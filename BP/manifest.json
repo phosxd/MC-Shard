@@ -1,0 +1,63 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"PhosXD"
+		]
+	},
+	"header": {
+		"name": "Shard [Stable] v0.0.1",
+		"description": "Best plug-in for Bedrock servers & realms.",
+		"min_engine_version": [
+			1,
+			21,
+			90
+		],
+		"uuid": "55f284d0-90ed-439c-bf35-3df11c35fa09",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "data",
+			"uuid": "6219820f-6bd1-4e30-927a-62b66e10129b",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"uuid": "5dc45d31-11dd-43f0-9867-6e38e847d4b7",
+			"entry": "scripts/main.js",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "f335f95b-fa62-4b51-8f94-441f0f77703d",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"module_name": "@minecraft/server",
+			"version": "2.0.0"
+		},
+		{
+			"module_name": "@minecraft/server-ui",
+			"version": "2.0.0"
+		}
+	]
+}
