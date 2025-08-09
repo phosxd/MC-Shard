@@ -5,7 +5,7 @@
 	"authors": [
 		"PhosXD"
 	],
-	"targetVersion": "1.21.90",
+	"targetVersion": "1.21.100",
 	"description": "Best plug-in for Bedrock servers & realms.",
 	"experimentalGameplay": {
 		"creationOfCustomBiomes": false,

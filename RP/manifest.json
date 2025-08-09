@@ -14,11 +14,12 @@
 			90
 		],
 		"uuid": "f335f95b-fa62-4b51-8f94-441f0f77703d",
+		"pack_scope": "world",
 		"version": [
 			1,
 			0,
 			0
-		]
+		],
 	},
 	"modules": [
 		{
