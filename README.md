@@ -35,7 +35,6 @@ Provides essential functionality for the add-on. Cannot be disabled.
 Provides various useful & handy commands. Not finished, more commands will be added.
 
 **Upcoming Commands:**
-- `/rename`: Rename an entity or item.
 - `/lore`: Add lore text to an item.
 - `/signtext`: Replace the text of a sign.
 - `/setslot`: Set a player's selected slot.
@@ -56,12 +55,12 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/thru`: Teleport through a wall 3 blocks or less thick.
 - `/drain`: Remove liquid blocks in a radius.
 - `/push`: Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.
-- `/enflame`: Sets entities on fire.
-- `/deflame`: Removes fire from entities.
+- `/enflame`: Set entities on fire. Enflame with 0 time to remove fire.
 - `/freeze`: Freezes an entity so it cannot move or turn. Freeze with 0 time to unfreeze.
 - `/explode`: Create an explosion.
 - `/repair`: Repair the item in your hand.
 - `/dupe`: Duplicate the item in your hand.
+- `/rename`: Rename entities or held items.
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
