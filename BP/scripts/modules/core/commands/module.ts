@@ -18,6 +18,7 @@ const RequiredTags:Array<string> = [];
 const RegisterEnums:Dictionary<Array<string>> = {
     module: ModuleNames,
     moduleAction: [
+        'info',
         'disable',
         'enable',
         'clearData',
@@ -26,6 +27,7 @@ const RegisterEnums:Dictionary<Array<string>> = {
 };
 
 const Lang = {
+    info: '§5ID: §e{id}§r\n§5Description: §e{desc}§r\n§5Commands: §r{cmds}§r',
     disable: 'Disabled module §e{module}§r.',
     enable: 'Enabled module §e{module}§r',
     clearData: 'Deleted all data for the §e{module}§r module.',
@@ -36,15 +38,24 @@ const Lang = {
 
 
 
-//
-function moduleActionEnable(module_key:string) {
+function moduleActionInfo(context:ShardCommandContext, module_key:string) {
     // Import modules then perform action.
     import('../../modules').then(modules => {
-        let module:ShardModule = modules.Modules[module_key];
-        module.enable();
+        const module:ShardModule = modules.Modules[module_key];
+        // Generate command list.
+        let commandList:Array<string> = [''];
+        for (let key in module.commands) {
+            let value:ShardCommand = module.commands[key];
+            commandList.push(value.id);
+        };
+        commandList = commandList.sort(); // Sort alphabetically.
+        let commandListString:string = commandList.join('\n §r- §e/');
+
+        // Send message.
+        context.target.sendMessage(Lang.info.replace('{desc}',module.description).replace('{id}',module.id).replace('{cmds}',commandListString));
     });
 
-    return {message:Lang.enable.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+    return undefined;
 };
 
 
@@ -56,7 +67,7 @@ function moduleActionDisable(module_key:string) {
 
     // Import modules then perform action.
     import('../../modules').then(modules => {
-        let module:ShardModule = modules.Modules[module_key];
+        const module:ShardModule = modules.Modules[module_key];
         module.disable();
     });
 
@@ -64,10 +75,21 @@ function moduleActionDisable(module_key:string) {
 };
 
 
+function moduleActionEnable(module_key:string) {
+    // Import modules then perform action.
+    import('../../modules').then(modules => {
+        const module:ShardModule = modules.Modules[module_key];
+        module.enable();
+    });
+
+    return {message:Lang.enable.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+};
+
+
 function moduleActionClearData(module_key:string) {
     // Import modules then perform action.
     import('../../modules').then(modules => {
-        let module:ShardModule = modules.Modules[module_key];
+        const module:ShardModule = modules.Modules[module_key];
         module.resetData();
     });
 
@@ -95,6 +117,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         case 'enable': return moduleActionEnable(module_key);
         case 'clearData': return moduleActionClearData(module_key);
         case 'printData': return moduleActionPrintData(module_key);
+        case 'info': return moduleActionInfo(Context, module_key);
     }
 
     return undefined;

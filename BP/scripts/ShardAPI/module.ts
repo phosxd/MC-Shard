@@ -20,23 +20,41 @@ const commandDisabledMessage:string = '§cEnable the §e{module}§c module to us
 
 
 export default class ShardModule {
-    id: string;
-    displayName: string; // How the module will appear in text.
-    init: () => void; // Called when the module is initialized.
-    eventListeners: Dictionary<ShardEventListener>;
-    commands: Dictionary<ShardCommand>;
-    forms: Dictionary<ShardForm>;
-    mainForm: ShardForm; // Main form for this module.
-    extraDefaultPersisData: Dictionary<any>;
+    /**Unique string identifier.*/
+    readonly id: string;
+    /**How the module will appear in text.*/
+    displayName: string;
+    /**Brief module description.*/
+    description: string;
+    /**Called when the module is initialized.*/
+    init: () => void;
+    readonly eventListeners: Dictionary<ShardEventListener>;
+    readonly commands: Dictionary<ShardCommand>;
+    readonly forms: Dictionary<ShardForm>;
+    /**Main form for the module.*/
+    mainForm: ShardForm;
+    readonly extraDefaultPersisData: Dictionary<any>;
 
-    sessionData: Dictionary<any>; // Arbitrary data for the module.
-    persisData: Dictionary<any>; // Arbitrary persistent data for the module.
-    persisDataReady: boolean; // Determines whether or not persisData is ready to be accessed.
+    /**Arbitrary data for the module. Will be lost after restart.*/
+    sessionData: Dictionary<any>;
+    /**Arbitrary persistent data for the module.
+     * 
+     * Use `saveData` to save this to MC `world` dynamic properties.
+    */
+    persisData: Dictionary<any>;
+    /**Determines whether or not `persisData` is ready to be accessed.*/
+    readonly persisDataReady: boolean;
+    /** Determines whether or not `world` from `@minecraft/server` is ready to be accessed.
+     * 
+     * Feature is not fully implemented, do not rely on this.
+    */
+    readonly worldReady: boolean 
 
 
-    constructor(id:string, displayName:string, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
+    constructor(id:string, displayName:string, description:string, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
         this.id = id;
         this.displayName = displayName;
+        this.description = description;
         this.init = init;
         this.eventListeners = eventListeners;
         this.commands = commands;
@@ -46,6 +64,7 @@ export default class ShardModule {
         this.persisData = defaultPersisData;
         Object.assign(this.persisData, extraDefaultPersisData);
         this.persisDataReady = false;
+        this.worldReady = false;
 
         // Get persistent data in an "after" context.
         MC.system.run(()=>{
@@ -54,6 +73,10 @@ export default class ShardModule {
            this.persisDataReady = true;
         });
 
+        // Flag world as ready when ready.
+        MC.world.afterEvents.worldLoad.subscribe(event => {
+            this.worldReady = true;
+        });
 
         // Register event listeners.
         Object.keys(this.eventListeners).forEach(key => {
@@ -91,51 +114,56 @@ export default class ShardModule {
 
 
 
+    /**Enable this module, allowing all child events & commands to run.*/
     enable() {
         this.persisData.enabled = true;
     };
 
 
-    disable() {
+    /**Disable this module, prevents all child events & commands from running.*/
+    disable(): void {
         this.persisData.enabled = false;
     };
 
 
-    // Get persistent data.
-    getData() {
+    /**Get persistent data saved in MC `world` dynamic properties.*/
+    getData():Dictionary<any>|undefined {
         return MCData.get(this.id);
     };
 
     
-    setData(data:Dictionary<any>) {
+    /**Set `persisData` then save it with `saveData`.*/
+    setData(data:Dictionary<any>):void {
         this.persisData = data;
-        MCData.set(this.id, data);
+        this.saveData()
     };
 
 
-    resetData() {
+    resetData():void {
         this.setData(Object.assign(Object.assign({},this.extraDefaultPersisData), defaultPersisData));
     };
 
 
-    // Save persistent data.
-    saveData() {
+    /**Save `persisData` using `MCData` API in `ShardAPI/util`*/
+    saveData():void {
         MCData.set(this.id, this.persisData);
     };
 
 
 
 
-    // Passthrough for all event listeners of this module.
-    eventListenerPassthrough(Listener:ShardEventListener, ...args) {
+    /**Passthrough for all event listeners of this module.*/
+    eventListenerPassthrough(Listener:ShardEventListener, ...args):void {
         if (this.persisData.enabled == false) {return};
         Listener.callback(...args);
     };
 
 
-    // Passthrough for all slash commands of this module.
-    // Handles converting Slash Command parameters to Shard Command parameters.
-    slashCommandPassthrough(Command:ShardCommand, Origin:MC.CustomCommandOrigin, ...Options) {
+    /**Passthrough for all slash commands of this module.
+     * 
+     * Handles converting Slash Command parameters to Shard Command parameters.
+    */
+    slashCommandPassthrough(Command:ShardCommand, Origin:MC.CustomCommandOrigin, ...Options):MC.CustomCommandResult|undefined {
         if (this.persisData.enabled == false) {
             return {message:commandDisabledMessage.replace('{module}',this.id), status:MC.CustomCommandStatus.Failure};
         };

@@ -17,8 +17,6 @@ import * as form_modules from './forms/modules';
 
 
 // Define module properties.
-const ID:string = 'shard';
-const DisplayName:string = '§0[§5Shard§0]§r';
 var EventListeners:Dictionary<ShardEventListener> = {
     playerJoin: event_playerJoin.EventListener,
 };
@@ -43,8 +41,9 @@ function Init() {};
 
 // Instantiate Module.
 export const Module:ShardModule = new ShardModule(
-    ID,
-    DisplayName,
+    'core', // ID
+    '§0[§5Shard§0]§r', // Display name
+    'Handles core Shard functionality & module management.', // Description
     Init,
     EventListeners,
     Commands,

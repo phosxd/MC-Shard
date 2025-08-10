@@ -7,7 +7,7 @@ import {Module} from '../module';
 
 // Define command properties.
 const ID:string = 'freeze';
-const Description:string = 'Freezes an entity so it cannot move or turn. Freeze with 0 time to unfreeze.';
+const Description:string = 'Freeze entities so they cannot move or turn. Freeze with 0 time to unfreeze.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
 ];

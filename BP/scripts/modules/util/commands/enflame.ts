@@ -6,7 +6,7 @@ import {MC} from '../../../ShardAPI/CONST';
 
 // Define command properties.
 const ID:string = 'enflame';
-const Description:string = 'Set entities on fire.';
+const Description:string = 'Set entities on fire. Enflame with 0 time to remove fire.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
@@ -16,6 +16,7 @@ const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Game
 const RequiredTags:Array<string> = [];
 const Lang = {
     success: 'Set {count} entities on fire for {time} seconds.',
+    extinguish: 'Removed fire from {count} entities.',
 };
 
 const default_time:number = 5;
@@ -38,11 +39,15 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     // Apply to targets.
     let count:number = 0;
     targets.forEach(entity => {
-        MC.system.run(()=>{entity.setOnFire(time)});
+        MC.system.run(()=>{
+            if (time == 0) {entity.extinguishFire()}
+            else {entity.setOnFire(time)};
+        });
         count += 1;
     });
 
-    return {message:Lang.success.replace('{count}',String(count)).replace('{time}',String(time)), status:MC.CustomCommandStatus.Success};
+    if (time == 0) {return {message:Lang.extinguish.replace('{count}',String(count)), status:MC.CustomCommandStatus.Success}}
+    else {return {message:Lang.success.replace('{count}',String(count)).replace('{time}',String(time)), status:MC.CustomCommandStatus.Success}};
 };
 
 

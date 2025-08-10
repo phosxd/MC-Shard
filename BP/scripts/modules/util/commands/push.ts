@@ -8,8 +8,8 @@ import {MC} from '../../../ShardAPI/CONST';
 const ID:string = 'push';
 const Description:string = 'Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'location', type:MC.CustomCommandParamType.Location},
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+    {name:'location', type:MC.CustomCommandParamType.Location},
 ];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
@@ -22,8 +22,8 @@ const Lang = {
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let location:MC.Vector3 = Options[0];
-    let targets:Array<MC.Entity> = Options[1];
+    let location:MC.Vector3 = Options[1];
+    let targets:Array<MC.Entity> = Options[0];
     let count = 0;
     // Apply to targets.
     targets.forEach(entity => {

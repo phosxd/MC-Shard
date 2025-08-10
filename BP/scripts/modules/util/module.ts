@@ -6,6 +6,7 @@ import ShardForm from '../../ShardAPI/form';
 
 // Import events.
 import * as event_tick from './events/tick';
+import * as event_entityDie from './events/entityDie';
 // Import commands.
 import * as command_pushchat from './commands/pushchat';
 import * as command_up from './commands/up';
@@ -19,21 +20,20 @@ import * as command_push from './commands/push';
 import * as command_heal from './commands/heal';
 import * as command_eat from './commands/eat';
 import * as command_enflame from './commands/enflame';
-import * as command_deflame from './commands/deflame';
 import * as command_explode from './commands/explode';
 import * as command_freeze from './commands/freeze';
 import * as command_suicide from './commands/suicide';
 import * as command_dupe from './commands/dupe';
 import * as command_repair from './commands/repair';
+import * as command_rename from './commands/rename';
 // Import forms.
 import * as form_main from './forms/main';
 
 
 // Define module properties.
-const ID:string = 'util';
-const DisplayName:string = '§0[§5Simple Utility§0]§r';
 const EventListeners:Dictionary<ShardEventListener> = {
     tick: event_tick.EventListener,
+    entityDie: event_entityDie.EventListener,
 };
 const Commands:Dictionary<ShardCommand> = {
     pushchat: command_pushchat.Command,
@@ -48,12 +48,12 @@ const Commands:Dictionary<ShardCommand> = {
     heal: command_heal.Command,
     eat: command_eat.Command,
     enflame: command_enflame.Command,
-    deflame: command_deflame.Command,
     explode: command_explode.Command,
     freeze: command_freeze.Command,
     suicide: command_suicide.Command,
     dupe: command_dupe.Command,
     repair: command_repair.Command,
+    rename: command_rename.Command,
 };
 const Forms:Dictionary<ShardForm> = {
 };
@@ -73,8 +73,9 @@ function Init() {};
 
 // Instantiate Module.
 export const Module:ShardModule = new ShardModule(
-    ID,
-    DisplayName,
+    'util',
+    '§0[§5Simple Utility§0]§r',
+    'Provides various helpful commands.',
     Init,
     EventListeners,
     Commands,
