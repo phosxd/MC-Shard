@@ -6,7 +6,7 @@ import {MC} from '../../../ShardAPI/CONST';
 
 // Define command properties.
 const ID:string = 'up';
-const Description:string = 'Teleport up.';
+const Description:string = 'Teleport up with a platform.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'amount', type:MC.CustomCommandParamType.Integer},
 ];

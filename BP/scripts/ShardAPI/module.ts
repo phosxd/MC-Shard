@@ -1,13 +1,19 @@
 import {MC, Dictionary, CommandNamespace} from './CONST';
 import ShardEventListener from './event_listener';
+import * as ShardEventServer from './event_server';
 import ShardCommand from './command';
 import ShardCommandContext from './command_context';
 import ShardForm from './form';
 import {MCData} from './util';
 
+const EventSources:Dictionary<any> = {
+    'world': MC.world,
+    'system': MC.system,
+    'shard': ShardEventServer,
+};
 const defaultPersisData:Dictionary<any> = {
     enabled: true,
-}
+};
 const commandDisabledMessage:string = '§cEnable the §e{module}§c module to use this command.';
 
 
@@ -48,6 +54,14 @@ export default class ShardModule {
            this.persisDataReady = true;
         });
 
+
+        // Register event listeners.
+        Object.keys(this.eventListeners).forEach(key => {
+            let listener = this.eventListeners[key];
+            EventSources[listener.source][`${listener.type}Events`][listener.eventId].subscribe(this.eventListenerPassthrough.bind(this, listener));
+        });
+
+
         // Register custom commands & their enums.
         MC.system.beforeEvents.startup.subscribe(event => {
             Object.keys(this.commands).forEach(key => {
@@ -69,9 +83,12 @@ export default class ShardModule {
             });
         });
 
+
         // Init.
         this.init();
     };
+
+
 
 
     enable() {
@@ -104,6 +121,15 @@ export default class ShardModule {
     // Save persistent data.
     saveData() {
         MCData.set(this.id, this.persisData);
+    };
+
+
+
+
+    // Passthrough for all event listeners of this module.
+    eventListenerPassthrough(Listener:ShardEventListener, ...args) {
+        if (this.persisData.enabled == false) {return};
+        Listener.callback(...args);
     };
 
 

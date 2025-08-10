@@ -16,6 +16,7 @@ const RequiredTags:Array<string> = [];
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
+    if (Context.targetType !== 'player') {return undefined};
     MC.system.run(()=>{Context.target.setGameMode(MC.GameMode.Adventure)});
 
     return undefined;

@@ -9,13 +9,13 @@ enum SourceTypes {
 
 export default class ShardCommandContext {
     static SourceTypes = SourceTypes;
-    source: MC.Block|MC.Entity|MC.Player|undefined;
+    source: MC.Block|MC.Entity|MC.Player|undefined; // The original executor of the command (If using slash commands, wil be the same as target).
     sourceType: SourceTypes;
-    target: MC.Block|MC.Entity|MC.Player|undefined;
+    target: MC.Block|MC.Entity|MC.Player|undefined; // The target executor of the command.
     targetType: SourceTypes;
-    dimension: MC.Dimension;
-    location: MC.Vector3;
-    rotation: MC.Vector2;
+    dimension: MC.Dimension; // Dimension.
+    location: MC.Vector3; // Location.
+    rotation: MC.Vector2; // Rotation.
 
 
     constructor(source:MC.Block|MC.Entity|MC.Player|undefined, sourceType:SourceTypes, target:MC.Block|MC.Entity|MC.Player|undefined, targetType:SourceTypes, dimension:MC.Dimension, location:MC.Vector3, rotation:MC.Vector2) {

@@ -7,6 +7,7 @@ import ShardForm from '../../ShardAPI/form';
 // Import events.
 import * as event_tick from './events/tick';
 // Import commands.
+import * as command_pushchat from './commands/pushchat';
 import * as command_up from './commands/up';
 import * as command_thru from './commands/thru';
 import * as command_drain from './commands/drain';
@@ -21,6 +22,9 @@ import * as command_enflame from './commands/enflame';
 import * as command_deflame from './commands/deflame';
 import * as command_explode from './commands/explode';
 import * as command_freeze from './commands/freeze';
+import * as command_suicide from './commands/suicide';
+import * as command_dupe from './commands/dupe';
+import * as command_repair from './commands/repair';
 // Import forms.
 import * as form_main from './forms/main';
 
@@ -32,6 +36,7 @@ const EventListeners:Dictionary<ShardEventListener> = {
     tick: event_tick.EventListener,
 };
 const Commands:Dictionary<ShardCommand> = {
+    pushchat: command_pushchat.Command,
     up: command_up.Command,
     thru: command_thru.Command,
     drain: command_drain.Command,
@@ -46,6 +51,9 @@ const Commands:Dictionary<ShardCommand> = {
     deflame: command_deflame.Command,
     explode: command_explode.Command,
     freeze: command_freeze.Command,
+    suicide: command_suicide.Command,
+    dupe: command_dupe.Command,
+    repair: command_repair.Command,
 };
 const Forms:Dictionary<ShardForm> = {
 };

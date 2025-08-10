@@ -1,16 +1,3 @@
-import * as ShardEventServer from './event_server';
-import {world, system} from '@minecraft/server';
-
-
-const Sources = {
-    'world': world,
-    'system': system,
-    'shard': ShardEventServer,
-};
-
-
-
-
 export default class ShardEventListener {
     source: 'world'|'system'|'shard';
     type: 'before'|'after';
@@ -23,8 +10,5 @@ export default class ShardEventListener {
         this.type = type;
         this.eventId = eventId;
         this.callback = callback;
-
-        // Register event.
-        Sources[source][`${type}Events`][eventId].subscribe(callback);
     };
 };
