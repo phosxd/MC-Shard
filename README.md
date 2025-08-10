@@ -33,11 +33,9 @@ Provides essential functionality for the add-on. Cannot be disabled.
 - `/discord`: Get the Shard Discord invite. (This will be editable to be any Discord you want).
 ## `util`:
 Provides various useful & handy commands. Not finished, more commands will be added.
+
 **Upcoming Commands:**
-- `/suicide`: Kill's the user. Useful if stuck.
 - `/rename`: Rename an entity or item.
-- `/repair`: Repair an item.
-- `/dupe`: Duplicate an item.
 - `/lore`: Add lore text to an item.
 - `/signtext`: Replace the text of a sign.
 - `/setslot`: Set a player's selected slot.
@@ -47,8 +45,11 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/qrotate`: Rotate the targeted block.
 - `/inventory`: Save or load an inventory.
 - `/hotbar`: Save or load a hotbar.
+
 **Commands:**
 - `/c, /s, /a, /sp`: Change user's game-mode. Far quicker than `/gamemode`.
+- `/pushchat`: Pushes all previous chat messages off-screen.
+- `/suicide`: Kill's the user. Useful if stuck.
 - `/heal`: Heals all health.
 - `/eat`: Replenishes all hunger bars.
 - `/up`: Teleport up with a platform.
@@ -59,6 +60,8 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/deflame`: Removes fire from entities.
 - `/freeze`: Freezes an entity so it cannot move or turn. Freeze with 0 time to unfreeze.
 - `/explode`: Create an explosion.
+- `/repair`: Repair the item in your hand.
+- `/dupe`: Duplicate the item in your hand.
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
