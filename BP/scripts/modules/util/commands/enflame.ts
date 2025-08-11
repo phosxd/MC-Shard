@@ -5,8 +5,6 @@ import {MC} from '../../../ShardAPI/CONST';
 
 
 // Define command properties.
-const ID:string = 'enflame';
-const Description:string = 'Set entities on fire. Enflame with 0 time to remove fire.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
@@ -14,10 +12,6 @@ const OptionalParameters:Array<MC.CustomCommandParameter> = [
 ];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
-const Lang = {
-    success: 'Set {count} entities on fire for {time} seconds.',
-    extinguish: 'Removed fire from {count} entities.',
-};
 
 const default_time:number = 5;
 
@@ -46,8 +40,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         count += 1;
     });
 
-    if (time == 0) {return {message:Lang.extinguish.replace('{count}',String(count)), status:MC.CustomCommandStatus.Success}}
-    else {return {message:Lang.success.replace('{count}',String(count)).replace('{time}',String(time)), status:MC.CustomCommandStatus.Success}};
+    if (time == 0) {return {message:{translate:'shard.util.cmd.enflame.extinguish', with:[String(count)]}, status:0}}
+    else {return {message:{translate:'shard.util.cmd.enflame.success', with:[String(count), String(time)]}, status:0}};
 };
 
 
@@ -55,8 +49,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'enflame',
+    'Set entities on fire. Enflame with 0 time to remove fire.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

@@ -6,8 +6,6 @@ import {LocationToString} from '../../../ShardAPI/util';
 
 
 // Define command properties.
-const ID:string = 'explode';
-const Description:string = 'Create an explosion.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'location', type:MC.CustomCommandParamType.Location},
 ];
@@ -20,9 +18,6 @@ const OptionalParameters:Array<MC.CustomCommandParameter> = [
 ];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
-const Lang = {
-    success: 'Created a new explosion at {location}.',
-};
 
 const default_radius:number = 4; // TNT explosion radius.
 const default_breakBlocks:boolean = true;
@@ -56,7 +51,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         Context.target.dimension.createExplosion(location, radius, {breaksBlocks:breakBlocks, causesFire:causeFire, allowUnderwater:allowUnderwater, source:source[0]});
     });
 
-    return {message:Lang.success.replace('{location}',LocationToString(location)), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.util.cmd.explode.success', with:[LocationToString(location)]}, status:0};
 };
 
 
@@ -64,8 +59,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'explode',
+    'Create an explosion.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

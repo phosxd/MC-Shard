@@ -1,39 +1,43 @@
 export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
+import {MC, Dictionary, CommandNamespace} from '../../../ShardAPI/CONST';
+import {Module} from '../module';
 
 
 // Define command properties.
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-    {name:'location', type:MC.CustomCommandParamType.Location},
+    {name:'slotIndex', type:MC.CustomCommandParamType.Integer},
 ];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
 
+const min_slot:number = 0;
+const max_slot:number = 8;
+
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let location:MC.Vector3 = Options[1];
     let targets:Array<MC.Entity> = Options[0];
-    let count = 0;
+    let slot:number = Number(Options[1]);
+    // Return error if slot index is out of range.
+    if (slot > max_slot || slot < min_slot) {
+        return {message:{translate:'shard.util.cmd.setslot.slotIndexOutOfRange'}, status:1};
+    };
     // Apply to targets.
+    let count:number = 0;
     targets.forEach(entity => {
-        if (entity.typeId == 'minecraft:item') {return};
-        // Calculate vector.
-        let vector:MC.Vector3 = {x:location.x-entity.location.x, y:location.y-entity.location.y, z:location.z-entity.location.z};
-        // Apply.
+        if (entity.typeId !== 'minecraft:player') {return};
         MC.system.run(()=>{
-            if (entity.typeId == 'minecraft:player') {entity.applyKnockback({x:vector.x, z:vector.z}, vector.y)}
-            else {entity.applyImpulse(vector)};
+            entity.selectedSlotIndex = slot;
         });
         count += 1;
     });
 
-    return {message:{translate:'shard.util.cmd.push.success', with:[String(count)]}, status:0};
+    return {message:{translate:'shard.util.cmd.setslot.success', with:[String(count), String(slot)]}, status:0};
 };
 
 
@@ -41,8 +45,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    'push',
-    'Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.',
+    'setslot',
+    'Set the selected hotbar slot.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

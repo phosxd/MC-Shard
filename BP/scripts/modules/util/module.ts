@@ -26,6 +26,7 @@ import * as command_suicide from './commands/suicide';
 import * as command_dupe from './commands/dupe';
 import * as command_repair from './commands/repair';
 import * as command_rename from './commands/rename';
+import * as command_setslot from './commands/setslot';
 // Import forms.
 import * as form_main from './forms/main';
 
@@ -54,6 +55,7 @@ const Commands:Dictionary<ShardCommand> = {
     dupe: command_dupe.Command,
     repair: command_repair.Command,
     rename: command_rename.Command,
+    setslot: command_setslot.Command,
 };
 const Forms:Dictionary<ShardForm> = {
 };

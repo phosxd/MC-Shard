@@ -5,17 +5,12 @@ import {MC} from '../../../ShardAPI/CONST';
 
 
 // Define command properties.
-const ID:string = 'heal';
-const Description:string = 'Regenerate all health.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
 ];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
-const Lang = {
-    success: 'Healed {count} entities.',
-};
 
 
 
@@ -34,7 +29,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         count += 1;
     });
 
-    return {message:Lang.success.replace('{count}',String(count)), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.util.cmd.heal.success', with:[String(count)]}, status:0};
 };
 
 
@@ -42,8 +37,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'heal',
+    'Regenerate all health.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

@@ -6,8 +6,6 @@ import {Module} from '../module';
 
 
 // Define command properties.
-const ID:string = 'freeze';
-const Description:string = 'Freeze entities so they cannot move or turn. Freeze with 0 time to unfreeze.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
 ];
@@ -16,9 +14,6 @@ const OptionalParameters:Array<MC.CustomCommandParameter> = [
 ];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
-const Lang = {
-    success: 'Froze {count} entities for {time} seconds.',
-};
 
 const default_time:number = 999999;
 
@@ -45,7 +40,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         count += 1;
     });
 
-    return {message:Lang.success.replace('{count}',String(count)).replace('{time}',String(time)), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.util.cmd.freeze.success', with:[String(count), String(time)]}, status:0};
 };
 
 
@@ -53,8 +48,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'freeze',
+    'Freeze entities so they cannot move or turn. Freeze with 0 time to unfreeze.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

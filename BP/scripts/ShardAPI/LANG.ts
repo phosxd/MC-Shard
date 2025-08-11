@@ -39,6 +39,34 @@ export const LANG = {
                     success: 'Duplicated %s §e%s§r.',
                     noItem: '§cYou need to be holding an item.',
                 },
+                eat: {
+                    success: 'Replenished %s entities.',
+                },
+                enflame: {
+                    success: 'Set %s entities on fire for %s seconds.',
+                    extinguish: 'Removed fire from %s entities.',
+                },
+                explode: {
+                    success: 'Created a new explosion at %s.',
+                },
+                freeze: {
+                    success: 'Froze %s entities for %s seconds.',
+                },
+                heal: {
+                    success: 'Healed %s entities.',
+                },
+                push: {
+                    success: 'Applied an impulse to %s entities.',
+                },
+                pushchat: {},
+                rename: {
+                    successEntity: 'Renamed %s entities to "%s".',
+                    successItem: 'Renamed items held by %s entities to "%s".',
+                },
+                setslot: {
+                    success: 'Set %s players\' slot to %s.',
+                    slotIndexOutOfRange: 'Slot index must be between 0 & 8.',
+                },
             },
         },
     },

@@ -23,6 +23,7 @@ export function rawMessageToString(message:MC.RawMessage):string {
 
     if (message.translate) {
         let translation:string = translate(message.translate);
+        if (translation == undefined) {translation = ''};
         if (message.with) {
             if (message.with instanceof Array) {
                 message.with.forEach(item => {

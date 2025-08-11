@@ -1,31 +1,7 @@
 export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC, Dictionary} from '../../../ShardAPI/CONST';
-
-
-// Define command properties.
-const ID:string = 'rename';
-const Description:string = 'Rename entities or held items.';
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'sh:renameOption', type:MC.CustomCommandParamType.Enum},
-    {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-    {name:'name', type:MC.CustomCommandParamType.String},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
-const RegisterEnums:Dictionary<Array<string>> = {
-    renameOption: [
-        'item',
-        'entity',
-    ],
-};
-
-const Lang = {
-    successEntity: 'Renamed {count} entities to "{name}".',
-    successItem: 'Renamed items held by {count} entities to "{name}".',
-};
+import {MC} from '../../../ShardAPI/CONST';
 
 
 
@@ -60,8 +36,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         count += 1;
     });
 
-    if (item_or_entity == 'item') {return {message:Lang.successItem.replace('{count}',String(count)).replace('{name}',name), status:MC.CustomCommandStatus.Success}};
-    if (item_or_entity == 'entity') {return {message:Lang.successEntity.replace('{count}',String(count)).replace('{name}',name), status:MC.CustomCommandStatus.Success}};
+    if (item_or_entity == 'item') {return {message:{translate:'shard.util.cmd.rename.successItem', with:[String(count), name]}, status:0}};
+    if (item_or_entity == 'entity') {return {message:{translate:'shard.util.cmd.rename.successEntity', with:[String(count), name]}, status:0}};
 };
 
 
@@ -69,12 +45,21 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    'rename',
+    'Rename entities or held items.',
+    [
+        {name:'sh:renameOption', type:MC.CustomCommandParamType.Enum},
+        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'name', type:MC.CustomCommandParamType.String},
+    ],
+    [],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
-    RegisterEnums,
+    {
+        renameOption: [
+            'item',
+            'entity',
+        ],
+    },
 );

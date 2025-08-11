@@ -60,7 +60,7 @@ function moduleActionDisable(module_key:string) {
         module.disable();
     });
 
-    return {message:{translate:'shard.core.cmd.module.disable', with:[module_key]}, status:0};
+    return {message:{translate:'shard.core.cmd.module.disabled', with:[module_key]}, status:0};
 };
 
 
@@ -71,7 +71,7 @@ function moduleActionEnable(module_key:string) {
         module.enable();
     });
 
-    return {message:{translate:'shard.core.cmd.module.enable', with:[module_key]}, status:0};
+    return {message:{translate:'shard.core.cmd.module.enabled', with:[module_key]}, status:0};
 };
 
 

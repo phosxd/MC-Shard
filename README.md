@@ -1,5 +1,7 @@
 Shard is an upcoming all-in-one add-on for servers & realms! With a fully modular & customizable design, Shard will have a vast multitude of management, utility, fun, survival+, & moderation modules soon.
 
+This is not a complete build! Many systems are subject to change.
+
 Version: 0.0.1.
 
 # Installation:
@@ -15,7 +17,7 @@ You DO NOT need:
 You DO need:
 - Cheats enabled.
 
-If you followed the instructions perfectly, when enetering your world you should receive a pretty "This server is running Shard" message.
+If you followed the instructions perfectly, when entering your world you should receive a pretty "This server is running Shard" message.
 
 # Getting started:
 To get started, type `/sh:` in chat (but do not send) to view auto-completes for every command for every Shard module.
@@ -31,13 +33,14 @@ Provides essential functionality for the add-on. Cannot be disabled.
 - `/shard`: Open the Shard menu.
 - `/module`: Configure a module.
 - `/discord`: Get the Shard Discord invite. (This will be editable to be any Discord you want).
+
+
 ## `util`:
 Provides various useful & handy commands. Not finished, more commands will be added.
 
 **Upcoming Commands:**
 - `/lore`: Add lore text to an item.
 - `/signtext`: Replace the text of a sign.
-- `/setslot`: Set a player's selected slot.
 - `/cloneentity`: Clone an entity with all it's properties.
 - `/qcopy`: Save the targeted block.
 - `/qpaste`: Load the saved block.
@@ -51,6 +54,7 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/suicide`: Kill's the user. Useful if stuck.
 - `/heal`: Heals all health.
 - `/eat`: Replenishes all hunger bars.
+- `/setslot`: Set the selected hotbar slot.
 - `/up`: Teleport up with a platform.
 - `/thru`: Teleport through a wall 3 blocks or less thick.
 - `/drain`: Remove liquid blocks in a radius.
