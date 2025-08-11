@@ -5,8 +5,6 @@ import {MC} from '../../../ShardAPI/CONST';
 
 
 // Define command properties.
-const ID:string = 'a';
-const Description:string = 'Adventure mode.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Admin;
@@ -16,9 +14,7 @@ const RequiredTags:Array<string> = [];
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
     MC.system.run(()=>{Context.target.setGameMode(MC.GameMode.Adventure)});
-
     return undefined;
 };
 
@@ -27,8 +23,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'a',
+    'Adventure mode.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

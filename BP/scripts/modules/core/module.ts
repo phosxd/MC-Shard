@@ -42,8 +42,8 @@ function Init() {};
 // Instantiate Module.
 export const Module:ShardModule = new ShardModule(
     'core', // ID
-    '§0[§5Shard§0]§r', // Display name
-    'Handles core Shard functionality & module management.', // Description
+    {translate:'shard.core.displayName'}, // Display name
+    {translate:'shard.core.description'}, // Description
     Init,
     EventListeners,
     Commands,

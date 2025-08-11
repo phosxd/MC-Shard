@@ -5,8 +5,6 @@ import {MC, Dictionary, CommandNamespace, ModuleNames, PermaEnabledModules} from
 
 
 // Define command properties.
-const ID:string = 'module';
-const Description:string = 'Open module configuration UI, or perform actions.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:CommandNamespace+':'+'module', type:MC.CustomCommandParamType.Enum}
 ];
@@ -26,15 +24,6 @@ const RegisterEnums:Dictionary<Array<string>> = {
     ],
 };
 
-const Lang = {
-    info: '§5ID: §e{id}§r\n§5Description: §e{desc}§r\n§5Commands: §r{cmds}§r',
-    disable: 'Disabled module §e{module}§r.',
-    enable: 'Enabled module §e{module}§r',
-    clearData: 'Deleted all data for the §e{module}§r module.',
-    printData: 'Printing all data for the §e{module}§r module. Data can be accessed in server logs.',
-    cannotDisable: 'Cannot disable §e{module}§r module.',
-};
-
 
 
 
@@ -52,7 +41,7 @@ function moduleActionInfo(context:ShardCommandContext, module_key:string) {
         let commandListString:string = commandList.join('\n §r- §e/');
 
         // Send message.
-        context.target.sendMessage(Lang.info.replace('{desc}',module.description).replace('{id}',module.id).replace('{cmds}',commandListString));
+        context.target.sendMessage({translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.id}, module.description, {text:commandListString}]}});
     });
 
     return undefined;
@@ -62,7 +51,7 @@ function moduleActionInfo(context:ShardCommandContext, module_key:string) {
 function moduleActionDisable(module_key:string) {
     // Return error if module cannot be disabled.
     if (PermaEnabledModules.includes(module_key)) {
-        return {message:Lang.cannotDisable.replace('{module}',module_key), status:MC.CustomCommandStatus.Failure};
+        return {message:{translate:'shard.core.cmd.module.cannotDisable', with:[module_key]}, status:1};
     };
 
     // Import modules then perform action.
@@ -71,7 +60,7 @@ function moduleActionDisable(module_key:string) {
         module.disable();
     });
 
-    return {message:Lang.disable.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.core.cmd.module.disable', with:[module_key]}, status:0};
 };
 
 
@@ -82,7 +71,7 @@ function moduleActionEnable(module_key:string) {
         module.enable();
     });
 
-    return {message:Lang.enable.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.core.cmd.module.enable', with:[module_key]}, status:0};
 };
 
 
@@ -93,7 +82,7 @@ function moduleActionClearData(module_key:string) {
         module.resetData();
     });
 
-    return {message:Lang.clearData.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.core.cmd.module.clearData', with:[module_key]}, status:0};
 };
 
 
@@ -104,7 +93,7 @@ function moduleActionPrintData(module_key:string) {
         console.warn(`${module_key} persistent data: `+JSON.stringify(module.persisData));
     });
 
-    return {message:Lang.printData.replace('{module}',module_key), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.core.cmd.module.printData', with:[module_key]}, status:0};
 };
 
 
@@ -128,8 +117,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    ID,
-    Description,
+    'module',
+    'Open module configuration UI, or perform actions.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

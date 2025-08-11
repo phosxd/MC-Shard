@@ -1,8 +1,3 @@
-## Command texts are defined but unused due to custom command result not supporting translations.
-## Command texts that are actually used can be found in `BP/scripts/LANG.ts`.
-
-
-shard.misc.welcomeMessage=§a┏----\n§a|§r Welcome §4%s§r!\n§a|§r This server is running:\n§a|§r §l§dShard§r §lv%s§r [%s].\n§a┖----
 shard.misc.commandModuleDisabled=§cEnable the §e%s§c module to use this command.
 shard.misc.commandDisabled=§cThis command is disabled.
 shard.misc.commandUnavailable=§cThis command is unavailable.
@@ -23,7 +18,3 @@ shard.core.cmd.module.printData=Printing all data for the §e%s§r module. Data 
 ## -----------
 shard.util.displayName=§0[§5Simple Utility§0]§r
 shard.util.description=Provides various helpful commands.
-shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.
-shard.util.cmd.drain.radiusOutOfBounds=Radius must be between 1 & 50.
-shard.util.cmd.dupe.success=Duplicated %s §e%s§r.
-shard.util.cmd.dupe.noItem=§cYou need to be holding an item.

@@ -3,8 +3,10 @@ import ShardEventListener from './event_listener';
 import * as ShardEventServer from './event_server';
 import ShardCommand from './command';
 import ShardCommandContext from './command_context';
+import ShardCommandResult from './command_result';
 import ShardForm from './form';
 import {MCData} from './util';
+import * as RawMessageParser from './raw_message_parser';
 
 const EventSources:Dictionary<any> = {
     'world': MC.world,
@@ -14,7 +16,6 @@ const EventSources:Dictionary<any> = {
 const defaultPersisData:Dictionary<any> = {
     enabled: true,
 };
-const commandDisabledMessage:string = '§cEnable the §e{module}§c module to use this command.';
 
 
 
@@ -22,18 +23,18 @@ const commandDisabledMessage:string = '§cEnable the §e{module}§c module to us
 export default class ShardModule {
     /**Unique string identifier.*/
     readonly id: string;
-    /**How the module will appear in text.*/
-    displayName: string;
+    /**Module display name.*/
+    displayName: MC.RawMessage;
     /**Brief module description.*/
-    description: string;
+    description: MC.RawMessage;
     /**Called when the module is initialized.*/
     init: () => void;
-    readonly eventListeners: Dictionary<ShardEventListener>;
-    readonly commands: Dictionary<ShardCommand>;
-    readonly forms: Dictionary<ShardForm>;
+    eventListeners: Dictionary<ShardEventListener>;
+    commands: Dictionary<ShardCommand>;
+    forms: Dictionary<ShardForm>;
     /**Main form for the module.*/
     mainForm: ShardForm;
-    readonly extraDefaultPersisData: Dictionary<any>;
+    extraDefaultPersisData: Dictionary<any>;
 
     /**Arbitrary data for the module. Will be lost after restart.*/
     sessionData: Dictionary<any>;
@@ -43,15 +44,15 @@ export default class ShardModule {
     */
     persisData: Dictionary<any>;
     /**Determines whether or not `persisData` is ready to be accessed.*/
-    readonly persisDataReady: boolean;
+    persisDataReady: boolean;
     /** Determines whether or not `world` from `@minecraft/server` is ready to be accessed.
      * 
      * Feature is not fully implemented, do not rely on this.
     */
-    readonly worldReady: boolean 
+    worldReady: boolean 
 
 
-    constructor(id:string, displayName:string, description:string, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
+    constructor(id:string, displayName:MC.RawMessage, description:MC.RawMessage, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
         this.id = id;
         this.displayName = displayName;
         this.description = description;
@@ -164,8 +165,9 @@ export default class ShardModule {
      * Handles converting Slash Command parameters to Shard Command parameters.
     */
     slashCommandPassthrough(Command:ShardCommand, Origin:MC.CustomCommandOrigin, ...Options):MC.CustomCommandResult|undefined {
+        // Return error message if module disabled.
         if (this.persisData.enabled == false) {
-            return {message:commandDisabledMessage.replace('{module}',this.id), status:MC.CustomCommandStatus.Failure};
+            return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.id]}), status:1};
         };
 
         let source: MC.Block|MC.Entity|MC.Player|undefined;
@@ -215,12 +217,19 @@ export default class ShardModule {
         };
 
         let context = new ShardCommandContext(source, sourceType, target, targetType, dimension, location, rotation);
-        let result = Command.execute(context, Options);
+        let result:ShardCommandResult|undefined = Command.execute(context, Options);
 
         // Modify result message to include module name.
         if (result !== undefined) {
-            result.message = `${this.displayName} ${result.message}`;
+            let resultMessage:MC.RawMessage;
+            // If result.message is a string, turn into raw-message.
+            if (typeof result.message == 'string') {resultMessage = {text:result.message}}
+            else {resultMessage = result.message};
+            // Apply module display name then return message.
+            const newMessage = {rawtext: [this.displayName, {text:' '}, resultMessage]};
+            return {message:RawMessageParser.rawMessageToString(newMessage), status:result.status};
         };
-        return result;
+
+        return undefined;
     };
 };

@@ -4,22 +4,16 @@ import {MC} from '../../../ShardAPI/CONST';
 
 
 // Define command properties.
-const ID:string = 'shard';
-const Description:string = 'Open the Shard menu.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Any;
 const RequiredTags:Array<string> = [];
 
-const Lang = {
-    message: 'This is currently unavailable.',
-};
-
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    return {message:Lang.message, status:MC.CustomCommandStatus.Failure};
+    return {message:{translate:'shard.misc.commandUnavailable'}, status:1};
 };
 
 
@@ -27,8 +21,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    ID,
-    Description,
+    'shard',
+    'Open the Shard menu.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,

@@ -74,8 +74,8 @@ function Init() {};
 // Instantiate Module.
 export const Module:ShardModule = new ShardModule(
     'util',
-    '§0[§5Simple Utility§0]§r',
-    'Provides various helpful commands.',
+    {translate:'shard.util.displayName'},
+    {translate:'shard.util.description'},
     Init,
     EventListeners,
     Commands,

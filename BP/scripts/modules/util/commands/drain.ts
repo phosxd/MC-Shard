@@ -6,18 +6,12 @@ import {LocationOutOfBounds} from '../../../ShardAPI/util';
 
 
 // Define command properties.
-const ID:string = 'drain';
-const Description:string = 'Remove liquid blocks in a radius.';
 const MandatoryParameters:Array<MC.CustomCommandParameter> = [
     {name:'radius', type:MC.CustomCommandParamType.Integer},
 ];
 const OptionalParameters:Array<MC.CustomCommandParameter> = [];
 const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
 const RequiredTags:Array<string> = [];
-const Lang = {
-    success: 'Removing all liquid blocks in a radius of {radius}. This may take a while if using a large radius.',
-    radiusOutOfBound: 'Radius must be between 1 & 50',
-};
 
 const MinRadius:number = 1;
 const MaxRadius:number = 50;
@@ -44,11 +38,11 @@ function* clearLiquidBlocks(radius:number, location:MC.Vector3, dimension:MC.Dim
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     let radius:number = Options[0];
     // Return error if radius out of bounds.
-    if (radius > MaxRadius || radius < MinRadius) {return {message:Lang.radiusOutOfBound, status:MC.CustomCommandStatus.Failure}};
+    if (radius > MaxRadius || radius < MinRadius) {return {message:{translate:'shard.util.cmd.drain.radiusOutOfBounds'}, status:1}};
     // Run job.
     MC.system.runJob(clearLiquidBlocks(radius, Context.target.location, Context.target.dimension));
     
-    return {message:Lang.success.replace('{radius}',String(radius)), status:MC.CustomCommandStatus.Success};
+    return {message:{translate:'shard.util.cmd.drain.success', with:[String(radius)]}, status:0};
 };
 
 
@@ -56,8 +50,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 var Command = new ShardCommand(
-    ID,
-    Description,
+    'drain',
+    'Remove liquid blocks in a radius.',
     MandatoryParameters,
     OptionalParameters,
     PermissionLevel,
