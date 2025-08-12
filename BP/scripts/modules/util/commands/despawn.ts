@@ -7,19 +7,17 @@ import {MC} from '../../../ShardAPI/CONST';
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     let targets:Array<MC.Entity> = Options[0];
-    // If no specified targets, set the user as the target & if the user is not an entity or player, then return.
-    if (targets == undefined) {
-        if (Context.targetType !== 'entity' && Context.targetType !== 'player') {return};
-        targets = [Context.target];
-    };
-    // Apply to targets.
+    // Despawn targets.
     let count:number = 0;
     targets.forEach(entity => {
-        MC.system.run(()=>{entity.runCommand('effect @s instant_health 1 200 true')});
+        if (entity.typeId == 'minecraft:player') {return};
+        MC.system.run(()=>{
+            entity.remove();
+        });
         count += 1;
     });
 
-    return {message:{translate:'shard.util.cmd.heal.success', with:[String(count)]}, status:0};
+    return {message:{translate:'shard.util.cmd.despawn.success', with:[String(count)]}, status:0};
 };
 
 
@@ -27,12 +25,12 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    'heal',
-    'Regenerate all health.',
-    [],
+    'despawn',
+    'Remove entities without death animations & without dropping loot/XP. Cannot use on players.',
     [
         {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
     ],
+    [],
     MC.CommandPermissionLevel.GameDirectors,
     [],
     Callback,

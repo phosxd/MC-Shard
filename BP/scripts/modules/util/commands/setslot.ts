@@ -1,18 +1,6 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC, Dictionary, CommandNamespace} from '../../../ShardAPI/CONST';
-import {Module} from '../module';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-    {name:'slotIndex', type:MC.CustomCommandParamType.Integer},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
 
 const min_slot:number = 0;
 const max_slot:number = 8;
@@ -44,12 +32,15 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'setslot',
     'Set the selected hotbar slot.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [
+        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'slotIndex', type:MC.CustomCommandParamType.Integer},
+    ],
+    [],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

@@ -6,9 +6,8 @@ import {MC} from '../../../ShardAPI/CONST';
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
-    MC.system.run(()=>{Context.target.setGameMode(MC.GameMode.Survival)});
-    return undefined;
+    let code:string = Options[0];
+    return {message:eval(code), status:0};
 };
 
 
@@ -16,9 +15,11 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    's',
-    'Survival mode.',
-    [],
+    'eval',
+    'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',
+    [
+        {name:'code', type:MC.CustomCommandParamType.String},
+    ],
     [],
     MC.CommandPermissionLevel.Admin,
     [],

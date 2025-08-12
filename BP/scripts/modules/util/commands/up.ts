@@ -1,21 +1,9 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
 
-
-// Define command properties.
-const ID:string = 'up';
-const Description:string = 'Teleport up with a platform.';
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'amount', type:MC.CustomCommandParamType.Integer},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Admin;
-const RequiredTags:Array<string> = [];
 const Lang = {
     success: 'Woosh!',
-    onlyEntity: 'Can only execute on an entity.',
     outOfBounds: 'Target location is out of bounds.',
     obstructed: 'Target location is obstructed.',
 };
@@ -24,11 +12,6 @@ const Lang = {
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    // Return error invalid target.
-    if (Context.targetType !== ShardCommandContext.SourceTypes.entity && Context.targetType !== ShardCommandContext.SourceTypes.player) {
-        return {message:Lang.onlyEntity, status:MC.CustomCommandStatus.Failure};
-    };
-
     // Get target block & location. Return error if out of bounds.
     let amount:number = Options[0];
     let target_location = Context.target.location; target_location.y += amount;
@@ -52,12 +35,14 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
-    ID,
-    Description,
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+export const Command = new ShardCommand(
+    'up',
+    'Teleport up with a platform.',
+    [
+        {name:'amount', type:MC.CustomCommandParamType.Integer},
+    ],
+    [],
+    MC.CommandPermissionLevel.Admin,
+    [],
     Callback,
 );

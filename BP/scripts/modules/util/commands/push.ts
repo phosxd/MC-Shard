@@ -1,17 +1,6 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-    {name:'location', type:MC.CustomCommandParamType.Location},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
 
 
 
@@ -40,12 +29,15 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'push',
     'Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [
+        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'location', type:MC.CustomCommandParamType.Location},
+    ],
+    [],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

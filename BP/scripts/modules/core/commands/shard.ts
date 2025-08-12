@@ -3,13 +3,6 @@ import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
 
 
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Any;
-const RequiredTags:Array<string> = [];
-
-
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
@@ -23,9 +16,9 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 export const Command = new ShardCommand(
     'shard',
     'Open the Shard menu.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [],
+    [],
+    MC.CommandPermissionLevel.Any,
+    [],
     Callback,
 );

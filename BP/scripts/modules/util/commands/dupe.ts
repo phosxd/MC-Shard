@@ -1,14 +1,6 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC, Dictionary} from '../../../ShardAPI/CONST';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
+import {MC} from '../../../ShardAPI/CONST';
 
 
 
@@ -33,12 +25,12 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'dupe',
     'Duplicate the item in your hand.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [],
+    [],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

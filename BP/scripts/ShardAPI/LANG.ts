@@ -9,6 +9,18 @@ export const LANG = {
             commandModuleDisabled: '§cEnable the §e%s§c module to use this command.',
             commandDisabled: '§cThis command is disabled.',
             commandUnavailable: '§cThis command is unavailable.',
+            missingPermission: '§cYou do not have permission to do this.',
+            moduleOption: {
+                commands: 'Commands',
+                settings: 'Settings',
+            },
+        },
+        formCommon: {
+            done: 'Done',
+            dismiss: 'Dismiss',
+            okay: 'Okay',
+            yes: 'Yes',
+            no: 'No',
         },
         core: {
             displayName: '§0[§5Shard§0]§r',
@@ -16,6 +28,9 @@ export const LANG = {
             cmd: {
                 discord: {
                     success: '§9dsc.gg/mc-shard',
+                },
+                eval: {
+                    run: 'Running provided code now.',
                 },
                 module: {
                     info: '§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r',
@@ -31,6 +46,9 @@ export const LANG = {
             displayName: '§0[§5Simple Utility§0]§r',
             description: 'Provides various helpful commands.',
             cmd: {
+                despawn: {
+                    success: 'Removed %s entities.',
+                },
                 drain: {
                     success: 'Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.',
                     radiusOutOfBounds: 'Radius must be between 1 & 50.',
@@ -66,6 +84,11 @@ export const LANG = {
                 setslot: {
                     success: 'Set %s players\' slot to %s.',
                     slotIndexOutOfRange: 'Slot index must be between 0 & 8.',
+                },
+                repair: {
+                    success: 'Repaired §e%s§r.',
+                    failure: '§e%s§c cannot be repaired.',
+                    noItem: '§cYou need to be holding an item.',
                 },
             },
         },

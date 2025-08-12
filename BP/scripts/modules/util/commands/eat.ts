@@ -1,16 +1,6 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [
-    {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
 
 
 
@@ -29,19 +19,21 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         count += 1;
     });
 
-    return {message:{translate:'shard.uti.cmd.eat.success', with:[String(count)]}, status:0};
+    return {message:{translate:'shard.util.cmd.eat.success', with:[String(count)]}, status:0};
 };
 
 
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'eat',
     'Replenishes all hunger bars.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [],
+    [
+        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+    ],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

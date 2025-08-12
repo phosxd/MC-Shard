@@ -3,48 +3,37 @@ import ShardCommandContext from '../../../ShardAPI/command_context';
 import ShardModule from '../../../ShardAPI/module';
 import {MC, Dictionary, CommandNamespace, ModuleNames, PermaEnabledModules} from '../../../ShardAPI/CONST';
 
+var Modules:Dictionary<ShardModule>;
+// Import modules after they have all initialized.
+MC.system.runTimeout(()=>{
+    import('../../modules').then(modules => {
+        Modules = modules.Modules;
+    });
+},10);
 
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:CommandNamespace+':'+'module', type:MC.CustomCommandParamType.Enum}
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [
-    {name:CommandNamespace+':'+'moduleAction', type:MC.CustomCommandParamType.Enum},
-];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Admin;
-const RequiredTags:Array<string> = [];
-const RegisterEnums:Dictionary<Array<string>> = {
-    module: ModuleNames,
-    moduleAction: [
-        'info',
-        'disable',
-        'enable',
-        'clearData',
-        'printData',
-    ],
+
+
+
+function moduleConfig(context:ShardCommandContext, module_key:string) {
+    const module:ShardModule = Modules[module_key];
+    Modules.core.forms.module.show(context, module);
+    return undefined;
 };
 
 
-
-
 function moduleActionInfo(context:ShardCommandContext, module_key:string) {
-    // Import modules then perform action.
-    import('../../modules').then(modules => {
-        const module:ShardModule = modules.Modules[module_key];
-        // Generate command list.
-        let commandList:Array<string> = [''];
-        for (let key in module.commands) {
-            let value:ShardCommand = module.commands[key];
-            commandList.push(value.id);
-        };
-        commandList = commandList.sort(); // Sort alphabetically.
-        let commandListString:string = commandList.join('\n §r- §e/');
+    const module:ShardModule = Modules[module_key];
+    // Generate command list.
+    let commandList:Array<string> = [''];
+    for (let key in module.commands) {
+        let value:ShardCommand = module.commands[key];
+        commandList.push(value.id);
+    };
+    commandList = commandList.sort(); // Sort alphabetically.
+    let commandListString:string = commandList.join('\n §r- §e/');
 
-        // Send message.
-        context.target.sendMessage({translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.id}, module.description, {text:commandListString}]}});
-    });
-
-    return undefined;
+    // Return message.
+    return {message:{translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.id}, module.description, {text:commandListString}]}}, status:0};
 };
 
 
@@ -54,47 +43,38 @@ function moduleActionDisable(module_key:string) {
         return {message:{translate:'shard.core.cmd.module.cannotDisable', with:[module_key]}, status:1};
     };
 
-    // Import modules then perform action.
-    import('../../modules').then(modules => {
-        const module:ShardModule = modules.Modules[module_key];
-        module.disable();
-    });
+    const module:ShardModule = Modules[module_key];
+    module.disable();
 
     return {message:{translate:'shard.core.cmd.module.disabled', with:[module_key]}, status:0};
 };
 
 
 function moduleActionEnable(module_key:string) {
-    // Import modules then perform action.
-    import('../../modules').then(modules => {
-        const module:ShardModule = modules.Modules[module_key];
-        module.enable();
-    });
+    const module:ShardModule = Modules[module_key];
+    module.enable()
 
     return {message:{translate:'shard.core.cmd.module.enabled', with:[module_key]}, status:0};
 };
 
 
 function moduleActionClearData(module_key:string) {
-    // Import modules then perform action.
-    import('../../modules').then(modules => {
-        const module:ShardModule = modules.Modules[module_key];
-        module.resetData();
-    });
+    const module:ShardModule = Modules[module_key];
+    module.resetData();
 
     return {message:{translate:'shard.core.cmd.module.clearData', with:[module_key]}, status:0};
 };
 
 
 function moduleActionPrintData(module_key:string) {
-    // Import modules then perform action.
-    import('../../modules').then(modules => {
-        let module:ShardModule = modules.Modules[module_key];
-        console.warn(`${module_key} persistent data: `+JSON.stringify(module.persisData));
-    });
+    let module:ShardModule = Modules[module_key];
+    if (module == undefined) {console.warn(`${module_key} does not exist.`)}
+    else {console.warn(`${module_key} persistent data: `+JSON.stringify(module.persisData))};
 
     return {message:{translate:'shard.core.cmd.module.printData', with:[module_key]}, status:0};
 };
+
+
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
@@ -107,9 +87,8 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         case 'clearData': return moduleActionClearData(module_key);
         case 'printData': return moduleActionPrintData(module_key);
         case 'info': return moduleActionInfo(Context, module_key);
-    }
-
-    return undefined;
+        default: return moduleConfig(Context, module_key);
+    };
 };
 
 
@@ -119,10 +98,23 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 export const Command = new ShardCommand(
     'module',
     'Open module configuration UI, or perform actions.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [
+        {name:CommandNamespace+':'+'module', type:MC.CustomCommandParamType.Enum}
+    ],
+    [
+        {name:CommandNamespace+':'+'moduleAction', type:MC.CustomCommandParamType.Enum},
+    ],
+    MC.CommandPermissionLevel.Admin,
+    [],
     Callback,
-    RegisterEnums,
+    {
+        module: ModuleNames,
+        moduleAction: [
+            'info',
+            'disable',
+            'enable',
+            'clearData',
+            'printData',
+        ],
+    },
 );

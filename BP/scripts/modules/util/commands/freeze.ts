@@ -1,19 +1,8 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
+import {FixVector3, FixVector2} from '../../../ShardAPI/util';
 import {Module} from '../module';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [
-    {name:'time', type:MC.CustomCommandParamType.Float},
-];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
 
 const default_time:number = 999999;
 
@@ -32,7 +21,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     targets.forEach(entity => {
         let data = Module.persisData.frozenEntities[entity.id];
         // If no frozen entity data, generate frozen entity data.
-        if (data == undefined) {data = {time:time, location:entity.location, rotation:entity.getRotation()}}
+        if (data == undefined) {data = {time:Number(time.toPrecision(2)), location:FixVector3(entity.location,3), rotation:FixVector2(entity.getRotation(),3)}}
         // Only update time if frozen entity data is still valid.
         else {data.time = time};
         // Update data.
@@ -47,12 +36,16 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'freeze',
     'Freeze entities so they cannot move or turn. Freeze with 0 time to unfreeze.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [
+        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+    ],
+    [
+        {name:'time', type:MC.CustomCommandParamType.Float},
+    ],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

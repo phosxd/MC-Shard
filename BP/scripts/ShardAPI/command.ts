@@ -1,4 +1,5 @@
 import {MC, Dictionary} from './CONST';
+import {CompareCommandPermissionLevel} from './util';
 import ShardCommandContext from './command_context';
 import ShardCommandResult from './command_result';
 
@@ -13,11 +14,11 @@ export default class ShardCommand {
     requiredTags: Array<string>;
     callback: (Context:ShardCommandContext, Options) => ShardCommandResult|undefined;
     registerEnums:Dictionary<Array<string>>;
-    disabled:boolean = false;
 
 
-    disabled_callback(Context:ShardCommandContext, Options:Array<any>): ShardCommandResult {
-        return {message:{translate:'shard.misc.commandDisabled'}, status:MC.CustomCommandStatus.Failure};
+    /**Called when command is run without proper permissions.*/
+    illegal_callback(context:ShardCommandContext, options:Array<any>): ShardCommandResult {
+        return {message:{translate:'shard.misc.missingPermission'}, status:1};
     };
 
 
@@ -33,8 +34,29 @@ export default class ShardCommand {
     };
 
 
-    execute(Context:ShardCommandContext, Options:Array<any>): ShardCommandResult|undefined {
-        if (this.disabled == true) {return this.disabled_callback(Context, Options)}
-        else {return this.callback(Context, Options)};
+    /**Executes the command after checking player permissions.*/
+    execute(context:ShardCommandContext, options:Array<any>): ShardCommandResult|undefined {
+        switch (context.targetType) {
+            case 'entity': {
+                if (this.permissionLevel !== MC.CommandPermissionLevel.Any) {
+                    return this.illegal_callback(context, options);
+                };
+                break;
+            };
+            case 'player': {
+                if (CompareCommandPermissionLevel(context.target.commandPermissionLevel, this.permissionLevel) == false) {
+                    return this.illegal_callback(context, options)
+                };
+                break;
+            };
+            case 'block': {
+                if (this.permissionLevel !== MC.CommandPermissionLevel.GameDirectors) {
+                    return this.illegal_callback(context, options);
+                };
+                break;
+            };
+        };
+        
+        return this.callback(context, options);
     };
 };

@@ -1,23 +1,7 @@
-export {Command};
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
 import {LocationToString} from '../../../ShardAPI/util';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [
-    {name:'location', type:MC.CustomCommandParamType.Location},
-];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [
-    {name:'radius', type:MC.CustomCommandParamType.Float},
-    {name:'breakBlocks', type:MC.CustomCommandParamType.Boolean},
-    {name:'causeFire', type:MC.CustomCommandParamType.Boolean},
-    {name:'allowUnderwater', type:MC.CustomCommandParamType.Boolean},
-    {name:'source', type:MC.CustomCommandParamType.EntitySelector},
-];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.GameDirectors;
-const RequiredTags:Array<string> = [];
 
 const default_radius:number = 4; // TNT explosion radius.
 const default_breakBlocks:boolean = true;
@@ -58,12 +42,20 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-var Command = new ShardCommand(
+export const Command = new ShardCommand(
     'explode',
     'Create an explosion.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    [
+        {name:'location', type:MC.CustomCommandParamType.Location},
+    ],
+    [
+        {name:'radius', type:MC.CustomCommandParamType.Float},
+        {name:'breakBlocks', type:MC.CustomCommandParamType.Boolean},
+        {name:'causeFire', type:MC.CustomCommandParamType.Boolean},
+        {name:'allowUnderwater', type:MC.CustomCommandParamType.Boolean},
+        {name:'source', type:MC.CustomCommandParamType.EntitySelector},
+    ],
+    MC.CommandPermissionLevel.GameDirectors,
+    [],
     Callback,
 );

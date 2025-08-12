@@ -10,7 +10,7 @@ export interface Dictionary<T> {
 export const Namespace:string = 'sh';
 export const CommandNamespace:string = Namespace; // Used for command & command enum namespace.
 export const BranchString:string = 'STABLE';
-export const Version:Array<number> = [0,0,1];
+export const Version:Array<number> = [0,0,2];
 export const VersionString:string = Version.join('.');
 export const BuildNumber = Util.VersionToBuildNumber(Version);
 

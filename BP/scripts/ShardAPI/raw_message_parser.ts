@@ -9,6 +9,7 @@ import {translate} from './LANG';
  * Translating with a raw message with parameters other than "rawtext" will have no affect.
 */
 export function rawMessageToString(message:MC.RawMessage):string {
+    if (message == undefined) {return ''};
     let parsed:string = '';
 
     if (message.text) {
@@ -23,8 +24,8 @@ export function rawMessageToString(message:MC.RawMessage):string {
 
     if (message.translate) {
         let translation:string = translate(message.translate);
-        if (translation == undefined) {translation = ''};
-        if (message.with) {
+        if (translation == undefined) {translation = ''}
+        else if (message.with) {
             if (message.with instanceof Array) {
                 message.with.forEach(item => {
                     translation = translation.replace('%s',item);

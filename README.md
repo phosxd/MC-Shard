@@ -2,7 +2,7 @@ Shard is an upcoming all-in-one add-on for servers & realms! With a fully modula
 
 This is not a complete build! Many systems are subject to change.
 
-Version: 0.0.1.
+Version: **0.0.2**.
 
 # Installation:
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
@@ -52,6 +52,7 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/c, /s, /a, /sp`: Change user's game-mode. Far quicker than `/gamemode`.
 - `/pushchat`: Pushes all previous chat messages off-screen.
 - `/suicide`: Kill's the user. Useful if stuck.
+- `/despawn`: Remove entities without death animations & without dropping loot/XP. Cannot use on players.
 - `/heal`: Heals all health.
 - `/eat`: Replenishes all hunger bars.
 - `/setslot`: Set the selected hotbar slot.

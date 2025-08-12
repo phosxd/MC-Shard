@@ -1,32 +1,25 @@
-export {Form};
 import ShardForm from '../../../ShardAPI/form';
+import ShardModule from '../../../ShardAPI/module';
+import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC, MCUI} from '../../../ShardAPI/CONST';
 import {Module} from '../module';
 
 
-// Define form properties.
-const ID:string = 'main';
-const PemrissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Admin;
-const RequiredTags:Array<string> = [];
-const Title:string = 'ShardCore';
-const Body:string = 'This module cannot be modified.';
 
 
-
-
-function BuildForm() {
+function BuildForm(context:ShardCommandContext, ...args) {
     const formData = new MCUI.ActionFormData()
-        .title(Title)
-        .body(Body)
-        .button('Okay');
-
+        .title(Module.displayName)
+        .body('No settings.')
+        .button('Ok');
+    
     return formData;
 };
 
 
 
 
-function Callback(response:MCUI.ActionFormResponse) {
+function Callback(context:ShardCommandContext, response:MCUI.ActionFormResponse, ...args) {
     return;
 };
 
@@ -34,10 +27,10 @@ function Callback(response:MCUI.ActionFormResponse) {
 
 
 // Initialize form.
-var Form:ShardForm = new ShardForm(
-    ID,
-    PemrissionLevel,
-    RequiredTags,
+export const Form:ShardForm = new ShardForm(
+    'main',
+    MC.CommandPermissionLevel.Admin,
+    [],
     BuildForm,
     Callback,
 );

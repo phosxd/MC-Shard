@@ -8,6 +8,7 @@ import ShardForm from './form';
 import {MCData} from './util';
 import * as RawMessageParser from './raw_message_parser';
 
+
 const EventSources:Dictionary<any> = {
     'world': MC.world,
     'system': MC.system,

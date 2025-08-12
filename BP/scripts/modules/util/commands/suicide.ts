@@ -3,15 +3,6 @@ import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC} from '../../../ShardAPI/CONST';
 
 
-// Define command properties.
-const ID:string = 'suicide';
-const Description:string = 'Kills you. Helpful when stuck somewhere.';
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Admin;
-const RequiredTags:Array<string> = [];
-
-
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
@@ -19,7 +10,6 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     MC.system.run(()=>{
         Context.target.kill();
     });
-
     return undefined;
 };
 
@@ -28,11 +18,11 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    ID,
-    Description,
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    'suicide',
+    'Kills you. Helpful when stuck somewhere.',
+    [],
+    [],
+    MC.CommandPermissionLevel.Admin,
+    [],
     Callback,
 );

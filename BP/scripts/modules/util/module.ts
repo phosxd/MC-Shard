@@ -11,6 +11,7 @@ import * as event_entityDie from './events/entityDie';
 import * as command_pushchat from './commands/pushchat';
 import * as command_up from './commands/up';
 import * as command_thru from './commands/thru';
+import * as command_despawn from './commands/despawn';
 import * as command_drain from './commands/drain';
 import * as command_c from './commands/c';
 import * as command_s from './commands/s';
@@ -40,6 +41,7 @@ const Commands:Dictionary<ShardCommand> = {
     pushchat: command_pushchat.Command,
     up: command_up.Command,
     thru: command_thru.Command,
+    despawn: command_despawn.Command,
     drain: command_drain.Command,
     c: command_c.Command,
     s: command_s.Command,

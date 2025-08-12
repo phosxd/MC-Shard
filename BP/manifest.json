@@ -3,10 +3,12 @@
 	"metadata": {
 		"authors": [
 			"PhosXD"
-		]
+		],
+		"license": "MIT License",
+		"url": "https://github.com/phosxd/mc-shard"
 	},
 	"header": {
-		"name": "Shard [Stable] v0.0.1",
+		"name": "Shard v0.0.2-stable",
 		"description": "Work in progress Bedrock server & realms add-on.",
 		"min_engine_version": [
 			1,
@@ -17,7 +19,7 @@
 		"version": [
 			0,
 			0,
-			1
+			2
 		]
 	},
 	"modules": [
@@ -44,7 +46,7 @@
 	],
 	"dependencies": [
 		{
-			"uuid": "35e9627e-c920-4c1a-99fc-64c3b1213479",
+			"uuid": "380069a8-b595-433a-a85b-4955c6b3ca04",
 			"version": [
 				1,
 				0,
@@ -59,5 +61,8 @@
 			"module_name": "@minecraft/server-ui",
 			"version": "2.0.0"
 		}
+	],
+	"capabilities": [
+		"script_eval"
 	]
 }

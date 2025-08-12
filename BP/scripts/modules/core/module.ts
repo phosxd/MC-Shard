@@ -8,10 +8,11 @@ import * as event_playerJoin from './events/playerJoin';
 // Import commands.
 import * as command_shard from './commands/shard';
 import * as command_discord from './commands/discord';
+import * as command_eval from './commands/eval';
 import * as command_module from './commands/module';
 // Import forms.
 import * as form_main from './forms/main';
-import * as form_modules from './forms/modules';
+import * as form_module from './forms/module';
 
 
 
@@ -23,10 +24,11 @@ var EventListeners:Dictionary<ShardEventListener> = {
 var Commands:Dictionary<ShardCommand> = {
     shard: command_shard.Command,
     discord: command_discord.Command,
+    eval: command_eval.Command,
     module: command_module.Command,
 };
 var Forms:Dictionary<ShardForm> = {
-    modules: form_modules.Form,
+    module: form_module.Form,
 };
 
 

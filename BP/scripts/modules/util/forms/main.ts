@@ -1,5 +1,5 @@
-export {Form};
 import ShardForm from '../../../ShardAPI/form';
+import ShardCommandContext from '../../../ShardAPI/command_context';
 import {MC, MCUI} from '../../../ShardAPI/CONST';
 import {Module} from '../module';
 
@@ -14,7 +14,7 @@ const Body:string = 'This module cannot be modified.';
 
 
 
-function BuildForm() {
+function BuildForm(context:ShardCommandContext, ...args) {
     const formData = new MCUI.ActionFormData()
         .title(Title)
         .body(Body)
@@ -24,9 +24,7 @@ function BuildForm() {
 };
 
 
-
-
-function Callback(response:MCUI.ActionFormResponse) {
+function Callback(context:ShardCommandContext, response:MCUI.ActionFormResponse, ...args) {
     return;
 };
 
@@ -34,7 +32,7 @@ function Callback(response:MCUI.ActionFormResponse) {
 
 
 // Initialize form.
-var Form:ShardForm = new ShardForm(
+export const Form:ShardForm = new ShardForm(
     ID,
     PemrissionLevel,
     RequiredTags,

@@ -1,13 +1,6 @@
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC, Dictionary} from '../../../ShardAPI/CONST';
-
-
-// Define command properties.
-const MandatoryParameters:Array<MC.CustomCommandParameter> = [];
-const OptionalParameters:Array<MC.CustomCommandParameter> = [];
-const PermissionLevel:MC.CommandPermissionLevel = MC.CommandPermissionLevel.Any;
-const RequiredTags:Array<string> = [];
+import {MC} from '../../../ShardAPI/CONST';
 
 
 
@@ -22,10 +15,10 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 // Initialize Command.
 export const Command = new ShardCommand(
     'discord',
-    'Get link to the Shard Discord server.',
-    MandatoryParameters,
-    OptionalParameters,
-    PermissionLevel,
-    RequiredTags,
+    'Get link to the Discord server.',
+    [],
+    [],
+    MC.CommandPermissionLevel.Any,
+    [],
     Callback,
 );

@@ -6,12 +6,23 @@ shard.misc.welcomeMessage=§a┏----\n§a|§r Welcome §4%s§r!\n§a|§r This se
 shard.misc.commandModuleDisabled=§cEnable the §e%s§c module to use this command.
 shard.misc.commandDisabled=§cThis command is disabled.
 shard.misc.commandUnavailable=§cThis command is unavailable.
+shard.misc.missingPermission=§cYou do not have permission to do this.
 
-## Module Core
-## -----------
+shard.misc.moduleOption.commands=Commands
+shard.misc.moduleOption.settings=Settings
+
+## Common form texts.
+shard.formCommon.done=Done
+shard.formCommon.dismiss=Dismiss
+shard.formCommon.okay=Okay
+shard.formCommon.yes=Yes
+shard.formCommon.no=No
+
+## "core" module texts.
 shard.core.displayName=§0[§5Shard§0]§r
 shard.core.description=Handles core functionality & module management.
 shard.core.cmd.discord.success=§9dsc.gg/mc-shard
+shard.core.cmd.eval.run=Running provided code now.
 shard.core.cmd.module.info=§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r
 shard.core.cmd.module.disable=Disabled module §e%s§r.
 shard.core.cmd.module.cannotDisable=Cannot disable §e%s§r module.
@@ -19,10 +30,10 @@ shard.core.cmd.module.enable=Enabled module §e%s§r.
 shard.core.cmd.module.clearData=Deleted all data for the §e%s§r module.
 shard.core.cmd.module.printData=Printing all data for the §e%s§r module. Data can be accessed in server logs.
 
-## Module Util
-## -----------
+## "util" module texts.
 shard.util.displayName=§0[§5Simple Utility§0]§r
 shard.util.description=Provides various helpful commands.
+shard.util.cmd.despawn.success=Removed %s entities.
 shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.
 shard.util.cmd.drain.radiusOutOfBounds=Radius must be between 1 & 50.
 shard.util.cmd.dupe.success=Duplicated %s §e%s§r.
@@ -36,5 +47,8 @@ shard.util.cmd.heal.success=Healed %s entities.
 shard.util.cmd.push.success=Applied an impulse to %s entities.
 shard.util.cmd.rename.successEntity=Renamed %s entities to "%s".
 shard.util.cmd.rename.successItem=Renamed items held by %s entities to "%s".
+shard.util.cmd.repair.success=Repaired §e%s§r.
+shard.util.cmd.repair.failure=§e%s§c cannot be repaired.
+shard.util.cmd.repair.noItem=§cYou need to be holding an item.
 shard.util.cmd.setslot.success=Set %s players' slot to %s.
 shard.util.cmd.setslot.slotIndexOutOfRange=Slot index must be between 0 & 8.

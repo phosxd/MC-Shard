@@ -16,6 +16,7 @@ function runFrozenEntityEffects() {
             entity.setRotation(entry.rotation);
         };
         entry.time -= 1/20; // Count down the timer.
+        entry.time = entry.time.toFixed(3);
         // Delete frozen entity entry if time is up.
         if (entry.time <= 0) {delete Module.persisData.frozenEntities[key]};
     };
