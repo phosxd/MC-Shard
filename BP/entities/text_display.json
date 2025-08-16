@@ -1,0 +1,45 @@
+{
+	"format_version": "1.21.20",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "shard:text_display",
+			"is_spawnable": false,
+			"is_summonable": true
+		},
+		"components": {
+			"minecraft:physics": {
+				"has_collision": false,
+				"has_gravity": false,
+				"push_towards_closest_space": false
+			},
+			"minecraft:health": {
+				"min": 1,
+				"value": 1
+			},
+			"minecraft:collision_box": {
+				"width": 0.2,
+				"height": 0.15
+			},
+			"minecraft:knockback_resistance": {
+				"value": 10
+			},
+			"minecraft:damage_sensor": {
+				"triggers": {
+					"cause": "all",
+					"deals_damage": false
+				}
+			},
+			"minecraft:nameable": {
+				"allow_name_tag_renaming": false,
+				"always_show": true
+			},
+			"minecraft:interact": {
+				"interactions": [
+					{
+						"swing": true
+					}
+				]
+			}
+		}
+	}
+}

@@ -21,7 +21,7 @@ export const Command = new ShardCommand(
         {name:'code', type:MC.CustomCommandParamType.String},
     ],
     [],
-    MC.CommandPermissionLevel.Admin,
+    MC.CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

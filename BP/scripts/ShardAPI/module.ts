@@ -63,7 +63,7 @@ export default class ShardModule {
         this.forms = forms;
         this.mainForm = mainForm;
         this.sessionData = {};
-        this.persisData = defaultPersisData;
+        this.persisData = Object.assign({}, defaultPersisData);
         Object.assign(this.persisData, extraDefaultPersisData);
         this.persisDataReady = false;
         this.worldReady = false;
@@ -161,63 +161,30 @@ export default class ShardModule {
     };
 
 
-    /**Passthrough for all slash commands of this module.
-     * 
-     * Handles converting Slash Command parameters to Shard Command parameters.
-    */
+    /**Passthrough for all slash commands of this module.*/
     slashCommandPassthrough(Command:ShardCommand, Origin:MC.CustomCommandOrigin, ...Options):MC.CustomCommandResult|undefined {
         // Return error message if module disabled.
         if (this.persisData.enabled == false) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.id]}), status:1};
         };
 
-        let source: MC.Block|MC.Entity|MC.Player|undefined;
-        let sourceType;
-        let target: MC.Block|MC.Entity|MC.Player|undefined;
-        let targetType;
-        let dimension: MC.Dimension|undefined;
-        let location: MC.Vector3|undefined;
-        let rotation: MC.Vector2|undefined;
+        let context:ShardCommandContext
 
-        if (Origin.sourceType == MC.CustomCommandSource.Entity) {
-            source = Origin.sourceEntity;
-            sourceType = ShardCommandContext.SourceTypes.entity;
-            if (source.typeId == 'minecraft:player') {sourceType = ShardCommandContext.SourceTypes.player};
-            target = source;
-            targetType = sourceType;
-            dimension = source.dimension;
-            location = source.location;
-            rotation = source.getRotation();
-        }
-        else if (Origin.sourceType == MC.CustomCommandSource.Block) {
-            source = Origin.sourceBlock;
-            sourceType = ShardCommandContext.SourceTypes.block;
-            target = source;
-            targetType = sourceType;
-            dimension = source.dimension;
-            location = source.location;
-            rotation = {x:0,y:0};
-        }
-        else if (Origin.sourceType == MC.CustomCommandSource.NPCDialogue) {
-            source = Origin.initiator;
-            sourceType = ShardCommandContext.SourceTypes.entity;
-            target = source;
-            targetType = sourceType;
-            dimension = source.dimension;
-            location = source.location;
-            rotation = source.getRotation();
-        }
+        if (Origin.sourceEntity) {context = ShardCommandContext.generate(Origin.sourceEntity)}
+        else if (Origin.initiator) {context = ShardCommandContext.generate(Origin.initiator)}
+        else if (Origin.sourceBlock) {context = ShardCommandContext.generate(Origin.sourceBlock)}
         else if (Origin.sourceType == MC.CustomCommandSource.Server) {
-            source = undefined;
-            sourceType = ShardCommandContext.SourceTypes.world;
-            target = source;
-            targetType = sourceType;
-            dimension = undefined;
-            location = undefined;
-            rotation = undefined;
+            context = new ShardCommandContext(
+                undefined,
+                'world',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+            );
         };
 
-        let context = new ShardCommandContext(source, sourceType, target, targetType, dimension, location, rotation);
         let result:ShardCommandResult|undefined = Command.execute(context, Options);
 
         // Modify result message to include module name.

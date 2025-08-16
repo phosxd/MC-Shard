@@ -52,3 +52,21 @@ shard.util.cmd.repair.failure=§e%s§c cannot be repaired.
 shard.util.cmd.repair.noItem=§cYou need to be holding an item.
 shard.util.cmd.setslot.success=Set %s players' slot to %s.
 shard.util.cmd.setslot.slotIndexOutOfRange=Slot index must be between 0 & 8.
+
+## "textdisplay" module texts.
+shard.textdisplay.displayName=§0[§5Text Display§0]§r
+shard.textdisplay.description=Provides tools for interacting with text display entities.
+shard.textdisplay.form.main.body=...
+shard.textdisplay.form.main.guide.summon=Use "/summon" to spawn a "shard:text_display" entity with a name.
+shard.textDisplay.form.main.guide.edit=Click right below a text display entity to edit it.
+shard.textdisplay.form.main.viewAll=View All Text Displays
+shard.textdisplay.form.viewAll.body=Teleport to a text display.
+shard.textdisplay.form.edit.text=Text
+shard.textdisplay.form.edit.textPlaceholder=Enter display text here...
+shard.textdisplay.form.edit.killToggle=Kill this display?
+
+## "draw" module texts.
+shard.draw.displayName=§0[§cD§er§aa§9w§0]§r
+shard.draw.description=Provides tools for rendering shapes in the world using particles.
+shard.draw.cmd.drawsquare.success=Rendering sqaure at %s for %s clients.
+shard.draw.cmd.drawsquare.success=Rendering cuboid at %s for %s clients.

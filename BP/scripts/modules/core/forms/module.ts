@@ -18,7 +18,7 @@ function BuildForm(context:ShardCommandContext, ...args) {
         .button({translate:'shard.misc.moduleOption.commands'})
         .button({translate:'shard.formCommon.done'});
     
-    return formData;
+    return {data:formData, callbackArgs:args};
 };
 
 

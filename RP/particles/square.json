@@ -1,0 +1,65 @@
+{
+	"format_version": "1.10.0",
+	"particle_effect": {
+		"description": {
+			"identifier": "shard:square",
+			"basic_render_parameters": {
+				"material": "particles_blend",
+				"texture": "textures/white"
+			}
+		},
+		"components": {
+			"minecraft:emitter_lifetime_once": {
+				"active_time": "v.alpha_fade_in+v.alpha_sustain+v.alpha_fade_out"
+			},
+			"minecraft:emitter_local_space": {
+				"position": true,
+				"rotation": true
+			},
+			"minecraft:emitter_rate_instant": {
+				"num_particles": 1
+			},
+			"minecraft:emitter_shape_point": {},
+			"minecraft:particle_initial_speed": 0,
+			"minecraft:particle_motion_dynamic": {},
+			"minecraft:particle_lifetime_expression": {
+				"max_lifetime": "v.alpha_fade_in+v.alpha_sustain+v.alpha_fade_out"
+			},
+			"minecraft:particle_appearance_billboard": {
+				"size": [
+					"(v.particle_age <= v.size_x_fade_in) ? {   return (v.particle_age/v.size_x_fade_in)*v.size_x; }; (v.particle_age <= v.size_x_fade_in+v.size_x_sustain) ? {   return v.size_x; }; (v.particle_age > v.size_x_fade_in+v.size_x_sustain) ? {   return v.size_x - ((v.particle_age - (v.size_x_fade_in+v.size_x_sustain)) / v.size_x_fade_out); };",
+					"(v.particle_age <= v.size_y_fade_in) ? {   return (v.particle_age/v.size_y_fade_in)*v.size_y; }; (v.particle_age <= v.size_y_fade_in+v.size_y_sustain) ? {   return v.size_y; }; (v.particle_age > v.size_y_fade_in+v.size_y_sustain) ? {   return v.size_y - ((v.particle_age - (v.size_y_fade_in+v.size_y_sustain)) / v.size_y_fade_out); };"
+				],
+				"facing_camera_mode": "direction_z",
+				"direction": {
+					"mode": "custom",
+					"custom_direction": [
+						"variable.particle.direction_x",
+						"variable.particle.direction_y",
+						"variable.particle.direction_z"
+					]
+				},
+				"uv": {
+					"texture_width": 1,
+					"texture_height": 1,
+					"uv": [
+						0,
+						0
+					],
+					"uv_size": [
+						1,
+						1
+					]
+				}
+			},
+			"minecraft:particle_appearance_tinting": {
+				"color": [
+					"v.color.r",
+					"v.color.g",
+					"v.color.b",
+					"t.alpha_fs = v.alpha_fade_in+v.alpha_sustain; (v.particle_age <= v.alpha_fade_in) ? {   return (v.particle_age/v.alpha_fade_in) * v.color.a; }; (v.particle_age <= t.alpha_fs) ? {   return v.color.a; }; (v.particle_age > t.alpha_fs) ? {   return v.color.a - ((v.particle_age - (t.alpha_fs)) / v.alpha_fade_out); };"
+				]
+			}
+		}
+	}
+}

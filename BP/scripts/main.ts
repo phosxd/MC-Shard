@@ -4,7 +4,9 @@ import './ShardAPI/util';
 import './ShardAPI/raw_message_parser';
 
 // Interfaces.
+import './ShardAPI/command_context';
 import './ShardAPI/command_result';
+import './ShardAPI/form_build_result';
 
 // Classes.
 import './ShardAPI/module';

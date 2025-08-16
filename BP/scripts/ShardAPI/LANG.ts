@@ -92,6 +92,22 @@ export const LANG = {
                 },
             },
         },
+        textdisplay: {
+            displayName: '§0[§5Text Display§0]§r',
+            description: 'Provides tools for interacting with text display entities.',
+        },
+        draw: {
+            displayName: '§0[§cD§er§aa§9w§0]§r',
+            description: 'Provides tools for rendering shapes in the world using particles.',
+            cmd: {
+                drawsquare: {
+                    success: 'Rendering sqaure at %s for %s clients.',
+                },
+                drawcuboid: {
+                    success: 'Rendering cuboid at %s for %s clients.',
+                },
+            },
+        },
     },
 };
 
