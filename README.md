@@ -32,6 +32,7 @@ Provides essential functionality for the add-on. Cannot be disabled.
 **Commands:**
 - `/shard`: Open the Shard menu.
 - `/module`: Configure a module.
+- `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
 - `/discord`: Get the Shard Discord invite. (This will be editable to be any Discord you want).
 
 
@@ -67,6 +68,40 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/dupe`: Duplicate the item in your hand.
 - `/rename`: Rename entities or held items.
 
+## `textdisplay`:
+Provides tools for interacting with text display entities.
+
+## `draw`:
+Provides tools for rendering shapes in the world using particles.
+
+**Drawing Options:**
+- `targets`: Players who will see the render.
+- `location`: Location where the render will be centered.
+- `size`: The size of the rendered shape. 2 numbers for square, 3 numbers for cuboid.
+- `color`: RGB color of the rendered shape.
+- `opacity`: Opacity of the rendered shape.
+- `lifetime`: How long the render will be active.
+
+**Unavailable Drawing Options:**
+These are drawing options that are implemented but not currently available due to the custom command parameter limit of 8. I will add commands to save & draw presets that support all options.
+- `alpha_fade_in`: How long the opacity fade in transition lasts.
+- `alpha_sustain`: How long the opacity will sustain it's target value.
+- `alpha_fade_out`: How long the opacity fade out transition lasts.
+- `size_x_fade_in`
+- `size_x_sustain`
+- `size_x_fade_out`
+- `size_y_fade_in`
+- `size_y_sustain`
+- `size_y_fade_out`
+
+**Upcoming Commands:**
+- `/drawpreset`: Renders a shape from a preset.
+- `/shapepreset`: Add, remove, or list shape presets.
+
+**Commands:**
+- `/drawsquare`: Renders a square.
+- `/drawcuboid`: Renders a cuboid.
+
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
 - `tracker`: Uses scoreboards & tags to track entity statistics, actions, & current state.
@@ -75,5 +110,4 @@ Join the Discord to see more potential modules. There are plently more modules t
 - `spy`: Implments commands for spying on players unnoticed, or for taking a peek inside player inventories. Great for trolling 👀
 - `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
-- `hologram`: Implements commands & UI for creating/managing hologram text boxes.
 - `region`: Manage & create regions that affect world mutability & player abilities.
