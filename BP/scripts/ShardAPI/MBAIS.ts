@@ -1,4 +1,5 @@
-import {MC, Namespace, BuildNumber} from './CONST';
+import {system} from '@minecraft/server';
+import {Namespace, BuildNumber} from './CONST';
 
 
 const Discovery = {
@@ -9,4 +10,4 @@ const Discovery = {
 };
 
 
-MC.system.sendScriptEvent('global:discovery', JSON.stringify(Discovery));
+system.sendScriptEvent('global:discovery', JSON.stringify(Discovery));

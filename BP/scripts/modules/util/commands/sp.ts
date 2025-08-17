@@ -1,13 +1,14 @@
+import {system, Player, GameMode, CommandPermissionLevel} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     if (Context.targetType !== 'player') {return undefined};
-    MC.system.run(()=>{Context.target.setGameMode(MC.GameMode.Spectator)});
+    const player:Player = Context.target as Player;
+    system.run(()=>{player.setGameMode(GameMode.Spectator)});
     return undefined;
 };
 
@@ -20,7 +21,7 @@ export const Command = new ShardCommand(
     'Spectator mode.',
     [],
     [],
-    MC.CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Admin,
     [],
     Callback,
 );

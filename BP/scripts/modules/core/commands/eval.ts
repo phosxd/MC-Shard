@@ -1,6 +1,6 @@
+import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
@@ -18,10 +18,10 @@ export const Command = new ShardCommand(
     'eval',
     'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',
     [
-        {name:'code', type:MC.CustomCommandParamType.String},
+        {name:'code', type:CustomCommandParamType.String},
     ],
     [],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

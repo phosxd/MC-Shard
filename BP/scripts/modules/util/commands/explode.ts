@@ -1,6 +1,6 @@
+import {system, world, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 import {LocationToString} from '../../../ShardAPI/util';
 
 const default_radius:number = 4; // TNT explosion radius.
@@ -12,16 +12,16 @@ const default_allowUnderwater:boolean = false;
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let location:MC.Vector3 = Options[0];
+    let location:Vector3 = Options[0];
     let radius:number = Options[1];
     let breakBlocks:boolean = Options[2];
     let causeFire:boolean = Options[3];
     let allowUnderwater:boolean = Options[4];
-    let source:Array<MC.Entity> = Options[5];
+    let source:Array<Entity> = Options[5];
     let dimension = Context.target.dimension;
     // If no context target, set dimension to overworld.
-    if (Context.targetType == ShardCommandContext.SourceTypes.world) {
-        dimension = MC.world.getDimension('overworld');
+    if (Context.targetType == 'world') {
+        dimension = world.getDimension('overworld');
     };
     // Set undefined parameters to default.
     if (radius == undefined) {radius = default_radius};
@@ -31,7 +31,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     if (source == undefined) {source = []};
 
     // Create explosion.
-    MC.system.run(()=>{
+    system.run(()=>{
         Context.target.dimension.createExplosion(location, radius, {breaksBlocks:breakBlocks, causesFire:causeFire, allowUnderwater:allowUnderwater, source:source[0]});
     });
 
@@ -46,16 +46,16 @@ export const Command = new ShardCommand(
     'explode',
     'Create an explosion.',
     [
-        {name:'location', type:MC.CustomCommandParamType.Location},
+        {name:'location', type:CustomCommandParamType.Location},
     ],
     [
-        {name:'radius', type:MC.CustomCommandParamType.Float},
-        {name:'breakBlocks', type:MC.CustomCommandParamType.Boolean},
-        {name:'causeFire', type:MC.CustomCommandParamType.Boolean},
-        {name:'allowUnderwater', type:MC.CustomCommandParamType.Boolean},
-        {name:'source', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'radius', type:CustomCommandParamType.Float},
+        {name:'breakBlocks', type:CustomCommandParamType.Boolean},
+        {name:'causeFire', type:CustomCommandParamType.Boolean},
+        {name:'allowUnderwater', type:CustomCommandParamType.Boolean},
+        {name:'source', type:CustomCommandParamType.EntitySelector},
     ],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

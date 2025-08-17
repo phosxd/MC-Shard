@@ -1,6 +1,6 @@
+import {CommandPermissionLevel} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
@@ -18,7 +18,7 @@ export const Command = new ShardCommand(
     'Open the Shard menu.',
     [],
     [],
-    MC.CommandPermissionLevel.Any,
+    CommandPermissionLevel.Any,
     [],
     Callback,
 );

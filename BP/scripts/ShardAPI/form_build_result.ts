@@ -1,8 +1,8 @@
-import {MCUI} from './CONST';
+import {ActionFormData, ModalFormData, MessageFormData} from '@minecraft/server-ui';
 
 
 /**Form build callbacks must return this.*/
 export default interface ShardFormBuildResult {
-    data: MCUI.ActionFormData|MCUI.ModalFormData|MCUI.MessageFormData,
+    data: ActionFormData|ModalFormData|MessageFormData,
     callbackArgs: Array<any>,
 };

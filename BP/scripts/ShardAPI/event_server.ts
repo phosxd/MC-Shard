@@ -1,4 +1,4 @@
-import {MC} from './CONST';
+import {system} from '@minecraft/server';
 
 
 class EventSignal {
@@ -38,8 +38,8 @@ function tick() {
         listener();
     });
     
-    MC.system.run(tick);
+    system.run(tick);
 };
 
 
-MC.system.run(tick);
+system.run(tick);

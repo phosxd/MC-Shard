@@ -1,5 +1,6 @@
+import {world, Entity} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
-import {MC, Dictionary} from '../../../ShardAPI/CONST';
+import {Dictionary} from '../../../ShardAPI/CONST';
 import {Module} from '../module';
 
 
@@ -9,7 +10,7 @@ import {Module} from '../module';
 function runFrozenEntityEffects() {
     for (let key in Module.persisData.frozenEntities) {
         const entry:Dictionary<any> = Module.persisData.frozenEntities[key];
-        const entity:MC.Entity = MC.world.getEntity(key);
+        const entity:Entity = world.getEntity(key);
         // Apply frozen effects if entity found.
         if (entity !== undefined) {
             entity.teleport(entry.location);

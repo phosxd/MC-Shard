@@ -1,4 +1,5 @@
-import {MC, Dictionary, CommandNamespace} from './CONST';
+import {system, world, RawMessage, CustomCommandOrigin, CustomCommandSource, CustomCommandResult} from '@minecraft/server';
+import {Dictionary, CommandNamespace} from './CONST';
 import ShardEventListener from './event_listener';
 import * as ShardEventServer from './event_server';
 import ShardCommand from './command';
@@ -10,8 +11,8 @@ import * as RawMessageParser from './raw_message_parser';
 
 
 const EventSources:Dictionary<any> = {
-    'world': MC.world,
-    'system': MC.system,
+    'world': world,
+    'system': system,
     'shard': ShardEventServer,
 };
 const defaultPersisData:Dictionary<any> = {
@@ -25,9 +26,9 @@ export default class ShardModule {
     /**Unique string identifier.*/
     readonly id: string;
     /**Module display name.*/
-    displayName: MC.RawMessage;
+    displayName: RawMessage;
     /**Brief module description.*/
-    description: MC.RawMessage;
+    description: RawMessage;
     /**Called when the module is initialized.*/
     init: () => void;
     eventListeners: Dictionary<ShardEventListener>;
@@ -53,7 +54,7 @@ export default class ShardModule {
     worldReady: boolean 
 
 
-    constructor(id:string, displayName:MC.RawMessage, description:MC.RawMessage, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
+    constructor(id:string, displayName:RawMessage, description:RawMessage, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
         this.id = id;
         this.displayName = displayName;
         this.description = description;
@@ -69,14 +70,14 @@ export default class ShardModule {
         this.worldReady = false;
 
         // Get persistent data in an "after" context.
-        MC.system.run(()=>{
+        system.run(()=>{
            let storedData = this.getData();
            if (storedData) {this.persisData = storedData};
            this.persisDataReady = true;
         });
 
         // Flag world as ready when ready.
-        MC.world.afterEvents.worldLoad.subscribe(event => {
+        world.afterEvents.worldLoad.subscribe(event => {
             this.worldReady = true;
         });
 
@@ -88,7 +89,7 @@ export default class ShardModule {
 
 
         // Register custom commands & their enums.
-        MC.system.beforeEvents.startup.subscribe(event => {
+        system.beforeEvents.startup.subscribe(event => {
             Object.keys(this.commands).forEach(key => {
                 let command = this.commands[key];
                 // Register enums.
@@ -162,7 +163,7 @@ export default class ShardModule {
 
 
     /**Passthrough for all slash commands of this module.*/
-    slashCommandPassthrough(Command:ShardCommand, Origin:MC.CustomCommandOrigin, ...Options):MC.CustomCommandResult|undefined {
+    slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...Options):CustomCommandResult|undefined {
         // Return error message if module disabled.
         if (this.persisData.enabled == false) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.id]}), status:1};
@@ -173,7 +174,7 @@ export default class ShardModule {
         if (Origin.sourceEntity) {context = ShardCommandContext.generate(Origin.sourceEntity)}
         else if (Origin.initiator) {context = ShardCommandContext.generate(Origin.initiator)}
         else if (Origin.sourceBlock) {context = ShardCommandContext.generate(Origin.sourceBlock)}
-        else if (Origin.sourceType == MC.CustomCommandSource.Server) {
+        else if (Origin.sourceType == CustomCommandSource.Server) {
             context = new ShardCommandContext(
                 undefined,
                 'world',
@@ -189,7 +190,7 @@ export default class ShardModule {
 
         // Modify result message to include module name.
         if (result !== undefined) {
-            let resultMessage:MC.RawMessage;
+            let resultMessage:RawMessage;
             // If result.message is a string, turn into raw-message.
             if (typeof result.message == 'string') {resultMessage = {text:result.message}}
             else {resultMessage = result.message};

@@ -1,5 +1,5 @@
+import {EntityRemoveAfterEvent} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
-import {MC, Dictionary} from '../../../ShardAPI/CONST';
 import {Module} from '../module';
 
 
@@ -10,7 +10,7 @@ function removeFrozenEntityEntry(entityId:string) {
 };
 
 
-function Callback(event:MC.EntityRemoveAfterEvent) {
+function Callback(event:EntityRemoveAfterEvent) {
     if (event.typeId !== 'minecraft:player') {
         removeFrozenEntityEntry(event.removedEntityId);
     };

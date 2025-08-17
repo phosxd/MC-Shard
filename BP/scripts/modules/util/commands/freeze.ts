@@ -1,6 +1,6 @@
+import {Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 import {FixVector3, FixVector2} from '../../../ShardAPI/util';
 import {Module} from '../module';
 
@@ -10,7 +10,7 @@ const default_time:number = 999999;
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let targets:Array<MC.Entity> = Options[0];
+    let targets:Array<Entity> = Options[0];
     let time:number = Options[1];
     // If no specified time, set default time.
     if (time == undefined) {
@@ -40,12 +40,12 @@ export const Command = new ShardCommand(
     'freeze',
     'Freeze entities so they cannot move or turn. Freeze with 0 time to unfreeze.',
     [
-        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'targets', type:CustomCommandParamType.EntitySelector},
     ],
     [
-        {name:'time', type:MC.CustomCommandParamType.Float},
+        {name:'time', type:CustomCommandParamType.Float},
     ],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

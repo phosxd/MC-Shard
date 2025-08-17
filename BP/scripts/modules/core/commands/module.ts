@@ -1,11 +1,12 @@
+import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
 import ShardModule from '../../../ShardAPI/module';
-import {MC, Dictionary, CommandNamespace, ModuleNames, PermaEnabledModules} from '../../../ShardAPI/CONST';
+import {Dictionary, CommandNamespace, ModuleNames, PermaEnabledModules} from '../../../ShardAPI/CONST';
 
 var Modules:Dictionary<ShardModule>;
 // Import modules after they have all initialized.
-MC.system.runTimeout(()=>{
+system.runTimeout(()=>{
     import('../../modules').then(modules => {
         Modules = modules.Modules;
     });
@@ -99,12 +100,12 @@ export const Command = new ShardCommand(
     'module',
     'Open module configuration UI, or perform actions.',
     [
-        {name:CommandNamespace+':'+'module', type:MC.CustomCommandParamType.Enum}
+        {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum}
     ],
     [
-        {name:CommandNamespace+':'+'moduleAction', type:MC.CustomCommandParamType.Enum},
+        {name:CommandNamespace+':'+'moduleAction', type:CustomCommandParamType.Enum},
     ],
-    MC.CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Admin,
     [],
     Callback,
     {

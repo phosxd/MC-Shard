@@ -1,6 +1,6 @@
+import {system, Player, Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC, Dictionary, CommandNamespace} from '../../../ShardAPI/CONST';
 
 const min_slot:number = 0;
 const max_slot:number = 8;
@@ -9,7 +9,7 @@ const max_slot:number = 8;
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let targets:Array<MC.Entity> = Options[0];
+    let targets:Array<Entity> = Options[0];
     let slot:number = Number(Options[1]);
     // Return error if slot index is out of range.
     if (slot > max_slot || slot < min_slot) {
@@ -19,8 +19,9 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     let count:number = 0;
     targets.forEach(entity => {
         if (entity.typeId !== 'minecraft:player') {return};
-        MC.system.run(()=>{
-            entity.selectedSlotIndex = slot;
+        const player:Player = entity as Player;
+        system.run(()=>{
+            player.selectedSlotIndex = slot;
         });
         count += 1;
     });
@@ -36,11 +37,11 @@ export const Command = new ShardCommand(
     'setslot',
     'Set the selected hotbar slot.',
     [
-        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
-        {name:'slotIndex', type:MC.CustomCommandParamType.Integer},
+        {name:'targets', type:CustomCommandParamType.EntitySelector},
+        {name:'slotIndex', type:CustomCommandParamType.Integer},
     ],
     [],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

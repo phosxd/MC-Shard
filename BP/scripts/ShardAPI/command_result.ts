@@ -1,8 +1,8 @@
-import {MC} from './CONST';
+import {RawMessage, CustomCommandStatus} from '@minecraft/server';
 
 
 /**Command callbacks must return this. Allows rawtext.*/
 export default interface ShardCommandResult {
-    message?: MC.RawMessage|string,
-    status: MC.CustomCommandStatus,
+    message?: RawMessage|string,
+    status: CustomCommandStatus,
 };

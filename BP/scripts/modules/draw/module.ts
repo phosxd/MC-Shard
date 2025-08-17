@@ -1,4 +1,5 @@
-import {MC, Dictionary, CardinalDirectionMap} from '../../ShardAPI/CONST';
+import {Dimension, Player, Vector2, Vector3, MolangVariableMap, RGBA} from '@minecraft/server';
+import {Dictionary, CardinalDirectionMap} from '../../ShardAPI/CONST';
 import ShardModule from '../../ShardAPI/module';
 import ShardEventListener from '../../ShardAPI/event_listener';
 import ShardCommand from '../../ShardAPI/command';
@@ -60,7 +61,7 @@ function Init() {};
  * 
  * `lifetime` sets all sustain options in `particleOptions` if they are undefined.
 */
-export function RenderSquare(location:MC.Vector3, target:MC.Dimension|MC.Player, color:MC.RGBA, facingDirection:'north'|'east'|'south'|'west'|'up'|'down', particleOptions?:ParticleOptions, lifetime:number=1):void {
+export function RenderSquare(location:Vector3, target:Dimension|Player, color:RGBA, facingDirection:'north'|'east'|'south'|'west'|'up'|'down', particleOptions?:ParticleOptions, lifetime:number=1):void {
     // Set default options.
     if (particleOptions == undefined) {particleOptions = {}};
     if (particleOptions.size_x == undefined) {particleOptions.size_x = 0.5};
@@ -76,7 +77,7 @@ export function RenderSquare(location:MC.Vector3, target:MC.Dimension|MC.Player,
     if (particleOptions.size_y_fade_out == undefined) {particleOptions.size_y_fade_out = 0};
 
     // Create molang map.
-    const molang = new MC.MolangVariableMap();
+    const molang = new MolangVariableMap();
     molang.setColorRGBA('variable.color', color);
     molang.setSpeedAndDirection('variable.particle', 0, CardinalDirectionMap[facingDirection]);
     for (let key in particleOptions) {
@@ -84,7 +85,7 @@ export function RenderSquare(location:MC.Vector3, target:MC.Dimension|MC.Player,
     };
 
     // If not in unloaded chunk, spawn particle.
-    if (target instanceof MC.Dimension) {
+    if (target instanceof Dimension) {
         if (target.getBlock(location) == undefined) {return};
     };
     target.spawnParticle('shard:square', location, molang);
@@ -95,11 +96,11 @@ export function RenderSquare(location:MC.Vector3, target:MC.Dimension|MC.Player,
  * 
  * `lifetime` sets all sustain options in `particleOptions` if they are undefined.
 */
-export function RenderCuboid(location:MC.Vector3, target:MC.Dimension|MC.Player, color:MC.RGBA, size:MC.Vector3={x:1,y:1,z:1}, particleOptions?:ParticleOptions, lifetime:number=1):void {
+export function RenderCuboid(location:Vector3, target:Dimension|Player, color:RGBA, size:Vector3={x:1,y:1,z:1}, particleOptions?:ParticleOptions, lifetime:number=1):void {
     // Iterate on each face.
     for (let direction in CardinalDirectionMap) {
-        let particleSize:MC.Vector2 = {x:size.x/2, y:size.y/2};
-        let particleLocation:MC.Vector3 = {x:0, y:0, z:0};
+        let particleSize:Vector2 = {x:size.x/2, y:size.y/2};
+        let particleLocation:Vector3 = {x:0, y:0, z:0};
         // Logic for setting correct positions & sizes for each face.
         switch (direction) {
             case 'up': {

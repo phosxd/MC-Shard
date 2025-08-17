@@ -1,4 +1,4 @@
-import {MC} from './CONST';
+import {RawMessage} from '@minecraft/server';
 import {translate} from './LANG';
 
 
@@ -8,7 +8,7 @@ import {translate} from './LANG';
  * 
  * Translating with a raw message with parameters other than "rawtext" will have no affect.
 */
-export function rawMessageToString(message:MC.RawMessage):string {
+export function rawMessageToString(message:RawMessage):string {
     if (message == undefined) {return ''};
     let parsed:string = '';
 

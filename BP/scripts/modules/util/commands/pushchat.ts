@@ -1,13 +1,13 @@
+import {CommandPermissionLevel} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     if (Context.targetType !== 'player') {return undefined};
-    return {message:'\n'.repeat(80), status:MC.CustomCommandStatus.Success};
+    return {message:'\n'.repeat(80), status:0};
 };
 
 
@@ -19,7 +19,7 @@ export const Command = new ShardCommand(
     'Pushes all previous chat messages off-screen.',
     [],
     [],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

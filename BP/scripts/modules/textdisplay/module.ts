@@ -1,4 +1,4 @@
-import {MC, Dictionary} from '../../ShardAPI/CONST';
+import {Dictionary} from '../../ShardAPI/CONST';
 import ShardModule from '../../ShardAPI/module';
 import ShardEventListener from '../../ShardAPI/event_listener';
 import ShardCommand from '../../ShardAPI/command';

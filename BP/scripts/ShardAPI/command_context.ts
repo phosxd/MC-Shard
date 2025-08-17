@@ -1,20 +1,20 @@
-import {MC} from './CONST';
+import {Dimension, Vector2, Vector3, Block, Entity, Player} from '@minecraft/server';
 
 //export type CommandSourceType = 'world'|'block'|'entity'|'player';
 //export type CommandSource = MC.Block|MC.Entity|MC.Player;
 
 
 export default class ShardCommandContext {
-    source: MC.Block|MC.Entity|MC.Player; // The original executor of the command (If using slash commands, wil be the same as target).
+    source: Block|Entity|Player; // The original executor of the command (If using slash commands, wil be the same as target).
     sourceType: 'world'|'block'|'entity'|'player';
-    target: MC.Block|MC.Entity|MC.Player; // The target executor of the command.
+    target: Block|Entity|Player; // The target executor of the command.
     targetType: 'world'|'block'|'entity'|'player';
-    dimension: MC.Dimension; // Dimension.
-    location: MC.Vector3; // Location.
-    rotation: MC.Vector2; // Rotation.
+    dimension: Dimension; // Dimension.
+    location: Vector3; // Location.
+    rotation: Vector2; // Rotation.
 
 
-    constructor(source:MC.Block|MC.Entity|MC.Player, sourceType:'world'|'block'|'entity'|'player', target:MC.Block|MC.Entity|MC.Player, targetType:'world'|'block'|'entity'|'player', dimension:MC.Dimension, location:MC.Vector3, rotation:MC.Vector2) {
+    constructor(source:Block|Entity|Player, sourceType:'world'|'block'|'entity'|'player', target:Block|Entity|Player, targetType:'world'|'block'|'entity'|'player', dimension:Dimension, location:Vector3, rotation:Vector2) {
         this.source = source;
         this.sourceType = sourceType;
         this.target = target;
@@ -26,16 +26,16 @@ export default class ShardCommandContext {
 
 
     /**Generate new context from an `Entity`, `Player`, or `Block`. */
-    static generate = (from:MC.Block|MC.Entity|MC.Player) => {
-        let source: MC.Block|MC.Entity|MC.Player;
+    static generate = (from:Block|Entity|Player) => {
+        let source: Block|Entity|Player;
         let sourceType;
-        let target: MC.Block|MC.Entity|MC.Player;
+        let target: Block|Entity|Player;
         let targetType;
-        let dimension: MC.Dimension|undefined;
-        let location: MC.Vector3|undefined;
-        let rotation: MC.Vector2|undefined;
+        let dimension: Dimension|undefined;
+        let location: Vector3|undefined;
+        let rotation: Vector2|undefined;
 
-        if (from instanceof MC.Player || from instanceof MC.Entity) {
+        if (from instanceof Player || from instanceof Entity) {
             source = from;
             sourceType = 'entity';
             if (source.typeId == 'minecraft:player') {sourceType = 'player'};
@@ -45,7 +45,7 @@ export default class ShardCommandContext {
             location = source.location;
             rotation = source.getRotation();
         }
-        else if (from instanceof MC.Block) {
+        else if (from instanceof Block) {
             source = from;
             sourceType = 'block';
             target = source;

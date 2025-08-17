@@ -1,14 +1,15 @@
+import {system, Player, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     if (Context.targetType !== 'player') {return undefined};
-    MC.system.run(()=>{
-        Context.target.kill();
+    const player:Player = Context.target as Player;
+    system.run(()=>{
+        player.kill();
     });
     return undefined;
 };
@@ -22,7 +23,7 @@ export const Command = new ShardCommand(
     'Kills you. Helpful when stuck somewhere.',
     [],
     [],
-    MC.CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Admin,
     [],
     Callback,
 );

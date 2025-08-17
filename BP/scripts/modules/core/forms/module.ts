@@ -1,7 +1,8 @@
+import {CommandPermissionLevel} from '@minecraft/server';
+import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
 import ShardForm from '../../../ShardAPI/form';
 import ShardModule from '../../../ShardAPI/module';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC, MCUI} from '../../../ShardAPI/CONST';
 import {Module} from '../module';
 
 
@@ -11,7 +12,7 @@ import {Module} from '../module';
 function BuildForm(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
 
-    const formData = new MCUI.ActionFormData()
+    const formData = new ActionFormData()
         .title(module.displayName)
         .body(module.description)
         .button({translate:'shard.misc.moduleOption.settings'})
@@ -24,7 +25,7 @@ function BuildForm(context:ShardCommandContext, ...args) {
 
 
 
-function Callback(context:ShardCommandContext, response:MCUI.ActionFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
     if (response.canceled) {return};
     const module:ShardModule = args[0];
 
@@ -51,7 +52,7 @@ function Callback(context:ShardCommandContext, response:MCUI.ActionFormResponse,
 // Initialize form.
 export const Form:ShardForm = new ShardForm(
     'module',
-    MC.CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Admin,
     [],
     BuildForm,
     Callback,

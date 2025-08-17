@@ -1,12 +1,13 @@
+import {system, Player, GameMode, CommandPermissionLevel} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    MC.system.run(()=>{Context.target.setGameMode(MC.GameMode.Creative)});
+    const target = Context.target as Player;
+    system.run(()=>{target.setGameMode(GameMode.Creative)});
     return undefined;
 };
 
@@ -19,7 +20,7 @@ export const Command = new ShardCommand(
     'Creative mode.',
     [],
     [],
-    MC.CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Admin,
     [],
     Callback,
 );

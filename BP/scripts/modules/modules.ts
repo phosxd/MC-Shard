@@ -1,14 +1,11 @@
-// Import modules.
-import * as module_core from './core/module';
-import * as module_util from './util/module';
-import * as module_textdisplay from './textdisplay/module';
-import * as module_draw from './draw/module';
+import {ModuleNames, Dictionary} from '../ShardAPI/CONST';
+import ShardModule from '../ShardAPI/module';
 
 
-// Assign.
-export const Modules = {
-    core: module_core.Module,
-    util: module_util.Module,
-    textdisplay: module_textdisplay.Module,
-    draw: module_draw.Module,
-};
+// Import modules then assign to `Modules`.
+export var Modules:Dictionary<ShardModule> = {};
+ModuleNames.forEach(name => {
+    import(`./${name}/module`).then(module => {
+        Modules[module.Module.id] = module.Module;
+    });
+});

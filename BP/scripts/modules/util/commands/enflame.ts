@@ -1,6 +1,6 @@
+import {system, Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 const default_time:number = 5;
 
@@ -8,7 +8,7 @@ const default_time:number = 5;
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let targets:Array<MC.Entity> = Options[0];
+    let targets:Array<Entity> = Options[0];
     let time:number = Options[1];
     // If no specified time, set default time.
     if (time == undefined) {
@@ -17,7 +17,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     // Apply to targets.
     let count:number = 0;
     targets.forEach(entity => {
-        MC.system.run(()=>{
+        system.run(()=>{
             if (time == 0) {entity.extinguishFire()}
             else {entity.setOnFire(time)};
         });
@@ -36,12 +36,12 @@ export const Command = new ShardCommand(
     'enflame',
     'Set entities on fire. Enflame with 0 time to remove fire.',
     [
-        {name:'targets', type:MC.CustomCommandParamType.EntitySelector},
+        {name:'targets', type:CustomCommandParamType.EntitySelector},
     ],
     [
-        {name:'time', type:MC.CustomCommandParamType.Float},
+        {name:'time', type:CustomCommandParamType.Float},
     ],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

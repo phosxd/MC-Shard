@@ -1,4 +1,5 @@
-import {MC, Dictionary} from './CONST';
+import {world, Vector2, Vector3, CommandPermissionLevel} from '@minecraft/server';
+import {Dictionary} from './CONST';
 
 
 /**Converts a Build Number to a Version.*/
@@ -19,21 +20,21 @@ export function VersionToBuildNumber(version:Array<number>) {
 
 
 /**Converts a location to a string.*/
-export function LocationToString(location:MC.Vector3) {
+export function LocationToString(location:Vector3) {
     return `${location.x} ${location.y} ${location.z}`;
 };
 
 
 /**Determines if a block location is out of bounds.*/
-export function LocationOutOfBounds(location:MC.Vector3):boolean {
+export function LocationOutOfBounds(location:Vector3):boolean {
     if (location.y > 256 || location.y < -64) {return true};
     return false;
 };
 
 
 /**Returns a new Vector3 with the new precision.*/
-export function FixVector3(vector:MC.Vector3, precision:number):MC.Vector3 {
-    let newVector:MC.Vector3 = {x:0,y:0,z:0};
+export function FixVector3(vector:Vector3, precision:number):Vector3 {
+    let newVector:Vector3 = {x:0,y:0,z:0};
     newVector.x = Number(vector.x.toPrecision(precision));
     newVector.y = Number(vector.y.toPrecision(precision));
     newVector.z = Number(vector.z.toPrecision(precision));
@@ -42,8 +43,8 @@ export function FixVector3(vector:MC.Vector3, precision:number):MC.Vector3 {
 
 
 /**Returns a new Vector2 with the new precision.*/
-export function FixVector2(vector:MC.Vector2, precision:number):MC.Vector2 {
-    let newVector:MC.Vector2 = {x:0,y:0};
+export function FixVector2(vector:Vector2, precision:number):Vector2 {
+    let newVector:Vector2 = {x:0,y:0};
     newVector.x = Number(vector.x.toPrecision(precision));
     newVector.y = Number(vector.y.toPrecision(precision));
     return newVector;
@@ -80,7 +81,7 @@ const cplMap:Dictionary<Array<number>> = {
  * 
  * Returns `true` if `a` is equal to or higher than `b`.
  * */
-export function CompareCommandPermissionLevel(a:MC.CommandPermissionLevel, b:MC.CommandPermissionLevel):boolean {
+export function CompareCommandPermissionLevel(a:CommandPermissionLevel, b:CommandPermissionLevel):boolean {
     return cplMap[a].includes(b);
 };
 
@@ -96,7 +97,7 @@ const mcDataCharCap:number = 9500;
 */
 export const MCData = {
     // Get persistent data.
-    'get': (key:string, Holder=MC.world) => {
+    'get': (key:string, Holder=world) => {
         let result:Array<any> = [];
         let i:number = -1;
         while (true) {
@@ -111,7 +112,7 @@ export const MCData = {
 
 
     // Set persistent data.
-    'set': (key:string, value:Dictionary<any>, Holder=MC.world) => {
+    'set': (key:string, value:Dictionary<any>, Holder=world) => {
         const stringValue = JSON.stringify(value);
         // Set all occupied parts to `false`. To "erase" previous data.
         let i:number = -1;

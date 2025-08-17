@@ -1,4 +1,5 @@
-import {MC, Dictionary} from './CONST';
+import {CustomCommandParameter, CommandPermissionLevel, Block, Entity, Player} from '@minecraft/server';
+import {Dictionary} from './CONST';
 import {CompareCommandPermissionLevel} from './util';
 import ShardCommandContext from './command_context';
 import ShardCommandResult from './command_result';
@@ -8,9 +9,9 @@ import ShardCommandResult from './command_result';
 export default class ShardCommand {
     id: string;
     description: string;
-    mandatoryParameters: Array<MC.CustomCommandParameter>;
-    optionalParameters: Array<MC.CustomCommandParameter>;
-    permissionLevel: MC.CommandPermissionLevel;
+    mandatoryParameters: Array<CustomCommandParameter>;
+    optionalParameters: Array<CustomCommandParameter>;
+    permissionLevel: CommandPermissionLevel;
     requiredTags: Array<string>;
     callback: (Context:ShardCommandContext, Options) => ShardCommandResult|undefined;
     registerEnums:Dictionary<Array<string>>;
@@ -22,7 +23,7 @@ export default class ShardCommand {
     };
 
 
-    constructor(id:string, description:string, mandatoryParameters:Array<MC.CustomCommandParameter>, optionalParameters:Array<MC.CustomCommandParameter>, permissionLevel:MC.CommandPermissionLevel, requiredTags:Array<string>, callback:(Context:ShardCommandContext, Options) => ShardCommandResult|undefined, registerEnums?:Dictionary<Array<string>>) {
+    constructor(id:string, description:string, mandatoryParameters:Array<CustomCommandParameter>, optionalParameters:Array<CustomCommandParameter>, permissionLevel:CommandPermissionLevel, requiredTags:Array<string>, callback:(Context:ShardCommandContext, Options) => ShardCommandResult|undefined, registerEnums?:Dictionary<Array<string>>) {
         this.id = id;
         this.description = description;
         this.mandatoryParameters = mandatoryParameters;
@@ -38,19 +39,20 @@ export default class ShardCommand {
     execute(context:ShardCommandContext, options:Array<any>): ShardCommandResult|undefined {
         switch (context.targetType) {
             case 'entity': {
-                if (this.permissionLevel !== MC.CommandPermissionLevel.Any) {
+                if (this.permissionLevel !== CommandPermissionLevel.Any) {
                     return this.illegal_callback(context, options);
                 };
                 break;
             };
             case 'player': {
-                if (CompareCommandPermissionLevel(context.target.commandPermissionLevel, this.permissionLevel) == false) {
+                const target = context.target as Player;
+                if (CompareCommandPermissionLevel(target.commandPermissionLevel, this.permissionLevel) == false) {
                     return this.illegal_callback(context, options)
                 };
                 break;
             };
             case 'block': {
-                if (this.permissionLevel !== MC.CommandPermissionLevel.GameDirectors) {
+                if (this.permissionLevel !== CommandPermissionLevel.GameDirectors) {
                     return this.illegal_callback(context, options);
                 };
                 break;

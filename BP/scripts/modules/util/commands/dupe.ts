@@ -1,20 +1,21 @@
+import {system, CommandPermissionLevel, Container, ItemStack, Player} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
-import {MC} from '../../../ShardAPI/CONST';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     if (Context.targetType !== 'player') {return undefined};
+    const player:Player = Context.target as Player;
 
     // Get player inventory & clone held item stack.
-    let invContainer:MC.Container = Context.target.getComponent('inventory').container;
-    let stack:MC.ItemStack = invContainer.getSlot(Context.target.selectedSlotIndex).getItem();
+    let invContainer:Container = Context.target.getComponent('inventory').container;
+    let stack:ItemStack = invContainer.getSlot(player.selectedSlotIndex).getItem();
     // Return error if no item stack in slot.
     if (stack == undefined) {return {message:{translate:'shard.util.cmd.dupe.noItem'}, status:1}};
     // Clone item stack.
-    MC.system.run(()=>{
+    system.run(()=>{
         invContainer.addItem(stack.clone());
     });
 
@@ -30,7 +31,7 @@ export const Command = new ShardCommand(
     'Duplicate the item in your hand.',
     [],
     [],
-    MC.CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.GameDirectors,
     [],
     Callback,
 );

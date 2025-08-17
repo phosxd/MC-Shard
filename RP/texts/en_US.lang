@@ -2,11 +2,14 @@
 ## Command texts that are actually used can be found in `BP/scripts/LANG.ts`.
 
 
-shard.misc.welcomeMessage=§a┏----\n§a|§r Welcome §4%s§r!\n§a|§r This server is running:\n§a|§r §l§dShard§r §lv%s§r [%s].\n§a┖----
+shard.misc.welcomeMessage=§a┏----\n§a|§r Welcome §4%s§r!\n§a|§r This server is running:\n§a|§r §l§dShard§r §lv%s§r.\n§a┖----
 shard.misc.commandModuleDisabled=§cEnable the §e%s§c module to use this command.
 shard.misc.commandDisabled=§cThis command is disabled.
 shard.misc.commandUnavailable=§cThis command is unavailable.
 shard.misc.missingPermission=§cYou do not have permission to do this.
+shard.misc.targetLocationOutOfBounds=§cTarget location is out of bounds.
+shard.misc.targetLocationObstructed=§cTarget location is obstructed.
+shard.misc.woosh=Woosh!
 
 shard.misc.moduleOption.commands=Commands
 shard.misc.moduleOption.settings=Settings

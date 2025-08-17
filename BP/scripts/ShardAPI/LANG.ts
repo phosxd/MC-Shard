@@ -10,6 +10,9 @@ export const LANG = {
             commandDisabled: '§cThis command is disabled.',
             commandUnavailable: '§cThis command is unavailable.',
             missingPermission: '§cYou do not have permission to do this.',
+            targetLocationOutOfBounds: '§cTarget location is out of bounds.',
+            targetLocationObstructed: '§cTarget location is obstructed.',
+            woosh: 'Woosh!',
             moduleOption: {
                 commands: 'Commands',
                 settings: 'Settings',
