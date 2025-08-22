@@ -4,7 +4,7 @@ import ShardEventListener from '../../ShardAPI/event_listener';
 import ShardCommand from '../../ShardAPI/command';
 import ShardForm from '../../ShardAPI/form';
 // Import events.
-import * as event_playerJoin from './events/playerJoin';
+import * as event_playerLoad from './events/playerLoad';
 // Import commands.
 import * as command_shard from './commands/shard';
 import * as command_discord from './commands/discord';
@@ -13,13 +13,14 @@ import * as command_module from './commands/module';
 // Import forms.
 import * as form_main from './forms/main';
 import * as form_module from './forms/module';
+import * as form_shard from './forms/shard';
 
 
 
 
 // Define module properties.
 var EventListeners:Dictionary<ShardEventListener> = {
-    playerJoin: event_playerJoin.EventListener,
+    playerLoad: event_playerLoad.EventListener,
 };
 var Commands:Dictionary<ShardCommand> = {
     shard: command_shard.Command,
@@ -29,6 +30,7 @@ var Commands:Dictionary<ShardCommand> = {
 };
 var Forms:Dictionary<ShardForm> = {
     module: form_module.Form,
+    shard: form_shard.Form,
 };
 
 

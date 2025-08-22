@@ -23,7 +23,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         system.run(()=>{RenderSquare(location, entity as Player, color, direction as 'north'|'east'|'south'|'west'|'up'|'down', particleOptions, lifetime)});
     });
 
-    return {message:{translate:'shard.draw.cmd.drawsquare.success', with:[LocationToString(FixVector3(location,2)), String(count)]}, status:0};
+    return {message:{translate:'shard.draw.cmd.drawsquare.success', with:[LocationToString(location), String(count)]}, status:0};
 };
 
 

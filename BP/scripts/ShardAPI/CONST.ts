@@ -24,6 +24,7 @@ export const BuildNumber = VersionToBuildNumber(Version);
 export const ModuleNames = [
     'core',
     'util',
+    'tracker',
     'textdisplay',
     'draw',
 ];

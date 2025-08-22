@@ -93,7 +93,6 @@ const mcDataCharCap:number = 9500;
  * 
  * Saves & retieves data in "parts" to overcome maximum dynamic property string value length.
  * New parts are only created if absolutely needed.
- * Since there is no way to "delete" dynamic properties, discarded parts are set to `false`.
 */
 export const MCData = {
     // Get persistent data.
@@ -103,7 +102,7 @@ export const MCData = {
         while (true) {
             i += 1;
             const x = Holder.getDynamicProperty(`${key}[${i}]`);
-            if (x == undefined || x == false) {break}
+            if (x == undefined) {break}
             else {result.push(x)};
         };
         if (result.length == 0) {return undefined};
@@ -114,14 +113,14 @@ export const MCData = {
     // Set persistent data.
     'set': (key:string, value:Dictionary<any>, Holder=world) => {
         const stringValue = JSON.stringify(value);
-        // Set all occupied parts to `false`. To "erase" previous data.
+        // Set all occupied parts to `undefined`. To erase previous data.
         let i:number = -1;
         while (true) {
             i += 1;
             const id:string = `${key}[${i}]`;
             const x = Holder.getDynamicProperty(id);
-            if (x == undefined || x == false) {break}
-            else {Holder.setDynamicProperty(id, false)};
+            if (x == undefined) {break}
+            else {Holder.setDynamicProperty(id, undefined)};
         };
         // Set parts to new value.
         // Dynamic properties must be split when they are large enough due to the limits imposed by the Minecraft Server API.

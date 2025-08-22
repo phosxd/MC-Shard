@@ -1,12 +1,14 @@
 import {CommandPermissionLevel} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
+import {Module} from '../module';
 
 
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    return {message:{translate:'shard.misc.commandUnavailable'}, status:1};
+    Module.forms.shard.show(Context);
+    return {status:0};
 };
 
 

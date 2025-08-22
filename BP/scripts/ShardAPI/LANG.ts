@@ -95,6 +95,10 @@ export const LANG = {
                 },
             },
         },
+        tracking: {
+            displayName: '§0[§3Tracker§0]',
+            description: 'Provides entity statistics & current entity state tracking.',
+        },
         textdisplay: {
             displayName: '§0[§5Text Display§0]§r',
             description: 'Provides tools for interacting with text display entities.',

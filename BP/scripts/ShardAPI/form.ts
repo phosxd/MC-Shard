@@ -1,4 +1,4 @@
-import {system, CommandPermissionLevel, Player} from '@minecraft/server';
+import {system, CommandPermissionLevel, Player, RawMessage} from '@minecraft/server';
 import {ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {CompareCommandPermissionLevel} from './util';
 import ShardCommandContext from './command_context';
@@ -11,14 +11,16 @@ export default class ShardForm {
     requiredTags: Array<string>;
     buildForm: (context:ShardCommandContext, ...args) => ShardFormBuildResult;
     callback: (context:ShardCommandContext, response:ActionFormResponse|ModalFormResponse|MessageFormResponse, ...args) => void;
+    onClosed: (context:ShardCommandContext, response:ActionFormResponse|ModalFormResponse|MessageFormResponse, ...args) => void;
 
 
-    constructor(id:string, permissionLevel:CommandPermissionLevel, requiredTags:Array<string>, buildForm:(context:ShardCommandContext, ...args) => ShardFormBuildResult, callback:(context:ShardCommandContext, response:ActionFormResponse|ModalFormResponse|MessageFormResponse, ...args) => void) {
+    constructor(id:string, permissionLevel:CommandPermissionLevel, requiredTags:Array<string>, buildForm:(context:ShardCommandContext, ...args) => ShardFormBuildResult, callback:(context:ShardCommandContext, response:ActionFormResponse|ModalFormResponse|MessageFormResponse, ...args) => void, onClosed?:(context:ShardCommandContext, response:ActionFormResponse|ModalFormResponse|MessageFormResponse, ...args) => void) {
         this.id = id;
         this.permissionLevel = permissionLevel;
         this.requiredTags = requiredTags;
         this.buildForm = buildForm;
         this.callback = callback;
+        this.onClosed = onClosed;
     };
 
 
@@ -30,14 +32,19 @@ export default class ShardForm {
         
         // Run in an "after" context.
         system.run(()=>{
+            // Build form.
             const formBuildResult:ShardFormBuildResult = this.buildForm(context, ...args);
+            // Show form.
             formBuildResult.data.show(target).then(response => {
                 // If player cannot open the form, queue & retry every half second.
                 if (response.cancelationReason == FormCancelationReason.UserBusy) {
                     system.runTimeout(this.show.bind(this,context.target), 10);
                 }
-                // If player closed, do nothing then return.
+                // If player closed, call close callback.
                 else if (response.cancelationReason == FormCancelationReason.UserClosed) {
+                    if (this.onClosed) {
+                        this.onClosed(context, response, ...formBuildResult.callbackArgs);
+                    };
                     return;
                 };
                 // Callback.
