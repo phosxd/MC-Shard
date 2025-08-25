@@ -1,5 +1,7 @@
 import {world, Vector2, Vector3, CommandPermissionLevel} from '@minecraft/server';
-import {Dictionary} from './CONST';
+import {Dictionary, AlignedArea} from './CONST';
+
+
 
 
 /**Converts a Build Number to a Version.*/
@@ -25,10 +27,88 @@ export function LocationToString(location:Vector3) {
 };
 
 
+/**Converts a string to a location.*/
+export function StringToLocation(value:string):Dictionary<any> {
+    if (value == undefined) {return {status:1}};
+
+    const splitValue:Array<string> = value.split(' ');
+    let x:any = splitValue[0];
+    let y:any = splitValue[1];
+    let z:any = splitValue[2];
+    if (x == undefined || y == undefined || z == undefined) {
+        return {status:1};
+    };
+    x = Number(x);
+    y = Number(y);
+    z = Number(z);
+    if (isNaN(x) || isNaN(y) || isNaN(z)) {
+        return {status:1};
+    };
+
+    return {status:0, location:{x:x,y:y,z:z}};
+};
+
+
 /**Determines if a block location is out of bounds.*/
 export function LocationOutOfBounds(location:Vector3):boolean {
     if (location.y > 256 || location.y < -64) {return true};
     return false;
+};
+
+
+/**Returns a new Vector3 with subtracted values.*/
+export function AddVector3(a:Vector3, b:Vector3):Vector3 {
+    return {
+        x: a.x+b.x,
+        y: a.y+b.y,
+        z: a.z+b.z,
+    };
+};
+
+
+/**Returns a new Vector3 with subtracted values.*/
+export function SubtractVector3(a:Vector3, b:Vector3):Vector3 {
+    return {
+        x: a.x-b.x,
+        y: a.y-b.y,
+        z: a.z-b.z,
+    };
+};
+
+
+/**Returns a new Vector3 with normalized values.*/
+export function NormalizeVector3(vector:Vector3):Vector3 {
+    let length = Math.sqrt(vector.x**2 + vector.y**2 + vector.z**2);
+    if (length == 0) {
+        return {x:0,y:0,z:0};
+    };
+    return {
+        x: vector.x / length,
+        y: vector.y / length,
+        z: vector.z / length,
+    };
+};
+
+
+/**Returns a new Vector3 with rounded values.*/
+export function RoundVector3(vector:Vector3):Vector3 {
+    return {
+        x: Math.round(vector.x),
+        y: Math.round(vector.y),
+        z: Math.round(vector.z),
+    };
+};
+
+
+/**Returns a new Vector3 with sign flipped values.
+ * Equivalant to `var number = -number`.
+*/
+export function FlipVector3(vector:Vector3):Vector3 {
+    return {
+        x: -vector.x,
+        y: -vector.y,
+        z: -vector.z,
+    };
 };
 
 
@@ -48,6 +128,71 @@ export function FixVector2(vector:Vector2, precision:number):Vector2 {
     newVector.x = Number(vector.x.toPrecision(precision));
     newVector.y = Number(vector.y.toPrecision(precision));
     return newVector;
+};
+
+
+/**Get the center location of an `AlignedArea`.*/
+export function GetAreaCenter(area:AlignedArea):Vector3 {
+    return {
+        x:area.end.x-(area.end.x-area.start.x)/2,
+        y:area.end.y-(area.end.y-area.start.y)/2,
+        z:area.end.z-(area.end.z-area.start.z)/2
+    };
+};
+
+
+/**Returns a (new) corrected `AlignedArea`.*/
+export function AlignArea(area:AlignedArea):AlignedArea {
+    let negCorner = Object.assign({}, area.start);
+    let posCorner = Object.assign({}, area.end);
+    if (area.end.x < area.start.x) { negCorner.x = area.end.x; posCorner.x = area.start.x; };
+    if (area.end.y < area.start.y) { negCorner.y = area.end.y; posCorner.y = area.start.y; };
+    if (area.end.z < area.start.z) { negCorner.z = area.end.z; posCorner.z = area.start.z; };
+    return {start:negCorner, end:posCorner};
+};
+
+
+/**Retruns a new Vector3 representing the closest point within the area, relative to `origin`.
+ * If `inverted`, returns closest point outside the area.
+*/
+export function GetClosestPointInArea(origin:Vector3, area:AlignedArea, inverted:boolean=false) {
+    if (inverted) {
+        return {
+            x: Math.min(origin.x, Math.max(area.start.x, area.end.x)),
+            y: Math.min(origin.y, Math.max(area.start.y, area.end.y)),
+            z: Math.min(origin.z, Math.max(area.start.z, area.end.z)),
+        };
+    }
+    else {
+        return {
+            x: Math.max(area.start.x, Math.min(origin.x, area.end.x)),
+            y: Math.max(area.start.y, Math.min(origin.y, area.end.y)),
+            z: Math.max(area.start.z, Math.min(origin.z, area.end.z)),
+        };
+    };
+};
+
+
+/**Determines if a block location is within the `AlignedArea` bounds.*/
+export function LocationInArea(location:Vector3, area:AlignedArea) {
+    let result:boolean = true;
+
+    ['x','y','z'].forEach(i=>{
+        if (result == false) {return};
+
+        if (area.start[i] <= area.end[i]) {
+            if (location[i] < area.start[i] || location[i] > area.end[i]) {
+                result = false;
+            };
+        }
+        else {
+            if (location[i] < area.end[i] || location[i] > area.start[i]) {
+                result = false;
+            };
+        };
+    });
+
+    return result;
 };
 
 
@@ -83,6 +228,18 @@ const cplMap:Dictionary<Array<number>> = {
  * */
 export function CompareCommandPermissionLevel(a:CommandPermissionLevel, b:CommandPermissionLevel):boolean {
     return cplMap[a].includes(b);
+};
+
+
+
+
+/**Returns every entity in every dimension.*/
+export function GetAllEntities() {
+    return [
+        ...world.getDimension('overworld').getEntities(),
+        ...world.getDimension('nether').getEntities(),
+        ...world.getDimension('the_end').getEntities(),
+    ];
 };
 
 

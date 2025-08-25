@@ -23,7 +23,7 @@ export const Command = new ShardCommand(
     'Kills you. Helpful when stuck somewhere.',
     [],
     [],
-    CommandPermissionLevel.Admin,
+    CommandPermissionLevel.Any,
     [],
     Callback,
 );

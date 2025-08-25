@@ -156,9 +156,9 @@ export default class ShardModule {
 
 
     /**Passthrough for all event listeners of this module.*/
-    eventListenerPassthrough(Listener:ShardEventListener, ...args):void {
+    eventListenerPassthrough(Listener:ShardEventListener, ...args) {
         if (this.persisData.enabled == false) {return};
-        Listener.callback(...args);
+        return Listener.callback(...args);
     };
 
 

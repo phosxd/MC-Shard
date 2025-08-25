@@ -24,11 +24,13 @@ function runFrozenEntityEffects() {
 };
 
 
-function Callback() {
-    if (Module.persisDataReady == false || Module.worldReady == false) {return};
+function Callback(data:Dictionary<any>) {
+    if (Module.persisDataReady == false || Module.worldReady == false) {return data};
     
     runFrozenEntityEffects();
     Module.saveData();
+
+    return data;
 };
 
 

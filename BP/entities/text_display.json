@@ -21,7 +21,7 @@
 				"height": 0.15
 			},
 			"minecraft:knockback_resistance": {
-				"value": 10
+				"value": 100
 			},
 			"minecraft:damage_sensor": {
 				"triggers": {

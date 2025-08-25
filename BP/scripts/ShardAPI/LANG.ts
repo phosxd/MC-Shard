@@ -26,7 +26,7 @@ export const LANG = {
             no: 'No',
         },
         core: {
-            displayName: '§0[§5Shard§0]§r',
+            displayName: '§r[§dShard§r]',
             description: 'Handles core functionality & module management.',
             cmd: {
                 discord: {
@@ -46,7 +46,7 @@ export const LANG = {
             },
         },
         util: {
-            displayName: '§0[§5Simple Utility§0]§r',
+            displayName: '§r[§gSimple Utility§r]',
             description: 'Provides various helpful commands.',
             cmd: {
                 despawn: {
@@ -95,16 +95,37 @@ export const LANG = {
                 },
             },
         },
-        tracking: {
-            displayName: '§0[§3Tracker§0]',
+        tracker: {
+            displayName: '§r[§3Tracker§r]',
             description: 'Provides entity statistics & current entity state tracking.',
         },
         textdisplay: {
             displayName: '§0[§5Text Display§0]§r',
             description: 'Provides tools for interacting with text display entities.',
         },
+        border: {
+            displayName: '§r[§gBorder§r]',
+            description: 'Provides border tools.',
+            cmd: {
+                addBorder: {
+                    success: 'Added new border "§e%s§r" starting from %s & ending at %s.',
+                    nameTaken: '§cCannot create border with duplicate name.',
+                    invalidStyle: '§cCannot create border with invalid style. Available styles: %s.',
+                    mustBeInverted: '§cNormal borders are not yet supported, only inverted borders should be created.',
+                },
+                removeBorder: {
+                    success: 'Removed border "§e%s§r".',
+                    doesNotExist: '§cCannot delete a border that does not exist.',
+                },
+                listBorders: {
+                    success: 'All Borders: %s',
+                    noBorders: '§cThere are currently no borders.',
+                },
+            },
+            form: {},
+        },
         draw: {
-            displayName: '§0[§cD§er§aa§9w§0]§r',
+            displayName: '§r[§cD§er§aa§9w§r]',
             description: 'Provides tools for rendering shapes in the world using particles.',
             cmd: {
                 drawsquare: {

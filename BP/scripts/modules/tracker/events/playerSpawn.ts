@@ -1,11 +1,12 @@
-import {world, system, Player} from '@minecraft/server';
+import {world, system, Player, PlayerSpawnAfterEvent} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
 import {Scoreboards} from '../module';
 
 
 
 
-function Callback(event:{player:Player}) {
+function Callback(event:PlayerSpawnAfterEvent) {
+    if (!event.initialSpawn) {return};
     Scoreboards['sh.tk.playerJoins'].addScore(event.player, 1);
 };
 
@@ -14,8 +15,8 @@ function Callback(event:{player:Player}) {
 
 // Initialize event listener.
 export const EventListener:ShardEventListener = new ShardEventListener(
-    'shard',
+    'world',
     'after',
-    'playerLoad',
+    'playerSpawn',
     Callback,
 );

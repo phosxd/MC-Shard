@@ -1,3 +1,4 @@
+import {Vector3} from '@minecraft/server';
 import {VersionToBuildNumber} from './util';
 
 
@@ -25,6 +26,7 @@ export const ModuleNames = [
     'core',
     'util',
     'tracker',
+    'border',
     'textdisplay',
     'draw',
 ];
@@ -43,6 +45,18 @@ export const PermaEnabledModules = [
 
 export interface Dictionary<T> {
     [key:string]: T,
+};
+
+
+/**Vectors representing a correct rectangular area of block locations in world space.
+ * 
+ * Start & end values are assumed to be correct but cannot be guaranteed. Correction should be ensured before use.
+ * 
+ * A correct area would be an area where `start` is strictly negative relative to `end`.
+*/
+export interface AlignedArea {
+    start: Vector3,
+    end: Vector3,
 };
 
 

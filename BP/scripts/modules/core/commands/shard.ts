@@ -8,7 +8,7 @@ import {Module} from '../module';
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
     Module.forms.shard.show(Context);
-    return {status:0};
+    return undefined;
 };
 
 

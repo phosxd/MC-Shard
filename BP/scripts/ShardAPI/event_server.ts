@@ -1,24 +1,19 @@
 import {system, world, PlayerJoinAfterEvent, Player} from '@minecraft/server';
+import {Dictionary} from './CONST';
 
 
 
 
-class EventSignal {
-    _id: string;
-    _listeners:Array<Function> = [];
+class TickEventSignal {
+    _listeners:Array<(data:Dictionary<any>)=>Dictionary<any>>;
 
-
-    constructor(id) {
-        this._id = id;
+    constructor() {
+        this._listeners = [];
     };
-
-
-    subscribe(callback:Function) {
+    subscribe(callback:(data:Dictionary<any>)=>Dictionary<any>):void {
         this._listeners.push(callback);
     };
-
-
-    unsubscribe(callback:()=>void) {
+    unsubscribe(callback:(data:Dictionary<any>)=>Dictionary<any>):void {
         this._listeners.splice(this._listeners.indexOf(callback), 1);
     };
 };
@@ -28,48 +23,22 @@ class EventSignal {
 
 // All Shard after events.
 export const afterEvents = {
-    tick: new EventSignal('tick'),
-    playerLoad: new EventSignal('playerLoad'),
+    /**Runs every server tick (1/20th seconds).
+     * 
+     * `data` is the data passed onto the next listener, this exists for separate listeners to be able to share resources to save performance.
+    */
+    tick: new TickEventSignal(),
 };
 
 
 
 // Tick loop.
 function tick() {
+    let data:Dictionary<any> = {};
     afterEvents.tick._listeners.forEach(listener => {
-        listener();
+        data = listener(data);
     });
     
     system.run(tick);
 };
 system.run(tick);
-
-
-// Player Load.
-world.afterEvents.playerJoin.subscribe(event => {
-    afterEvents.playerLoad._listeners.forEach(listener => {
-        const attempts:number = 10; // How many times it attempts to find the player.
-        const attempt_interval:number = 20; // Ticks between each attempt.
-        let attempt_count:number = 0;
-        function Attempt(event:PlayerJoinAfterEvent) {
-            attempt_count += 1;
-            // Quit if used all attempts.
-            if (attempt_count > attempts) {return};
-            const players:Array<Player> = world.getPlayers({name:event.playerName});
-            const player = players[0];
-            // If no player, try again.
-            if (player == undefined) {
-                system.runTimeout(Attempt.bind(this,event), attempt_interval);
-                return;
-            };
-
-            // If player found run listeners.
-            listener({
-                player: player,
-            });
-        };
-
-
-        Attempt(event);
-    });
-});

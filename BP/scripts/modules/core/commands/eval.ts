@@ -1,6 +1,8 @@
-import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {system, world, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import ShardCommand from '../../../ShardAPI/command';
 import ShardCommandContext from '../../../ShardAPI/command_context';
+system;
+world;
 
 
 

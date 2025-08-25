@@ -1,17 +1,17 @@
 import {world, system, Player, Entity} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
+import {Dictionary} from '../../../ShardAPI/CONST';
+import {GetAllEntities} from '../../../ShardAPI/util';
 import {Scoreboards, scoreboardsReady} from '../module';
 
 
 
 
-function Callback() {
-    if (scoreboardsReady == false) {return};
+function Callback(data:Dictionary<any>) {
+    if (scoreboardsReady == false) {return data};
 
-    const allEntities:Array<Entity> = world.getDimension('overworld').getEntities().concat(
-        world.getDimension('nether').getEntities().concat(
-        world.getDimension('the_end').getEntities()
-    ));
+    if (!data.allEntities) {data.allEntities = GetAllEntities()};
+    const allEntities = data.allEntities as Array<Entity>;
 
 
     allEntities.forEach(entity => {
@@ -38,6 +38,8 @@ function Callback() {
             Scoreboards['sh.tk.timePlayed.d'].addScore(entity, 1);
         };
     });
+
+    return data;
 };
 
 

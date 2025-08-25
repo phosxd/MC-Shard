@@ -19,7 +19,7 @@ export const Command = new ShardCommand(
     'Pushes all previous chat messages off-screen.',
     [],
     [],
-    CommandPermissionLevel.GameDirectors,
+    CommandPermissionLevel.Any,
     [],
     Callback,
 );

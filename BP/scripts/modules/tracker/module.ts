@@ -5,7 +5,7 @@ import ShardEventListener from '../../ShardAPI/event_listener';
 import ShardCommand from '../../ShardAPI/command';
 import ShardForm from '../../ShardAPI/form';
 // Import events.
-import * as event_playerLoad from './events/playerLoad';
+import * as event_playerSpawn from './events/playerSpawn';
 import * as event_entityDie from './events/entityDie';
 import * as event_tick from './events/tick';
 // Import forms.
@@ -16,7 +16,7 @@ import * as form_main from './forms/main';
 
 // Define module properties.
 var EventListeners:Dictionary<ShardEventListener> = {
-    playerLoad: event_playerLoad.EventListener,
+    playerSpawn: event_playerSpawn.EventListener,
     entityDie: event_entityDie.EventListener,
     tick: event_tick.EventListener,
 };
