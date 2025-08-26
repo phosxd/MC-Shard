@@ -1,4 +1,4 @@
-import {world, Vector2, Vector3, CommandPermissionLevel} from '@minecraft/server';
+import {world, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
 
 
@@ -234,11 +234,11 @@ export function CompareCommandPermissionLevel(a:CommandPermissionLevel, b:Comman
 
 
 /**Returns every entity in every dimension.*/
-export function GetAllEntities() {
+export function GetAllEntities(options?:EntityQueryOptions) {
     return [
-        ...world.getDimension('overworld').getEntities(),
-        ...world.getDimension('nether').getEntities(),
-        ...world.getDimension('the_end').getEntities(),
+        ...world.getDimension('overworld').getEntities(options),
+        ...world.getDimension('nether').getEntities(options),
+        ...world.getDimension('the_end').getEntities(options),
     ];
 };
 

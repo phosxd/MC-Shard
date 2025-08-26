@@ -7,6 +7,8 @@ import {Scoreboards} from '../module';
 
 function Callback(event:PlayerSpawnAfterEvent) {
     if (!event.initialSpawn) {return};
+    if (!event.player.hasTag('sh.tk.playerJoins')) {return};
+
     Scoreboards['sh.tk.playerJoins'].addScore(event.player, 1);
 };
 

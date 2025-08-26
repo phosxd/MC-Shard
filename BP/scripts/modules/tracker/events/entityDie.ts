@@ -7,6 +7,7 @@ import {Scoreboards} from '../module';
 
 function Callback(event:EntityDieAfterEvent) {
     if (event.deadEntity.typeId !== 'minecraft:player') {return};
+    if (!event.deadEntity.hasTag('sh.tk.playerDeaths')) {return};
 
     Scoreboards['sh.tk.playerDeaths'].addScore(event.deadEntity, 1);
 };
