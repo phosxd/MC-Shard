@@ -24,7 +24,7 @@ To get started, type `/sh:` in chat (but do not send) to view auto-completes for
 
 You can configure modules by using the `/module <module>` command. With this you can toggle, print data & reset data. Disabling a module will disable all it's commands & events. There is not yet a feature to disable individual commands or events.
 
-There are a bunch of useful commands from the `util` module to play around with to start off. Just remember this version of Shard is an early alpha & there are only a few features currently available.
+There are plenty of features to play around with & so many more to come! If you need any help, join the Discord & we will try our best.
 
 # Modules:
 ## `core`:
@@ -71,25 +71,36 @@ Some commands may also be removed from this module & re-implemented in other mod
 - `/rename`: Rename entities or held items.
 
 ## `tracker`:
-Provides entity statistics & current entity state tracking.
-This currently tracks all entities, but in the future you will need to apply a tag to entities you want to track.
+Provides entity statistics & current entity state tracking. Data is stored in scoreboards, or "sh.st" tags. Tracker tags must be applied to entities you want to track.
 
 **Upcoming Features:**
-- `Entity State Tracking`: Tags applied to entities in a certain states (like "jumping", "sneaking", "flying", ...).
 - `/stats`: Command to view stats of an entity.
 
 **Scoreboards:**
-- `sh.tk.playerJoins`: Player join count.
-- `sh.tk.playerDeaths`: Player death count.
-- `sh.tk.timePlayed.tt`: Time played in total ticks. (I forgot to add this one lol, so not currently available)
+- `sh.tk.timePlayed.tt`: Time played in total ticks.
 - `sh.tk.timePlayed.t`: Time played in ticks.
 - `sh.tk.timePlayed.s`: Time played in seconds.
 - `sh.tk.timePlayed.m`: Time played in minutes.
 - `sh.tk.timePlayed.h`: Time played in hours.
 - `sh.tk.timePlayed.d`: Time played in days.
+- `sh.tk.playerJoins`: Player join count.
+- `sh.tk.playerDeaths`: Player death count.
+- `sh.tk.holdingSlot`: Slot index the player is holding.
+- `sh.tk.health`: Entity health.
+
+**Trackers:**
+- `sh.tk.timePlayed`
+- `sh.tk.playerJoins`
+- `sh.tk.playerDeaths`
+- `sh.tk.holdingSlot`
+- `sh.tk.health`
+- `sh.tk.mobileState`
+
+**States:**
+- `sh.st.is[Jumping,Sneaking,Sprinting,Swimming,Falling,Flying,Gliding,Climbing,Sleeping,Emoting`
 
 ## `textdisplay`:
-Provides tools for interacting with text display entities.
+Provides tools for interacting with text display entities for holographic text & bossbars.
 
 ## `border`:
 Provides border tools. This is mostly unfinished as there is no style editor & only 1 default style ("hidden"). There is also no support for non-inverted borders yet.
@@ -115,7 +126,7 @@ Provides tools for rendering shapes in the world using particles.
 - `lifetime`: How long the render will be active.
 
 **Unavailable Drawing Options:**
-These are drawing options that are implemented but not currently available due to the custom command parameter limit of 8. I will add commands to save & draw presets that support all options.
+These are drawing options that are implemented but not currently available due to the custom command parameter limit of 8. I might add commands to save & draw presets that support all options.
 - `alpha_fade_in`: How long the opacity fade in transition lasts.
 - `alpha_sustain`: How long the opacity will sustain it's target value.
 - `alpha_fade_out`: How long the opacity fade out transition lasts.
@@ -137,7 +148,6 @@ These are drawing options that are implemented but not currently available due t
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
 - `clutter`: Removes dense groups of entities over a certain threshold. Can be configured to target or ignore certain entities.
-- `spy`: Implments commands for spying on players unnoticed, or for taking a peek inside player inventories. Great for trolling 👀
 - `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
 - `region`: Manage & create regions that affect world mutability & player abilities.
