@@ -22,13 +22,14 @@ If you followed the instructions perfectly, when entering your world you should 
 # Getting started:
 To get started, type `/sh:` in chat (but do not send) to view auto-completes for every command for every Shard module.
 
-You can configure modules by using the `/module <module>` command. With this you can toggle, print data & reset data. Disabling a module will also disable all it's commands. There is not yet a feature to disable individual commands.
+You can configure modules by using the `/module <module>` command. With this you can toggle, print data & reset data. Disabling a module will disable all it's commands & events. There is not yet a feature to disable individual commands or events.
 
 There are a bunch of useful commands from the `util` module to play around with to start off. Just remember this version of Shard is an early alpha & there are only a few features currently available.
 
 # Modules:
 ## `core`:
 Provides essential functionality for the add-on. Cannot be disabled.
+
 **Commands:**
 - `/shard`: Open the Shard menu.
 - `/module`: Configure a module.
@@ -38,6 +39,7 @@ Provides essential functionality for the add-on. Cannot be disabled.
 
 ## `util`:
 Provides various useful & handy commands. Not finished, more commands will be added.
+Some commands may also be removed from this module & re-implemented in other modules.
 
 **Upcoming Commands:**
 - `/lore`: Add lore text to an item.
@@ -68,8 +70,38 @@ Provides various useful & handy commands. Not finished, more commands will be ad
 - `/dupe`: Duplicate the item in your hand.
 - `/rename`: Rename entities or held items.
 
+## `tracker`:
+Provides entity statistics & current entity state tracking.
+This currently tracks all entities, but in the future you will need to apply a tag to entities you want to track.
+
+**Upcoming Features:**
+- `Entity State Tracking`: Tags applied to entities in a certain states (like "jumping", "sneaking", "flying", ...).
+- `/stats`: Command to view stats of an entity.
+
+**Scoreboards:**
+- `sh.tk.playerJoins`: Player join count.
+- `sh.tk.playerDeaths`: Player death count.
+- `sh.tk.timePlayed.tt`: Time played in total ticks. (I forgot to add this one lol, so not currently available)
+- `sh.tk.timePlayed.t`: Time played in ticks.
+- `sh.tk.timePlayed.s`: Time played in seconds.
+- `sh.tk.timePlayed.m`: Time played in minutes.
+- `sh.tk.timePlayed.h`: Time played in hours.
+- `sh.tk.timePlayed.d`: Time played in days.
+
 ## `textdisplay`:
 Provides tools for interacting with text display entities.
+
+## `border`:
+Provides border tools. This is mostly unfinished as there is no style editor & only 1 default style ("hidden"). There is also no support for non-inverted borders yet.
+
+**Upcoming Features:**
+- `Border Style Editor`: In the `border` module settings there will be UI where you can create border styles with options like flat color, physical blocks as border, particles, & render distance.
+- `Border Message`: In `border` module settings you will be able to set the message that the player sees when colliding with a border.
+
+**Commands:**
+- `/addborder`: Add a new border. Set inverted for world border.
+- `/removeborder`: Remove a border.
+- `/listborders`: List all borders.
 
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.
@@ -104,9 +136,7 @@ These are drawing options that are implemented but not currently available due t
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
-- `tracker`: Uses scoreboards & tags to track entity statistics, actions, & current state.
 - `clutter`: Removes dense groups of entities over a certain threshold. Can be configured to target or ignore certain entities.
-- `worldborder`: Adds a world-border for each dimension, with customizable particles & animations.
 - `spy`: Implments commands for spying on players unnoticed, or for taking a peek inside player inventories. Great for trolling 👀
 - `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
