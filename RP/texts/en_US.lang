@@ -86,14 +86,14 @@ shard.border.form.edit.killToggle=Remove this border?
 
 ## "textdisplay" module texts.
 shard.textdisplay.displayName=§r[§5Text Display§r]
-shard.textdisplay.description=Provides tools for interacting with text display entities.
-shard.textdisplay.form.main.body=...
-shard.textdisplay.form.main.guide.summon=Use "/summon" to spawn a "shard:text_display" entity with a name.
+shard.textdisplay.description=Provides tools for interacting with text display entities for holographic text & bossbars.
+shard.textdisplay.form.main.body=Use "/summon" to spawn a "shard:text_display" entity with a name. Edit the text display to change it's name or make it into a Bossbar.\n\n§cWarning: §rBossbars are glitchy & often require server restarts to update their text, going too far from one will also break it. The only solution is to delete & respawn the entity regularly using command blocks.
 shard.textDisplay.form.main.guide.edit=Click right below a text display entity to edit it.
 shard.textdisplay.form.main.viewAll=View All Text Displays
 shard.textdisplay.form.viewAll.body=Teleport to a text display.
 shard.textdisplay.form.edit.text=Text
 shard.textdisplay.form.edit.textPlaceholder=Enter display text here...
+shard.textdisplay.form.edit.isBossbar=Is Bossbar? (Glitchy sometimes)
 shard.textdisplay.form.edit.killToggle=Remove this display?
 
 ## "draw" module texts.

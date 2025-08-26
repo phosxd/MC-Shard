@@ -14,6 +14,7 @@ function BuildForm(context:ShardCommandContext, ...args):ShardFormBuildResult {
     const formData = new ModalFormData()
         .title(Module.displayName)
         .textField({translate:'shard.textdisplay.form.edit.text'}, {translate:'shard.textdisplay.form.edit.textPlaceholder'}, {defaultValue:textDisplay.nameTag})
+        .toggle({translate:'shard.textdisplay.form.edit.isBossbar'}, {defaultValue:textDisplay.getProperty('shard:mode') == 'bossbar'})
         .toggle({translate:'shard.textdisplay.form.edit.killToggle'}, {defaultValue:false})
     
     return {data:formData, callbackArgs:args};
@@ -23,10 +24,17 @@ function BuildForm(context:ShardCommandContext, ...args):ShardFormBuildResult {
 function Callback(context:ShardCommandContext, response:ModalFormResponse, ...args) {
     const textDisplay:Entity = args[0];
     // Kill if toggled.
-    if (response.formValues[1] == true) {
+    if (response.formValues[2] == true) {
         textDisplay.remove();
         return;
     };
+
+    // Set bossbar mode.
+    if (response.formValues[1] == true) {
+        textDisplay.triggerEvent('shard:bossbar_range_3');
+    }
+    else {textDisplay.triggerEvent('shard:text_display')};
+
     // Rename.
     textDisplay.nameTag = response.formValues[0] as string;
 };

@@ -4,7 +4,17 @@
 		"description": {
 			"identifier": "shard:text_display",
 			"is_spawnable": false,
-			"is_summonable": true
+			"is_summonable": true,
+			"properties": {
+				"shard:mode": {
+					"type": "enum",
+					"default": "text_display",
+					"values": [
+						"bossbar",
+						"text_display"
+					]
+				}
+			}
 		},
 		"components": {
 			"minecraft:physics": {
@@ -39,6 +49,92 @@
 						"swing": true
 					}
 				]
+			},
+			"minecraft:persistent": {}
+		},
+		"component_groups": {
+			"shard:bossbar_range_1": {
+				"minecraft:boss": {
+					"should_darken_sky": false,
+					"hud_range": 25,
+					"name": "Restart Server To Update Text"
+				}
+			},
+			"shard:bossbar_range_2": {
+				"minecraft:boss": {
+					"should_darken_sky": false,
+					"hud_range": 50,
+					"name": "Restart Server To Update Text"
+				}
+			},
+			"shard:bossbar_range_3": {
+				"minecraft:boss": {
+					"should_darken_sky": false,
+					"hud_range": 255,
+					"name": "Restart Server To Update Text"
+				}
+			}
+		},
+		"events": {
+			"shard:text_display": {
+				"remove": {
+					"component_groups": [
+						"shard:bossbar_range_1",
+						"shard:bossbar_range_2",
+						"shard:bossbar_range_3"
+					]
+				},
+				"set_property": {
+					"shard:mode": "text_display"
+				}
+			},
+			"shard:bossbar_range_1": {
+				"add": {
+					"component_groups": [
+						"shard:bossbar_range_1"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"shard:bossbar_range_2",
+						"shard:bossbar_range_3"
+					]
+				},
+				"set_property": {
+					"shard:mode": "bossbar"
+				}
+			},
+			"shard:bossbar_range_2": {
+				"add": {
+					"component_groups": [
+						"shard:bossbar_range_2"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"shard:bossbar_range_1",
+						"shard:bossbar_range_3"
+					]
+				},
+				"set_property": {
+					"shard:mode": "bossbar"
+				}
+			},
+			"shard:bossbar_range_3": {
+				"add": {
+					"component_groups": [
+						"shard:bossbar_range_3"
+					]
+				},
+				"remove": {
+					"component_groups": [
+						"shard:bossbar_range_1",
+						"shard:bossbar_range_2"
+					]
+				},
+				"set_property": {
+					"shard:mode": "bossbar"
+				}
 			}
 		}
 	}

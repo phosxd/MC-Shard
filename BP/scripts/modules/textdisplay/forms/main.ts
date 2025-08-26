@@ -11,7 +11,7 @@ import {Module} from '../module';
 function BuildForm(context:ShardCommandContext, ...args):ShardFormBuildResult {
     const formData = new ActionFormData()
         .title(Module.displayName)
-        .body({translate:'shard.textdisplay.form.main.guide.summon'})
+        .body({translate:'shard.textdisplay.form.main.body'})
         .label({translate:'shard.textdisplay.form.main.guide.edit'})
         .button({translate:'shard.textdisplay.form.main.viewAll'})
         .button({translate:'shard.formCommon.done'});

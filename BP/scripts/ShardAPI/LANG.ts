@@ -101,7 +101,7 @@ export const LANG = {
         },
         textdisplay: {
             displayName: '§0[§5Text Display§0]§r',
-            description: 'Provides tools for interacting with text display entities.',
+            description: 'Provides tools for interacting with text display entities for holographic text & bossbars.',
         },
         border: {
             displayName: '§r[§gBorder§r]',
