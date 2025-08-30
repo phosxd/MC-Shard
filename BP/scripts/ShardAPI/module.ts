@@ -64,6 +64,7 @@ export default class ShardModule {
         this.forms = forms;
         this.mainForm = mainForm;
         this.sessionData = {};
+        this.extraDefaultPersisData = extraDefaultPersisData;
         this.persisData = Object.assign({}, defaultPersisData);
         Object.assign(this.persisData, extraDefaultPersisData);
         this.persisDataReady = false;

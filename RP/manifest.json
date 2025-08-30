@@ -7,7 +7,7 @@
 	},
 	"header": {
 		"name": "Shard v0.0.2-stable",
-		"description": "Work in progress Bedrock server & realms add-on.",
+		"description": "JOIN: dsc.gg/mc-shard",
 		"min_engine_version": [
 			1,
 			21,
@@ -17,8 +17,8 @@
 		"pack_scope": "world",
 		"version": [
 			0,
-			0,
-			2
+			2,
+			0
 		]
 	},
 	"modules": [
@@ -28,7 +28,7 @@
 			"version": [
 				0,
 				0,
-				2
+				0
 			]
 		}
 	],
@@ -36,8 +36,8 @@
 		{
 			"uuid": "55f284d0-90ed-439c-bf35-3df11c35fa09",
 			"version": [
-				1,
 				0,
+				2,
 				0
 			]
 		}

@@ -12,8 +12,10 @@ import * as command_eval from './commands/eval';
 import * as command_module from './commands/module';
 // Import forms.
 import * as form_main from './forms/main';
-import * as form_module from './forms/module';
 import * as form_shard from './forms/shard';
+import * as form_module from './forms/module';
+import * as form_module_commands from './forms/module_commands';
+import * as form_module_command_settings from './forms/module_command_settings';
 
 
 
@@ -29,8 +31,10 @@ var Commands:Dictionary<ShardCommand> = {
     module: command_module.Command,
 };
 var Forms:Dictionary<ShardForm> = {
-    module: form_module.Form,
     shard: form_shard.Form,
+    module: form_module.Form,
+    module_commands: form_module_commands.Form,
+    module_command_settings: form_module_command_settings.Form,
 };
 
 

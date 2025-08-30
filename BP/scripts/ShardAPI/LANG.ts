@@ -36,7 +36,7 @@ export const LANG = {
                     run: 'Running provided code now.',
                 },
                 module: {
-                    info: '§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r',
+                    info: '\n§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r',
                     disabled: 'Disabled module §e%s§r.',
                     cannotDisable: 'Cannot disable §e%s§r module.',
                     enabled: 'Enabled module §e%s§r.',
@@ -120,6 +120,28 @@ export const LANG = {
                 listBorders: {
                     success: 'All Borders: %s',
                     noBorders: '§cThere are currently no borders.',
+                },
+            },
+            form: {},
+        },
+        region: {
+            displayName: '§r[§gRegion§r]',
+            description: 'Provides tools for managing regions.',
+            cmd: {
+                addRegion: {
+                    success: 'Added new region "§e%s§r" starting from %s & ending at %s.',
+                    nameTaken: '§cCannot create border with duplicate name.',
+                },
+                editRegion: {
+                    doesNotExist: ' §cCannot edit a region that does not exist.',
+                },
+                removeRegion: {
+                    success: 'Removed region "§e%s§r".',
+                    doesNotExist: '§cCannot delete a region that does not exist.',
+                },
+                listRegions: {
+                    success: 'All Regions: %s',
+                    noRegions: '§cThere are currently no regions.',
                 },
             },
             form: {},

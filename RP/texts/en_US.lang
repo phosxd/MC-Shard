@@ -12,7 +12,14 @@ shard.misc.targetLocationObstructed=§cTarget location is obstructed.
 shard.misc.woosh=Woosh!
 
 shard.misc.moduleOption.commands=Commands
-shard.misc.moduleOption.settings=Settings
+shard.misc.moduleOption.settings=Module
+shard.misc.moduleCommands.body=Select a command to edit.
+
+## General phrases & words.
+shard.general.command=Command
+shard.general.commands=Commands
+shard.general.settings=Settings
+shard.general.name=Name
 
 ## Common form texts.
 shard.formCommon.done=Done
@@ -20,13 +27,15 @@ shard.formCommon.dismiss=Dismiss
 shard.formCommon.okay=Okay
 shard.formCommon.yes=Yes
 shard.formCommon.no=No
+shard.formCommon.invalidLocation=§cExpected valid location. Try again.
+shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
 
 ## "core" module texts.
 shard.core.displayName=§r[§dShard§r]
 shard.core.description=Handles core functionality & module management.
 shard.core.cmd.discord.success=§9dsc.gg/mc-shard
 shard.core.cmd.eval.run=Running provided code now.
-shard.core.cmd.module.info=§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r
+shard.core.cmd.module.info=\n§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r
 shard.core.cmd.module.disable=Disabled module §e%s§r.
 shard.core.cmd.module.cannotDisable=Cannot disable §e%s§r module.
 shard.core.cmd.module.enable=Enabled module §e%s§r.
@@ -83,6 +92,37 @@ shard.border.form.edit.startPlaceholder=Border start position...
 shard.border.form.edit.text=End
 shard.border.form.edit.endPlaceholder=Border end position...
 shard.border.form.edit.killToggle=Remove this border?
+
+## "region" module texts.
+shard.region.displayName=§r[§gRegion§r]
+shard.region.description=Provides tools for managing regions.
+shard.region.cmd.addRegion.success=Added new region "§e%s§r" starting from %s & ending at %s.
+shard.region.cmd.addRegion.nameTaken=§cCannot create region with duplicate name.
+shard.region.cmd.removeRegion.success=Removed region "§e%s§r".
+shard.region.cmd.removeRegion.doesNotExist=§cCannot delete a region that does not exist.
+shard.region.cmd.editRegion.doesNotExist=§cCannot edit a region that does not exist.
+shard.region.cmd.listRegions.noRegions=§cThere are currently no regions.
+shard.region.cmd.listRegions.success=All Regions: %s
+shard.region.form.main.viewAll=View All Regions
+shard.region.form.viewAll.body=Edit a region.
+shard.region.form.edit.title=Edit Region
+shard.region.form.edit.name=Name
+shard.region.form.edit.namePlaceholder=Enter region name here...
+shard.region.form.edit.start=Start
+shard.region.form.edit.startPlaceholder=Region start position...
+shard.region.form.edit.end=End
+shard.region.form.edit.endPlaceholder=Region end position...
+shard.region.form.edit.inverted=Is inverted?
+shard.region.form.edit.general=General Settings
+shard.region.form.commands.addCommand=§2Add Command
+shard.region.form.addCommand.title=Add Command
+shard.region.form.addCommand.event=Event
+shard.region.form.addCommand.event.tick=On Tick
+shard.region.form.addCommand.event.enter=On Enter
+shard.region.form.addCommand.event.exit=On Exit
+shard.region.form.addCommand.command=Command
+shard.region.form.addCommand.commandPlaceholder=Enter command here...
+
 
 ## "textdisplay" module texts.
 shard.textdisplay.displayName=§r[§5Text Display§r]
