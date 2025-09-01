@@ -2,7 +2,7 @@ import {Dimension, Player, Vector2, Vector3, MolangVariableMap, RGBA} from '@min
 import {Dictionary, CardinalDirectionMap} from '../../ShardAPI/CONST';
 import ShardModule from '../../ShardAPI/module';
 import ShardEventListener from '../../ShardAPI/event_listener';
-import ShardCommand from '../../ShardAPI/command';
+import {ShardCommand} from '../../ShardAPI/command';
 import ShardForm from '../../ShardAPI/form';
 
 // Import commands.

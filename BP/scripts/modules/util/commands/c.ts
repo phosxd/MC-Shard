@@ -1,6 +1,5 @@
 import {system, Player, GameMode, CommandPermissionLevel} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 
 
 

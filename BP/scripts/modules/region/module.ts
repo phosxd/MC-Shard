@@ -2,7 +2,7 @@ import {system, world, RGBA} from '@minecraft/server';
 import {Dictionary, AlignedArea} from '../../ShardAPI/CONST';
 import ShardModule from '../../ShardAPI/module';
 import ShardEventListener from '../../ShardAPI/event_listener';
-import ShardCommand from '../../ShardAPI/command';
+import {ShardCommand} from '../../ShardAPI/command';
 import ShardForm from '../../ShardAPI/form';
 // Import events.
 import * as event_tick from './events/tick';

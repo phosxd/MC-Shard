@@ -1,6 +1,5 @@
 import {system, Player, Entity, Container, ItemStack, ItemDurabilityComponent, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 
 
 

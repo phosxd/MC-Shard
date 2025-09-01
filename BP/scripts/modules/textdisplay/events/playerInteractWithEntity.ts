@@ -1,6 +1,6 @@
 import {PlayerInteractWithEntityAfterEvent} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommandContext} from '../../../ShardAPI/command';
 import {Module} from '../module';
 
 

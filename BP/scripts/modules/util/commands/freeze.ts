@@ -1,6 +1,5 @@
 import {Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {FixVector3, FixVector2} from '../../../ShardAPI/util';
 import {Module} from '../module';
 

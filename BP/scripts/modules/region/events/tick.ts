@@ -1,7 +1,7 @@
 import {world, system, Dimension, Player, Entity, Vector3} from '@minecraft/server';
 import ShardEventListener from '../../../ShardAPI/event_listener';
 import {Dictionary} from '../../../ShardAPI/CONST';
-import {GetAllEntities, LocationInArea, AddVector3, SubtractVector3, NormalizeVector3, FlipVector3, GetClosestPointInArea} from '../../../ShardAPI/util';
+import {GetAllEntities, LocationInArea, LocationToString, GetAreaCenter} from '../../../ShardAPI/util';
 import {Module, Region, RegionCommand} from '../module';
 
 
@@ -27,7 +27,7 @@ function Callback(data:Dictionary<any>) {
                 const command:RegionCommand = region.commands[key];
                 if (command.event == 'tick') {
                     try {
-                        dimension.runCommand(command.command);
+                        dimension.runCommand('execute positioned '+LocationToString(GetAreaCenter(region.area))+' run '+command.command);
                     } catch {};
                 }
                 else if (command.event == 'tickEntity') {

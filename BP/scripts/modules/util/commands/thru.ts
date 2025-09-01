@@ -1,6 +1,6 @@
 import {system, Entity, Vector3, CommandPermissionLevel} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+
 
 const Lang = {
     noBlocks: 'No blocks in range to teleport through.',

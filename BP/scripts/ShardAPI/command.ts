@@ -1,12 +1,77 @@
-import {CustomCommandParameter, CommandPermissionLevel, Block, Entity, Player} from '@minecraft/server';
+import {CustomCommandParameter, CommandPermissionLevel, Dimension, RawMessage, Vector3, Vector2, CustomCommandStatus, Block, Entity, Player} from '@minecraft/server';
 import {Dictionary} from './CONST';
 import {CompareCommandPermissionLevel} from './util';
-import ShardCommandContext from './command_context';
-import ShardCommandResult from './command_result';
 
 
-// Class for Shard Commands.
-export default class ShardCommand {
+/**Command callbacks must return this. Allows rawtext.*/
+export interface ShardCommandResult {
+    message?: RawMessage|string,
+    status: CustomCommandStatus,
+};
+
+
+
+/**Class for command context.*/
+export class ShardCommandContext {
+    source: Block|Entity|Player; // The original executor of the command (If using slash commands, wil be the same as target).
+    sourceType: 'world'|'block'|'entity'|'player';
+    target: Block|Entity|Player; // The target executor of the command.
+    targetType: 'world'|'block'|'entity'|'player';
+    dimension: Dimension; // Dimension.
+    location: Vector3; // Location.
+    rotation: Vector2; // Rotation.
+
+
+    constructor(source:Block|Entity|Player, sourceType:'world'|'block'|'entity'|'player', target:Block|Entity|Player, targetType:'world'|'block'|'entity'|'player', dimension:Dimension, location:Vector3, rotation:Vector2) {
+        this.source = source;
+        this.sourceType = sourceType;
+        this.target = target;
+        this.targetType = targetType;
+        this.dimension = dimension;
+        this.location = location;
+        this.rotation = rotation;
+    };
+
+
+    /**Generate new context from an `Entity`, `Player`, or `Block`. */
+    static generate = (from:Block|Entity|Player) => {
+        let source: Block|Entity|Player;
+        let sourceType;
+        let target: Block|Entity|Player;
+        let targetType;
+        let dimension: Dimension|undefined;
+        let location: Vector3|undefined;
+        let rotation: Vector2|undefined;
+
+        if (from instanceof Player || from instanceof Entity) {
+            source = from;
+            sourceType = 'entity';
+            if (source.typeId == 'minecraft:player') {sourceType = 'player'};
+            target = source;
+            targetType = sourceType;
+            dimension = source.dimension;
+            location = source.location;
+            rotation = source.getRotation();
+        }
+        else if (from instanceof Block) {
+            source = from;
+            sourceType = 'block';
+            target = source;
+            targetType = sourceType;
+            dimension = source.dimension;
+            location = source.location;
+            rotation = {x:0,y:0};
+        };
+
+        return new ShardCommandContext(source, sourceType, target, targetType, dimension, location, rotation);
+    };
+};
+
+
+
+
+/**Class for custom commands.*/
+export class ShardCommand {
     id: string;
     description: string;
     mandatoryParameters: Array<CustomCommandParameter>;
@@ -37,28 +102,6 @@ export default class ShardCommand {
 
     /**Executes the command after checking player permissions.*/
     execute(context:ShardCommandContext, options:Array<any>): ShardCommandResult|undefined {
-        switch (context.targetType) {
-            case 'entity': {
-                if (this.permissionLevel !== CommandPermissionLevel.Any) {
-                    return this.illegal_callback(context, options);
-                };
-                break;
-            };
-            case 'player': {
-                const target = context.target as Player;
-                if (CompareCommandPermissionLevel(target.commandPermissionLevel, this.permissionLevel) == false) {
-                    return this.illegal_callback(context, options)
-                };
-                break;
-            };
-            case 'block': {
-                if (this.permissionLevel !== CommandPermissionLevel.GameDirectors) {
-                    return this.illegal_callback(context, options);
-                };
-                break;
-            };
-        };
-        
         return this.callback(context, options);
     };
 };

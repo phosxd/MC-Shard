@@ -1,7 +1,7 @@
 import {world, CommandPermissionLevel, Entity} from '@minecraft/server';
 import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
 import ShardForm from '../../../ShardAPI/form';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommandContext} from '../../../ShardAPI/command';
 import ShardFormBuildResult from '../../../ShardAPI/form_build_result';
 import {Module} from '../module';
 

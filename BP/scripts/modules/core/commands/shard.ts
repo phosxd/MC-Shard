@@ -1,6 +1,5 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {Module} from '../module';
 
 

@@ -1,6 +1,5 @@
 import {system, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, RGBA} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {RenderCuboid} from '../module';
 import {LocationToString, FixVector3} from '../../../ShardAPI/util';
 import {ParticleOptions} from '../module';

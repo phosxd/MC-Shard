@@ -1,6 +1,5 @@
 import {system, Player, Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 
 const min_slot:number = 0;
 const max_slot:number = 8;

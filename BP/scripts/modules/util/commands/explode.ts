@@ -1,6 +1,5 @@
 import {system, world, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {LocationToString} from '../../../ShardAPI/util';
 
 const default_radius:number = 4; // TNT explosion radius.

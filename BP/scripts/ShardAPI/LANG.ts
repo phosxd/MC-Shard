@@ -126,7 +126,7 @@ export const LANG = {
         },
         region: {
             displayName: '§r[§gRegion§r]',
-            description: 'Provides tools for managing regions.',
+            description: 'Provides regions to edit world mutability & player abilities.',
             cmd: {
                 addRegion: {
                     success: 'Added new region "§e%s§r" starting from %s & ending at %s.',

@@ -2,7 +2,7 @@ import {system, CommandPermissionLevel, RawMessage} from '@minecraft/server';
 import {ModalFormData, ModalFormResponse} from '@minecraft/server-ui';
 import {Dictionary} from '../../../ShardAPI/CONST';
 import ShardForm from '../../../ShardAPI/form';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommandContext} from '../../../ShardAPI/command';
 import {LocationToString, StringToLocation, AlignArea} from '../../../ShardAPI/util';
 import {Module, Region} from '../module';
 

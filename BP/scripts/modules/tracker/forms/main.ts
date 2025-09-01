@@ -1,7 +1,7 @@
 import {CommandPermissionLevel, RawMessage} from '@minecraft/server';
 import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
 import ShardForm from '../../../ShardAPI/form';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommandContext} from '../../../ShardAPI/command';
 import {Module, trackersList, scoreboardsList, statesList} from '../module';
 
 

@@ -1,7 +1,7 @@
 import {system, CommandPermissionLevel, Player, RawMessage} from '@minecraft/server';
 import {ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {CompareCommandPermissionLevel} from './util';
-import ShardCommandContext from './command_context';
+import {ShardCommandContext} from './command';
 import ShardFormBuildResult from './form_build_result';
 
 

@@ -1,6 +1,5 @@
 import {system, Dimension, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {LocationOutOfBounds} from '../../../ShardAPI/util';
 
 const MinRadius:number = 1;

@@ -1,6 +1,5 @@
 import {Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import ShardCommand from '../../../ShardAPI/command';
-import ShardCommandContext from '../../../ShardAPI/command_context';
+import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
 import {AlignedArea} from '../../../ShardAPI/CONST';
 import {AlignArea, LocationToString, RoundVector3} from '../../../ShardAPI/util';
 import {Module, Border} from '../module';

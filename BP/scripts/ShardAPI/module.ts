@@ -2,9 +2,7 @@ import {system, world, RawMessage, CustomCommandOrigin, CustomCommandSource, Cus
 import {Dictionary, CommandNamespace} from './CONST';
 import ShardEventListener from './event_listener';
 import * as ShardEventServer from './event_server';
-import ShardCommand from './command';
-import ShardCommandContext from './command_context';
-import ShardCommandResult from './command_result';
+import {ShardCommand, ShardCommandContext, ShardCommandResult} from './command';
 import ShardForm from './form';
 import {MCData} from './util';
 import * as RawMessageParser from './raw_message_parser';
