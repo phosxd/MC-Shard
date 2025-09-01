@@ -2,7 +2,7 @@ Shard is an upcoming all-in-one add-on for servers & realms! With a fully modula
 
 This is not a complete build! Many systems are subject to change.
 
-Version: **0.0.2**.
+Version: **0.2** (in-dev).
 
 # Installation:
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
