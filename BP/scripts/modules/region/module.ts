@@ -17,6 +17,7 @@ import * as form_edit from './forms/edit';
 import * as form_editGeneral from './forms/editGeneral';
 import * as form_commands from './forms/commands';
 import * as form_addCommand from './forms/addCommand';
+import * as form_editCommand from './forms/editCommand';
 
 
 export interface Region {
@@ -31,6 +32,13 @@ export interface RegionCommand {
     event: string,
     command: string,
 };
+
+export const commandEventIndexMap = [
+    'tick',
+    'tickEntity',
+    'onEnter',
+    'onExit',
+];
 
 
 // Define module properties.
@@ -48,6 +56,7 @@ var Forms:Dictionary<ShardForm> = {
     editGeneral: form_editGeneral.Form,
     commands: form_commands.Form,
     addCommand: form_addCommand.Form,
+    editCommand: form_editCommand.Form,
 };
 const ExtraDefaultPersisData:Dictionary<any> = {
     regions: {},

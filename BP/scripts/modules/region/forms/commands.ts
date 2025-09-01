@@ -12,8 +12,8 @@ function BuildForm(context:ShardCommandContext, ...args) {
     const regionCommandKeys:Array<string> = Object.keys(Module.persisData.regions[regionName].commands).sort();
 
     const formData = new ActionFormData()
-        .title({rawtext:[Module.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]})
-        .button({translate:'shard.region.form.edit.commands.add'})
+        .title({rawtext:[Module.displayName, {text:' - '}, {translate:'shard.region.form.commands.title'}]})
+        .button({translate:'shard.region.form.commands.add'})
     // Command buttons.
     regionCommandKeys.forEach(key => {
         formData.button(key);

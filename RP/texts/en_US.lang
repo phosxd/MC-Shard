@@ -29,6 +29,8 @@ shard.formCommon.yes=Yes
 shard.formCommon.no=No
 shard.formCommon.invalidLocation=§cExpected valid location. Try again.
 shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
+shard.formCommon.duplicateName=§cExpected unique name. Try again.
+shard.formCommon.invalidName=§cName contains invalid characters. Try again.
 
 ## "core" module texts.
 shard.core.displayName=§r[§dShard§r]
@@ -114,14 +116,23 @@ shard.region.form.edit.end=End
 shard.region.form.edit.endPlaceholder=Region end position...
 shard.region.form.edit.inverted=Is inverted?
 shard.region.form.edit.general=General Settings
-shard.region.form.commands.addCommand=§2Add Command
+shard.region.form.edit.commands=Commands
+shard.region.form.commands.title=Region Commands
+shard.region.form.commands.add=§2Add Command
+shard.region.form.addCommand.name=Name
+shard.region.form.addCommand.namePlaceholder=Enter unique name for this...
 shard.region.form.addCommand.title=Add Command
+shard.region.form.addCommand.editTitle=Edit Command
 shard.region.form.addCommand.event=Event
+shard.region.form.addCommand.eventTooltip=Determines when to run the command.\n\n- "tickEntity": runs the command *as* the entity.
 shard.region.form.addCommand.event.tick=On Tick
+shard.region.form.addCommand.event.tickEntity=On Entity Tick
 shard.region.form.addCommand.event.enter=On Enter
 shard.region.form.addCommand.event.exit=On Exit
 shard.region.form.addCommand.command=Command
 shard.region.form.addCommand.commandPlaceholder=Enter command here...
+shard.region.form.addCommand.invalidCommandLength=§cCommand must be at least %s characters long.
+shard.region.form.addCommand.remove=Remove command?
 
 
 ## "textdisplay" module texts.
@@ -141,3 +152,11 @@ shard.draw.displayName=§r[§cD§er§aa§9w§r]
 shard.draw.description=Provides tools for rendering shapes in the world using particles.
 shard.draw.cmd.drawsquare.success=Rendering sqaure at %s for %s clients.
 shard.draw.cmd.drawsquare.success=Rendering cuboid at %s for %s clients.
+
+## "fun" module texts.
+shard.fun.displayName=§r[§dFun§r]
+shard.fun.description=Some silly stuff.
+shard.fun.cmd.crash.success=Well, you asked for this...
+shard.fun.cmd.party.success=Now partying with %s friends!
+shard.fun.cmd.party.noFriends=Trying to party by yourself? Sadge...
+shard.fun.cmd.party.alreadyPartying=§cYou are already partying!

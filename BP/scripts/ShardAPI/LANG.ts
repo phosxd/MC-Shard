@@ -158,6 +158,20 @@ export const LANG = {
                 },
             },
         },
+        fun: {
+            displayName: '§r[§dFun§r]',
+            description: 'Some silly stuff.',
+            cmd: {
+                crash: {
+                    success: 'Well, you asked for this...',
+                },
+                party: {
+                    success: 'Now partying with %s friends!',
+                    noFriends: 'Trying to party by yourself? Sadge...',
+                    alreadyPartying: '§cYou are already partying!',
+                },
+            },
+        },
     },
 };
 

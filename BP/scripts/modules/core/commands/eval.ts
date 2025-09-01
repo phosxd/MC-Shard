@@ -7,8 +7,8 @@ world;
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let code:string = Options[0];
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    let code:string = args[0];
     return {message:eval(code), status:0};
 };
 

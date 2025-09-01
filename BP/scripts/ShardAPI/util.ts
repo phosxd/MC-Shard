@@ -56,8 +56,11 @@ export function LocationOutOfBounds(location:Vector3):boolean {
 };
 
 
-/**Returns a new Vector3 with subtracted values.*/
-export function AddVector3(a:Vector3, b:Vector3):Vector3 {
+/**Returns a new Vector3 with added values.*/
+export function AddVector3(a:Vector3, b:Vector3|number):Vector3 {
+    if (typeof b == 'number') {
+        b = {x:b, y:b, z:b};
+    };
     return {
         x: a.x+b.x,
         y: a.y+b.y,
@@ -67,7 +70,10 @@ export function AddVector3(a:Vector3, b:Vector3):Vector3 {
 
 
 /**Returns a new Vector3 with subtracted values.*/
-export function SubtractVector3(a:Vector3, b:Vector3):Vector3 {
+export function SubtractVector3(a:Vector3, b:Vector3|number):Vector3 {
+    if (typeof b == 'number') {
+        b = {x:b, y:b, z:b};
+    };
     return {
         x: a.x-b.x,
         y: a.y-b.y,

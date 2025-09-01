@@ -30,6 +30,7 @@ export const ModuleNames = [
     'region',
     'textdisplay',
     'draw',
+    'fun'
 ];
 
 /**Modules that cannot be disabled during run-time.*/

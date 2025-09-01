@@ -25,10 +25,16 @@ function Callback(data:Dictionary<any>) {
 
             for (const key in region.commands) {
                 const command:RegionCommand = region.commands[key];
-                if (command.event !== 'tick') {continue};
-                try {
-                    dimension.runCommand(command.command);
-                } catch {};
+                if (command.event == 'tick') {
+                    try {
+                        dimension.runCommand(command.command);
+                    } catch {};
+                }
+                else if (command.event == 'tickEntity') {
+                    try {
+                        entity.runCommand(command.command);
+                    } catch {};
+                };
             };
         };
     });
