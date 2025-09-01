@@ -114,6 +114,18 @@ Provides border tools. This is mostly unfinished as there is no style editor & o
 - `/removeborder`: Remove a border.
 - `/listborders`: List all borders.
 
+## `region`:
+Provides tools for managing regions. This is mostly unfinished as there are missing command events & no region rules to change.
+
+**Upcoming Features:**
+- `More Command Events`: more command events to choose from in region command editor, like "On Enter", "On Exit", "On Break Block", "On Place Block", & "On Use Item".
+- `Region Rules`: a UI to change various rules for the region, such as "Can Break Blocks", "Can Place Blocks", "Can Interact With Blocks", "Can Hit Entities", "Can Drop Items", "Can Throw Items", "Can Shoot Bows", & "Can Explode Entities". Each rule could have unique settings to change & targes to affect.
+
+**Commands:**
+- `/addregion`: Add a new region.
+- `/removeregion`: Remove a region.
+- `/listregions`: List all regions.
+
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.
 
@@ -150,4 +162,3 @@ Join the Discord to see more potential modules. There are plently more modules t
 - `clutter`: Removes dense groups of entities over a certain threshold. Can be configured to target or ignore certain entities.
 - `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
-- `region`: Manage & create regions that affect world mutability & player abilities.
