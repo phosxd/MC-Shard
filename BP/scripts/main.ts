@@ -9,9 +9,6 @@ import './ShardAPI/LANG';
 import './ShardAPI/util';
 import './ShardAPI/raw_message_parser';
 
-// Interfaces.
-import './ShardAPI/form_build_result';
-
 // Classes & their interfaces.
 import './ShardAPI/module';
 import './ShardAPI/event_listener';

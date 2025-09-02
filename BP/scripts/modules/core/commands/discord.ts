@@ -13,11 +13,12 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    'discord',
-    'Get link to the Discord server.',
-    [],
-    [],
-    CommandPermissionLevel.Any,
-    [],
-    Callback,
+    {
+        id: 'discord',
+        brief: 'Get link to the Discord server.',
+        permissionLevel: CommandPermissionLevel.Any,
+    },
+    {
+        callback: Callback,
+    }
 );

@@ -1,6 +1,6 @@
 import {CommandPermissionLevel, RawMessage} from '@minecraft/server';
 import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import ShardForm from '../../../ShardAPI/form';
+import {ShardForm} from '../../../ShardAPI/form';
 import {ShardCommandContext} from '../../../ShardAPI/command';
 import {Module} from '../module';
 
@@ -9,7 +9,7 @@ import {Module} from '../module';
 
 function BuildForm(context:ShardCommandContext, ...args) {
     const formData = new ActionFormData()
-        .title(Module.displayName)
+        .title(Module.details.displayName)
         .body('')
         .button({translate:'shard.formCommon.done'});
     
@@ -28,9 +28,12 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
 
 // Initialize form.
 export const Form:ShardForm = new ShardForm(
-    'main',
-    CommandPermissionLevel.Admin,
-    [],
-    BuildForm,
-    Callback,
+    {
+        id: 'main',
+        permissionLevel: CommandPermissionLevel.Admin,
+    },
+    {
+        buildForm: BuildForm,
+        callback: Callback,
+    },
 );

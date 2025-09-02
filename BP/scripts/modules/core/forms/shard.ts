@@ -1,7 +1,7 @@
 import {CommandPermissionLevel} from '@minecraft/server';
 import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import ShardForm from '../../../ShardAPI/form';
-import ShardModule from '../../../ShardAPI/module';
+import {ShardForm} from '../../../ShardAPI/form';
+import {ShardModule} from '../../../ShardAPI/module';
 import {ShardCommandContext} from '../../../ShardAPI/command';
 import {Module} from '../module';
 
@@ -30,9 +30,12 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
 
 // Initialize form.
 export const Form:ShardForm = new ShardForm(
-    'module',
-    CommandPermissionLevel.Any,
-    [],
-    BuildForm,
-    Callback,
+    {
+        id: 'shard',
+        permissionLevel: CommandPermissionLevel.Any,
+    },
+    {
+        buildForm: BuildForm,
+        callback: Callback,
+    },
 );

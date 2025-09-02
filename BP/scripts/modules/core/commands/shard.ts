@@ -5,8 +5,8 @@ import {Module} from '../module';
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    Module.forms.shard.show(Context);
+function Callback(context:ShardCommandContext, ...args) {
+    Module.forms.shard.show(context);
     return undefined;
 };
 
@@ -15,11 +15,12 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    'shard',
-    'Open the Shard menu.',
-    [],
-    [],
-    CommandPermissionLevel.Any,
-    [],
-    Callback,
+    {
+        id: 'shard',
+        brief: 'Shard info.',
+        permissionLevel: CommandPermissionLevel.Any
+    },
+    {
+        callback: Callback,
+    }
 );

@@ -16,7 +16,7 @@ system.runTimeout(()=>{
 
 function moduleConfig(context:ShardCommandContext, module_key:string) {
     const module:ShardModule = Modules[module_key];
-    Modules.core.forms.module.show(context, module);
+    module.forms.module.show(context, module);
     return undefined;
 };
 
@@ -27,13 +27,13 @@ function moduleActionInfo(context:ShardCommandContext, module_key:string) {
     let commandList:Array<string> = [''];
     for (let key in module.commands) {
         let value:ShardCommand = module.commands[key];
-        commandList.push(value.id);
+        commandList.push(value.details.id);
     };
     commandList = commandList.sort(); // Sort alphabetically.
     let commandListString:string = commandList.join('\n §r- §e/');
 
     // Return message.
-    return {message:{translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.id}, module.description, {text:commandListString}]}}, status:0};
+    return {message:{translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.details.id}, module.details.brief, {text:commandListString}]}}, status:0};
 };
 
 
@@ -96,25 +96,18 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    'module',
-    'Open module configuration UI, or perform actions.',
-    [
-        {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum}
-    ],
-    [
-        {name:CommandNamespace+':'+'moduleAction', type:CustomCommandParamType.Enum},
-    ],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
     {
-        module: ModuleNames,
-        moduleAction: [
-            'info',
-            'disable',
-            'enable',
-            'clearData',
-            'printData',
+        id: 'module',
+        brief: 'Open module configuration UI, or perform actions.',
+        permissionLevel: CommandPermissionLevel.Admin,
+        mandatoryParameters: [
+            {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum},
         ],
+        optionalParameters: [
+            {name:CommandNamespace+':'+'moduleAction', type:CustomCommandParamType.Enum},
+        ],
+    },
+    {
+        callback: Callback,
     },
 );

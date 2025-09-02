@@ -6,6 +6,6 @@ import ShardModule from '../ShardAPI/module';
 export var Modules:Dictionary<ShardModule> = {};
 ModuleNames.forEach(name => {
     import(`./${name}/module`).then(module => {
-        Modules[module.Module.id] = module.Module;
+        Modules[module.Module.details.id] = module.Module;
     });
 });

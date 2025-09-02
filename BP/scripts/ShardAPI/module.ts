@@ -8,32 +8,63 @@ import {MCData} from './util';
 import * as RawMessageParser from './raw_message_parser';
 
 
-const EventSources:Dictionary<any> = {
+export const EventSources:Dictionary<any> = {
     'world': world,
     'system': system,
     'shard': ShardEventServer,
 };
-const defaultPersisData:Dictionary<any> = {
+export const defaultPersisData:Dictionary<any> = {
     enabled: true,
+    commandSettings: {},
+};
+
+
+
+/**Module details for initialization.*/
+export interface ShardModuleDetails {
+    /**Unique module ID.*/
+    id: string,
+    /**Module display name.*/
+    displayName: RawMessage,
+    /**Brief module description.*/
+    brief: RawMessage,
+    /**Features or other modules that this module depends on.*/
+    dependencies?: {
+        features?: Array<string>,
+        modules?: Array<string>
+    },
+};
+
+
+export interface ShardModuleData {
+    init: ()=>void,
+    eventListeners: Dictionary<ShardEventListener>,
+    commands: Dictionary<ShardCommand>,
+    commandEnums: Dictionary<Array<string>>,
+    forms: Dictionary<ShardForm>,
+    mainForm: ShardForm,
+    extraDefaultPersisData?: Dictionary<any>,
 };
 
 
 
 
-export default class ShardModule {
-    /**Unique string identifier.*/
-    readonly id: string;
-    /**Module display name.*/
-    displayName: RawMessage;
-    /**Brief module description.*/
-    description: RawMessage;
+export class ShardModule {
+    /**Module details.*/
+    readonly details: ShardModuleDetails;
     /**Called when the module is initialized.*/
     init: () => void;
+    /**Event listeners.*/
     eventListeners: Dictionary<ShardEventListener>;
+    /**Commands.*/
     commands: Dictionary<ShardCommand>;
+    /**Command enums.*/
+    commandEnums: Dictionary<Array<string>>;
+    /**Forms.*/
     forms: Dictionary<ShardForm>;
-    /**Main form for the module.*/
+    /**Main form for this module.*/
     mainForm: ShardForm;
+    /**Additional default persistent data.*/
     extraDefaultPersisData: Dictionary<any>;
 
     /**Arbitrary data for the module. Will be lost after restart.*/
@@ -52,19 +83,20 @@ export default class ShardModule {
     worldReady: boolean 
 
 
-    constructor(id:string, displayName:RawMessage, description:RawMessage, init:()=>void, eventListeners:Dictionary<ShardEventListener>, commands:Dictionary<ShardCommand>, forms:Dictionary<ShardForm>, mainForm:ShardForm, extraDefaultPersisData:Dictionary<any>={}) {
-        this.id = id;
-        this.displayName = displayName;
-        this.description = description;
-        this.init = init;
-        this.eventListeners = eventListeners;
-        this.commands = commands;
-        this.forms = forms;
-        this.mainForm = mainForm;
+    constructor(details:ShardModuleDetails, data:ShardModuleData) {
+        this.details = details;
+        this.init = data.init;
+        this.eventListeners = data.eventListeners;
+        this.commands = data.commands;
+        this.commandEnums = data.commandEnums;
+        this.forms = data.forms;
+        this.mainForm = data.mainForm;
+
         this.sessionData = {};
-        this.extraDefaultPersisData = extraDefaultPersisData;
+        if (data.extraDefaultPersisData) {this.extraDefaultPersisData = data.extraDefaultPersisData}
+        else {this.extraDefaultPersisData = {}};
         this.persisData = Object.assign({}, defaultPersisData);
-        Object.assign(this.persisData, extraDefaultPersisData);
+        Object.assign(this.persisData, data.extraDefaultPersisData);
         this.persisDataReady = false;
         this.worldReady = false;
 
@@ -87,25 +119,24 @@ export default class ShardModule {
         });
 
 
-        // Register custom commands & their enums.
+        // Register custom commands & custom enums.
         system.beforeEvents.startup.subscribe(event => {
-            Object.keys(this.commands).forEach(key => {
-                let command = this.commands[key];
-                // Register enums.
-                for (let key in command.registerEnums) {
-                    let values:Array<string> = command.registerEnums[key];
-                    if (values == undefined) {return};
-                    event.customCommandRegistry.registerEnum(CommandNamespace+':'+key, values);
-                };
-                // Register command.
+            // Register enums.
+            for (const key in this.commandEnums) {
+                const values:Array<string> = this.commandEnums[key];
+                event.customCommandRegistry.registerEnum(CommandNamespace+':'+key, values);
+            };
+            // Register commands.
+            for (const key in this.commands) {
+                const command:ShardCommand = this.commands[key];
                 event.customCommandRegistry.registerCommand({
-                    name: CommandNamespace+':'+command.id,
-                    description: command.description,
-                    permissionLevel: command.permissionLevel,
-                    mandatoryParameters: command.mandatoryParameters,
-                    optionalParameters: command.optionalParameters,
+                    name: CommandNamespace+':'+command.details.id,
+                    description: command.details.brief,
+                    permissionLevel: command.details.permissionLevel,
+                    mandatoryParameters: command.details.mandatoryParameters,
+                    optionalParameters: command.details.optionalParameters,
                 }, this.slashCommandPassthrough.bind(this, command));
-            });
+            };
         });
 
 
@@ -130,7 +161,7 @@ export default class ShardModule {
 
     /**Get persistent data saved in MC `world` dynamic properties.*/
     getData():Dictionary<any>|undefined {
-        return MCData.get(this.id);
+        return MCData.get(this.details.id);
     };
 
     
@@ -148,7 +179,7 @@ export default class ShardModule {
 
     /**Save `persisData` using `MCData` API in `ShardAPI/util`*/
     saveData():void {
-        MCData.set(this.id, this.persisData);
+        MCData.set(this.details.id, this.persisData);
     };
 
 
@@ -162,10 +193,10 @@ export default class ShardModule {
 
 
     /**Passthrough for all slash commands of this module.*/
-    slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...Options):CustomCommandResult|undefined {
+    slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...args):CustomCommandResult|undefined {
         // Return error message if module disabled.
         if (this.persisData.enabled == false) {
-            return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.id]}), status:1};
+            return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.details.id]}), status:1};
         };
 
         let context:ShardCommandContext
@@ -185,7 +216,7 @@ export default class ShardModule {
             );
         };
 
-        let result:ShardCommandResult|undefined = Command.execute(context, Options);
+        let result:ShardCommandResult|undefined = Command.execute(context, args);
 
         // Modify result message to include module name.
         if (result !== undefined) {
@@ -194,7 +225,7 @@ export default class ShardModule {
             if (typeof result.message == 'string') {resultMessage = {text:result.message}}
             else {resultMessage = result.message};
             // Apply module display name then return message.
-            const newMessage = {rawtext: [this.displayName, {text:' '}, resultMessage]};
+            const newMessage = {rawtext: [this.details.displayName, {text:' '}, resultMessage]};
             return {message:RawMessageParser.rawMessageToString(newMessage), status:result.status};
         };
 

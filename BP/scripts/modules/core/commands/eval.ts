@@ -16,13 +16,15 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
 // Initialize Command.
 export const Command = new ShardCommand(
-    'eval',
-    'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',
-    [
-        {name:'code', type:CustomCommandParamType.String},
-    ],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+    {
+        id: 'eval',
+        brief: 'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'code', type:CustomCommandParamType.String},
+        ],
+    },
+    {
+        callback: Callback,
+    },
 );

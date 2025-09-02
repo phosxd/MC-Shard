@@ -1,11 +1,12 @@
 import {Dictionary} from '../../ShardAPI/CONST';
-import ShardModule from '../../ShardAPI/module';
+import {ShardModule} from '../../ShardAPI/module';
 import ShardEventListener from '../../ShardAPI/event_listener';
 import {ShardCommand} from '../../ShardAPI/command';
-import ShardForm from '../../ShardAPI/form';
+import {ShardForm} from '../../ShardAPI/form';
 // Import events.
 import * as event_playerSpawn from './events/playerSpawn';
 // Import commands.
+import CommandEnums from './commandEnums';
 import * as command_shard from './commands/shard';
 import * as command_discord from './commands/discord';
 import * as command_eval from './commands/eval';
@@ -49,12 +50,17 @@ function Init() {};
 
 // Instantiate Module.
 export const Module:ShardModule = new ShardModule(
-    'core', // ID
-    {translate:'shard.core.displayName'}, // Display name
-    {translate:'shard.core.description'}, // Description
-    Init,
-    EventListeners,
-    Commands,
-    Forms,
-    form_main.Form,
+    {
+        id: 'core',
+        displayName: {translate:'shard.core.displayName'},
+        brief: {translate:'shard.core.description'},
+    },
+    {
+        init: Init,
+        eventListeners: EventListeners,
+        commands: Commands,
+        commandEnums: CommandEnums,
+        forms: Forms,
+        mainForm: form_main.Form,
+    },
 );

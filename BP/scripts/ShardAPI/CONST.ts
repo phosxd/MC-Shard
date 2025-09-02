@@ -11,7 +11,7 @@ export const Namespace:string = 'sh';
 export const CommandNamespace:string = Namespace;
 
 /**The current version of the add-on.*/
-export const Version:Array<number> = [0,0,2];
+export const Version:Array<number> = [0,2,0];
 /**Version as a string value. Derived from `Version`.*/
 export const VersionString:string = Version.join('.');
 /**Build number used for integral versioning. Derived from `Version`.*/
@@ -24,13 +24,15 @@ export const BuildNumber = VersionToBuildNumber(Version);
 */
 export const ModuleNames = [
     'core',
+    /**
     'util',
     'tracker',
     'border',
     'region',
     'textdisplay',
     'draw',
-    'fun'
+    'fun',
+    */
 ];
 
 /**Modules that cannot be disabled during run-time.*/
