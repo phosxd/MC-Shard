@@ -1,8 +1,8 @@
-import {Dictionary} from '../../ShardAPI/CONST';
-import {ShardModule} from '../../ShardAPI/module';
-import ShardEventListener from '../../ShardAPI/event_listener';
-import {ShardCommand} from '../../ShardAPI/command';
-import {ShardForm} from '../../ShardAPI/form';
+import {Dictionary} from '../../Shard/CONST';
+import {ShardModule} from '../../Shard/module';
+import {ShardListener} from '../../Shard/listener';
+import {ShardCommand} from '../../Shard/command';
+import {ShardForm} from '../../Shard/form';
 // Import events.
 import * as event_playerSpawn from './events/playerSpawn';
 // Import commands.
@@ -22,8 +22,8 @@ import * as form_module_command_settings from './forms/module_command_settings';
 
 
 // Define module properties.
-var EventListeners:Dictionary<ShardEventListener> = {
-    playerSpawn: event_playerSpawn.EventListener,
+var Listeners:Dictionary<ShardListener> = {
+    playerSpawn: event_playerSpawn.Listener,
 };
 var Commands:Dictionary<ShardCommand> = {
     shard: command_shard.Command,
@@ -53,11 +53,11 @@ export const Module:ShardModule = new ShardModule(
     {
         id: 'core',
         displayName: {translate:'shard.core.displayName'},
-        brief: {translate:'shard.core.description'},
+        brief: {translate:'shard.core.brief'},
     },
     {
         init: Init,
-        eventListeners: EventListeners,
+        listeners: Listeners,
         commands: Commands,
         commandEnums: CommandEnums,
         forms: Forms,

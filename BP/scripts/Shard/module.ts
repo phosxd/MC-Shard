@@ -1,9 +1,9 @@
 import {system, world, RawMessage, CustomCommandOrigin, CustomCommandSource, CustomCommandResult} from '@minecraft/server';
 import {Dictionary, CommandNamespace} from './CONST';
-import ShardEventListener from './event_listener';
+import {ShardListener} from './listener';
 import * as ShardEventServer from './event_server';
 import {ShardCommand, ShardCommandContext, ShardCommandResult} from './command';
-import ShardForm from './form';
+import {ShardForm} from './form';
 import {MCData} from './util';
 import * as RawMessageParser from './raw_message_parser';
 
@@ -38,7 +38,7 @@ export interface ShardModuleDetails {
 
 export interface ShardModuleData {
     init: ()=>void,
-    eventListeners: Dictionary<ShardEventListener>,
+    listeners: Dictionary<ShardListener>,
     commands: Dictionary<ShardCommand>,
     commandEnums: Dictionary<Array<string>>,
     forms: Dictionary<ShardForm>,
@@ -55,7 +55,7 @@ export class ShardModule {
     /**Called when the module is initialized.*/
     init: () => void;
     /**Event listeners.*/
-    eventListeners: Dictionary<ShardEventListener>;
+    listeners: Dictionary<ShardListener>;
     /**Commands.*/
     commands: Dictionary<ShardCommand>;
     /**Command enums.*/
@@ -86,7 +86,7 @@ export class ShardModule {
     constructor(details:ShardModuleDetails, data:ShardModuleData) {
         this.details = details;
         this.init = data.init;
-        this.eventListeners = data.eventListeners;
+        this.listeners = data.listeners;
         this.commands = data.commands;
         this.commandEnums = data.commandEnums;
         this.forms = data.forms;
@@ -113,9 +113,9 @@ export class ShardModule {
         });
 
         // Register event listeners.
-        Object.keys(this.eventListeners).forEach(key => {
-            let listener = this.eventListeners[key];
-            EventSources[listener.source][`${listener.type}Events`][listener.eventId].subscribe(this.eventListenerPassthrough.bind(this, listener));
+        Object.keys(this.listeners).forEach(key => {
+            let listener = this.listeners[key];
+            EventSources[listener.details.source][`${listener.details.type}Events`][listener.details.eventId].subscribe(this.listenerPassthrough.bind(this, listener));
         });
 
 
@@ -186,9 +186,9 @@ export class ShardModule {
 
 
     /**Passthrough for all event listeners of this module.*/
-    eventListenerPassthrough(Listener:ShardEventListener, ...args) {
+    listenerPassthrough(listener:ShardListener, ...args) {
         if (this.persisData.enabled == false) {return};
-        return Listener.callback(...args);
+        return listener.callback(...args);
     };
 
 

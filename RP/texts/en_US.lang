@@ -31,10 +31,16 @@ shard.formCommon.invalidLocation=§cExpected valid location. Try again.
 shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
 shard.formCommon.duplicateName=§cExpected unique name. Try again.
 shard.formCommon.invalidName=§cName contains invalid characters. Try again.
+shard.formError.outOfRange=§c"%s" should be between %s & %s.
+shard.formError.outOfRangeLength=§c"%s" length should be between %s & %s.
+shard.formError.invalidStep=§c"%s" expected a step of %s.
+shard.formError.invalidLocation=§c"%s" expected a valid location.
+shard.formError.invalidSelector=§c"%s" expected a valid entity selector.
+shard.formError.invalidCharacters=§c"%s" contains invalid characters.
 
 ## "core" module texts.
 shard.core.displayName=§r[§dShard§r]
-shard.core.description=Handles core functionality & module management.
+shard.core.brief=Handles core functionality & module management.
 shard.core.cmd.discord.success=§9dsc.gg/mc-shard
 shard.core.cmd.eval.run=Running provided code now.
 shard.core.cmd.module.info=\n§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r
@@ -48,7 +54,7 @@ shard.core.form.shard.body=§eRepo: §9github.com/phosxd/mc-shard§r\nJoin the D
 
 ## "util" module texts.
 shard.util.displayName=§r[§gSimple Utility§r]
-shard.util.description=Provides various helpful commands.
+shard.util.brief=Provides various helpful commands.
 shard.util.cmd.despawn.success=Removed %s entities.
 shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.
 shard.util.cmd.drain.radiusOutOfBounds=Radius must be between 1 & 50.
@@ -71,12 +77,12 @@ shard.util.cmd.setslot.slotIndexOutOfRange=Slot index must be between 0 & 8.
 
 ## "tracker" module texts.
 shard.tracker.displayName=§r[§3Tracker§r]
-shard.tracker.description=Provides entity statistics & current entity state tracking.
+shard.tracker.brief=Provides entity statistics & current entity state tracking.
 shard.trackers.form.main.body=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
 
 ## "border" module texts.
 shard.border.displayName=§r[§gBorder§r]
-shard.border.description=Provides border tools.
+shard.border.brief=Provides border tools.
 shard.border.cmd.addBorder.success=Added new border "§e%s§r" starting from %s & ending at %s.
 shard.border.cmd.addBorder.nameTaken=§cCannot create border with duplicate name.
 shard.border.cmd.addBorder.invalidStyle=§cCannot create border with invalid style. Available styles: %s.
@@ -97,7 +103,7 @@ shard.border.form.edit.killToggle=Remove this border?
 
 ## "region" module texts.
 shard.region.displayName=§r[§gRegion§r]
-shard.region.description=Provides tools for managing regions.
+shard.region.brief=Provides regions to edit world mutability & player abilities.
 shard.region.cmd.addRegion.success=Added new region "§e%s§r" starting from %s & ending at %s.
 shard.region.cmd.addRegion.nameTaken=§cCannot create region with duplicate name.
 shard.region.cmd.removeRegion.success=Removed region "§e%s§r".
@@ -137,7 +143,7 @@ shard.region.form.addCommand.remove=Remove command?
 
 ## "textdisplay" module texts.
 shard.textdisplay.displayName=§r[§5Text Display§r]
-shard.textdisplay.description=Provides tools for interacting with text display entities for holographic text & bossbars.
+shard.textdisplay.brief=Provides tools for interacting with text display entities for holographic text & bossbars.
 shard.textdisplay.form.main.body=Use "/summon" to spawn a "shard:text_display" entity with a name. Edit the text display to change it's name or make it into a Bossbar.\n\n§cWarning: §rBossbars are glitchy & often require server restarts to update their text, going too far from one will also break it. The only solution is to delete & respawn the entity regularly using command blocks.
 shard.textDisplay.form.main.guide.edit=Click right below a text display entity to edit it.
 shard.textdisplay.form.main.viewAll=View All Text Displays
@@ -149,13 +155,13 @@ shard.textdisplay.form.edit.killToggle=Remove this display?
 
 ## "draw" module texts.
 shard.draw.displayName=§r[§cD§er§aa§9w§r]
-shard.draw.description=Provides tools for rendering shapes in the world using particles.
+shard.draw.brief=Provides tools for rendering shapes in the world using particles.
 shard.draw.cmd.drawsquare.success=Rendering sqaure at %s for %s clients.
 shard.draw.cmd.drawsquare.success=Rendering cuboid at %s for %s clients.
 
 ## "fun" module texts.
 shard.fun.displayName=§r[§dFun§r]
-shard.fun.description=Some silly stuff.
+shard.fun.brief=Some silly stuff.
 shard.fun.cmd.crash.success=Well, you asked for this...
 shard.fun.cmd.party.success=Now partying with %s friends!
 shard.fun.cmd.party.noFriends=Trying to party by yourself? Sadge...

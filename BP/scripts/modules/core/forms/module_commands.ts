@@ -1,41 +1,45 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import {ShardForm} from '../../../ShardAPI/form';
-import {ShardModule} from '../../../ShardAPI/module';
-import {ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormTitle, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardModule} from '../../../Shard/module';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
 
 
 /**Build the form. `args` should only contain one item of type `ShardModule`.*/
-function BuildForm(context:ShardCommandContext, ...args) {
+function Builder(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
     const commandKeys:Array<string> = Object.keys(module.commands).sort();
 
-    const formData = new ActionFormData()
-        .title({rawtext:[module.details.displayName, {text:' - '}, {translate:'shard.general.commands'}]})
-        .body({translate:'shard.misc.moduleCommands.body'})
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:{rawtext:[module.details.displayName, {text:' - '}, {translate:'shard.general.commands'}]}}});
+    elements.push({type:'body', id:'body', data:{display:{translate:'shard.misc.moduleCommands.body'}}});
     // Add command buttons.
     commandKeys.forEach(key => {
         const command = module.commands[key];
-        formData.button(command.details.id);
+        elements.push({type:'button', id:command.details.id, data:{display: {text:command.details.id}}});
     });
-    formData.button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:[module, commandKeys]};
+    elements.push({type:'button', id:'done', data:{display: {translate:'shard.formCommon.done'}}});
+
+    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[module, commandKeys]});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
-    if (response.canceled) {return};
+function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     const module:ShardModule = args[0];
     const commandKeys:Array<string> = args[1];
-    if (response.selection == commandKeys.length) {return}; // Done button.
 
-    Module.forms.module_command_settings.show(context, module, commandKeys[response.selection]);
+    // Done button.
+    if (response.selection == commandKeys.length) {
+        // Return to parent form.
+        Module.forms.module.show(context, [module]);
+        return;
+    };
+
+    Module.forms.module_command_settings.show(context, [module, commandKeys[response.selection]]);
 
     return;
 };
@@ -50,7 +54,7 @@ export const Form:ShardForm = new ShardForm(
         permissionLevel: CommandPermissionLevel.Admin,
     },
     {
-        buildForm: BuildForm,
+        buildForm: Builder,
         callback: Callback,
     },
 );

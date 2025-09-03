@@ -1,5 +1,5 @@
-import {ModuleNames, Dictionary} from '../ShardAPI/CONST';
-import ShardModule from '../ShardAPI/module';
+import {ModuleNames, Dictionary} from '../Shard/CONST';
+import {ShardModule} from '../Shard/module';
 
 
 // Import modules then assign to `Modules`.

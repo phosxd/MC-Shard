@@ -27,7 +27,7 @@ export const LANG = {
         },
         core: {
             displayName: '§r[§dShard§r]',
-            description: 'Handles core functionality & module management.',
+            brief: 'Handles core functionality & module management.',
             cmd: {
                 discord: {
                     success: '§9dsc.gg/mc-shard',
@@ -47,7 +47,7 @@ export const LANG = {
         },
         util: {
             displayName: '§r[§gSimple Utility§r]',
-            description: 'Provides various helpful commands.',
+            brief: 'Provides various helpful commands.',
             cmd: {
                 despawn: {
                     success: 'Removed %s entities.',
@@ -97,15 +97,15 @@ export const LANG = {
         },
         tracker: {
             displayName: '§r[§3Tracker§r]',
-            description: 'Provides entity statistics & current entity state tracking.',
+            brief: 'Provides entity statistics & current entity state tracking.',
         },
         textdisplay: {
             displayName: '§0[§5Text Display§0]§r',
-            description: 'Provides tools for interacting with text display entities for holographic text & bossbars.',
+            brief: 'Provides tools for interacting with text display entities for holographic text & bossbars.',
         },
         border: {
             displayName: '§r[§gBorder§r]',
-            description: 'Provides border tools.',
+            brief: 'Provides border tools.',
             cmd: {
                 addBorder: {
                     success: 'Added new border "§e%s§r" starting from %s & ending at %s.',
@@ -126,7 +126,7 @@ export const LANG = {
         },
         region: {
             displayName: '§r[§gRegion§r]',
-            description: 'Provides regions to edit world mutability & player abilities.',
+            brief: 'Provides regions to edit world mutability & player abilities.',
             cmd: {
                 addRegion: {
                     success: 'Added new region "§e%s§r" starting from %s & ending at %s.',
@@ -148,7 +148,7 @@ export const LANG = {
         },
         draw: {
             displayName: '§r[§cD§er§aa§9w§r]',
-            description: 'Provides tools for rendering shapes in the world using particles.',
+            brief: 'Provides tools for rendering shapes in the world using particles.',
             cmd: {
                 drawsquare: {
                     success: 'Rendering sqaure at %s for %s clients.',
@@ -160,7 +160,7 @@ export const LANG = {
         },
         fun: {
             displayName: '§r[§dFun§r]',
-            description: 'Some silly stuff.',
+            brief: 'Some silly stuff.',
             cmd: {
                 crash: {
                     success: 'Well, you asked for this...',

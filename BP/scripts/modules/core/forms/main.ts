@@ -1,25 +1,21 @@
 import {CommandPermissionLevel, RawMessage} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import {ShardForm} from '../../../ShardAPI/form';
-import {ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
 
 
-function BuildForm(context:ShardCommandContext, ...args) {
-    const formData = new ActionFormData()
-        .title(Module.details.displayName)
-        .body('')
-        .button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:[]};
+function Builder(context:ShardCommandContext, ...args) {
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:Module.details.displayName}});
+    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[]});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     return;
 };
 
@@ -27,13 +23,13 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
 
 
 // Initialize form.
-export const Form:ShardForm = new ShardForm(
+export const Form = new ShardForm(
     {
         id: 'main',
         permissionLevel: CommandPermissionLevel.Admin,
     },
     {
-        buildForm: BuildForm,
+        buildForm: Builder,
         callback: Callback,
     },
 );

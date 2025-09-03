@@ -1,6 +1,6 @@
 import {world, system, Player, PlayerSpawnAfterEvent} from '@minecraft/server';
-import ShardEventListener from '../../../ShardAPI/event_listener';
-import {VersionString} from '../../../ShardAPI/CONST';
+import {ShardListener} from '../../../Shard/listener';
+import {VersionString} from '../../../Shard/CONST';
 
 
 
@@ -14,9 +14,13 @@ function Callback(event:PlayerSpawnAfterEvent) {
 
 
 // Initialize event listener.
-export const EventListener:ShardEventListener = new ShardEventListener(
-    'world',
-    'after',
-    'playerSpawn',
-    Callback,
+export const Listener:ShardListener = new ShardListener(
+    {
+        source: 'world',
+        type: 'after',
+        eventId: 'playerSpawn',
+    },
+    {
+        callback: Callback,
+    },
 );

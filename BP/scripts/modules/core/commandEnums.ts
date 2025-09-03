@@ -1,4 +1,4 @@
-import {ModuleNames} from '../../ShardAPI/CONST';
+import {ModuleNames} from '../../Shard/CONST';
 export default {
     module: ModuleNames,
     moduleAction: [

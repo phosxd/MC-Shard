@@ -1,32 +1,27 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import {ShardForm} from '../../../ShardAPI/form';
-import {ShardModule} from '../../../ShardAPI/module';
-import {ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardModule} from '../../../Shard/module';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
 
 
 /**Build the form. `args` should only contain one item of type `ShardModule`.*/
-function BuildForm(context:ShardCommandContext, ...args) {
+function Builder(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
-
-    const formData = new ActionFormData()
-        .title(module.details.displayName)
-        .body(module.details.brief)
-        .button({translate:'shard.misc.moduleOption.settings'})
-        .button({translate:'shard.misc.moduleOption.commands'})
-        .button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:args};
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display: module.details.displayName}});
+    elements.push({type:'body', id:'body', data:{display: module.details.brief}});
+    elements.push({type:'button', id:'settings', data:{display:{translate:'shard.misc.moduleOption.settings'}}});
+    elements.push({type:'button', id:'commands', data:{display:{translate:'shard.misc.moduleOption.commands'}}});
+    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:args});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
-    if (response.canceled) {return};
+function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     const module:ShardModule = args[0];
 
     switch (response.selection) {
@@ -35,7 +30,7 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
             break;
         };
         case 1: { // Commands.
-            Module.forms.module_commands.show(context, module);
+            Module.forms.module_commands.show(context, [module]);
             break;
         };
         case 3: { // Done.
@@ -56,7 +51,7 @@ export const Form:ShardForm = new ShardForm(
         permissionLevel: CommandPermissionLevel.Admin,
     },
     {
-        buildForm: BuildForm,
+        buildForm: Builder,
         callback: Callback,
     },
 );

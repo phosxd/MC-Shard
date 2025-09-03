@@ -1,19 +1,19 @@
 // This is the initial file for Shard.
 // Initializes all other required files.
 //
-// Navigate to the "CONST" file under "ShardAPI" to configure hard-coded values.
+// Navigate to the "CONST" file under "Shard" to configure hard-coded values.
 
 
-import './ShardAPI/CONST';
-import './ShardAPI/LANG';
-import './ShardAPI/util';
-import './ShardAPI/raw_message_parser';
+import './Shard/CONST';
+import './Shard/LANG';
+import './Shard/util';
+import './Shard/raw_message_parser';
 
 // Classes & their interfaces.
-import './ShardAPI/module';
-import './ShardAPI/event_listener';
-import './ShardAPI/command';
-import './ShardAPI/form';
+import './Shard/module';
+import './Shard/listener';
+import './Shard/command';
+import './Shard/form';
 
 // Init modules.
 import './modules/modules';

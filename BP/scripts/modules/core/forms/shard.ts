@@ -1,27 +1,22 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import {ShardForm} from '../../../ShardAPI/form';
-import {ShardModule} from '../../../ShardAPI/module';
-import {ShardCommandContext} from '../../../ShardAPI/command';
-import {Module} from '../module';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormMessageResponse} from '../../../Shard/form';
+import {ShardCommandContext} from '../../../Shard/command';
 
 
 
 
 /**Build the form. `args` should only contain one item of type `ShardModule`.*/
-function BuildForm(context:ShardCommandContext, ...args) {
-    const formData = new ActionFormData()
-        .title({translate:'shard.core.form.shard.title'})
-        .body({translate:'shard.core.form.shard.body'})
-        .button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:args};
+function Builder(context:ShardCommandContext, ...args) {
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:{translate:'shard.core.form.shard.title'}}});
+    elements.push({type:'body', id:'body', data:{display:{translate:'shard.core.form.shard.body'}}});
+    return new ShardFormBuilder({type:'message'}, {elements:elements, callbackArgs:args});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormMessageResponse, ...args) {
     return;
 };
 
@@ -35,7 +30,7 @@ export const Form:ShardForm = new ShardForm(
         permissionLevel: CommandPermissionLevel.Any,
     },
     {
-        buildForm: BuildForm,
+        buildForm: Builder,
         callback: Callback,
     },
 );
