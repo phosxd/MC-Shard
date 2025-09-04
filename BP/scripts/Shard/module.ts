@@ -212,23 +212,23 @@ export class ShardModule {
         if (commandSettings.enabled == false && !Command.details.important) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandDisabled'}), status:1};
         };
+        // If entity executed, check if it has any of the required tags.
+        if (Origin.sourceEntity && !Command.details.important) {
+            let hasTag:boolean = false;
+            commandSettings.requiredTags.forEach(tag => {
+                if (Origin.sourceEntity.hasTag(tag)) {hasTag = true};
+            });
+            if (!hasTag && commandSettings.requiredTags.length > 0) {
+                return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.missingPermission'}), status:1};
+            };
+        };
 
+        // Generate context.
         let context:ShardCommandContext
-
         if (Origin.sourceEntity) {context = ShardCommandContext.generate(Origin.sourceEntity)}
         else if (Origin.initiator) {context = ShardCommandContext.generate(Origin.initiator)}
         else if (Origin.sourceBlock) {context = ShardCommandContext.generate(Origin.sourceBlock)}
-        else if (Origin.sourceType == CustomCommandSource.Server) {
-            context = new ShardCommandContext(
-                undefined,
-                'world',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-            );
-        };
+        else if (Origin.sourceType == CustomCommandSource.Server) {context = new ShardCommandContext(undefined,'world',undefined,undefined,undefined,undefined,undefined)};
 
         let result:ShardCommandResult|undefined = Command.execute(context, args);
 
@@ -240,7 +240,7 @@ export class ShardModule {
             else {resultMessage = result.message};
             // Add module tag then return message.
             let newMessage = resultMessage;
-            if (commandSettings.moduleTag) {newMessage = {rawtext: [this.details.displayName, {text:' '}, resultMessage]}};
+            if (commandSettings.showModuleTag) {newMessage = {rawtext: [this.details.displayName, {text:' '}, resultMessage]}};
             return {message:RawMessageParser.rawMessageToString(newMessage), status:result.status};
         };
 

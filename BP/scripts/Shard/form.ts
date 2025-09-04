@@ -1,7 +1,8 @@
-import {system, CommandPermissionLevel, Player, RawMessage} from '@minecraft/server';
+import {system, CommandPermissionLevel, Player, RawMessage, Vector3} from '@minecraft/server';
 import {ActionFormData, ModalFormData, MessageFormData, ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {Dictionary} from './CONST';
 import {CompareCommandPermissionLevel} from './util';
+import {toRawMessage} from './raw_message_parser';
 import {ShardCommandContext} from './command';
 
 
@@ -17,10 +18,10 @@ export interface ShardFormElement {
      * 
      * Modal Elements: "title", "label", "toggle", "slider", "numberBox", "textBox".
     */
-    type: 'title'|'body'|'label'|'button'|'toggle'|'slider'|'numberBox'|'textBox',
+    type: 'title'|'body'|'label'|'button'|'dropdown'|'toggle'|'slider'|'numberBox'|'textBox'|'vector3Box'|'numberArray'|'textArray',
     /**Unique ID which the element is referenced by in callbacks.*/
     id: string,
-    data: ShardFormTitle|ShardFormBody|ShardFormLabel|ShardFormButton|ShardFormToggle|ShardFormSlider|ShardFormNumberBox|ShardFormTextBox,
+    data: ShardFormTitle|ShardFormBody|ShardFormLabel|ShardFormButton|ShardFormDropdown|ShardFormToggle|ShardFormSlider|ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray,
 };
 
 
@@ -36,6 +37,12 @@ export interface ShardFormLabel {
 export interface ShardFormButton {
     display: string|RawMessage,
     iconPath?: string,
+};
+export interface ShardFormDropdown {
+    display: string|RawMessage,
+    items: Array<string>,
+    defaultValue?: number,
+    tooltip?: string|RawMessage,
 };
 export interface ShardFormToggle {
     display: string|RawMessage,
@@ -66,6 +73,36 @@ export interface ShardFormTextBox {
     max: number,
     placeholder: string|RawMessage,
     defaultValue?: string,
+    tooltip?: string|RawMessage,
+};
+export interface ShardFormVector3Box {
+    display: string|RawMessage,
+    placeholder: string|RawMessage,
+    defaultValue?: Vector3,
+    tooltip?: string|RawMessage,
+};
+export interface ShardFormNumberArray {
+    display: string|RawMessage,
+    min: number,
+    max: number,
+    /**Minimum value of each item in the array.*/
+    itemMin: number,
+    /**Maximum value of each item in the array.*/
+    itemMax: number,
+    placeholder: string|RawMessage,
+    defaultValue?: Array<number>,
+    tooltip?: string|RawMessage,
+};
+export interface ShardFormTextArray {
+    display: string|RawMessage,
+    min: number,
+    max: number,
+    /**Minimum length of each item in the array.*/
+    itemMin: number,
+    /**Maximum length of each item in the array.*/
+    itemMax: number,
+    placeholder: string|RawMessage,
+    defaultValue?: Array<string>,
     tooltip?: string|RawMessage,
 };
 
@@ -160,43 +197,97 @@ export class ShardFormBuilder {
             if (element.type == 'toggle') {
                 shardResponse.map[element.id] = response.formValues[index] as boolean;
             };
+            // Dropdown element.
+            if (element.type == 'dropdown') {
+                shardResponse.map[element.id] = response.formValues[index] as number;
+            };
             // Slider element.
             if (element.type == 'slider') {
                 const elementData = element.data as ShardFormSlider;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
                 const value = response.formValues[index] as number;
                 shardResponse.map[element.id] = value;
                 // Out of range error.
                 if (value > elementData.max || value < elementData.min) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.outOfRange',
-                    with:{rawtext:[elementData.display, {text:String(elementData.min)}, {text:String(elementData.max)}]},
+                    with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
                 }};
                 // Invalid step error.
                 if (value%elementData.step !== 1) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.invalidStep',
-                    with:{rawtext:[elementData.display, {text:String(elementData.step)}]},
+                    with:{rawtext:[elementDisplay, {text:String(elementData.step)}]},
                 }};
             };
             // Number box element.
             if (element.type == 'numberBox') {
                 const elementData = element.data as ShardFormNumberBox;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
                 const value = response.formValues[index] as number;
                 shardResponse.map[element.id] = value;
                 // Out of range error.
                 if (value > elementData.max || value < elementData.min) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.outOfRange',
-                    with:{rawtext:[elementData.display, {text:String(elementData.min)}, {text:String(elementData.max)}]},
+                    with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
                 }};
             };
             // Text box element.
             if (element.type == 'textBox') {
                 const elementData = element.data as ShardFormTextBox;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
                 const value = response.formValues[index] as string;
                 shardResponse.map[element.id] = value;
                 // Out of range error.
                 if (value.length > elementData.max || value.length < elementData.min) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeLength',
-                    with:{rawtext:[elementData.display, {text:String(elementData.min)}, {text:String(elementData.max)}]},
+                    with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
                 }};
+            };
+            // Number array element.
+            if (element.type == 'numberArray') {
+                const elementData = element.data as ShardFormNumberArray;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
+                const rawValue = response.formValues[index] as string;
+                const value = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0}).map(Number);
+                shardResponse.map[element.id] = value;
+                // Out of range error.
+                if (value.length > elementData.max || value.length < elementData.min) {
+                    shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeArray',
+                    with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
+                }};
+                // Out of range item error.
+                value.forEach(rawItem => {
+                    const item = (rawItem as any) as number;
+                    if (item > elementData.itemMax || item < elementData.itemMin) {
+                        shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeArrayItem',
+                        with:{rawtext:[elementDisplay, {text:String(elementData.itemMin)}, {text:String(elementData.itemMax)}]},
+                    }};
+                });
+            };
+            // Text array element.
+            if (element.type == 'textArray') {
+                const elementData = element.data as ShardFormNumberArray;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
+                const rawValue = response.formValues[index] as string;
+                const value = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0});
+                shardResponse.map[element.id] = value;
+                // Out of range error.
+                if (value.length > elementData.max || value.length < elementData.min) {
+                    shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeArray',
+                    with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
+                }};
+                // Out of range item error.
+                value.forEach(rawItem => {
+                    const item = (rawItem as any) as string;
+                    if (item.length > elementData.itemMax || item.length < elementData.itemMin) {
+                        shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeArrayItemLength',
+                        with:{rawtext:[elementDisplay, {text:String(elementData.itemMin)}, {text:String(elementData.itemMax)}]},
+                    }};
+                });
             };
             index += 1;
         });
@@ -272,7 +363,7 @@ export class ShardFormBuilder {
                 const elementData = element.data as ShardFormSlider;
                 formData.slider(element.data.display, elementData.min, elementData.max, {valueStep:elementData.step, defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
             };
-            if (element.type == 'numberBox' || element.type == 'textBox') {
+            if (['numberBox','textBox','numberArray','textArray'].includes(element.type)) {
                 const elementData = element.data as ShardFormNumberBox|ShardFormTextBox;
                 formData.textField(element.data.display, elementData.placeholder, {defaultValue:String(elementData.defaultValue), tooltip:elementData.tooltip});
             };

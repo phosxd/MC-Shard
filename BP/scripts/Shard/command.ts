@@ -6,7 +6,16 @@ import {ShardFormElement} from './form';
 
 export const defaultSettingElements:Array<ShardFormElement> = [
     {type:'toggle', id:'enabled', data:{display:{translate:'shard.misc.moduleCommandSetting.enabled'}, defaultValue:true}},
-    {type:'toggle', id:'moduleTag', data:{display:{translate:'shard.misc.moduleCommandSetting.moduleTag'}, defaultValue:true}},
+    {type:'toggle', id:'showModuleTag', data:{display:{translate:'shard.misc.moduleCommandSetting.showModuleTag'}, defaultValue:true}},
+    {type:'textArray', id:'requiredTags', data:{
+        display: {translate:'shard.misc.moduleCommandSetting.requiredTags'},
+        placeholder: {translate:'shard.misc.moduleCommandSetting.requiredTagsPlaceholder'},
+        min: 0,
+        max: 10,
+        itemMin: 1,
+        itemMax: 32,
+        defaultValue: [],
+    }},
 ];
 
 

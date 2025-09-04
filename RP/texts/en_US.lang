@@ -15,7 +15,9 @@ shard.misc.moduleOption.commands=Commands
 shard.misc.moduleOption.settings=Module
 shard.misc.moduleCommands.body=Select a command to edit.
 shard.misc.moduleCommandSetting.enabled=Is enabled?
-shard.misc.moduleCommandSetting.moduleTag=Show module tag in output?
+shard.misc.moduleCommandSetting.showModuleTag=Show module tag in output?
+shard.misc.moduleCommandSetting.requiredTags=User required (any of) tags
+shard.misc.moduleCommandSetting.requiredTagsPlaceholder=E.g. "tag1,tag2,tag3".
 
 ## General phrases & words.
 shard.general.command=Command
@@ -35,6 +37,9 @@ shard.formCommon.duplicateName=§cExpected unique name. Try again.
 shard.formCommon.invalidName=§cName contains invalid characters. Try again.
 shard.formError.outOfRange=§c"%s" should be between %s & %s.
 shard.formError.outOfRangeLength=§c"%s" length should be between %s & %s.
+shard.formError.outOfRangeArray=§c"%s" item count should be between %s & %s.
+shard.formError.outOfRangeArrayItem=§c"%s" item value should be between %s & %s.
+shard.formError.outOfRangeArrayItemLength=§c"%s" item length should be between %s & %s.
 shard.formError.invalidStep=§c"%s" expected a step of %s.
 shard.formError.invalidLocation=§c"%s" expected a valid location.
 shard.formError.invalidSelector=§c"%s" expected a valid entity selector.

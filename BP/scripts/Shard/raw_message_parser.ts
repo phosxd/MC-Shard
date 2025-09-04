@@ -43,3 +43,10 @@ export function rawMessageToString(message:RawMessage):string {
 
     return parsed;
 };
+
+
+/**Takes a variable that could be either a string or `RawMessage` & ensures the output is a `RawMessage`.*/
+export function toRawMessage(value:string|RawMessage):RawMessage {
+    if (typeof value == 'string') {return {text:value as string}};
+    return value;
+};
