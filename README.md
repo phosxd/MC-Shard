@@ -1,6 +1,6 @@
 Shard is an upcoming all-in-one add-on for servers & realms! With a fully modular & customizable design, Shard will have a vast multitude of management, utility, fun, survival+, & moderation modules soon.
 
-This is not a complete build! Many systems are subject to change.
+This is not a complete build! Although the ground-work is out of the way, there are still many things subject to change & with incomplete implementations.
 
 Version: **0.2** (in-dev).
 
@@ -22,7 +22,7 @@ If you followed the instructions perfectly, when entering your world you should 
 # Getting started:
 To get started, type `/sh:` in chat (but do not send) to view auto-completes for every command for every Shard module.
 
-You can configure modules by using the `/module <module>` command. With this you can toggle, print data & reset data. Disabling a module will disable all it's commands & events. There is not yet a feature to disable individual commands or events.
+You can configure modules by using the `/module <module>` command. Disabling a module will disable all it's commands & events. You can also configure settings for individual commands.
 
 There are plenty of features to play around with & so many more to come! If you need any help, join the Discord & we will try our best.
 
@@ -31,10 +31,10 @@ There are plenty of features to play around with & so many more to come! If you 
 Provides essential functionality for the add-on. Cannot be disabled.
 
 **Commands:**
-- `/shard`: Open the Shard menu.
+- `/shard`: Shard info.
 - `/module`: Configure a module.
 - `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
-- `/discord`: Get the Shard Discord invite. (This will be editable to be any Discord you want).
+- `/discord`: Get the Discord invite. Link can be changed in settings.
 
 
 ## `util`:
