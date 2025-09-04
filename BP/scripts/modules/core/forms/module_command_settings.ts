@@ -1,5 +1,5 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormModalResponse} from '../../../Shard/form';
 import {ShardModule} from '../../../Shard/module';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
@@ -12,19 +12,38 @@ function Builder(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
     const commandKey:string = args[1];
     const command:ShardCommand = module.commands[commandKey];
+    const commandData = module.persisData.commandSettings[command.details.id];
 
     const elements:Array<ShardFormElement> = [];
-    elements.push({type:'title', id:'title', data:{display:Module.details.displayName}});
-    elements.push({type:'body', id:'body', data:{display:{text:'Work in progress.'}}});
-    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[module]});
+    elements.push({type:'title', id:'title', data:{display:{rawtext:[module.details.displayName, {text:' - '}, {translate:'shard.general.commands'}]}}});
+    elements.push({type:'label', id:'body', data:{display:{text:command.details.brief}}});
+    // Add command settings.
+    command.settingElements.forEach(element => {
+        const newElement = element as any; // Retype to `any` so no errors are shown in-editor when trying to set `defaultValue` on an element that does not support it.
+        // Set default value to value of the setting.
+        newElement.data.defaultValue = commandData[element.id];
+        elements.push(newElement);
+    });
+    return new ShardFormBuilder({type:'modal'}, {elements:elements, callbackArgs:[module, commandKey]});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormModalResponse, ...args) {
     const module:ShardModule = args[0];
+    const commandKey:string = args[1];
+    const command:ShardCommand = module.commands[commandKey];
 
+    // Apply changes.
+    for (const key in response.map) {
+        const value = response.map[key];
+        module.persisData.commandSettings[command.details.id][key] = value;
+    };
+    module.saveData();
+
+    // Return to parent form.
+    Module.forms.module_commands.show(context, [module]);
     return;
 };
 

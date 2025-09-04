@@ -98,7 +98,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 export const Command = new ShardCommand(
     {
         id: 'module',
-        brief: 'Open module configuration UI, or perform actions.',
+        brief: 'Open module configuration, or perform actions.',
         permissionLevel: CommandPermissionLevel.Admin,
         mandatoryParameters: [
             {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum},
@@ -106,6 +106,7 @@ export const Command = new ShardCommand(
         optionalParameters: [
             {name:CommandNamespace+':'+'moduleAction', type:CustomCommandParamType.Enum},
         ],
+        important: true,
     },
     {
         callback: Callback,

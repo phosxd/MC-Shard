@@ -16,6 +16,7 @@ export const Version:Array<number> = [0,2,0];
 export const VersionString:string = Version.join('.');
 /**Build number used for integral versioning. Derived from `Version`.*/
 export const BuildNumber = VersionToBuildNumber(Version);
+export const DiscordLink:string = 'dsc.gg/mc-shard';
 
 
 /**Every module the add-on includes.
@@ -37,7 +38,7 @@ export const ModuleNames = [
 
 /**Modules that cannot be disabled during run-time.*/
 export const PermaEnabledModules = [
-    'core',
+    'core', // Do not remove this one.
     'textdisplay',
 ];
 

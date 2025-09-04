@@ -25,48 +25,48 @@ export interface ShardFormElement {
 
 
 export interface ShardFormTitle {
-    display: RawMessage,
+    display: string|RawMessage,
 };
 export interface ShardFormBody {
-    display: RawMessage,
+    display: string|RawMessage,
 };
 export interface ShardFormLabel {
-    display: RawMessage,
+    display: string|RawMessage,
 };
 export interface ShardFormButton {
-    display: RawMessage,
+    display: string|RawMessage,
     iconPath?: string,
 };
 export interface ShardFormToggle {
-    display: RawMessage,
+    display: string|RawMessage,
     defaultValue?: boolean,
-    tooltip?: string,
+    tooltip?: string|RawMessage,
 };
 export interface ShardFormSlider {
-    display: RawMessage,
+    display: string|RawMessage,
     min: number,
     max: number,
     /**If undefined, assume `1`.*/
     step?: number,
     defaultValue?: number,
-    tooltip?: string,
+    tooltip?: string|RawMessage,
 };
 export interface ShardFormNumberBox {
-    display: RawMessage,
+    display: string|RawMessage,
     float: boolean,
     min: number,
     max: number,
-    placeholder: string,
+    placeholder: string|RawMessage,
     defaultValue?: number,
-    tooltip?: string,
+    tooltip?: string|RawMessage,
 };
 export interface ShardFormTextBox {
-    display: RawMessage,
+    display: string|RawMessage,
     min: number,
     max: number,
-    placeholder: string
+    placeholder: string|RawMessage,
     defaultValue?: string,
-    tooltip?: string,
+    tooltip?: string|RawMessage,
 };
 
 

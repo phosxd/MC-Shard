@@ -30,7 +30,7 @@ export const LANG = {
             brief: 'Handles core functionality & module management.',
             cmd: {
                 discord: {
-                    success: '§9dsc.gg/mc-shard',
+                    success: '§9%s',
                 },
                 eval: {
                     run: 'Running provided code now.',

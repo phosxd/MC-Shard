@@ -1,6 +1,13 @@
 import {CustomCommandParameter, CommandPermissionLevel, Dimension, RawMessage, Vector3, Vector2, CustomCommandStatus, Block, Entity, Player} from '@minecraft/server';
 import {Dictionary} from './CONST';
 import {CompareCommandPermissionLevel} from './util';
+import {ShardFormElement} from './form';
+
+
+export const defaultSettingElements:Array<ShardFormElement> = [
+    {type:'toggle', id:'enabled', data:{display:{translate:'shard.misc.moduleCommandSetting.enabled'}, defaultValue:true}},
+    {type:'toggle', id:'moduleTag', data:{display:{translate:'shard.misc.moduleCommandSetting.moduleTag'}, defaultValue:true}},
+];
 
 
 /**Command callbacks must return this. Allows rawtext.*/
@@ -24,52 +31,15 @@ export interface ShardCommandDetails {
     mandatoryParameters?: Array<CustomCommandParameter>,
     /**Determines which actors the command is visible to.*/
     permissionLevel: CommandPermissionLevel,
+    /**If true, command cannot be disabled.*/
+    important?: boolean,
 };
 
 
 export interface ShardCommandData {
     callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined,
-    settings?: Array<ShardCommandSetting>,
-};
-
-
-/**Command setting parameter.*/
-export interface ShardCommandSetting {
-    /**ID for this setting.*/
-    id: string,
-    /**Displayed setting name.*/
-    displayName: string,
-    /**Breif description of the setting.*/
-    brief?: string,
-    /**Setting type.*/
-    type: 'boolean'|'slider'|'integer'|'float'|'string'|'enum',
-    boolean?: {
-        defaultValue: boolean,
-    },
-    slider?: {
-        min: number,
-        max: number,
-        /**Should not be smaller than 1/100 of `max`, otherwise UI may break.*/
-        step: number,
-        defaultValue: number,
-    },
-    integer?: {
-        defaultValue: number,
-    },
-    float?: {
-        defaultValue: number,
-    },
-    string?: {
-        min: number,
-        max: number,
-        /**How the string is expected to be formatted.*/
-        type?: 'any'|'ascii',
-        defaultValue: string,
-    },
-    enum?: {
-        options: Array<string>,
-        defaultValue: number,
-    },
+    /**Form elements linked to command settings.*/
+    settingElements?: Array<ShardFormElement>,
 };
 
 
@@ -138,7 +108,7 @@ export class ShardCommand {
     /**Command's constant details.*/
     readonly details: ShardCommandDetails;
     /**Command settings that are persistently saved.*/
-    settings: Array<ShardCommandSetting>;
+    settingElements: Array<ShardFormElement>;
     /**Called when the command is run.*/
     callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined;
 
@@ -152,12 +122,12 @@ export class ShardCommand {
     constructor(details:ShardCommandDetails, data:ShardCommandData) {
         this.details = details;
         this.callback = data.callback;
-        if (data.settings) {this.settings = data.settings}
-        else {this.settings = []};
+        this.settingElements = [...defaultSettingElements];
+        if (data.settingElements) {this.settingElements = this.settingElements.concat(data.settingElements)};
     };
 
 
-    /**Executes the command after checking player permissions.*/
+    /**Executes the command.*/
     execute(context:ShardCommandContext, ...args): ShardCommandResult|undefined {
         return this.callback(context, ...args);
     };

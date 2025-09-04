@@ -136,6 +136,15 @@ export class ShardModule {
                     mandatoryParameters: command.details.mandatoryParameters,
                     optionalParameters: command.details.optionalParameters,
                 }, this.slashCommandPassthrough.bind(this, command));
+                // Setup settings.
+                const settings = {};
+                command.settingElements.forEach(element => {
+                    const elementData = element.data as Dictionary<any>;
+                    // Apply default value if available.
+                    if (!elementData.defaultValue) {settings[element.id] = undefined}
+                    else {settings[element.id] = elementData.defaultValue};
+                });
+                this.persisData.commandSettings[command.details.id] = settings;
             };
         });
 
@@ -198,6 +207,11 @@ export class ShardModule {
         if (this.persisData.enabled == false) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.details.id]}), status:1};
         };
+        const commandSettings:Dictionary<any> = this.persisData.commandSettings[Command.details.id];
+        // Return error message if command disabled.
+        if (commandSettings.enabled == false && !Command.details.important) {
+            return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandDisabled'}), status:1};
+        };
 
         let context:ShardCommandContext
 
@@ -218,14 +232,15 @@ export class ShardModule {
 
         let result:ShardCommandResult|undefined = Command.execute(context, args);
 
-        // Modify result message to include module name.
+        // Return command output.
         if (result !== undefined) {
             let resultMessage:RawMessage;
             // If result.message is a string, turn into raw-message.
             if (typeof result.message == 'string') {resultMessage = {text:result.message}}
             else {resultMessage = result.message};
-            // Apply module display name then return message.
-            const newMessage = {rawtext: [this.details.displayName, {text:' '}, resultMessage]};
+            // Add module tag then return message.
+            let newMessage = resultMessage;
+            if (commandSettings.moduleTag) {newMessage = {rawtext: [this.details.displayName, {text:' '}, resultMessage]}};
             return {message:RawMessageParser.rawMessageToString(newMessage), status:result.status};
         };
 
