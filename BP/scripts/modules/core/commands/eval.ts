@@ -15,7 +15,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
+export const MAIN = new ShardCommand(
     {
         id: 'eval',
         brief: 'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',

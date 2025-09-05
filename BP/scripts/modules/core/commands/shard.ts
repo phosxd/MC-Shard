@@ -14,7 +14,7 @@ function Callback(context:ShardCommandContext, ...args) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
+export const MAIN = new ShardCommand(
     {
         id: 'shard',
         brief: 'Shard info.',

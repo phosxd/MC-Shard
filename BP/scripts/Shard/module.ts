@@ -38,10 +38,8 @@ export interface ShardModuleDetails {
 
 export interface ShardModuleData {
     init: ()=>void,
-    listeners: Dictionary<ShardListener>,
-    commands: Dictionary<ShardCommand>,
+    childPaths: Array<string>,
     commandEnums: Dictionary<Array<string>>,
-    forms: Dictionary<ShardForm>,
     mainForm: ShardForm,
     extraDefaultPersisData?: Dictionary<any>,
 };
@@ -86,10 +84,7 @@ export class ShardModule {
     constructor(details:ShardModuleDetails, data:ShardModuleData) {
         this.details = details;
         this.init = data.init;
-        this.listeners = data.listeners;
-        this.commands = data.commands;
         this.commandEnums = data.commandEnums;
-        this.forms = data.forms;
         this.mainForm = data.mainForm;
 
         this.sessionData = {};
@@ -100,6 +95,37 @@ export class ShardModule {
         this.persisDataReady = false;
         this.worldReady = false;
 
+        (async () => {
+            // Import children.
+            this.listeners = {};
+            this.commands = {};
+            this.forms = {};
+            let promises = [];
+            if (data.childPaths) {
+                data.childPaths.forEach(path => {
+                    promises.push(import(`../modules/${this.details.id}/${path}`).then(file => {
+                        const child = file.MAIN;
+                        if (!child) {
+                            console.warn(`§cModule "${this.details.id}" child "${path}" does not export a "MAIN" object. Skipping initialization.`);
+                            return;
+                        };
+                        if (child instanceof ShardListener) {this.listeners[child.details.eventId] = child}
+                        else if (child instanceof ShardCommand) {this.commands[child.details.id] = child}
+                        else if (child instanceof ShardForm) {this.forms[child.details.id] = child};
+                    }));
+                });
+            };
+
+            // Wait for all children to be imported.
+            await Promise.all(promises);
+            // Continue with the rest of module init.
+            this.afterChildImports();
+        })();
+    };
+
+
+    /**Runs after children are imported.*/
+    afterChildImports() {
         // Get persistent data in an "after" context.
         system.run(()=>{
            let storedData = this.getData();
@@ -144,12 +170,22 @@ export class ShardModule {
                     if (!elementData.defaultValue) {settings[element.id] = undefined}
                     else {settings[element.id] = elementData.defaultValue};
                 });
-                this.persisData.commandSettings[command.details.id] = settings;
+                // Update settings after `persisData` initialization.
+                system.run(()=>{
+                    // Add any previously saved data.
+                    const previousData = this.persisData.commandSettings[command.details.id];
+                    if (previousData) {
+                        Object.assign(settings, previousData);
+                    };
+                    // Set new data.
+                    this.persisData.commandSettings[command.details.id] = settings;
+                    this.saveData();
+                });
             };
         });
 
 
-        // Init.
+        // Module custom init.
         this.init();
     };
 

@@ -95,7 +95,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
+export const MAIN = new ShardCommand(
     {
         id: 'module',
         brief: 'Open module configuration, or perform actions.',

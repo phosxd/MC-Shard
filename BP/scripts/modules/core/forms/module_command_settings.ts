@@ -51,7 +51,7 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
 
 
 // Initialize form.
-export const Form:ShardForm = new ShardForm(
+export const MAIN = new ShardForm(
     {
         id: 'module_command_settings',
         permissionLevel: CommandPermissionLevel.Admin,

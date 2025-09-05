@@ -251,7 +251,7 @@ export function GetAllEntities(options?:EntityQueryOptions) {
 
 
 /**Max character length for dynamic property string value.*/
-const mcDataCharCap:number = 9500;
+const mcDataCharCap:number = 32700;
 /**API for persistent data.
  * 
  * Saves & retieves data in "parts" to overcome maximum dynamic property string value length.
