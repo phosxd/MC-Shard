@@ -1,5 +1,5 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormTitle, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
 import {ShardModule} from '../../../Shard/module';
 import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
@@ -18,8 +18,15 @@ function Builder(context:ShardCommandContext, ...args) {
     // Add command buttons.
     commandKeys.forEach(key => {
         const command = module.commands[key];
-        elements.push({type:'button', id:command.details.id, data:{display: {text:command.details.id}}});
+        const display = {text:command.details.id};
+        // Change color of text if command disabled.
+        if (!module.persisData.commandSettings[command.details.id].enabled) {
+            display.text = '§c'+display.text;
+        };
+        // Add button.
+        elements.push({type:'button', id:command.details.id, data:{display:display}});
     });
+    // Done button.
     elements.push({type:'button', id:'done', data:{display: {translate:'shard.formCommon.done'}}});
 
     return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[module, commandKeys]});

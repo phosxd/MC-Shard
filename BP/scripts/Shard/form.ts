@@ -116,9 +116,10 @@ export interface ShardFormModalResponse {
 export interface ShardFormActionResponse {
     /**Selected button index.*/
     selection: number,
+    /**Selected element ID. Useful when you dont always know the index of a button.*/
+    selectedId: string,
 };
-export interface ShardFormMessageResponse {
-};
+export interface ShardFormMessageResponse {};
 
 
 export interface ShardFormBuilderDetails {
@@ -171,6 +172,7 @@ export class ShardFormBuilder {
     generateActionResponse(response:ActionFormResponse):ShardFormActionResponse {
         const shardResponse:ShardFormActionResponse = {
             selection: response.selection,
+            selectedId: this.elements.filter((value)=>{return value.type == 'button'})[response.selection].id,
         };
         return shardResponse;
     };
@@ -388,7 +390,7 @@ export interface ShardFormDetails {
 export interface ShardFormData {
     buildForm: (context:ShardCommandContext, ...args) => ShardFormBuilder,
     callback: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void,
-    onClosed?: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void,
+    onClosed?: (context:ShardCommandContext, ...args) => void,
     onError?: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void,
 };
 
@@ -399,7 +401,7 @@ export class ShardForm {
     readonly details: ShardFormDetails;
     buildForm: (context:ShardCommandContext, ...args) => ShardFormBuilder;
     callback: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void;
-    onClosed: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void;
+    onClosed: (context:ShardCommandContext, ...args) => void;
     onError: (context:ShardCommandContext, response:ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse, ...args) => void;
 
 
@@ -424,7 +426,6 @@ export class ShardForm {
             if (!builder) {builder = this.buildForm(context, ...args)};
             // Show form.
             builder.build().show(target).then(response => {
-                const shardResponse = builder.generateResponse(response);
                 // If player cannot open the form, queue & retry every half second.
                 if (response.cancelationReason == FormCancelationReason.UserBusy) {
                     system.runTimeout(this.show.bind(this,context, builder.callbackArgs), 10);
@@ -432,10 +433,12 @@ export class ShardForm {
                 // If player closed, call `onClosed`.
                 else if (response.cancelationReason == FormCancelationReason.UserClosed) {
                     if (this.onClosed) {
-                        this.onClosed(context, shardResponse, ...builder.callbackArgs);
+                        this.onClosed(context, ...builder.callbackArgs);
                     };
                     return;
                 };
+
+                const shardResponse = builder.generateResponse(response);
                 // If any errors in form response, retry & call `onError`.
                 if (builder.details.type == 'modal') {
                     const shardModalResponse = shardResponse as ShardFormModalResponse;

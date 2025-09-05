@@ -13,7 +13,9 @@ function Builder(context:ShardCommandContext, ...args) {
     const elements:Array<ShardFormElement> = [];
     elements.push({type:'title', id:'title', data:{display: module.details.displayName}});
     elements.push({type:'body', id:'body', data:{display: module.details.brief}});
-    elements.push({type:'button', id:'settings', data:{display:{translate:'shard.misc.moduleOption.settings'}}});
+    if (module.mainForm) {
+        elements.push({type:'button', id:'settings', data:{display:{translate:'shard.misc.moduleOption.settings'}}});
+    };
     elements.push({type:'button', id:'commands', data:{display:{translate:'shard.misc.moduleOption.commands'}}});
     return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:args});
 };
@@ -24,16 +26,16 @@ function Builder(context:ShardCommandContext, ...args) {
 function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     const module:ShardModule = args[0];
 
-    switch (response.selection) {
-        case 0: { // Settings.
+    switch (response.selectedId) {
+        case 'settings': { // Settings.
             module.mainForm.show(context);
             break;
         };
-        case 1: { // Commands.
+        case 'commands': { // Commands.
             Module.forms.module_commands.show(context, [module]);
             break;
         };
-        case 3: { // Done.
+        case 'done': { // Done.
             return;
         };
     };

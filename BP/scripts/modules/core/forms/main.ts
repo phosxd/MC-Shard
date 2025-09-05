@@ -1,5 +1,5 @@
 import {CommandPermissionLevel, RawMessage} from '@minecraft/server';
-import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
 import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 

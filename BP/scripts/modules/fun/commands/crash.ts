@@ -1,5 +1,5 @@
 import {system, world, CommandPermissionLevel} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
@@ -19,12 +19,13 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'crash',
-    'Hehehe...',
-    [],
-    [],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'crash',
+        brief: 'Hehehe...',
+        permissionLevel: CommandPermissionLevel.Admin,
+    },
+    {
+        callback: Callback,
+    },
 );

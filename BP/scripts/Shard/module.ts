@@ -40,7 +40,7 @@ export interface ShardModuleData {
     init?: ()=>void,
     childPaths: Array<string>,
     commandEnums?: Dictionary<Array<string>>,
-    mainForm: ShardForm,
+    mainForm?: ShardForm,
     extraDefaultPersisData?: Dictionary<any>,
 };
 
@@ -60,7 +60,7 @@ export class ShardModule {
     commandEnums: Dictionary<Array<string>>;
     /**Forms.*/
     forms: Dictionary<ShardForm>;
-    /**Main form for this module.*/
+    /**Main form for this module. Can be undefined.*/
     mainForm: ShardForm;
     /**Additional default persistent data.*/
     extraDefaultPersisData: Dictionary<any>;

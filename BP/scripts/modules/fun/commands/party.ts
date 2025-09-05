@@ -1,6 +1,6 @@
 import {system, world, Dimension, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, MolangVariableMap} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {AddVector3} from '../../../ShardAPI/util';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {AddVector3} from '../../../Shard/util';
 import {partying} from '../module';
 
 
@@ -68,7 +68,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     partying.push(player.id);
 
-    return {message:{translate:'shard.fun.cmd.party.success', with:[friends.length]}, status:0};
+    return {message:{translate:'shard.fun.cmd.party.success', with:[String(friends.length)]}, status:0};
 };
 
 
@@ -93,14 +93,16 @@ function randomParticleLocation() {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'party',
-    'Let\'s get it started in here!',
-    [],
-    [
-        {name:'seconds', type:CustomCommandParamType.Integer},
-    ],
-    CommandPermissionLevel.Any,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'party',
+        brief: 'Let\'s get it started in here!',
+        permissionLevel: CommandPermissionLevel.Any,
+        mandatoryParameters: [
+            {name:'seconds', type:CustomCommandParamType.Integer},
+        ],
+    },
+    {
+        callback: Callback,
+    },
 );

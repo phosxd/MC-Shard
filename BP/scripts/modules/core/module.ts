@@ -1,29 +1,16 @@
-import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
-import {ShardListener} from '../../Shard/listener';
-import {ShardCommand} from '../../Shard/command';
-import {ShardForm} from '../../Shard/form';
-
 import CommandEnums from './commandEnums';
-import * as mainForm from './forms/main';
-
-
-// Init callback.
-function Init() {};
-
-
-
+//import * as mainForm from './forms/main';
 
 
 // Instantiate Module.
-export const Module:ShardModule = new ShardModule(
+export const Module = new ShardModule(
     {
         id: 'core',
         displayName: {translate:'shard.core.displayName'},
         brief: {translate:'shard.core.brief'},
     },
     {
-        init: Init,
         childPaths: [
             'events/playerSpawn',
             'commands/discord',
@@ -37,6 +24,6 @@ export const Module:ShardModule = new ShardModule(
             'forms/shard',
         ],
         commandEnums: CommandEnums,
-        mainForm: mainForm.MAIN,
+        //mainForm: mainForm.MAIN,
     },
 );

@@ -1,4 +1,3 @@
-import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import * as mainForm from './forms/main';
 
