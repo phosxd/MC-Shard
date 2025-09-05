@@ -1,29 +1,25 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import ShardForm from '../../../ShardAPI/form';
-import {ShardCommandContext} from '../../../ShardAPI/command';
-import ShardFormBuildResult from '../../../ShardAPI/form_build_result';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
 
 
-function BuildForm(context:ShardCommandContext, ...args):ShardFormBuildResult {
-    const formData = new ActionFormData()
-        .title(Module.displayName)
-        .body({translate:'shard.textdisplay.form.main.body'})
-        .label({translate:'shard.textdisplay.form.main.guide.edit'})
-        .button({translate:'shard.textdisplay.form.main.viewAll'})
-        .button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:[]};
+function Builder(context:ShardCommandContext, ...args):ShardFormBuilder {
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:Module.details.displayName}});
+    elements.push({type:'body', id:'body', data:{display:{translate:'shard.textdisplay.form.main.body'}}});
+    elements.push({type:'label', id:'guideEdit', data:{display:{translate:'shard.textdisplay.form.main.guide.edit'}}});
+    elements.push({type:'button', id:'viewAll', data:{display:{translate:'shard.textdisplay.form.main.viewAll'}}});
+    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[]});
 };
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     switch (response.selection) {
         case 0: { // View All.
-            Module.forms.viewAll.show(context, ...args);
+            Module.forms.viewAll.show(context, [args]);
             break;
         };
         default: return;
@@ -34,10 +30,13 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
 
 
 // Initialize form.
-export const Form:ShardForm = new ShardForm(
-    'main',
-    CommandPermissionLevel.Admin,
-    [],
-    BuildForm,
-    Callback,
+export const MAIN = new ShardForm(
+    {
+        id: 'main',
+        permissionLevel: CommandPermissionLevel.Admin,
+    },
+    {
+        buildForm: Builder,
+        callback: Callback,
+    },
 );

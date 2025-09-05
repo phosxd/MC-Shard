@@ -1,6 +1,6 @@
 import {PlayerInteractWithEntityAfterEvent} from '@minecraft/server';
-import ShardEventListener from '../../../ShardAPI/event_listener';
-import {ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardListener} from '../../../Shard/listener';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
@@ -9,16 +9,20 @@ import {Module} from '../module';
 function Callback(event:PlayerInteractWithEntityAfterEvent) {
     if (event.target.typeId !== 'shard:text_display') {return};
     // Open form UI to edit text display.
-    Module.forms.edit.show(ShardCommandContext.generate(event.player), event.target);
+    Module.forms.edit.show(ShardCommandContext.generate(event.player), [event.target]);
 };
 
 
 
 
 // Initialize event listener.
-export const EventListener:ShardEventListener = new ShardEventListener(
-    'world',
-    'after',
-    'playerInteractWithEntity',
-    Callback,
+export const MAIN = new ShardListener(
+    {
+        source: 'world',
+        type: 'after',
+        eventId: 'playerInteractWithEntity',
+    },
+    {
+        callback: Callback,
+    },
 );

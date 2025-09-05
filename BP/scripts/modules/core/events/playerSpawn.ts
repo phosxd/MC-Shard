@@ -14,7 +14,7 @@ function Callback(event:PlayerSpawnAfterEvent) {
 
 
 // Initialize event listener.
-export const MAIN:ShardListener = new ShardListener(
+export const MAIN = new ShardListener(
     {
         source: 'world',
         type: 'after',

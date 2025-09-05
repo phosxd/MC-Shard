@@ -1,7 +1,8 @@
 import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShardModule} from '../../../Shard/module';
-import {Dictionary, CommandNamespace, ModuleNames, PermaEnabledModules} from '../../../Shard/CONST';
+import {Dictionary, CommandNamespace, PermaEnabledModules} from '../../../Shard/CONST';
+import {Module} from '../module';
 
 var Modules:Dictionary<ShardModule>;
 // Import modules after they have all initialized.
@@ -16,7 +17,7 @@ system.runTimeout(()=>{
 
 function moduleConfig(context:ShardCommandContext, module_key:string) {
     const module:ShardModule = Modules[module_key];
-    module.forms.module.show(context, [module]);
+    Module.forms.module.show(context, [module]);
     return undefined;
 };
 

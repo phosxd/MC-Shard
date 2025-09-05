@@ -37,9 +37,9 @@ export interface ShardModuleDetails {
 
 
 export interface ShardModuleData {
-    init: ()=>void,
+    init?: ()=>void,
     childPaths: Array<string>,
-    commandEnums: Dictionary<Array<string>>,
+    commandEnums?: Dictionary<Array<string>>,
     mainForm: ShardForm,
     extraDefaultPersisData?: Dictionary<any>,
 };
@@ -84,7 +84,8 @@ export class ShardModule {
     constructor(details:ShardModuleDetails, data:ShardModuleData) {
         this.details = details;
         this.init = data.init;
-        this.commandEnums = data.commandEnums;
+        if (data.commandEnums) {this.commandEnums = data.commandEnums}
+        else {this.commandEnums = {}};
         this.mainForm = data.mainForm;
 
         this.sessionData = {};
@@ -186,7 +187,7 @@ export class ShardModule {
 
 
         // Module custom init.
-        this.init();
+        if (this.init) {this.init()};
     };
 
 
