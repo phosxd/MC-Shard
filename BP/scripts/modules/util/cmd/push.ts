@@ -1,12 +1,12 @@
 import {system, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let location:Vector3 = Options[1];
-    let targets:Array<Entity> = Options[0];
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    let location:Vector3 = args[1];
+    let targets:Array<Entity> = args[0];
     let count = 0;
     // Apply to targets.
     targets.forEach(entity => {
@@ -28,15 +28,15 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'push',
-    'Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.',
-    [
-        {name:'targets', type:CustomCommandParamType.EntitySelector},
-        {name:'location', type:CustomCommandParamType.Location},
-    ],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'push',
+        brief: 'shard.util.cmd.push.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'targets', type:CustomCommandParamType.EntitySelector},
+            {name:'location', type:CustomCommandParamType.Location},
+        ],
+    },
+    {callback: Callback},
 );

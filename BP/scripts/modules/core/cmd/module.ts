@@ -99,7 +99,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 export const MAIN = new ShardCommand(
     {
         id: 'module',
-        brief: 'Open module configuration, or perform actions.',
+        brief: 'shard.core.cmd.module.brief',
         permissionLevel: CommandPermissionLevel.Admin,
         mandatoryParameters: [
             {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum},

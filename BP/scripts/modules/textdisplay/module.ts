@@ -1,5 +1,5 @@
 import {ShardModule} from '../../Shard/module';
-import * as mainForm from './forms/main';
+import * as mainForm from './form/main';
 
 
 // Instantiate Module.
@@ -11,9 +11,9 @@ export const Module = new ShardModule(
     },
     {
         childPaths: [
-            'events/playerInteractWithEntity',
-            'forms/edit',
-            'forms/viewAll',
+            'event/playerInteractWithEntity',
+            'form/edit',
+            'form/viewAll',
         ],
         mainForm: mainForm.MAIN,
     }

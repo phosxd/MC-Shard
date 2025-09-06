@@ -7,8 +7,7 @@ world;
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    let code:string = args[0];
-    return {message:eval(code), status:0};
+    return {message:eval(args[0]), status:0};
 };
 
 
@@ -18,13 +17,11 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 export const MAIN = new ShardCommand(
     {
         id: 'eval',
-        brief: 'Run TypeScript code in an uncontrolled environment. Intended for developer use only.',
+        brief: 'shard.core.cmd.eval.brief',
         permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:'code', type:CustomCommandParamType.String},
         ],
     },
-    {
-        callback: Callback,
-    },
+    {callback: Callback},
 );

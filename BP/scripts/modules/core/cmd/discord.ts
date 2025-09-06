@@ -18,7 +18,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 export const MAIN = new ShardCommand(
     {
         id: 'discord',
-        brief: 'Get link to the Discord server.',
+        brief: 'shard.core.cmd.discord.brief',
         permissionLevel: CommandPermissionLevel.Any,
     },
     {

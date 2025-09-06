@@ -14,8 +14,8 @@ export const Module = new ShardModule(
     },
     {
         childPaths: [
-            'commands/crash',
-            'commands/party',
+            'cmd/crash',
+            'cmd/party',
         ],
     },
 );

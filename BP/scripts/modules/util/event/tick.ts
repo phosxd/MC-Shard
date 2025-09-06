@@ -1,9 +1,7 @@
 import {world, Entity} from '@minecraft/server';
-import ShardEventListener from '../../../ShardAPI/event_listener';
-import {Dictionary} from '../../../ShardAPI/CONST';
+import {ShardListener} from '../../../Shard/listener';
+import {Dictionary} from '../../../Shard/CONST';
 import {Module} from '../module';
-
-
 
 
 // Apply frozen entity functions. Frozen entities are added via "/freeze".
@@ -37,9 +35,11 @@ function Callback(data:Dictionary<any>) {
 
 
 // Initialize event listener.
-export const EventListener:ShardEventListener = new ShardEventListener(
-    'shard',
-    'after',
-    'tick',
-    Callback,
+export const MAIN = new ShardListener(
+    {
+        source: 'shard',
+        type: 'after',
+        eventId: 'tick',
+    },
+    {callback: Callback},
 );

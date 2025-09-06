@@ -44,7 +44,7 @@ export const LANG = {
                     printData: 'Printing all data for the §e%s§r module. Data can be accessed in server logs.',
                 },
                 shardMemory: {
-                    success: '\n§5Disk Space Used: §e%sMB (%s Bytes)§r\n§cDisk space should always be low, if it is over 2MB you should try removing or optimizing some data.',
+                    success: '\n§5Disk Space Used: §e%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',
                 },
             },
         },

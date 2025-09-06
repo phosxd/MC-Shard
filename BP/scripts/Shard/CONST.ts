@@ -25,8 +25,8 @@ export const DiscordLink:string = 'dsc.gg/mc-shard';
 */
 export const ModuleNames = [
     'core',
-    /**
     'util',
+    /**
     'tracker',
     'border',
     'region',

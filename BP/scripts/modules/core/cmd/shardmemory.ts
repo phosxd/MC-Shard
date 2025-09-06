@@ -1,8 +1,5 @@
 import {world, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {Module} from '../module';
-
-
 
 
 function Callback(context:ShardCommandContext, ...args) {
@@ -12,16 +9,12 @@ function Callback(context:ShardCommandContext, ...args) {
 };
 
 
-
-
 // Initialize Command.
 export const MAIN = new ShardCommand(
     {
         id: 'shardmemory',
-        brief: 'Shard memory info.',
+        brief: 'shard.core.cmd.shardMemory.brief',
         permissionLevel: CommandPermissionLevel.Admin
     },
-    {
-        callback: Callback,
-    }
+    {callback: Callback},
 );

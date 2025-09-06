@@ -1,8 +1,6 @@
 import {EntityRemoveAfterEvent} from '@minecraft/server';
-import ShardEventListener from '../../../ShardAPI/event_listener';
+import {ShardListener} from '../../../Shard/listener';
 import {Module} from '../module';
-
-
 
 
 function removeFrozenEntityEntry(entityId:string) {
@@ -20,9 +18,11 @@ function Callback(event:EntityRemoveAfterEvent) {
 
 
 // Initialize event listener.
-export const EventListener:ShardEventListener = new ShardEventListener(
-    'world',
-    'after',
-    'entityRemove',
-    Callback,
+export const MAIN = new ShardListener(
+    {
+        source: 'world',
+        type: 'after',
+        eventId: 'entityRemove',
+    },
+    {callback: Callback},
 );

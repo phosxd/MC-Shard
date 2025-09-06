@@ -17,7 +17,7 @@ function Callback(context:ShardCommandContext, ...args) {
 export const MAIN = new ShardCommand(
     {
         id: 'shard',
-        brief: 'Shard info.',
+        brief: 'shard.core.cmd.shard.brief',
         permissionLevel: CommandPermissionLevel.Any
     },
     {

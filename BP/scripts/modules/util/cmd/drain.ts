@@ -1,6 +1,6 @@
 import {system, Dimension, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {LocationOutOfBounds} from '../../../ShardAPI/util';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {LocationOutOfBounds} from '../../../Shard/util';
 
 const MinRadius:number = 1;
 const MaxRadius:number = 50;
@@ -24,12 +24,12 @@ function* clearLiquidBlocks(radius:number, location:Vector3, dimension:Dimension
 };
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let radius:number = Options[0];
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    let radius:number = args[0];
     // Return error if radius out of bounds.
     if (radius > MaxRadius || radius < MinRadius) {return {message:{translate:'shard.util.cmd.drain.radiusOutOfBounds'}, status:1}};
     // Run job.
-    system.runJob(clearLiquidBlocks(radius, Context.target.location, Context.target.dimension));
+    system.runJob(clearLiquidBlocks(radius, context.target.location, context.target.dimension));
     
     return {message:{translate:'shard.util.cmd.drain.success', with:[String(radius)]}, status:0};
 };
@@ -38,14 +38,14 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'drain',
-    'Remove liquid blocks in a radius.',
-    [
-        {name:'radius', type:CustomCommandParamType.Integer},
-    ],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'drain',
+        brief: 'shard.util.cmd.drain.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'radius', type:CustomCommandParamType.Integer},
+        ],
+    },
+    {callback:Callback},
 );

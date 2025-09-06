@@ -96,13 +96,11 @@ function randomParticleLocation() {
 export const MAIN = new ShardCommand(
     {
         id: 'party',
-        brief: 'Let\'s get it started in here!',
+        brief: 'shard.fun.cmd.party.brief',
         permissionLevel: CommandPermissionLevel.Any,
-        mandatoryParameters: [
+        optionalParameters: [
             {name:'seconds', type:CustomCommandParamType.Integer},
         ],
     },
-    {
-        callback: Callback,
-    },
+    {callback: Callback},
 );
