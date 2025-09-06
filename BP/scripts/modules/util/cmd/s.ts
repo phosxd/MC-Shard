@@ -1,26 +1,15 @@
 import {system, Player, GameMode, CommandPermissionLevel} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
-    const player:Player = Context.target as Player;
-    system.run(()=>{player.setGameMode(GameMode.Survival)});
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    system.run(()=>{(context.target as Player).setGameMode(GameMode.Survival)});
     return undefined;
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    's',
-    'Survival mode.',
-    [],
-    [],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {id:'s', brief:'shard.util.cmd.s.brief', permissionLevel:CommandPermissionLevel.Admin},
+    {callback: Callback},
 );

@@ -80,6 +80,10 @@ shard.core.form.shard.body=§eRepo: §9github.com/phosxd/mc-shard§r\nJoin the D
 ## --------------------
 shard.util.displayName=§r[§gSimple Utility§r]
 shard.util.brief=Provides various helpful commands.
+## cmd: a
+shard.util.cmd.a.brief=Adventure mode.
+## cmd: c
+shard.util.cmd.c.brief=Creative mode.
 ## cmd: despawn
 shard.util.cmd.despawn.success=Removed %s entities.
 ## cmd: drain
@@ -109,13 +113,33 @@ shard.util.cmd.heal.success=Healed %s entities.
 ## cmd: push
 shard.util.cmd.push.brief=Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.
 shard.util.cmd.push.success=Applied an impulse to %s entities.
+## cmd: pushchat
+shard.util.cmd.pushChat.brief=Pushes all previous chat messages off-screen.
+## cmd: rename
+shard.util.cmd.rename.brief=Rename entities or held items.
 shard.util.cmd.rename.successEntity=Renamed %s entities to "%s".
 shard.util.cmd.rename.successItem=Renamed items held by %s entities to "%s".
+## cmd: repair
+shard.util.cmd.repair.brief=Repair the item in your hand.
 shard.util.cmd.repair.success=Repaired §e%s§r.
 shard.util.cmd.repair.failure=§e%s§c cannot be repaired.
 shard.util.cmd.repair.noItem=§cYou need to be holding an item.
-shard.util.cmd.setslot.success=Set %s players' slot to %s.
-shard.util.cmd.setslot.slotIndexOutOfRange=Slot index must be between 0 & 8.
+## cmd: s
+shard.util.cmd.s.brief=Survival mode.
+## cmd: setslot
+shard.util.cmd.setSlot.brief=Set the selected hotbar slot.
+shard.util.cmd.setSlot.success=Set %s players' slot to %s.
+shard.util.cmd.setSlot.slotIndexOutOfRange=Slot index must be between 0 & 8.
+## cmd: sp
+shard.util.cmd.sp.brief=Spectator mode.
+## cmd: suicide
+shard.util.cmd.suicide.brief=Kills you. Helpful when stuck somewhere.
+## cmd: thru
+shard.util.cmd.thru.brief=Teleport through a wall 4 blocks thick or less.
+shard.util.cmd.thru.noBlocks=No blocks in range to teleport through.
+shard.util.cmd.thru.tooThick=Wall is too thick to teleport through.
+## cmd: up
+shard.util.cmd.up.brief=Teleport up with a platform.
 
 ## "tracker" module texts.
 ## -----------------------

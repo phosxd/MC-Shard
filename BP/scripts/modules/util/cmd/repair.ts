@@ -1,15 +1,15 @@
 import {system, Player, Entity, Container, ItemStack, ItemDurabilityComponent, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
-    const player:Player = Context.target as Player;
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    if (context.targetType !== 'player') {return undefined};
+    const player = context.target as Player;
 
     // Get player inventory & item durability component.
-    let invContainer:Container = Context.target.getComponent('inventory').container;
+    let invContainer:Container = player.getComponent('inventory').container;
     let stack:ItemStack = invContainer.getSlot(player.selectedSlotIndex).getItem();
     // Return error if no item stack in slot.
     if (stack == undefined) {return {message:{translate:'shard.util.cmd.repair.noItem'}, status:1}};
@@ -29,12 +29,11 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'repair',
-    'Repair the item in your hand.',
-    [],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'repair',
+        brief: 'shard.util.cmd.repair.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+    },
+    {callback: Callback}
 );

@@ -1,28 +1,22 @@
-import {system, Player, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {system, Entity, CommandPermissionLevel} from '@minecraft/server';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
-    const player:Player = Context.target as Player;
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    if (!(context.target instanceof Entity)) {return undefined};
     system.run(()=>{
-        player.kill();
+        (context.target as Entity).kill();
     });
     return undefined;
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'suicide',
-    'Kills you. Helpful when stuck somewhere.',
-    [],
-    [],
-    CommandPermissionLevel.Any,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'suicide',
+        brief: 'shard.util.cmd.suicide.brief',
+        permissionLevel: CommandPermissionLevel.Any,
+    },
+    {callback: Callback},
 );

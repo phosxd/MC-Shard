@@ -1,24 +1,18 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    if (Context.targetType !== 'player') {return undefined};
+function Callback(context:ShardCommandContext, args:Array<any>) {
     return {message:'\n'.repeat(80), status:0};
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'pushchat',
-    'Pushes all previous chat messages off-screen.',
-    [],
-    [],
-    CommandPermissionLevel.Any,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'pushchat',
+        brief: 'shard.util.cmd.pushChat.brief',
+        permissionLevel: CommandPermissionLevel.Any,
+    },
+    {callback: Callback},
 );

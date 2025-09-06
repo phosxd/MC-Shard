@@ -1,4 +1,4 @@
-import {world,Vector3} from '@minecraft/server';
+import {system, world, Vector3} from '@minecraft/server';
 import {VersionToBuildNumber} from './util';
 
 

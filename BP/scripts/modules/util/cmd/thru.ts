@@ -1,24 +1,18 @@
 import {system, Entity, Vector3, CommandPermissionLevel} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-
-
-const Lang = {
-    noBlocks: 'No blocks in range to teleport through.',
-    obstructed: 'Wall is too thick to teleport through.',
-};
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 const MaxWallDistance:number = 10;
-const MaxWallThickness:number = 3;
+const MaxWallThickness:number = 4;
 
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    const entity:Entity = Context.target as Entity;
-    let raycast = entity.getBlockFromViewDirection({maxDistance:MaxWallDistance, includeLiquidBlocks:false});
-    if (raycast === undefined) {return {message:Lang.noBlocks, status:1}};
-    let direction = entity.getViewDirection();
-    let checkLocation:Vector3 = raycast.block.location;
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    const entity:Entity = context.target as Entity;
+    const raycast = entity.getBlockFromViewDirection({maxDistance:MaxWallDistance, includeLiquidBlocks:false});
+    if (raycast === undefined) {return {message:{translate:'shard.util.cmd.thru.noBlocks'}, status:1}};
+    const direction = entity.getViewDirection();
+    const checkLocation:Vector3 = raycast.block.location;
     // Search for other side of the wall.
     for (let i = 0; i < MaxWallThickness; i++) {
         checkLocation.x += direction.x; checkLocation.y += direction.y; checkLocation.z += direction.z;
@@ -26,7 +20,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         if (checkLocation.y > 256 || checkLocation.y < -64) {return {message:{translate:'shard.misc.targetLocationOutOfBounds'}, status:1}};
         
         // Check block.
-        let checkBlock = Context.target.dimension.getBlock(checkLocation);
+        const checkBlock = context.target.dimension.getBlock(checkLocation);
         if (checkBlock.isAir === true || checkBlock.isLiquid === true) {
             // 1 tick later... Teleport target.
             system.run(()=>{
@@ -36,19 +30,18 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
         };
     };
 
-    return {message:Lang.obstructed, status:0};
+    return {message:{translate:'shard.util.cmd.thru.tooThick'}, status:0};
 };
 
 
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'thru',
-    'Teleport through a wall 3 blocks thick or less.',
-    [],
-    [],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'thru',
+        brief: 'shard.util.cmd.thru.brief',
+        permissionLevel: CommandPermissionLevel.Admin,
+    },
+    {callback: Callback},
 );

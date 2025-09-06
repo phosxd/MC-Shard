@@ -1,13 +1,11 @@
 import {system, Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    const entity:Entity = Context.target as Entity;
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    const entity:Entity = context.target as Entity;
     // Get target block & location. Return error if out of bounds.
-    let amount:number = Options[0];
+    let amount:number = args[0];
     let target_location = entity.location; target_location.y += amount;
     if (target_location.y > 256 || target_location.y < -64) {return {message:{translate:'shard.misc.targetLocationOutOfBounds'}, status:1}}
     let target_block = entity.dimension.getBlock(target_location);
@@ -26,17 +24,15 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'up',
-    'Teleport up with a platform.',
-    [
-        {name:'amount', type:CustomCommandParamType.Integer},
-    ],
-    [],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'up',
+        brief: 'shard.util.cmd.up.brief',
+        permissionLevel: CommandPermissionLevel.Admin,
+        mandatoryParameters: [
+            {name:'distance', type:CustomCommandParamType.Integer},
+        ],
+    },
+    {callback: Callback},
 );

@@ -1,13 +1,13 @@
 import {system, Player, Entity, EntityInventoryComponent, ItemStack, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    const item_or_entity:'item'|'entity' = Options[0];
-    const targets:Array<Entity> = Options[1];
-    const name:string = Options[2];
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    const item_or_entity:'item'|'entity' = args[0];
+    const targets:Array<Entity> = args[1];
+    const name:string = args[2];
     let count = 0;
 
     // Apply to targets.
@@ -44,22 +44,16 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'rename',
-    'Rename entities or held items.',
-    [
-        {name:'sh:renameOption', type:CustomCommandParamType.Enum},
-        {name:'targets', type:CustomCommandParamType.EntitySelector},
-        {name:'name', type:CustomCommandParamType.String},
-    ],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
     {
-        renameOption: [
-            'item',
-            'entity',
+        id: 'rename',
+        brief: 'shard.util.cmd.rename.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'sh:renameOption', type:CustomCommandParamType.Enum},
+            {name:'targets', type:CustomCommandParamType.EntitySelector},
+            {name:'name', type:CustomCommandParamType.String},
         ],
     },
+    {callback: Callback},
 );

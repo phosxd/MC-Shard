@@ -1,4 +1,5 @@
 import {ShardModule} from '../../Shard/module';
+import CommandEnums from './commandEnums';
 
 
 // Instantiate Module.
@@ -23,7 +24,17 @@ export const Module = new ShardModule(
             'cmd/freeze',
             'cmd/heal',
             'cmd/push',
+            'cmd/pushchat',
+            'cmd/rename',
+            'cmd/repair',
+            'cmd/s',
+            'cmd/setslot',
+            'cmd/sp',
+            'cmd/suicide',
+            'cmd/thru',
+            'cmd/up',
         ],
+        commandEnums: CommandEnums,
         extraDefaultPersisData: {
             frozenEntities: {},
         },

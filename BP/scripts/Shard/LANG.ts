@@ -82,12 +82,11 @@ export const LANG = {
                 push: {
                     success: 'Applied an impulse to %s entities.',
                 },
-                pushchat: {},
                 rename: {
                     successEntity: 'Renamed %s entities to "%s".',
                     successItem: 'Renamed items held by %s entities to "%s".',
                 },
-                setslot: {
+                setSlot: {
                     success: 'Set %s players\' slot to %s.',
                     slotIndexOutOfRange: 'Slot index must be between 0 & 8.',
                 },
@@ -95,6 +94,10 @@ export const LANG = {
                     success: 'Repaired §e%s§r.',
                     failure: '§e%s§c cannot be repaired.',
                     noItem: '§cYou need to be holding an item.',
+                },
+                thru: {
+                    noBlocks: 'No blocks in range to teleport through.',
+                    tooThick: 'Wall is too thick to teleport through.',
                 },
             },
         },
