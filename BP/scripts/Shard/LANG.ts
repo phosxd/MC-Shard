@@ -32,13 +32,10 @@ export const LANG = {
                 discord: {
                     success: '§9%s',
                 },
-                eval: {
-                    run: 'Running provided code now.',
-                },
                 module: {
                     info: '\n§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r',
                     disabled: 'Disabled module §e%s§r.',
-                    cannotDisable: 'Cannot disable §e%s§r module.',
+                    cannotDisable: '§cCannot disable §e%s§c module.',
                     enabled: 'Enabled module §e%s§r.',
                     clearData: 'Deleted all data for the §e%s§r module.',
                     printData: 'Printing all data for the §e%s§r module. Data can be accessed in server logs.',

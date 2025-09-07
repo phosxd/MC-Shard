@@ -4,13 +4,9 @@ system;
 world;
 
 
-
-
 function Callback(context:ShardCommandContext, args:Array<any>) {
     return {message:eval(args[0]), status:0};
 };
-
-
 
 
 // Initialize Command.

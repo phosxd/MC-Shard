@@ -1,7 +1,7 @@
-import {world, system, Player, Entity} from '@minecraft/server';
-import ShardEventListener from '../../../ShardAPI/event_listener';
-import {Dictionary} from '../../../ShardAPI/CONST';
-import {GetAllEntities} from '../../../ShardAPI/util';
+import {Player} from '@minecraft/server';
+import {ShardListener} from '../../../Shard/listener';
+import {Dictionary} from '../../../Shard/CONST';
+import {GetAllEntities} from '../../../Shard/util';
 import {Scoreboards, scoreboardsReady} from '../module';
 
 
@@ -69,9 +69,7 @@ function Callback(data:Dictionary<any>) {
 
 
 // Initialize event listener.
-export const EventListener:ShardEventListener = new ShardEventListener(
-    'shard',
-    'after',
-    'tick',
-    Callback,
+export const MAIN = new ShardListener(
+    {source:'shard', type:'after', eventId:'tick'},
+    {callback: Callback},
 );

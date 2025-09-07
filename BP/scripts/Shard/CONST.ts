@@ -1,4 +1,4 @@
-import {system, world, Vector3} from '@minecraft/server';
+import {Vector3} from '@minecraft/server';
 import {VersionToBuildNumber} from './util';
 
 
@@ -16,7 +16,17 @@ export const Version:Array<number> = [0,2,0];
 export const VersionString:string = Version.join('.');
 /**Build number used for integral versioning. Derived from `Version`.*/
 export const BuildNumber = VersionToBuildNumber(Version);
+
+/**The link to the Shard Discord server.*/
 export const DiscordLink:string = 'dsc.gg/mc-shard';
+
+
+/**Feature flags for modules to read.
+ * Adding or removing these may lead to modules having different behavior.
+*/
+export const Features = [
+    //'beta',
+];
 
 
 /**Every module the add-on includes.
@@ -26,8 +36,8 @@ export const DiscordLink:string = 'dsc.gg/mc-shard';
 export const ModuleNames = [
     'core',
     'util',
-    /**
     'tracker',
+    /**
     'border',
     'region',
     */

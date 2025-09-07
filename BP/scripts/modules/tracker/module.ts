@@ -1,33 +1,7 @@
 import {system, world, ScoreboardObjective} from '@minecraft/server';
-import {Dictionary} from '../../ShardAPI/CONST';
-import ShardModule from '../../ShardAPI/module';
-import ShardEventListener from '../../ShardAPI/event_listener';
-import {ShardCommand} from '../../ShardAPI/command';
-import ShardForm from '../../ShardAPI/form';
-// Import events.
-import * as event_playerSpawn from './events/playerSpawn';
-import * as event_entityDie from './events/entityDie';
-import * as event_entityHealthChange from './events/entityHealthChange';
-import * as event_selectedSlotChange from './events/playerHotbarSelectedSlotChange';
-import * as event_tick from './events/tick';
-// Import forms.
-import * as form_main from './forms/main';
-
-
-
-
-// Define module properties.
-var EventListeners:Dictionary<ShardEventListener> = {
-    playerSpawn: event_playerSpawn.EventListener,
-    entityDie: event_entityDie.EventListener,
-    entityHealthChange: event_entityHealthChange.EventListener,
-    selectedSlotChange: event_selectedSlotChange.EventListener,
-    tick: event_tick.EventListener,
-};
-var Commands:Dictionary<ShardCommand> = {
-};
-var Forms:Dictionary<ShardForm> = {
-};
+import {Dictionary} from '../../Shard/CONST';
+import {ShardModule} from '../../Shard/module';
+import * as mainForm from './form/main';
 
 
 // Setup scoreboards.
@@ -99,21 +73,21 @@ system.run(()=>{
 
 
 
-// Init callback.
-function Init() {};
-
-
-
-
-
 // Instantiate Module.
-export const Module:ShardModule = new ShardModule(
-    'tracker', // ID
-    {translate:'shard.tracker.displayName'}, // Display name
-    {translate:'shard.tracker.description'}, // Description
-    Init,
-    EventListeners,
-    Commands,
-    Forms,
-    form_main.Form,
+export const Module = new ShardModule(
+    {
+        id: 'tracker',
+        displayName: {translate:'shard.tracker.displayName'},
+        brief: {translate:'shard.tracker.brief'},
+    },
+    {
+        childPaths: [
+            'event/entityDie',
+            'event/entityHealthChange',
+            'event/playerHotbarSelectedSlotChange',
+            'event/playerSpawn',
+            'event/tick',
+        ],
+        mainForm: mainForm.MAIN,
+    },
 );
