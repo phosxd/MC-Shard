@@ -1,15 +1,11 @@
-import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {} from '../../../ShardAPI/CONST';
-import {LocationToString, RoundVector3} from '../../../ShardAPI/util';
+import {CommandPermissionLevel} from '@minecraft/server';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Region} from '../module';
-
-
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
-
     const regionKeys:Array<string> = Object.keys(Module.persisData.regions);
     if (regionKeys.length == 0) {return {message:{translate:'shard.region.cmd.listRegions.noRegions'}, status:1}};
 
@@ -23,15 +19,12 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'listregions',
-    'List all regions.',
-    [],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'listregions',
+        brief: 'shard.region.cmd.listRegions',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+    },
+    {callback: Callback},
 );

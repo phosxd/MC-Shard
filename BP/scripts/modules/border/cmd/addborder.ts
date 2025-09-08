@@ -1,10 +1,8 @@
 import {Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {AlignedArea} from '../../../ShardAPI/CONST';
-import {AlignArea, LocationToString, RoundVector3} from '../../../ShardAPI/util';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {AlignedArea} from '../../../Shard/CONST';
+import {AlignArea, LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Border} from '../module';
-
-
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -41,20 +39,21 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'addborder',
-    'Add a new border. Set inverted for world border.',
-    [
-        {name:'name', type:CustomCommandParamType.String},
-        {name:'start', type:CustomCommandParamType.Location},
-        {name:'end', type:CustomCommandParamType.Location},
-        {name:'inverted', type:CustomCommandParamType.Boolean},
-        {name:'damage', type:CustomCommandParamType.Float},
-    ],
-    [
-        {name:'style', type:CustomCommandParamType.String},
-    ],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'addborder',
+        brief: 'shard.border.cmd.addBorder.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'name', type:CustomCommandParamType.String},
+            {name:'start', type:CustomCommandParamType.Location},
+            {name:'end', type:CustomCommandParamType.Location},
+            {name:'inverted', type:CustomCommandParamType.Boolean},
+            {name:'damage', type:CustomCommandParamType.Float},
+        ],
+        optionalParameters: [
+            {name:'style', type:CustomCommandParamType.String},
+        ],
+    },
+    {callback: Callback},
 );

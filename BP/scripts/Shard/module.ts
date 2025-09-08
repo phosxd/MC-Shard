@@ -15,7 +15,7 @@ export const EventSources:Dictionary<any> = {
 };
 export const defaultPersisData:Dictionary<any> = {
     enabled: true,
-    commandSettings: {},
+    commandSettings: {}
 };
 
 
@@ -92,7 +92,7 @@ export class ShardModule {
         if (data.extraDefaultPersisData) {this.extraDefaultPersisData = data.extraDefaultPersisData}
         else {this.extraDefaultPersisData = {}};
         this.persisData = Object.assign({}, defaultPersisData);
-        Object.assign(this.persisData, data.extraDefaultPersisData);
+        Object.assign(this.persisData, this.extraDefaultPersisData);
         this.persisDataReady = false;
         this.worldReady = false;
 
@@ -163,15 +163,8 @@ export class ShardModule {
                     mandatoryParameters: command.details.mandatoryParameters,
                     optionalParameters: command.details.optionalParameters,
                 }, this.slashCommandPassthrough.bind(this, command));
-                // Setup settings.
-                const settings = {};
-                command.settingElements.forEach(element => {
-                    const elementData = element.data as Dictionary<any>;
-                    // Apply default value if available.
-                    if (!elementData.defaultValue) {settings[element.id] = undefined}
-                    else {settings[element.id] = elementData.defaultValue};
-                });
                 // Update settings after `persisData` initialization.
+                const settings = command.getDefaultSettings();
                 system.run(()=>{
                     // Add any previously saved data.
                     const previousData = this.persisData.commandSettings[command.details.id];
@@ -218,8 +211,16 @@ export class ShardModule {
     };
 
 
+    /**Resets module persistent data to it's default state.*/
     resetData():void {
-        this.setData(Object.assign(Object.assign({},this.extraDefaultPersisData), defaultPersisData));
+        const newData = Object.assign(Object.assign({},this.extraDefaultPersisData), defaultPersisData);
+        // Add default command setting.
+        for (const key in this.commands) {
+            const command = this.commands[key];
+            newData.commandSettings[command.details.id] = command.getDefaultSettings();
+        };
+        // Apply.
+        this.setData(newData);
     };
 
 

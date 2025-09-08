@@ -1,8 +1,6 @@
-import {system, world, CommandPermissionLevel, CustomCommandParamType, Entity} from '@minecraft/server';
+import {CommandPermissionLevel, CustomCommandParamType, Entity} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Hardcopy} from '../module';
-system;
-world;
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {

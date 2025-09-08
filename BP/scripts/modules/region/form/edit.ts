@@ -1,37 +1,34 @@
 import {CommandPermissionLevel, RawMessage} from '@minecraft/server';
-import {ActionFormData, ActionFormResponse} from '@minecraft/server-ui';
-import ShardForm from '../../../ShardAPI/form';
-import {ShardCommandContext} from '../../../ShardAPI/command';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
 
 
-function BuildForm(context:ShardCommandContext, ...args) {
+function Builder(context:ShardCommandContext, ...args) {
     const regionName:string = args[0];
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:{rawtext:[Module.details.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]}}});
+    elements.push({type:'button', id:'general', data:{display:{translate:'shard.region.form.edit.general'}}});
+    elements.push({type:'button', id:'commands', data:{display:{translate:'shard.region.form.edit.commands'}}});
 
-    const formData = new ActionFormData()
-        .title({rawtext:[Module.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]})
-        .button({translate:'shard.region.form.edit.general'})
-        .button({translate:'shard.region.form.edit.commands'})
-        .button({translate:'shard.formCommon.done'});
-    
-    return {data:formData, callbackArgs:[regionName]};
+    return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[regionName]});
 };
 
 
 
 
-function Callback(context:ShardCommandContext, response:ActionFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     const regionName:string = args[0];
 
     switch (response.selection) {
         case 0: { // General.
-            Module.forms.editGeneral.show(context, regionName);
+            Module.forms.editGeneral.show(context, [regionName]);
             break;
         };
         case 1: { // Commands.
-            Module.forms.commands.show(context, regionName);
+            Module.forms.commands.show(context, [regionName]);
             break;
         };
     }
@@ -41,10 +38,7 @@ function Callback(context:ShardCommandContext, response:ActionFormResponse, ...a
 
 
 // Initialize form.
-export const Form:ShardForm = new ShardForm(
-    'edit',
-    CommandPermissionLevel.Admin,
-    [],
-    BuildForm,
-    Callback,
+export const MAIN = new ShardForm(
+    {id:'edit', permissionLevel:CommandPermissionLevel.Admin},
+    {buildForm:Builder, callback:Callback},
 );

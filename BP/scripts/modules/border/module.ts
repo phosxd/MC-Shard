@@ -1,17 +1,6 @@
-import {system, world, RGBA} from '@minecraft/server';
-import {Dictionary, AlignedArea} from '../../ShardAPI/CONST';
-import ShardModule from '../../ShardAPI/module';
-import ShardEventListener from '../../ShardAPI/event_listener';
-import ShardCommand from '../../ShardAPI/command';
-import ShardForm from '../../ShardAPI/form';
-// Import events.
-import * as event_tick from './events/tick';
-// Import commands.
-import * as command_addborder from './commands/addborder';
-import * as command_removeborder from './commands/removeborder';
-import * as command_listborders from './commands/listborders';
-// Import forms.
-import * as form_main from './forms/main';
+import {RGBA} from '@minecraft/server';
+import {Dictionary, AlignedArea} from '../../Shard/CONST';
+import {ShardModule} from '../../Shard/module';
 
 
 export interface Border {
@@ -43,8 +32,6 @@ export interface BorderStyle {
 };
 
 
-
-
 // Default border styles.
 export const defaultBorderStyles:Dictionary<BorderStyle> = {
     hidden: {
@@ -54,41 +41,21 @@ export const defaultBorderStyles:Dictionary<BorderStyle> = {
 };
 
 
-// Define module properties.
-var EventListeners:Dictionary<ShardEventListener> = {
-    tick: event_tick.EventListener,
-};
-var Commands:Dictionary<ShardCommand> = {
-    addborder: command_addborder.Command,
-    removeborder: command_removeborder.Command,
-    listborders: command_listborders.Command,
-};
-var Forms:Dictionary<ShardForm> = {
-};
-const ExtraDefaultPersisData:Dictionary<any> = {
-    borders: {},
-    borderStyles: defaultBorderStyles,
-};
-
-
-
-
-// Init callback.
-function Init() {};
-
-
-
 
 
 // Instantiate Module.
-export const Module:ShardModule = new ShardModule(
-    'border', // ID
-    {translate:'shard.border.displayName'}, // Display name
-    {translate:'shard.border.description'}, // Description
-    Init,
-    EventListeners,
-    Commands,
-    Forms,
-    form_main.Form,
-    ExtraDefaultPersisData,
+export const Module = new ShardModule(
+    {id:'border', displayName:{translate:'shard.border.displayName'}, brief:{translate:'shard.border.brief'}},
+    {
+        childPaths: [
+            'event/tick',
+            'cmd/addBorder',
+            'cmd/listBorders',
+            'cmd/removeBorder',
+        ],
+        extraDefaultPersisData: {
+            borders: {},
+            borderStyles: defaultBorderStyles,
+        },
+    },
 );

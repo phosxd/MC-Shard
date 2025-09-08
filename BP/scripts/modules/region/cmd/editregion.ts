@@ -1,7 +1,5 @@
 import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {} from '../../../ShardAPI/CONST';
-import {} from '../../../ShardAPI/util';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
@@ -12,7 +10,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (!Module.persisData.regions[name]) {return {message:{translate:'shard.region.cmd.editRegion.doesNotExist'}, status:1}};
 
     // Show edit form.
-    Module.forms.edit.show(context, name);
+    Module.forms.edit.show(context, [name]);
 
     return undefined;
 };
@@ -21,14 +19,14 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
 
 // Initialize Command.
-export const Command = new ShardCommand(
-    'editregion',
-    'Edit a region.',
-    [
-        {name:'name', type:CustomCommandParamType.String},
-    ],
-    [],
-    CommandPermissionLevel.Admin,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'editregion',
+        brief: 'shard.region.cmd.editRegion.brief',
+        permissionLevel: CommandPermissionLevel.Admin,
+        mandatoryParameters: [
+            {name:'name', type:CustomCommandParamType.String},
+        ],
+    },
+    {callback: Callback},
 );

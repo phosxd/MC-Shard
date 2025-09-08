@@ -155,37 +155,45 @@ shard.trackers.form.main.body=Use "/tag <entity> add <tracker>" to start trackin
 ## ----------------------
 shard.border.displayName=§r[§gBorder§r]
 shard.border.brief=Provides border tools.
+## cmd: addBorder
+shard.border.cmd.addBorder.brief=Add a new border. Set inverted for world border.
 shard.border.cmd.addBorder.success=Added new border "§e%s§r" starting from %s & ending at %s.
 shard.border.cmd.addBorder.nameTaken=§cCannot create border with duplicate name.
 shard.border.cmd.addBorder.invalidStyle=§cCannot create border with invalid style. Available styles: %s.
 shard.border.cmd.addBorder.mustBeInverted=§cNormal borders are not yet supported, only inverted borders should be created.
+## cmd: removeBorder
+shard.border.cmd.removeBorder.brief=Remove a border.
 shard.border.cmd.removeBorder.success=Removed border "§e%s§r".
 shard.border.cmd.removeBorder.doesNotExist=§cCannot delete a border that does not exist.
+## cmd: listBorders
+shard.border.cmd.listBorders.brief=List all borders.
 shard.border.cmd.listBorders.noBorder=§cThere are currently no borders.
 shard.border.cmd.listBorders.success=All Borders: %s
-shard.border.form.main.viewAll=View All Borders
-shard.border.form.viewAll.body=Teleport to a border.
-shard.border.form.edit.text=Name
-shard.border.form.edit.textPlaceholder=Enter border name here...
-shard.border.form.edit.text=Start
-shard.border.form.edit.startPlaceholder=Border start position...
-shard.border.form.edit.text=End
-shard.border.form.edit.endPlaceholder=Border end position...
-shard.border.form.edit.killToggle=Remove this border?
 
 ## "region" module texts.
 ## ----------------------
 shard.region.displayName=§r[§gRegion§r]
 shard.region.brief=Provides regions to edit world mutability & player abilities.
+## cmd: addRegion
+shard.region.cmd.addRegion.brief=Adds a new region.
 shard.region.cmd.addRegion.success=Added new region "§e%s§r" starting from %s & ending at %s.
 shard.region.cmd.addRegion.nameTaken=§cCannot create region with duplicate name.
+## cmd: removeRegion
+shard.region.cmd.removeRegion.brief=Removes a region.
 shard.region.cmd.removeRegion.success=Removed region "§e%s§r".
 shard.region.cmd.removeRegion.doesNotExist=§cCannot delete a region that does not exist.
+## cmd: editRegion
+shard.region.cmd.editRegion.brief=Edit a region.
 shard.region.cmd.editRegion.doesNotExist=§cCannot edit a region that does not exist.
+## cmd: listRegions
+shard.region.cmd.listRegions.brief=List all regions.
 shard.region.cmd.listRegions.noRegions=§cThere are currently no regions.
 shard.region.cmd.listRegions.success=All Regions: %s
+## form: main
 shard.region.form.main.viewAll=View All Regions
+## form: viewAll
 shard.region.form.viewAll.body=Edit a region.
+## form: edit
 shard.region.form.edit.title=Edit Region
 shard.region.form.edit.name=Name
 shard.region.form.edit.namePlaceholder=Enter region name here...
@@ -196,8 +204,10 @@ shard.region.form.edit.endPlaceholder=Region end position...
 shard.region.form.edit.inverted=Is inverted?
 shard.region.form.edit.general=General Settings
 shard.region.form.edit.commands=Commands
+## form: commands
 shard.region.form.commands.title=Region Commands
 shard.region.form.commands.add=§2Add Command
+## form: addCommand
 shard.region.form.addCommand.name=Name
 shard.region.form.addCommand.namePlaceholder=Enter unique name for this...
 shard.region.form.addCommand.title=Add Command

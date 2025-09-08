@@ -220,7 +220,7 @@ export function EqualSplitString(value:string, parts:number) {
 
 
 
-// Specifies what each CommandPermissionLevel value is equal to or greater than.
+/**Specifies what each CommandPermissionLevel value is equal to or greater than.*/
 const cplMap:Dictionary<Array<number>> = {
     0: [0], // Any
     1: [0,1,2], // Game Directors
@@ -252,8 +252,7 @@ export function GetAllEntities(options?:EntityQueryOptions) {
 
 /**Max character length for dynamic property string value.*/
 const mcDataCharCap:number = 32700;
-/**API for persistent data.
- * 
+/**
  * Saves & retieves data in "parts" to overcome maximum dynamic property string value length.
  * New parts are only created if absolutely needed.
 */

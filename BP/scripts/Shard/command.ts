@@ -1,7 +1,6 @@
 import {CustomCommandParameter, CommandPermissionLevel, Dimension, RawMessage, Vector3, Vector2, CustomCommandStatus, Block, Entity, Player} from '@minecraft/server';
-import {Dictionary} from './CONST';
-import {CompareCommandPermissionLevel} from './util';
 import {ShardFormElement} from './form';
+import {Dictionary} from './CONST';
 
 
 export const defaultSettingElements:Array<ShardFormElement> = [
@@ -139,5 +138,18 @@ export class ShardCommand {
     /**Executes the command.*/
     execute(context:ShardCommandContext, ...args): ShardCommandResult|undefined {
         return this.callback(context, ...args);
+    };
+
+
+    /**Get default settings for this command.*/
+    getDefaultSettings():Dictionary<any> {
+        const settings = {};
+        this.settingElements.forEach(element => {
+            const elementData = element.data as Dictionary<any>;
+            // Apply default value if available.
+            if (!elementData.defaultValue) {settings[element.id] = undefined}
+            else {settings[element.id] = elementData.defaultValue};
+        });
+        return settings;
     };
 };

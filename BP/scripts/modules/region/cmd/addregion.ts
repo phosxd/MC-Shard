@@ -1,10 +1,8 @@
 import {Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {AlignedArea} from '../../../ShardAPI/CONST';
-import {AlignArea, LocationToString, RoundVector3} from '../../../ShardAPI/util';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {AlignedArea} from '../../../Shard/CONST';
+import {AlignArea, LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Region} from '../module';
-
-
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -31,20 +29,18 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'addregion',
-    'Add a new region.',
-    [
-        {name:'name', type:CustomCommandParamType.String},
-        {name:'start', type:CustomCommandParamType.Location},
-        {name:'end', type:CustomCommandParamType.Location},
-        {name:'inverted', type:CustomCommandParamType.Boolean},
-    ],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'addregion',
+        brief: 'shard.region.cmd.addRegion.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'name', type:CustomCommandParamType.String},
+            {name:'start', type:CustomCommandParamType.Location},
+            {name:'end', type:CustomCommandParamType.Location},
+            {name:'inverted', type:CustomCommandParamType.Boolean},
+        ],
+    },
+    {callback: Callback},
 );

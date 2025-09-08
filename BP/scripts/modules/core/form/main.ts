@@ -4,15 +4,11 @@ import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-
-
 function Builder(context:ShardCommandContext, ...args) {
     const elements:Array<ShardFormElement> = [];
     elements.push({type:'title', id:'title', data:{display:Module.details.displayName}});
     return new ShardFormBuilder({type:'action'}, {elements:elements, callbackArgs:[]});
 };
-
-
 
 
 function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
@@ -24,12 +20,6 @@ function Callback(context:ShardCommandContext, response:ShardFormActionResponse,
 
 // Initialize form.
 export const MAIN = new ShardForm(
-    {
-        id: 'main',
-        permissionLevel: CommandPermissionLevel.Admin,
-    },
-    {
-        buildForm: Builder,
-        callback: Callback,
-    },
+    {id:'main', permissionLevel:CommandPermissionLevel.Admin},
+    {buildForm:Builder, callback:Callback},
 );

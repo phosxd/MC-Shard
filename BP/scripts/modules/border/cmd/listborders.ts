@@ -1,10 +1,7 @@
-import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
-import {ShardCommand, ShardCommandContext} from '../../../ShardAPI/command';
-import {} from '../../../ShardAPI/CONST';
-import {LocationToString, RoundVector3} from '../../../ShardAPI/util';
+import {CommandPermissionLevel} from '@minecraft/server';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Border} from '../module';
-
-
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -23,15 +20,12 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 };
 
 
-
-
 // Initialize Command.
-export const Command = new ShardCommand(
-    'listborders',
-    'List all borders.',
-    [],
-    [],
-    CommandPermissionLevel.GameDirectors,
-    [],
-    Callback,
+export const MAIN = new ShardCommand(
+    {
+        id: 'listborders',
+        brief: 'shard.border.cmd.listBorders.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+    },
+    {callback: Callback},
 );
