@@ -154,7 +154,7 @@ shard.trackers.form.main.body=Use "/tag <entity> add <tracker>" to start trackin
 ## "border" module texts.
 ## ----------------------
 shard.border.displayName=§r[§gBorder§r]
-shard.border.brief=Provides border tools.
+shard.border.brief=Provides border functionality.
 ## cmd: addBorder
 shard.border.cmd.addBorder.brief=Add a new border. Set inverted for world border.
 shard.border.cmd.addBorder.success=Added new border "§e%s§r" starting from %s & ending at %s.
@@ -241,8 +241,12 @@ shard.textdisplay.form.edit.killToggle=Remove this display?
 ## --------------------
 shard.draw.displayName=§r[§cD§er§aa§9w§r]
 shard.draw.brief=Provides tools for rendering shapes in the world using particles.
-shard.draw.cmd.drawsquare.success=Rendering sqaure at %s for %s clients.
-shard.draw.cmd.drawsquare.success=Rendering cuboid at %s for %s clients.
+## cmd: drawCuboid
+shard.draw.cmd.drawCuboid.brief=Renders a cuboid for the targets. "options" expects valid JSON, see "/sh:drawoptions" for option list.
+shard.draw.cmd.drawCuboid.success=Rendering cuboid at %s for %s clients.
+## cmd: drawOptions
+shard.draw.cmd.drawOptions.brief=List all drawing options.
+shard.draw.cmd.drawOptions.success=All drawing options:\n- §ealpha_fade_in\n§r- §ealpha_sustain\n§r- §ealpha_fade_out\n§r- §esize_x_fade_in\n§r- §esize_x_sustain\n§r- §esize_x_fade_out\n§r- §esize_y_fade_in\n§r- §esize_y_sustain\n§r- §esize_y_fade_out
 
 ## "fun" module texts.
 ## -------------------

@@ -108,7 +108,7 @@ export const LANG = {
         },
         border: {
             displayName: '§r[§gBorder§r]',
-            brief: 'Provides border tools.',
+            brief: 'Provides border functionality.',
             cmd: {
                 addBorder: {
                     success: 'Added new border "§e%s§r" starting from %s & ending at %s.',
@@ -153,11 +153,11 @@ export const LANG = {
             displayName: '§r[§cD§er§aa§9w§r]',
             brief: 'Provides tools for rendering shapes in the world using particles.',
             cmd: {
-                drawsquare: {
-                    success: 'Rendering sqaure at %s for %s clients.',
-                },
-                drawcuboid: {
+                drawCuboid: {
                     success: 'Rendering cuboid at %s for %s clients.',
+                },
+                drawOptions: {
+                    success: 'All drawing options:\n- §ealpha_fade_in\n§r- §ealpha_sustain\n§r- §ealpha_fade_out\n§r- §esize_x_fade_in\n§r- §esize_x_sustain\n§r- §esize_x_fade_out\n§r- §esize_y_fade_in\n§r- §esize_y_sustain\n§r- §esize_y_fade_out',
                 },
             },
         },

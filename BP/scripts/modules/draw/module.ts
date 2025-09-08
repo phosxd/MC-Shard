@@ -1,33 +1,8 @@
 import {Dimension, Player, Vector2, Vector3, MolangVariableMap, RGBA} from '@minecraft/server';
-import {Dictionary, CardinalDirectionMap} from '../../ShardAPI/CONST';
-import ShardModule from '../../ShardAPI/module';
-import ShardEventListener from '../../ShardAPI/event_listener';
-import {ShardCommand} from '../../ShardAPI/command';
-import ShardForm from '../../ShardAPI/form';
-
-// Import commands.
-import * as command_drawsquare from './commands/drawsquare';
-import * as command_drawcuboid from './commands/drawcuboid';
-// Import events.
-
-// Import forms.
-import * as form_main from './forms/main';
+import {CardinalDirectionMap} from '../../Shard/CONST';
+import {ShardModule} from '../../Shard/module';
 
 
-// Define module properties.
-const EventListeners:Dictionary<ShardEventListener> = {
-};
-const Commands:Dictionary<ShardCommand> = {
-    drawsquare: command_drawsquare.Command,
-    drawcuboid: command_drawcuboid.Command,
-};
-const Forms:Dictionary<ShardForm> = {
-};
-const ExtraDefaultPersisData:Dictionary<any> = {
-};
-
-
-// Other.
 /**Options for setting & animating particle opacity & size.
  * 
  * `alpha_fade_out` is currently glitchy & should not be used.
@@ -48,13 +23,6 @@ export interface ParticleOptions {
     size_y_sustain?: number,
     size_y_fade_out?:number,
 };
-
-
-
-
-// Init callback.
-function Init() {};
-
 
 
 /**Renders a square at the location.
@@ -144,16 +112,17 @@ export function RenderCuboid(location:Vector3, target:Dimension|Player, color:RG
 
 
 
-
 // Instantiate Module.
-export const Module:ShardModule = new ShardModule(
-    'draw',
-    {translate:'shard.draw.displayName'},
-    {translate:'shard.draw.description'},
-    Init,
-    EventListeners,
-    Commands,
-    Forms,
-    form_main.Form,
-    ExtraDefaultPersisData,
+export const Module = new ShardModule(
+    {
+        id: 'draw',
+        displayName: {translate:'shard.draw.displayName'},
+        brief: {translate:'shard.draw.brief'},
+    },
+    {
+        childPaths: [
+            'cmd/drawCuboid',
+            'cmd/drawOptions',
+        ],
+    },
 );

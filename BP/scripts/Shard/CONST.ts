@@ -42,9 +42,7 @@ export const ModuleNames = [
     'region',
     */
     'textdisplay',
-    /**
     'draw',
-    */
     'fun',
 ];
 
