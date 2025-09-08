@@ -8,7 +8,7 @@ Version: **0.2** (in-dev).
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
 - Download the latest release on [Github](https://github.com/phosxd/mc-shard) or [Discord](https://dsc.gg/mc-shard).
 - Double click or open the downloaded `.mcaddon` file.
-- Apply the pack to your world.
+- Apply the pack to your world. Make sure to apply the resource pack AND the behavior pack.
 
 You DO NOT need:
 - Beta-APIs.
@@ -133,33 +133,9 @@ Provides tools for managing regions. This is mostly unfinished as there are miss
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.
 
-**Drawing Options:**
-- `targets`: Players who will see the render.
-- `location`: Location where the render will be centered.
-- `size`: The size of the rendered shape. 2 numbers for square, 3 numbers for cuboid.
-- `color`: RGB color of the rendered shape.
-- `opacity`: Opacity of the rendered shape.
-- `lifetime`: How long the render will be active.
-
-**Unavailable Drawing Options:**
-These are drawing options that are implemented but not currently available due to the custom command parameter limit of 8. I might add commands to save & draw presets that support all options.
-- `alpha_fade_in`: How long the opacity fade in transition lasts.
-- `alpha_sustain`: How long the opacity will sustain it's target value.
-- `alpha_fade_out`: How long the opacity fade out transition lasts.
-- `size_x_fade_in`
-- `size_x_sustain`
-- `size_x_fade_out`
-- `size_y_fade_in`
-- `size_y_sustain`
-- `size_y_fade_out`
-
-**Upcoming Commands:**
-- `/drawpreset`: Renders a shape from a preset.
-- `/shapepreset`: Add, remove, or list shape presets.
-
 **Commands:**
-- `/drawsquare`: Renders a square.
-- `/drawcuboid`: Renders a cuboid.
+- `/drawcuboid`: Renders a cuboid for the targets. "options" expects valid JSON, see "/sh:drawoptions" for option list.
+- `/drawoptions`: List all drawing options.
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
