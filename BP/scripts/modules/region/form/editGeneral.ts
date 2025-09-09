@@ -1,64 +1,35 @@
-import {system, CommandPermissionLevel, RawMessage} from '@minecraft/server';
-import {ModalFormData, ModalFormResponse} from '@minecraft/server-ui';
-import {Dictionary} from '../../../ShardAPI/CONST';
-import ShardForm from '../../../ShardAPI/form';
-import {ShardCommandContext} from '../../../ShardAPI/command';
-import {LocationToString, StringToLocation, AlignArea} from '../../../ShardAPI/util';
+import {CommandPermissionLevel, Vector3} from '@minecraft/server';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormModalResponse} from '../../../Shard/form';
+import {ShardCommandContext} from '../../../Shard/command';
+import {LocationToString, AlignArea} from '../../../Shard/util';
 import {Module, Region} from '../module';
 
 
-
-
-function BuildForm(context:ShardCommandContext, ...args) {
-    const valueIndexMap:Dictionary<number> = {};
-    let valueIndex:number = -1;
-
+function Builder(context:ShardCommandContext, ...args) {
     const regionName:string = args[0];
     const region:Region = Module.persisData.regions[regionName];
     if (!region) {return};
     const message:string = args[1];
 
-    const formData = new ModalFormData()
-        .title({rawtext:[Module.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]});
-    // Add message if given.
+    const elements:Array<ShardFormElement> = [];
+    elements.push({type:'title', id:'title', data:{display:{rawtext:[Module.details.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]}}});
     if (message) {
-        formData.label(message);
-        valueIndex += 1;
+        elements.push({type:'title', id:'message', data:{display:message}});
     };
-    formData.textField({translate:'shard.region.form.edit.name'}, {translate:'shard.region.form.edit.namePlaceholder'}, {defaultValue:region.name})
-    formData.textField({translate:'shard.region.form.edit.start'}, {translate:'shard.region.form.edit.startPlaceholder'}, {defaultValue:LocationToString(region.area.start)})
-    formData.textField({translate:'shard.region.form.edit.end'}, {translate:'shard.region.form.edit.endPlaceholder'}, {defaultValue:LocationToString(region.area.end)})
-    formData.toggle({translate:'shard.region.form.edit.inverted'}, {defaultValue:region.inverted});
-    valueIndex += 1;
-    Object.assign(valueIndexMap, {
-        name: valueIndex,
-        start: valueIndex+1,
-        end: valueIndex+2,
-        inverted: valueIndex+3,
-    });
-    valueIndex += 3;
-    
-    return {data:formData, callbackArgs:[regionName, valueIndexMap]};
+    elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.region.form.edit.name'}, placeholder:{translate:'shard.region.form.edit.namePlaceholder'}, defaultValue:region.name}});
+    elements.push({type:'vector3Box', id:'start', data:{display:{translate:'shard.region.form.edit.start'}, placeholder:{translate:'shard.region.form.edit.startPlaceholder'}, defaultValue:LocationToString(region.area.start)}});
+    elements.push({type:'vector3Box', id:'end', data:{display:{translate:'shard.region.form.edit.end'}, placeholder:{translate:'shard.region.form.edit.endPlaceholder'}, defaultValue:LocationToString(region.area.end)}});
+    elements.push({type:'toggle', id:'inverted', data:{display:{translate:'shard.region.form.edit.inverted'}, defaultValue:region.inverted}});
+    return new ShardFormBuilder({type:'modal'}, {elements:elements, callbackArgs:[regionName]});
 };
 
 
-
-
-function Callback(context:ShardCommandContext, response:ModalFormResponse, ...args) {
+function Callback(context:ShardCommandContext, response:ShardFormModalResponse, ...args) {
     const regionName:string = args[0];
-    const valueIndexMap:Dictionary<number> = args[1];
-    const newName = response.formValues[valueIndexMap.name] as string;
-    const start = StringToLocation(response.formValues[valueIndexMap.start] as string);
-    const end = StringToLocation(response.formValues[valueIndexMap.end] as string);
-    const inverted = response.formValues[valueIndexMap.inverted] as boolean;
-
-    // Reshow form with error message if invalid area.
-    if (start.status !== 0 || end.status !== 0) {
-        system.run(()=>{
-            Form.show(context, regionName, {translate:'shard.formCommon.invalidLocation'});
-        });
-        return;
-    };
+    const newName:string = response.map.name
+    const start:Vector3 = response.map.start;
+    const end:Vector3 = response.map.end;
+    const inverted:boolean = response.map.inverted;
 
     // Edit region.
     if (newName !== regionName) {
@@ -66,22 +37,19 @@ function Callback(context:ShardCommandContext, response:ModalFormResponse, ...ar
         delete Module.persisData.regions[regionName];
     };
     Module.persisData.regions[newName].name = newName;
-    Module.persisData.regions[newName].area = AlignArea({start:start.location, end:end.location});
+    Module.persisData.regions[newName].area = AlignArea({start:start, end:end});
     Module.persisData.regions[newName].inverted = inverted;
     Module.saveData();
 
     // Return to parent form.
-    Module.forms.edit.show(context, regionName);
+    Module.forms.edit.show(context, [regionName]);
 };
 
 
 
 
 // Initialize form.
-export const Form:ShardForm = new ShardForm(
-    'editGeneral',
-    CommandPermissionLevel.Admin,
-    [],
-    BuildForm,
-    Callback,
+export const MAIN = new ShardForm(
+    {id:'editGeneral', permissionLevel:CommandPermissionLevel.Admin},
+    {buildForm:Builder, callback:Callback},
 );

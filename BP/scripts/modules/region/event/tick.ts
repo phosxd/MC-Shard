@@ -21,16 +21,9 @@ function Callback(data:Dictionary<any>) {
             if (region.inverted && inArea) {continue};
             if (!region.inverted && !inArea) {continue};
 
-            const dimension:Dimension = world.getDimension(region.dimensionId);
-
             for (const key in region.commands) {
                 const command:RegionCommand = region.commands[key];
-                if (command.event == 'tick') {
-                    try {
-                        dimension.runCommand('execute positioned '+LocationToString(GetAreaCenter(region.area))+' run '+command.command);
-                    } catch {};
-                }
-                else if (command.event == 'tickEntity') {
+                if (command.event == 'tickEntity') {
                     try {
                         entity.runCommand(command.command);
                     } catch {};
@@ -38,6 +31,20 @@ function Callback(data:Dictionary<any>) {
             };
         };
     });
+
+    // Region tick commands.
+    for (const key in Module.persisData.regions) {
+        const region = Module.persisData.regions[key] as Region;
+        const dimension:Dimension = world.getDimension(region.dimensionId);
+        for (const key in region.commands) {
+            const command:RegionCommand = region.commands[key];
+            if (command.event == 'tick') {
+                try {
+                    dimension.runCommand('execute positioned '+LocationToString(GetAreaCenter(region.area))+' run '+command.command);
+                } catch {};
+            };
+        };
+    };
 
     return data;
 };

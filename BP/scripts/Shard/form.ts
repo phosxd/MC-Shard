@@ -1,7 +1,7 @@
 import {system, CommandPermissionLevel, Player, RawMessage, Vector3} from '@minecraft/server';
 import {ActionFormData, ModalFormData, MessageFormData, ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {Dictionary} from './CONST';
-import {CompareCommandPermissionLevel} from './util';
+import {CompareCommandPermissionLevel, StringToLocation} from './util';
 import {toRawMessage} from './raw_message_parser';
 import {ShardCommandContext} from './command';
 
@@ -40,7 +40,7 @@ export interface ShardFormButton {
 };
 export interface ShardFormDropdown {
     display: string|RawMessage,
-    items: Array<string>,
+    items: Array<string|RawMessage>,
     defaultValue?: number,
     tooltip?: string|RawMessage,
 };
@@ -247,6 +247,20 @@ export class ShardFormBuilder {
                     with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
                 }};
             };
+            // Vector3 box element.
+            if (element.type == 'vector3Box') {
+                const elementData = element.data as ShardFormVector3Box;
+                const elementDisplay = toRawMessage(element.data.display);
+                // Get value.
+                const rawValue = response.formValues[index] as string;
+                const value = StringToLocation(rawValue);
+                shardResponse.map[element.id] = value.location;
+                // Invalid location error.
+                if (value.status != 0) {
+                    shardResponse.errors[element.id] = {translate:'shard.formError.invalidLocation',
+                    with:{rawtext:[elementDisplay]},
+                }};
+            };
             // Number array element.
             if (element.type == 'numberArray') {
                 const elementData = element.data as ShardFormNumberArray;
@@ -359,15 +373,21 @@ export class ShardFormBuilder {
             };
             if (element.type == 'toggle') {
                 const elementData = element.data as ShardFormToggle;
-                formData.toggle(element.data.display, {defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
+                formData.toggle(elementData.display, {defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
             };
             if (element.type == 'slider') {
                 const elementData = element.data as ShardFormSlider;
-                formData.slider(element.data.display, elementData.min, elementData.max, {valueStep:elementData.step, defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
+                formData.slider(elementData.display, elementData.min, elementData.max, {valueStep:elementData.step, defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
             };
-            if (['numberBox','textBox','numberArray','textArray'].includes(element.type)) {
-                const elementData = element.data as ShardFormNumberBox|ShardFormTextBox;
-                formData.textField(element.data.display, elementData.placeholder, {defaultValue:String(elementData.defaultValue), tooltip:elementData.tooltip});
+            if (element.type == 'dropdown') {
+                const elementData = element.data as ShardFormDropdown;
+                formData.dropdown(elementData.display, elementData.items, {defaultValueIndex:elementData.defaultValue, tooltip:elementData.tooltip});
+            }
+            if (['numberBox','textBox','vector3Box','numberArray','textArray'].includes(element.type)) {
+                const elementData = element.data as ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray;
+                let defaultValue = elementData.defaultValue;
+                if (defaultValue) {defaultValue = String(elementData.defaultValue)};
+                formData.textField(elementData.display, elementData.placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});
             };
         });
         return formData;

@@ -5,15 +5,23 @@ import {Hardcopy} from '../module';
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
     const targets:Array<Entity> = args[0];
+    const rawStrings:boolean = args[1];
     // Return error if incorrect target count.
     if (targets.length !== 1) {return {message:{translate:'shard.core.cmd.hcPrintEntity'}, status:1}};
     const target = targets[0];
 
     let compiled;
+    let compiledString: string;
     if (target.typeId == 'minecraft:item') {compiled = Hardcopy.compileItem(target.getComponent('minecraft:item').itemStack)}
     else {compiled = Hardcopy.compileEntity(target)};
-    console.warn(JSON.stringify(compiled).replaceAll('"','\\"').replaceAll('\\\\"','\\\\\\"')); // 2 layer string reformatting.
-    
+    compiledString = JSON.stringify(compiled);
+    // 2 layer string reformatting.
+    if (!rawStrings) {
+        compiledString = compiledString.replaceAll('"','\\"').replaceAll('\\\\"','\\\\\\"');
+    };
+
+    // Print.
+    console.warn(compiledString);
     return undefined;
 };
 
@@ -26,6 +34,9 @@ export const MAIN = new ShardCommand(
         permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:'targets', type:CustomCommandParamType.EntitySelector},
+        ],
+        optionalParameters: [
+            {name:'rawStrings', type:CustomCommandParamType.Boolean},
         ],
     },
     {callback: Callback},

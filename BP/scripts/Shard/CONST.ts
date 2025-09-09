@@ -38,9 +38,7 @@ export const ModuleNames = [
     'util',
     'tracker',
     'border',
-    /**
     'region',
-    */
     'textdisplay',
     'draw',
     'fun',

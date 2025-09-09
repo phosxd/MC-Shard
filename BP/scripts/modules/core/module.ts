@@ -14,22 +14,20 @@ export const Hardcopy = {
         const result:HardEntity = {
             typeId: entity.typeId,
             rotation: entity.getRotation(),
-            nameTag: entity.nameTag,
-            effects: [],
-            tags: entity.getTags(),
-            dynamicProperties: {},
+            velocity: entity.getVelocity(),
         };
+        // Tags.
+        if (entity.getTags().length != 0) {result.tags = entity.getTags()};
+        // Name tag.
+        if (entity.nameTag.length != 0) {result.nameTag = entity.nameTag};
         // Effects.
+        if (entity.getEffects().length != 0) {result.effects = []};
         entity.getEffects().forEach(effect => {
             result.effects.push({
                 typeId: effect.typeId,
                 duration: effect.duration,
                 amplifier: effect.amplifier,
             });
-        });
-        // Dynamic properties.
-        entity.getDynamicPropertyIds().forEach(id => {
-            result.dynamicProperties[id] = entity.getDynamicProperty(id);
         });
         // Health.
         const health = entity.getComponent('minecraft:health');
@@ -44,6 +42,11 @@ export const Hardcopy = {
         if (entity.getComponent('minecraft:is_chested')) {result.isChested = true};
         if (entity.getComponent('minecraft:is_tamed')) {result.isChested = true};
         if (entity.getComponent('minecraft:is_sheared')) {result.isSheared = true};
+        // Dynamic properties.
+        if (entity.getDynamicPropertyIds().length != 0) {result.dynamicProperties = {}};
+        entity.getDynamicPropertyIds().forEach(id => {
+            result.dynamicProperties[id] = entity.getDynamicProperty(id);
+        });
         // Return.
         return {type:'entity', data:result};
     },
@@ -54,20 +57,22 @@ export const Hardcopy = {
         const result:HardItemStack = {
             typeId: item.typeId,
             amount: item.amount,
-            nameTag: item.nameTag,
-            lore: item.getLore(),
-            enchants: [],
             lockMode: item.lockMode,
             keepOnDeath: item.keepOnDeath,
-            dynamicProperties: {},
         };
-        // Dynamic properties.
-        item.getDynamicPropertyIds().forEach(id => {
-            result.dynamicProperties[id] = item.getDynamicProperty(id);
-        });
+        // Lore.
+        if (item.getLore().length != 0) {result.lore = item.getLore()};
+        // Name tag.
+        if (item.nameTag.length != 0) {result.nameTag = item.nameTag};
+        // Durability.
+        const durability = item.getComponent('minecraft:durability');
+        if (durability) {
+            result.durabilityDamage = durability.damage;
+        };
         // Enchants.
-        const enchantable = item.getComponent('minecraft:enchantable')
+        const enchantable = item.getComponent('minecraft:enchantable');
         if (enchantable) {
+            result.enchants = [];
             enchantable.getEnchantments().forEach(enchant => {
                 result.enchants.push({
                     typeId: enchant.type.id,
@@ -75,6 +80,11 @@ export const Hardcopy = {
                 });
             });
         };
+        // Dynamic properties.
+        if (item.getDynamicPropertyIds().length != 0) {result.dynamicProperties = {}};
+        item.getDynamicPropertyIds().forEach(id => {
+            result.dynamicProperties[id] = item.getDynamicProperty(id);
+        });
         // Return.
         return {type:'item', data:result};
     },
@@ -87,23 +97,26 @@ export const Hardcopy = {
         const entity = dimension.spawnEntity(data.typeId, location);
         const events:Array<string> = [];
         entity.setRotation(data.rotation);
-        entity.nameTag = data.nameTag;
+        // Velocity.
+        if (data.velocity) {
+            try {entity.applyImpulse(data.velocity)} catch(e) {console.warn(e)};
+        };
+        if (data.nameTag) {entity.nameTag = data.nameTag};
         // Effects.
-        data.effects.forEach(effect => {
-            entity.addEffect(effect.typeId, effect.duration, {amplifier:effect.amplifier, showParticles:true}); // `HardEntityEffect` does not store `showParticles` flag, defaults to true.
-        });
+        if (data.effects) {
+            data.effects.forEach(effect => {
+                entity.addEffect(effect.typeId, effect.duration, {amplifier:effect.amplifier, showParticles:true}); // `HardEntityEffect` does not store `showParticles` flag, defaults to true.
+            });
+        };
         // Tags.
-        data.tags.forEach(tag => {
-            entity.addTag(tag);
-        });
-        // Dynamic properties.
-        Object.keys(data.dynamicProperties).forEach(key => {
-            const value = data.dynamicProperties[key];
-            entity.setDynamicProperty(key, value);
-        });
+        if (data.tags) {
+            data.tags.forEach(tag => {
+                entity.addTag(tag);
+            });
+        };
         // Health.
         const health = entity.getComponent('minecraft:health');
-        if (health) {health.setCurrentValue(Math.min(data.health, health.effectiveMax))};
+        if (data.health && health) {health.setCurrentValue(Math.min(data.health, health.effectiveMax))};
         // Other components.
         if (data.onFire) {entity.setOnFire(data.onFire/20)};
         if (data.isBaby) {events.push('minecraft:entity_born')}
@@ -120,6 +133,13 @@ export const Hardcopy = {
         if (data.isChested) {events.push('minecraft:on_chest')};
         if (data.isTamed) {events.push('minecraft:on_tame')};
         if (data.isSheared) {events.push('minecraft:on_sheared')};
+        // Dynamic properties.
+        if (data.dynamicProperties) {
+            Object.keys(data.dynamicProperties).forEach(key => {
+                const value = data.dynamicProperties[key];
+                entity.setDynamicProperty(key, value);
+            });
+        };
         // Trigger events.
         events.forEach(event => {
             // Some entities may not have the event, so try-catch is used a a safeguard to prevent destructive errors.
@@ -135,23 +155,30 @@ export const Hardcopy = {
     */
     decompileItem(data:HardItemStack, dimension:Dimension, location:Vector3) {
         const item = new ItemStack(data.typeId, data.amount);
-        item.nameTag = data.nameTag;
-        item.lockMode = data.lockMode;
-        item.keepOnDeath = data.keepOnDeath;
-        item.setLore(data.lore);
+        if (data.nameTag) {item.nameTag = data.nameTag};
+        if (data.lockMode) {item.lockMode = data.lockMode};
+        if (data.keepOnDeath) {item.keepOnDeath = data.keepOnDeath};
+        if (data.lore) {item.setLore(data.lore)};
+        // Durability.
+        const durability = item.getComponent('minecraft:durability');
+        if (data.durabilityDamage && durability) {
+            durability.damage = data.durabilityDamage;
+        };
         // Enchants.
         const enchantable = item.getComponent('minecraft:enchantable');
-        if (enchantable) {
+        if (data.enchants && enchantable) {
             data.enchants.forEach(enchant => {
                 const type = new EnchantmentType(enchant.typeId);
                 enchantable.addEnchantment({type:type, level:enchant.level});
             });
         };
         // Dynamic properties.
-        Object.keys(data.dynamicProperties).forEach(key => {
-            const value = data.dynamicProperties[key];
-            item.setDynamicProperty(key, value);
-        });
+        if (data.dynamicProperties) {
+            Object.keys(data.dynamicProperties).forEach(key => {
+                const value = data.dynamicProperties[key];
+                item.setDynamicProperty(key, value);
+            });
+        };
         // Create in world then return.
         dimension.spawnItem(item, location);
         return item;
@@ -163,9 +190,10 @@ export const Hardcopy = {
 export interface HardEntity {
     typeId: string,
     rotation: Vector2,
-    nameTag: string,
-    effects: Array<HardEntityEffect>,
-    tags: Array<string>,
+    velocity?: Vector3,
+    nameTag?: string,
+    effects?: Array<HardEntityEffect>,
+    tags?: Array<string>,
     health?: number,
     onFire?: number,
     isBaby?: boolean,
@@ -174,7 +202,7 @@ export interface HardEntity {
     isSaddled?: boolean,
     isTamed?: boolean,
     isSheared?: boolean,
-    dynamicProperties: Dictionary<any>,
+    dynamicProperties?: Dictionary<any>,
 };
 
 
@@ -189,15 +217,16 @@ export interface HardEntityEffect {
 export interface HardItemStack {
     typeId: string,
     amount: number,
-    nameTag: string,
-    lore: Array<string>,
-    enchants: Array<{
+    nameTag?: string,
+    lore?: Array<string>,
+    durabilityDamage?: number,
+    enchants?: Array<{
         typeId: string,
         level: number,
     }>,
-    lockMode: ItemLockMode,
-    keepOnDeath: boolean,
-    dynamicProperties: Dictionary<any>,
+    lockMode?: ItemLockMode,
+    keepOnDeath?: boolean,
+    dynamicProperties?: Dictionary<any>,
 };
 
 

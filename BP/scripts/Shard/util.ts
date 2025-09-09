@@ -28,7 +28,7 @@ export function LocationToString(location:Vector3) {
 
 
 /**Converts a string to a location.*/
-export function StringToLocation(value:string):Dictionary<any> {
+export function StringToLocation(value:string):{status:number, location?:Vector3} {
     if (value == undefined) {return {status:1}};
 
     const splitValue:Array<string> = value.split(' ');

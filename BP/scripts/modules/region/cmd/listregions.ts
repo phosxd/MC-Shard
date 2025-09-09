@@ -23,7 +23,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 export const MAIN = new ShardCommand(
     {
         id: 'listregions',
-        brief: 'shard.region.cmd.listRegions',
+        brief: 'shard.region.cmd.listRegions.brief',
         permissionLevel: CommandPermissionLevel.GameDirectors,
     },
     {callback: Callback},
