@@ -4,6 +4,7 @@ import {Scoreboards} from '../module';
 
 
 function Callback(event:EntityHealthChangedAfterEvent) {
+    if (!event.entity.isValid) {return};
     if (!event.entity.hasTag('sh.tk.health')) {return};
     Scoreboards['sh.tk.health'].setScore(event.entity, event.newValue);
 };

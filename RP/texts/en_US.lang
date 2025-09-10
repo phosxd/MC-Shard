@@ -203,25 +203,35 @@ shard.region.form.edit.end=End
 shard.region.form.edit.endPlaceholder=Region end position...
 shard.region.form.edit.inverted=Is inverted?
 shard.region.form.edit.general=General Settings
-shard.region.form.edit.commands=Commands
-## form: commands
-shard.region.form.commands.title=Region Commands
-shard.region.form.commands.add=§2Add Command
-## form: addCommand
-shard.region.form.addCommand.name=Name
-shard.region.form.addCommand.namePlaceholder=Enter unique name for this...
-shard.region.form.addCommand.title=Add Command
-shard.region.form.addCommand.editTitle=Edit Command
-shard.region.form.addCommand.event=Event
-shard.region.form.addCommand.eventTooltip=Determines when to run the command.\n\n- "tickEntity": runs the command *as* the entity.
-shard.region.form.addCommand.event.tick=On Tick
-shard.region.form.addCommand.event.tickEntity=On Entity Tick
-shard.region.form.addCommand.event.enter=On Enter
-shard.region.form.addCommand.event.exit=On Exit
-shard.region.form.addCommand.command=Command
-shard.region.form.addCommand.commandPlaceholder=Enter command here...
-shard.region.form.addCommand.invalidCommandLength=§cCommand must be at least %s characters long.
-shard.region.form.addCommand.remove=Remove command?
+shard.region.form.edit.rules=Rules
+## form: rules
+shard.region.form.rules.title=Region Rules
+shard.region.form.rules.add=§2Add Rule
+## form: editRule
+shard.region.form.editRule.title=Add/Edit Rule
+shard.region.form.editRule.name=Name
+shard.region.form.editRule.namePlaceholder=Enter unique name for this...
+shard.region.form.editRule.event=Event
+shard.region.form.editRule.eventTooltip=Determines when to run the command.\n\n- "tickEntity": runs the command *as* the entity.
+shard.region.form.editRule.event.tick=Tick
+shard.region.form.editRule.event.entityTick=Entity Tick
+shard.region.form.editRule.event.entityEnter=Entity Enter
+shard.region.form.editRule.event.entityExit=Entity Exit
+shard.region.form.editRule.event.playerPlaceBlock=Player Place Block
+shard.region.form.editRule.event.playerBreakBlock=Player Break Block
+shard.region.form.editRule.event.playerInteractWithBlock=Player Interact With Block
+shard.region.form.editRule.tags=Entity (any of) Tags (optional)
+shard.region.form.editRule.tagsPlaceholder=E.g. "tag1,tag2,tag3".
+shard.region.form.editRule.tagsTooltip=Entities must have any of these tags to be affected by this rule.
+shard.region.form.editRule.blockTypes=Block (all of) Types (optional)
+shard.region.form.editRule.blockTypesPlaceholder=E.g. "grass,stone,custom:block".
+shard.region.form.editRule.blockTypesTooltip=Block types affected by this rule. Not applicable to all events.
+shard.region.form.editRule.command=Command (optional)
+shard.region.form.editRule.commandPlaceholder=Enter command here...
+shard.region.form.editRule.invalidCommandLength=§cCommand must be at least %s characters long.
+shard.region.form.editRule.revert=Revert event?
+shard.region.form.editRule.revertTooltip=If true, will try to undo the action caused by the event. Not applicable to all events.
+shard.region.form.editRule.remove=Remove rule?
 
 
 ## "textdisplay" module texts.

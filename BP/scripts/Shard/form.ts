@@ -267,7 +267,8 @@ export class ShardFormBuilder {
                 const elementDisplay = toRawMessage(element.data.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
-                const value = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0}).map(Number);
+                let value:Array<number> = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0}).map(Number);
+                if (!value) {value = []};
                 shardResponse.map[element.id] = value;
                 // Out of range error.
                 if (value.length > elementData.max || value.length < elementData.min) {
@@ -289,7 +290,8 @@ export class ShardFormBuilder {
                 const elementDisplay = toRawMessage(element.data.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
-                const value = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0});
+                let value:Array<string> = rawValue.replaceAll(' ','').split(',').filter((value)=>{return value.length > 0});
+                if (!value) {value = []};
                 shardResponse.map[element.id] = value;
                 // Out of range error.
                 if (value.length > elementData.max || value.length < elementData.min) {

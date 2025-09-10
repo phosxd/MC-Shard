@@ -7,19 +7,30 @@ export interface Region {
     dimensionId: string,
     area: AlignedArea,
     inverted: boolean,
-    commands: Dictionary<RegionCommand>,
+    rules: Dictionary<RegionRule>,
 };
 
-export interface RegionCommand {
-    event: string,
+export interface RegionRule {
+    /**Event ID this rule acts upon.*/
+    eventId: string,
+    /**Entity tags to determine which entities this rule will affect.*/
+    tags: Array<string>,
+    /**Block types this rule will affect.*/
+    blockTypes: Array<string>,
+    /**Command run when event is triggered.*/
     command: string,
+    /**If true, will try to revert actions caused by the event. Not applicable to all events.*/
+    revert: boolean,
 };
 
 export const commandEventIndexMap = [
     'tick',
-    'tickEntity',
-    'onEnter',
-    'onExit',
+    'entityTick',
+    'entityEnter',
+    'entityExit',
+    'playerPlaceBlock',
+    'playerBreakBlock',
+    'playerInteractWithBlock',
 ];
 
 
@@ -35,15 +46,17 @@ export const Module = new ShardModule(
     {
         childPaths: [
             'event/tick',
+            'event/playerBreakBlock',
+            'event/playerInteractWithBlock',
+            'event/playerPlaceBlock',
             'cmd/addRegion',
             'cmd/editRegion',
             'cmd/listRegions',
             'cmd/removeRegion',
-            'form/addCommand',
-            'form/commands',
             'form/edit',
-            'form/editCommand',
             'form/editGeneral',
+            'form/editRule',
+            'form/rules',
         ],
         extraDefaultPersisData: {
             regions: {},

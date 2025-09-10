@@ -1,4 +1,4 @@
-import {world, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
+import {world, Entity, Block, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
 
 
@@ -246,6 +246,66 @@ export function GetAllEntities(options?:EntityQueryOptions) {
         ...world.getDimension('nether').getEntities(options),
         ...world.getDimension('the_end').getEntities(options),
     ];
+};
+
+
+/**Tests if the Entity Selector applies to the `Entity`.
+ * 
+ * Cannot be called in `read-only` mode.
+*/
+export function SelectorApplies(entity:Entity, selector:string):boolean {
+    const testTag = `sh:testSelector.${Math.random()}`;
+    entity.runCommand(`tag ${selector} add ${testTag}`);
+    if (entity.hasTag(testTag)) {
+        entity.removeTag(testTag);
+        return true;
+    };
+    return false;
+};
+
+
+/**Returns true if `Entity` has any of the tags. If no tags in `tags` returns true.
+ * Tags starting with "!" will return true if the `Entity` does NOT have the tag.
+*/
+export function EntityHasAnyTags(entity:Entity, tags:Array<string>):boolean {
+    if (tags.length == 0) {return true};
+    let result = false;
+    tags.forEach(tag => {
+        if (result == true) {return};
+        if (entity.hasTag(tag) || (tag.startsWith('!') && !entity.hasTag(tag.replace('!','')))) {result = true};
+    });
+    return result;
+};
+
+
+/**Returns true if `Block` is any of the block types. If no block types in `blockTypes` returns true.
+ * Block types starting with "!" will return true if the `Block` is not the type.
+*/
+export function BlockIsAnyType(block:Block, blockTypes:Array<string>):boolean {
+    if (blockTypes.length == 0) {return true};
+    let result = false;
+    blockTypes.forEach(type => {
+        if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
+        if (result == true) {return};
+        if (block.typeId == type || (type.startsWith('!') && block.typeId != type.replace('!',''))) {result = true};
+    });
+    return result;
+};
+
+
+/**Returns true if `Block` is all of the block types. If no block types in `blockTypes` returns true.
+ * Block types starting with "!" will return true if the `Block` is not the type.
+*/
+export function BlockIsAllTypes(block:Block, blockTypes:Array<string>):boolean {
+    if (blockTypes.length == 0) {return true};
+    let result;
+    blockTypes.forEach(type => {
+        if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
+        if (result == false) {return};
+        if (block.typeId == type || (type.split(':')[1].startsWith('!') && block.typeId != type.replace('!',''))) {result = true}
+        else {result = false};
+    });
+    return result;
 };
 
 

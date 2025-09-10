@@ -20,7 +20,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         dimensionId: context.dimension.id,
         area: area,
         inverted: inverted,
-        commands: {},
+        rules: {},
     };
     Module.persisData.regions[name] = newRegion;
     Module.saveData();
