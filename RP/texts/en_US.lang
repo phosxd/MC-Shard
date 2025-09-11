@@ -69,6 +69,10 @@ shard.core.cmd.module.cannotDisable=§cCannot disable §e%s§c module.
 shard.core.cmd.module.enable=Enabled module §e%s§r.
 shard.core.cmd.module.clearData=Deleted all data for the §e%s§r module.
 shard.core.cmd.module.printData=Printing all data for the §e%s§r module. Data can be accessed in server logs.
+## cmd: moduleDataLoad
+shard.core.cmd.moduleDataLoad.brief=Load custom module data. If text is too long, use a command block.
+## cmd: moduleDataPrint
+shard.core.cmd.moduleDataPrint.brief=Print module data.
 ## cmd: repeat
 shard.core.cmd.repeat.brief=Repeats a command.
 ## cmd: shard

@@ -1,8 +1,17 @@
-import {world, Dimension, Entity, ItemStack, Vector2, Vector3, ItemLockMode, Enchantment, EnchantmentType} from '@minecraft/server';
+import {system,world, Dimension, Entity, ItemStack, Vector2, Vector3, ItemLockMode, Enchantment, EnchantmentType} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
 //import * as mainForm from './forms/main';
+
+
+export var Modules:Dictionary<ShardModule>;
+// Import modules after they have all initialized.
+system.runTimeout(()=>{
+    import('../modules').then(modules => {
+        Modules = modules.Modules;
+    });
+},10);
 
 
 
@@ -247,6 +256,8 @@ export const Module = new ShardModule(
             'cmd/hcLoad',
             'cmd/hcPrintEntity',
             'cmd/module',
+            'cmd/moduleDataLoad',
+            'cmd/moduleDataPrint',
             'cmd/repeat',
             'cmd/shard',
             'cmd/shardMemory',

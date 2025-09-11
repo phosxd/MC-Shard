@@ -2,15 +2,7 @@ import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShardModule} from '../../../Shard/module';
 import {Dictionary, CommandNamespace, PermaEnabledModules} from '../../../Shard/CONST';
-import {Module} from '../module';
-
-var Modules:Dictionary<ShardModule>;
-// Import modules after they have all initialized.
-system.runTimeout(()=>{
-    import('../../modules').then(modules => {
-        Modules = modules.Modules;
-    });
-},10);
+import {Module, Modules} from '../module';
 
 
 
@@ -67,15 +59,6 @@ function moduleActionClearData(module_key:string) {
 };
 
 
-function moduleActionPrintData(module_key:string) {
-    let module:ShardModule = Modules[module_key];
-    if (module == undefined) {console.warn(`${module_key} does not exist.`)}
-    else {console.warn(`${module_key} persistent data: `+JSON.stringify(module.persisData))};
-
-    return {message:{translate:'shard.core.cmd.module.printData', with:[module_key]}, status:0};
-};
-
-
 
 
 function Callback(Context:ShardCommandContext, Options:Array<any>) {
@@ -85,8 +68,7 @@ function Callback(Context:ShardCommandContext, Options:Array<any>) {
     switch (action) {
         case 'disable': return moduleActionDisable(module_key);
         case 'enable': return moduleActionEnable(module_key);
-        case 'clearData': return moduleActionClearData(module_key);
-        case 'printData': return moduleActionPrintData(module_key);
+        case 'reset': return moduleActionClearData(module_key);
         case 'info': return moduleActionInfo(Context, module_key);
         default: return moduleConfig(Context, module_key);
     };

@@ -5,7 +5,6 @@ export default {
         'info',
         'disable',
         'enable',
-        'clearData',
-        'printData',
+        'reset',
     ],
 };

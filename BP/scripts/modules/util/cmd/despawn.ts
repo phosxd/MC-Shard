@@ -9,6 +9,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     // Despawn targets.
     let count:number = 0;
     targets.forEach(entity => {
+        if (!entity.isValid) {return};
         if (entity.typeId == 'minecraft:player') {return};
         system.run(()=>{
             entity.remove();

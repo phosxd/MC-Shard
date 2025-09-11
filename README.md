@@ -36,6 +36,8 @@ Provides essential functionality for the add-on. Cannot be disabled.
 - `/hc.load`: Load hard-copy data. If text is too long, use a command block.
 - `/hc.print.entity`: Print an entity as a hard-copy. Some components, & entity variants are not copied.
 - `/module`: Configure a module.
+- `/module.data.print`: Print module data.
+- `/module.data.load`: Load custom module data.
 - `/repeat`: Repeats a command.
 - `/shard`: Shard info.
 - `/shardmemory`: Shard memory info.
@@ -127,6 +129,7 @@ Provides regions to edit world mutability & player abilities. Can also run comma
 - `Player Place Block`
 - `Player Break Block`
 - `Player Interact With Block`
+- `Player Drop Item`
 - `Explosion`
 
 **Commands:**
