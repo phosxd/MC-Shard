@@ -1,7 +1,7 @@
 import {world, Dimension, Entity} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {Dictionary} from '../../../Shard/CONST';
-import {GetAllEntities, LocationInArea, LocationToString, GetAreaCenter, EntityHasAnyTags} from '../../../Shard/util';
+import {GetAllEntities, LocationInArea, LocationToString, GetAreaCenter, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -27,7 +27,7 @@ function Callback(data:Dictionary<any>) {
                     entity.removeTag(regionTag);
                     for (const key in region.rules) {
                         const rule:RegionRule = region.rules[key];
-                        if (!EntityHasAnyTags(entity, rule.tags)) {continue};
+                        if (!EntityHasAnyTags(entity, rule.tags.anyOf) || !EntityHasAllTags(entity, rule.tags.allOf)) {continue};
                         if (rule.eventId != 'entityExit') {continue};
                         try {entity.runCommand(rule.command)} catch {};
                     };
@@ -44,7 +44,7 @@ function Callback(data:Dictionary<any>) {
             // Run region commands on entity.
             for (const key in region.rules) {
                 const rule:RegionRule = region.rules[key];
-                if (!EntityHasAnyTags(entity, rule.tags) && rule.tags.length != 0) {continue};
+                if (!EntityHasAnyTags(entity, rule.tags.anyOf) || !EntityHasAllTags(entity, rule.tags.allOf)) {continue};
                 let run:boolean = false;
                 if (rule.eventId == 'entityTick') {run = true}
                 else if (rule.eventId == 'entityEnter' && justEntered) {run = true};

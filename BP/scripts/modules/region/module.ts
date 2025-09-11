@@ -14,9 +14,15 @@ export interface RegionRule {
     /**Event ID this rule acts upon.*/
     eventId: string,
     /**Entity tags to determine which entities this rule will affect.*/
-    tags: Array<string>,
+    tags: {
+        anyOf: Array<string>,
+        allOf: Array<string>,
+    },
     /**Block types this rule will affect.*/
-    blockTypes: Array<string>,
+    blockTypes: {
+        anyOf: Array<string>,
+        allOf: Array<string>,
+    },
     /**Command run when event is triggered.*/
     command: string,
     /**If true, will try to revert actions caused by the event. Not applicable to all events.*/
@@ -31,6 +37,7 @@ export const commandEventIndexMap = [
     'playerPlaceBlock',
     'playerBreakBlock',
     'playerInteractWithBlock',
+    'explosion',
 ];
 
 
@@ -45,6 +52,7 @@ export const Module = new ShardModule(
     },
     {
         childPaths: [
+            'event/explosion',
             'event/tick',
             'event/playerBreakBlock',
             'event/playerInteractWithBlock',

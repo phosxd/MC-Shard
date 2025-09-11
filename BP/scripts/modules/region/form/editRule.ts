@@ -11,7 +11,17 @@ function Builder(context:ShardCommandContext, ...args) {
     const ruleName:string = args[1];
     const rule:RegionRule = region.rules[ruleName];
     const message:string = args[2];
-    const defaults:any = {name:ruleName};
+    const defaults:any = {
+        name: ruleName,
+        tags: {
+            anyOf: [],
+            allOf: [],
+        },
+        blockTypes: {
+            anyOf: [],
+            allOf: [],
+        },
+    };
     if (rule) {
         defaults.tags = rule.tags;
         defaults.blockTypes = rule.blockTypes;
@@ -37,6 +47,7 @@ function Builder(context:ShardCommandContext, ...args) {
             {translate:'shard.region.form.editRule.event.playerPlaceBlock'},
             {translate:'shard.region.form.editRule.event.playerBreakBlock'},
             {translate:'shard.region.form.editRule.event.playerInteractWithBlock'},
+            {translate:'shard.region.form.editRule.event.explosion'},
         ],
         defaultValue: defaults.eventIdIndex,
         tooltip: {translate:'shard.region.form.editRule.eventTooltip'},
@@ -49,7 +60,7 @@ function Builder(context:ShardCommandContext, ...args) {
         max: 10,
         itemMin: 1,
         itemMax: 32,
-        defaultValue: defaults.tags
+        defaultValue: defaults.tags.anyOf.concat(defaults.tags.allOf),
     }});
     elements.push({type:'textArray', id:'blockTypes', data:{
         display: {translate:'shard.region.form.editRule.blockTypes'},
@@ -59,7 +70,7 @@ function Builder(context:ShardCommandContext, ...args) {
         max: 64,
         itemMin: 1,
         itemMax: 64,
-        defaultValue: defaults.blockTypes
+        defaultValue: defaults.blockTypes.anyOf.concat(defaults.blockTypes.allOf),
     }});
     elements.push({type:'textBox', id:'command', data:{display:{translate:'shard.region.form.editRule.command'}, placeholder:{translate:'shard.region.form.editRule.commandPlaceholder'}, defaultValue:defaults.command}});
     elements.push({type:'toggle', id:'revert', data:{display:{translate:'shard.region.form.editRule.revert'}, tooltip:{translate:'shard.region.form.editRule.revertTooltip'}, defaultValue:defaults.revert}});
@@ -101,12 +112,19 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
     else {
         Module.persisData.regions[regionName].rules[newName] = {
             eventId: eventId,
-            tags: tags,
-            blockTypes: blockTypes,
+            tags: {
+                anyOf: tags.filter((value)=>{if (value.startsWith('!')) {return false}; return true;}),
+                allOf: tags.filter((value)=>{if (value.startsWith('!')) {return true}; return false;}),
+            },
+            blockTypes: {
+                anyOf: blockTypes.filter((value)=>{if (value.startsWith('!')) {return false}; return true;}),
+                allOf: blockTypes.filter((value)=>{if (value.startsWith('!')) {return true}; return false;}),
+            },
             command: command,
             revert: revert,
         } as RegionRule;
     };
+    console.warn(JSON.stringify(Module.persisData.regions[regionName].rules[newName].tags));
     Module.saveData();
 
     // Return to parent form.

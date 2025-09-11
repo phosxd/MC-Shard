@@ -278,6 +278,21 @@ export function EntityHasAnyTags(entity:Entity, tags:Array<string>):boolean {
 };
 
 
+/**Returns true if `Entity` has all of the tags. If no tags in `tags` returns true.
+ * Tags starting with "!" will return true if the `Entity` does NOT have the tag.
+*/
+export function EntityHasAllTags(entity:Entity, tags:Array<string>):boolean {
+    if (tags.length == 0) {return true};
+    let result;
+    tags.forEach(tag => {
+        if (result == false) {return};
+        if (entity.hasTag(tag) || (tag.startsWith('!') && !entity.hasTag(tag.replace('!','')))) {result = true}
+        else {result = false};
+    });
+    return result;
+};
+
+
 /**Returns true if `Block` is any of the block types. If no block types in `blockTypes` returns true.
  * Block types starting with "!" will return true if the `Block` is not the type.
 */
@@ -287,7 +302,7 @@ export function BlockIsAnyType(block:Block, blockTypes:Array<string>):boolean {
     blockTypes.forEach(type => {
         if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
         if (result == true) {return};
-        if (block.typeId == type || (type.startsWith('!') && block.typeId != type.replace('!',''))) {result = true};
+        if (block.typeId == type || (type.split(':')[1].startsWith('!') && block.typeId != type.replace('!',''))) {result = true};
     });
     return result;
 };

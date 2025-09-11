@@ -1,6 +1,6 @@
 import {PlayerPlaceBlockAfterEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {LocationInArea, LocationToString, EntityHasAnyTags, BlockIsAllTypes} from '../../../Shard/util';
+import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, BlockIsAnyType, BlockIsAllTypes} from '../../../Shard/util';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -17,8 +17,7 @@ function Callback(event:PlayerPlaceBlockAfterEvent) {
         for (const key in region.rules) {
             const rule:RegionRule = region.rules[key];
             if (rule.eventId != 'playerPlaceBlock') {continue};
-            if (!EntityHasAnyTags(player, rule.tags)) {continue};
-            if (!BlockIsAllTypes(event.block, rule.blockTypes)) {continue};
+            if (!EntityHasAnyTags(player, rule.tags.anyOf) || !EntityHasAllTags(player, rule.tags.allOf) || !BlockIsAnyType(event.block, rule.blockTypes.anyOf) || !BlockIsAllTypes(event.block, rule.blockTypes.allOf)) {continue};
             if (rule.revert) {event.block.setType('air')};
             try {player.runCommand(`execute positioned ${LocationToString(event.block.location)} run ${rule.command}`)} catch {};
         };

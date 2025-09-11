@@ -133,7 +133,7 @@ export const LANG = {
             cmd: {
                 addRegion: {
                     success: 'Added new region "§e%s§r" starting from %s & ending at %s.',
-                    nameTaken: '§cCannot create border with duplicate name.',
+                    nameTaken: '§cCannot create region with duplicate name.',
                 },
                 editRegion: {
                     doesNotExist: ' §cCannot edit a region that does not exist.',
