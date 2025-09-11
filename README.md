@@ -119,11 +119,15 @@ Provides border tools. This is mostly unfinished as there is no style editor & o
 - `/listborders`: List all borders.
 
 ## `region`:
-Provides tools for managing regions. This is mostly unfinished as there are missing command events & no region rules to change.
+Provides regions to edit world mutability & player abilities. Can also run commands on region events.
 
-**Upcoming Features:**
-- `More Command Events`: more command events to choose from in region command editor, like "On Enter", "On Exit", "On Break Block", "On Place Block", & "On Use Item".
-- `Region Rules`: a UI to change various rules for the region, such as "Can Break Blocks", "Can Place Blocks", "Can Interact With Blocks", "Can Hit Entities", "Can Drop Items", "Can Throw Items", "Can Shoot Bows", & "Can Explode Entities". Each rule could have unique settings to change & targes to affect.
+**Events:**
+- `Tick` / `Entity Tick`
+- `Entity Enter` / `Entity Exit`
+- `Player Place Block`
+- `Player Break Block`
+- `Player Interact With Block`
+- `Explosion`
 
 **Commands:**
 - `/addregion`: Add a new region.
