@@ -47,6 +47,7 @@ function Builder(context:ShardCommandContext, ...args) {
             {translate:'shard.region.form.editRule.event.playerPlaceBlock'},
             {translate:'shard.region.form.editRule.event.playerBreakBlock'},
             {translate:'shard.region.form.editRule.event.playerInteractWithBlock'},
+            {translate:'shard.region.form.editRule.event.playerDropItem'},
             {translate:'shard.region.form.editRule.event.explosion'},
         ],
         defaultValue: defaults.eventIdIndex,
@@ -124,7 +125,6 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
             revert: revert,
         } as RegionRule;
     };
-    console.warn(JSON.stringify(Module.persisData.regions[regionName].rules[newName].tags));
     Module.saveData();
 
     // Return to parent form.

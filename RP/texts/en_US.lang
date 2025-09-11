@@ -220,6 +220,7 @@ shard.region.form.editRule.event.entityExit=Entity Exit
 shard.region.form.editRule.event.playerPlaceBlock=Player Place Block
 shard.region.form.editRule.event.playerBreakBlock=Player Break Block
 shard.region.form.editRule.event.playerInteractWithBlock=Player Interact With Block
+shard.region.form.editRule.event.playerDropItem=Player Drop Item
 shard.region.form.editRule.event.explosion=Explosion
 shard.region.form.editRule.tags=Entity Tags (optional)
 shard.region.form.editRule.tagsPlaceholder=E.g. "tag1, tag2, tag3".

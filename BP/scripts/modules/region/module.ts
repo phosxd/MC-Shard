@@ -37,6 +37,7 @@ export const commandEventIndexMap = [
     'playerPlaceBlock',
     'playerBreakBlock',
     'playerInteractWithBlock',
+    'playerDropItem',
     'explosion',
 ];
 
@@ -57,6 +58,7 @@ export const Module = new ShardModule(
             'event/playerBreakBlock',
             'event/playerInteractWithBlock',
             'event/playerPlaceBlock',
+            'event/playerDropItem',
             'cmd/addRegion',
             'cmd/editRegion',
             'cmd/listRegions',
