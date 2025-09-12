@@ -31,9 +31,9 @@ There are plenty of features to play around with & so many more to come! If you 
 Provides essential functionality for the add-on. Cannot be disabled.
 
 **Commands:**
-- `/discord`: Get the Discord invite. Link can be changed in settings.
+- `/discord`: Get the Discord invite. Link can be changed in command's settings.
 - `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
-- `/hc.load`: Load hard-copy data. If text is too long, use a command block.
+- `/hc.load`: Load hard-copy data.
 - `/hc.print.entity`: Print an entity as a hard-copy. Some components, & entity variants are not copied.
 - `/module`: Configure a module.
 - `/module.data.print`: Print module data.
@@ -105,8 +105,11 @@ Provides entity statistics & current entity state tracking. Data is stored in sc
 **States:**
 - `sh.st.is[Jumping,Sneaking,Sprinting,Swimming,Falling,Flying,Gliding,Climbing,Sleeping,Emoting`
 
-## `textdisplay`:
-Provides tools for interacting with text display entities for holographic text & bossbars.
+## `display`:
+Provides tools for interacting with display entities for holographic text & bossbars.
+
+**Commands:**
+- `/adddisplay`: Summon a new display entity.
 
 ## `border`:
 Provides border tools. This is mostly unfinished as there is no style editor & only 1 default style ("hidden"). There is also no support for non-inverted borders yet.
