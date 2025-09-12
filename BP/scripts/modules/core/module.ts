@@ -72,7 +72,7 @@ export const Hardcopy = {
         // Lore.
         if (item.getLore().length != 0) {result.lore = item.getLore()};
         // Name tag.
-        if (item.nameTag.length != 0) {result.nameTag = item.nameTag};
+        if (item.nameTag && item.nameTag.length != 0) {result.nameTag = item.nameTag};
         // Durability.
         const durability = item.getComponent('minecraft:durability');
         if (durability) {

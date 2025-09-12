@@ -2,16 +2,16 @@
 	"format_version": "1.21.20",
 	"minecraft:entity": {
 		"description": {
-			"identifier": "shard:text_display",
+			"identifier": "shard:display",
 			"is_spawnable": false,
 			"is_summonable": true,
 			"properties": {
 				"shard:mode": {
 					"type": "enum",
-					"default": "text_display",
+					"default": "text",
 					"values": [
 						"bossbar",
-						"text_display"
+						"text"
 					]
 				}
 			}
@@ -27,8 +27,8 @@
 				"value": 1
 			},
 			"minecraft:collision_box": {
-				"width": 0.2,
-				"height": 0.15
+				"width": 0.25,
+				"height": 0.25
 			},
 			"minecraft:knockback_resistance": {
 				"value": 100
@@ -76,7 +76,7 @@
 			}
 		},
 		"events": {
-			"shard:text_display": {
+			"shard:text": {
 				"remove": {
 					"component_groups": [
 						"shard:bossbar_range_1",
@@ -85,7 +85,7 @@
 					]
 				},
 				"set_property": {
-					"shard:mode": "text_display"
+					"shard:mode": "test"
 				}
 			},
 			"shard:bossbar_range_1": {

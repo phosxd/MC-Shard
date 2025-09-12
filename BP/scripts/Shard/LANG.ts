@@ -102,9 +102,14 @@ export const LANG = {
             displayName: '§r[§3Tracker§r]',
             brief: 'Provides entity statistics & current entity state tracking.',
         },
-        textdisplay: {
-            displayName: '§0[§5Text Display§0]§r',
-            brief: 'Provides tools for interacting with text display entities for holographic text & bossbars.',
+        display: {
+            displayName: '§0[§5Display§0]§r',
+            brief: 'Provides tools for interacting with display entities for holographic text & bossbars.',
+            cmd: {
+                addDisplay: {
+                    success: 'Summoned "%s" at %s.',
+                },
+            },
         },
         border: {
             displayName: '§r[§gBorder§r]',

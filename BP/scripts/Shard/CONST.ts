@@ -39,7 +39,7 @@ export const ModuleNames = [
     'tracker',
     'border',
     'region',
-    'textdisplay',
+    'display',
     'draw',
     'fun',
 ];
@@ -47,7 +47,7 @@ export const ModuleNames = [
 /**Modules that cannot be disabled during run-time.*/
 export const PermaEnabledModules = [
     'core', // Do not remove this one.
-    'textdisplay',
+    'display',
 ];
 
 
