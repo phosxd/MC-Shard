@@ -1,7 +1,6 @@
 import {system, world, ScoreboardObjective} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
-import * as mainForm from './form/main';
 
 
 // Setup scoreboards.
@@ -88,6 +87,5 @@ export const Module = new ShardModule(
             'event/playerSpawn',
             'event/tick',
         ],
-        mainForm: mainForm.MAIN,
     },
 );

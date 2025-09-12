@@ -3,15 +3,18 @@ import {Dictionary} from './CONST';
 
 
 export class TickEventSignal {
-    _listeners:Array<(data:Dictionary<any>)=>Dictionary<any>>;
+    _listeners: Array<()=>void>;
+    /**Database for listeners to share data & communicate with each other.*/
+    sharedData: Dictionary<any>;
 
     constructor() {
         this._listeners = [];
+        this.sharedData = {};
     };
-    subscribe(callback:(data:Dictionary<any>)=>Dictionary<any>):void {
+    subscribe(callback:()=>void):void {
         this._listeners.push(callback);
     };
-    unsubscribe(callback:(data:Dictionary<any>)=>Dictionary<any>):void {
+    unsubscribe(callback:()=>void):void {
         this._listeners.splice(this._listeners.indexOf(callback), 1);
     };
 };
@@ -40,10 +43,7 @@ export class PlayerDropItemEventSignal {
 
 // All Shard after events.
 export const afterEvents = {
-    /**Runs every server tick (1/20th seconds).
-     * 
-     * `data` is the data passed onto the next listener, this exists for separate listeners to be able to share resources to save performance.
-    */
+    /**Runs every server tick (1/20th seconds).*/
     tick: new TickEventSignal(),
     /**Runs when a player drops an item from their inventory.*/
     playerDropItem: new PlayerDropItemEventSignal(),
@@ -54,9 +54,13 @@ export const afterEvents = {
 
 // Tick loop.
 function tick() {
-    let data:Dictionary<any> = {};
+    // Remove data from previous tick.
+    Object.keys(afterEvents.tick.sharedData).forEach(key => {
+        delete afterEvents.tick.sharedData[key];
+    });
+    // Run listeners.
     afterEvents.tick._listeners.forEach(listener => {
-        data = listener(data);
+        listener();
     });
     
     system.run(tick);

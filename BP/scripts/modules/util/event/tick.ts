@@ -22,13 +22,10 @@ function runFrozenEntityEffects() {
 };
 
 
-function Callback(data:Dictionary<any>) {
-    if (Module.persisDataReady == false || Module.worldReady == false) {return data};
-    
+function Callback() {
+    if (Module.persisDataReady == false || Module.worldReady == false) {return};
     runFrozenEntityEffects();
     Module.saveData();
-
-    return data;
 };
 
 
@@ -36,10 +33,6 @@ function Callback(data:Dictionary<any>) {
 
 // Initialize event listener.
 export const MAIN = new ShardListener(
-    {
-        source: 'shard',
-        type: 'after',
-        eventId: 'tick',
-    },
+    {source:'shard', type:'after', eventId:'tick'},
     {callback: Callback},
 );

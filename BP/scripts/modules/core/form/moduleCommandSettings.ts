@@ -5,8 +5,6 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-
-
 /**Build the form. `args` should only contain one item of type `ShardModule`.*/
 function Builder(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
@@ -28,22 +26,18 @@ function Builder(context:ShardCommandContext, ...args) {
 };
 
 
-
-
 function Callback(context:ShardCommandContext, response:ShardFormModalResponse, ...args) {
     const module:ShardModule = args[0];
     const commandKey:string = args[1];
     const command:ShardCommand = module.commands[commandKey];
-
     // Apply changes.
     for (const key in response.map) {
         const value = response.map[key];
         module.persisData.commandSettings[command.details.id][key] = value;
     };
     module.saveData();
-
     // Return to parent form.
-    Module.forms.module_commands.show(context, [module]);
+    Module.forms.moduleCommands.show(context, [module]);
     return;
 };
 
@@ -52,12 +46,6 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
 
 // Initialize form.
 export const MAIN = new ShardForm(
-    {
-        id: 'module_command_settings',
-        permissionLevel: CommandPermissionLevel.Admin,
-    },
-    {
-        buildForm: Builder,
-        callback: Callback,
-    },
+    {id:'moduleCommandSettings', permissionLevel:CommandPermissionLevel.Admin},
+    {buildForm:Builder, callback: Callback},
 );

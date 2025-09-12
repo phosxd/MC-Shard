@@ -1,10 +1,8 @@
 import {CommandPermissionLevel} from '@minecraft/server';
-import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormButton, ShardFormActionResponse} from '../../../Shard/form';
+import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
 import {ShardModule} from '../../../Shard/module';
 import {ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
-
-
 
 
 /**Build the form. `args` should only contain one item of type `ShardModule`.*/
@@ -13,7 +11,7 @@ function Builder(context:ShardCommandContext, ...args) {
     const elements:Array<ShardFormElement> = [];
     elements.push({type:'title', id:'title', data:{display: module.details.displayName}});
     elements.push({type:'body', id:'body', data:{display: module.details.brief}});
-    if (module.mainForm) {
+    if (module.settingElements.length != 0) {
         elements.push({type:'button', id:'settings', data:{display:{translate:'shard.misc.moduleOption.settings'}}});
     };
     elements.push({type:'button', id:'commands', data:{display:{translate:'shard.misc.moduleOption.commands'}}});
@@ -21,18 +19,16 @@ function Builder(context:ShardCommandContext, ...args) {
 };
 
 
-
-
 function Callback(context:ShardCommandContext, response:ShardFormActionResponse, ...args) {
     const module:ShardModule = args[0];
 
     switch (response.selectedId) {
         case 'settings': { // Settings.
-            module.mainForm.show(context);
+            Module.forms.moduleSettings.show(context, [module]);
             break;
         };
         case 'commands': { // Commands.
-            Module.forms.module_commands.show(context, [module]);
+            Module.forms.moduleCommands.show(context, [module]);
             break;
         };
         case 'done': { // Done.
@@ -48,12 +44,6 @@ function Callback(context:ShardCommandContext, response:ShardFormActionResponse,
 
 // Initialize form.
 export const MAIN = new ShardForm(
-    {
-        id: 'module',
-        permissionLevel: CommandPermissionLevel.Admin,
-    },
-    {
-        buildForm: Builder,
-        callback: Callback,
-    },
+    {id:'module', permissionLevel:CommandPermissionLevel.Admin},
+    {buildForm:Builder, callback:Callback},
 );

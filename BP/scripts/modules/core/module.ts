@@ -1,7 +1,6 @@
-import {system,world, Dimension, Entity, ItemStack, Vector2, Vector3, ItemLockMode, Enchantment, EnchantmentType} from '@minecraft/server';
+import {system} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
-import {ItemStackToObject, ObjectToItemStack, ItemStackObject} from '../../util/item';
 import CommandEnums from './commandEnums';
 //import * as mainForm from './forms/main';
 
@@ -35,12 +34,16 @@ export const Module = new ShardModule(
             'cmd/repeat',
             'cmd/shard',
             'cmd/shardMemory',
-            'form/module_command_settings',
-            'form/module_commands',
             'form/module',
+            'form/moduleCommands',
+            'form/moduleCommandSettings',
+            'form/moduleSettings',
             'form/shard',
         ],
         commandEnums: CommandEnums,
         //mainForm: mainForm.MAIN,
+        settingElements: [
+            {type:'toggle', id:'sendWelcomeMessage', data:{display:'shard.core.setting.sendWelcomeMessage', defaultValue:true}},
+        ],
     },
 );

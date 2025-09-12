@@ -3,9 +3,14 @@ import {Dictionary, CommandNamespace} from './CONST';
 import {ShardListener} from './listener';
 import * as ShardEventServer from './event_server';
 import {ShardCommand, ShardCommandContext, ShardCommandResult} from './command';
-import {ShardForm} from './form';
+import {ShardForm, ShardFormElement} from './form';
 import {MCData} from './util';
 import * as RawMessageParser from './raw_message_parser';
+
+
+export const defaultSettingElements:Array<ShardFormElement> = [
+    {type:'toggle', id:'enabled', data:{display:{translate:'shard.formCommon.isEnabled'}, defaultValue:true}},
+];
 
 
 export const EventSources:Dictionary<any> = {
@@ -14,7 +19,7 @@ export const EventSources:Dictionary<any> = {
     'shard': ShardEventServer,
 };
 export const defaultPersisData:Dictionary<any> = {
-    enabled: true,
+    settings: {},
     commandSettings: {}
 };
 
@@ -40,8 +45,8 @@ export interface ShardModuleData {
     init?: ()=>void,
     childPaths: Array<string>,
     commandEnums?: Dictionary<Array<string>>,
-    mainForm?: ShardForm,
     extraDefaultPersisData?: Dictionary<any>,
+    settingElements?: Array<ShardFormElement>,
 };
 
 
@@ -60,10 +65,10 @@ export class ShardModule {
     commandEnums: Dictionary<Array<string>>;
     /**Forms.*/
     forms: Dictionary<ShardForm>;
-    /**Main form for this module. Can be undefined.*/
-    mainForm: ShardForm;
     /**Additional default persistent data.*/
     extraDefaultPersisData: Dictionary<any>;
+    /**Module settings that are persistently saved.*/
+    settingElements: Array<ShardFormElement>;
 
     /**Arbitrary data for the module. Will be lost after restart.*/
     sessionData: Dictionary<any>;
@@ -86,13 +91,15 @@ export class ShardModule {
         this.init = data.init;
         if (data.commandEnums) {this.commandEnums = data.commandEnums}
         else {this.commandEnums = {}};
-        this.mainForm = data.mainForm;
+        this.settingElements = [...defaultSettingElements];
+        if (data.settingElements) {this.settingElements = this.settingElements.concat(data.settingElements)};
 
         this.sessionData = {};
         if (data.extraDefaultPersisData) {this.extraDefaultPersisData = data.extraDefaultPersisData}
         else {this.extraDefaultPersisData = {}};
         this.persisData = Object.assign({}, defaultPersisData);
         Object.assign(this.persisData, this.extraDefaultPersisData);
+        this.persisData.settings = this.getDefaultSettings();
         this.persisDataReady = false;
         this.worldReady = false;
 
@@ -130,7 +137,7 @@ export class ShardModule {
         // Get persistent data in an "after" context.
         system.run(()=>{
            let storedData = this.getData();
-           if (storedData) {this.persisData = storedData};
+           if (storedData) {this.persisData = Object.assign(this.persisData, storedData)};
            this.persisDataReady = true;
         });
 
@@ -188,13 +195,13 @@ export class ShardModule {
 
     /**Enable this module, allowing all child events & commands to run.*/
     enable() {
-        this.persisData.enabled = true;
+        this.persisData.settings.enabled = true;
     };
 
 
     /**Disable this module, prevents all child events & commands from running.*/
     disable(): void {
-        this.persisData.enabled = false;
+        this.persisData.settings.enabled = false;
     };
 
 
@@ -214,7 +221,9 @@ export class ShardModule {
     /**Resets module persistent data to it's default state.*/
     resetData():void {
         const newData = Object.assign(Object.assign({},this.extraDefaultPersisData), defaultPersisData);
-        // Add default command setting.
+        // Add default module settings.
+        newData.settings = this.getDefaultSettings();
+        // Add default command settings.
         for (const key in this.commands) {
             const command = this.commands[key];
             newData.commandSettings[command.details.id] = command.getDefaultSettings();
@@ -230,24 +239,37 @@ export class ShardModule {
     };
 
 
+    /**Get default settings for this module.*/
+    getDefaultSettings():Dictionary<any> {
+        const settings = {};
+        this.settingElements.forEach(element => {
+            const elementData = element.data as Dictionary<any>;
+            // Apply default value if available.
+            if (!elementData.defaultValue) {settings[element.id] = undefined}
+            else {settings[element.id] = elementData.defaultValue};
+        });
+        return settings;
+    };
+
+
 
 
     /**Passthrough for all event listeners of this module.*/
-    listenerPassthrough(listener:ShardListener, ...args) {
-        if (this.persisData.enabled == false) {return};
-        return listener.callback(...args);
+    listenerPassthrough(listener:ShardListener, ...args):void {
+        if (!this.persisData.settings.enabled) {return};
+        listener.callback(...args);
     };
 
 
     /**Passthrough for all slash commands of this module.*/
     slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...args):CustomCommandResult|undefined {
         // Return error message if module disabled.
-        if (this.persisData.enabled == false) {
+        if (!this.persisData.settings.enabled) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.details.id]}), status:1};
         };
         const commandSettings:Dictionary<any> = this.persisData.commandSettings[Command.details.id];
         // Return error message if command disabled.
-        if (commandSettings.enabled == false && !Command.details.important) {
+        if (!commandSettings.enabled && !Command.details.important) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandDisabled'}), status:1};
         };
         // If entity executed, check if it has any of the required tags.
@@ -256,7 +278,7 @@ export class ShardModule {
             commandSettings.requiredTags.forEach(tag => {
                 if (Origin.sourceEntity.hasTag(tag)) {hasTag = true};
             });
-            if (!hasTag && commandSettings.requiredTags.length > 0) {
+            if (!hasTag && commandSettings.requiredTags.length != 0) {
                 return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.missingPermission'}), status:1};
             };
         };
@@ -271,7 +293,7 @@ export class ShardModule {
         let result:ShardCommandResult|undefined = Command.execute(context, args);
 
         // Return command output.
-        if (result !== undefined) {
+        if (result) {
             let resultMessage:RawMessage;
             // If result.message is a string, turn into raw-message.
             if (typeof result.message == 'string') {resultMessage = {text:result.message}}

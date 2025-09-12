@@ -2,12 +2,14 @@ import {world, Dimension, Entity} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {Dictionary} from '../../../Shard/CONST';
 import {GetAllEntities, LocationInArea, LocationToString, GetAreaCenter, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
+import {afterEvents} from '../../../Shard/event_server';
 import {Module, Region, RegionRule} from '../module';
 
 
 
 
-function Callback(data:Dictionary<any>) {
+function Callback() {
+    const data = afterEvents.tick.sharedData;
     if (!data.allEntities) {data.allEntities = GetAllEntities()};
     const allEntities = data.allEntities as Array<Entity>;
     if (Object.keys(Module.persisData.regions).length == 0) {return};
@@ -66,7 +68,7 @@ function Callback(data:Dictionary<any>) {
     };
 
 
-    return data;
+    afterEvents.tick.sharedData = data;
 };
 
 

@@ -2,13 +2,15 @@ import {Player} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {Dictionary} from '../../../Shard/CONST';
 import {GetAllEntities} from '../../../Shard/util';
+import {afterEvents} from '../../../Shard/event_server';
 import {Scoreboards, scoreboardsReady} from '../module';
 
 
 
 
-function Callback(data:Dictionary<any>) {
-    if (scoreboardsReady == false) {return data};
+function Callback() {
+    const data = afterEvents.tick.sharedData;
+    if (scoreboardsReady == false) {return};
 
     GetAllEntities({tags:['sh.tk.timePlayed']}).forEach(entity => {
         // Add 1 tick to "time played" scoreboard.
@@ -62,7 +64,7 @@ function Callback(data:Dictionary<any>) {
         else {player.removeTag('sh.st.isJumping')};
     });
 
-    return data;
+    afterEvents.tick.sharedData = data;
 };
 
 

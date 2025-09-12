@@ -2,7 +2,6 @@
 ## Command texts that are actually used can be found in `BP/scripts/Shard/LANG.ts`.
 
 
-shard.misc.welcomeMessage=§a┏----\n§a|§r Welcome §7%s§r!\n§a|§r This server is running:\n§a|§r §l§dShard§r §lv%s§r.\n§a┖----
 shard.misc.commandModuleDisabled=§cEnable the §e%s§c module to use this command.
 shard.misc.commandDisabled=§cThis command is disabled.
 shard.misc.commandUnavailable=§cThis command is unavailable.
@@ -12,9 +11,8 @@ shard.misc.targetLocationObstructed=§cTarget location is obstructed.
 shard.misc.woosh=Woosh!
 
 shard.misc.moduleOption.commands=Commands
-shard.misc.moduleOption.settings=Module
+shard.misc.moduleOption.settings=Settings
 shard.misc.moduleCommands.body=Select a command to edit.
-shard.misc.moduleCommandSetting.enabled=Is enabled?
 shard.misc.moduleCommandSetting.showModuleTag=Show module tag in output?
 shard.misc.moduleCommandSetting.requiredTags=User required (any of) tags
 shard.misc.moduleCommandSetting.requiredTagsPlaceholder=E.g. "tag1, tag2, tag3".
@@ -31,6 +29,7 @@ shard.formCommon.dismiss=Dismiss
 shard.formCommon.okay=Okay
 shard.formCommon.yes=Yes
 shard.formCommon.no=No
+shard.formCommon.isEnabled=Is enabled?
 shard.formCommon.invalidLocation=§cExpected valid location. Try again.
 shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
 shard.formCommon.duplicateName=§cExpected unique name. Try again.
@@ -49,6 +48,9 @@ shard.formError.invalidCharacters=§c"%s" contains invalid characters.
 ## --------------------
 shard.core.displayName=§r[§dShard§r]
 shard.core.brief=Handles core functionality & module management.
+shard.core.welcomeMessage=§a┏----\n§a|§r Welcome §7%s§r!\n§a|§r This server is running:\n§a|§r §l§dShard§r §lv%s§r.\n§a┖----
+## settings
+shard.core.setting.sendWelcomeMessage=Send welcome message?
 ## cmd: discord
 shard.core.cmd.discord.brief=Get link to the Discord server.
 shard.core.cmd.discord.success=§9%s
@@ -68,7 +70,6 @@ shard.core.cmd.module.disable=Disabled module §e%s§r.
 shard.core.cmd.module.cannotDisable=§cCannot disable §e%s§c module.
 shard.core.cmd.module.enable=Enabled module §e%s§r.
 shard.core.cmd.module.clearData=Deleted all data for the §e%s§r module.
-shard.core.cmd.module.printData=Printing all data for the §e%s§r module. Data can be accessed in server logs.
 ## cmd: moduleDataLoad
 shard.core.cmd.moduleDataLoad.brief=Load custom module data. If text is too long, use a command block.
 ## cmd: moduleDataPrint

@@ -38,7 +38,6 @@ export const LANG = {
                     cannotDisable: '§cCannot disable §e%s§c module.',
                     enabled: 'Enabled module §e%s§r.',
                     clearData: 'Deleted all data for the §e%s§r module.',
-                    printData: 'Printing all data for the §e%s§r module. Data can be accessed in server logs.',
                 },
                 shardMemory: {
                     success: '\n§5Disk Space Used: §e%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',

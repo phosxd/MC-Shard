@@ -1,12 +1,12 @@
 {
 	"type": "minecraftBedrock",
-	"name": "Shard Stable",
+	"name": "Shard",
 	"namespace": "shard",
 	"authors": [
 		"PhosXD"
 	],
 	"targetVersion": "1.21.100",
-	"description": "Best plug-in for Bedrock servers & realms.",
+	"description": "Work in progress Bedrock server & realms add-on.",
 	"experimentalGameplay": {
 		"creationOfCustomBiomes": false,
 		"upcomingCreatorFeatures": false,
@@ -38,7 +38,7 @@
 			[
 				"simpleRewrite",
 				{
-					"packName": "Shard [Stable] v0.0.1"
+					"packName": "Shard v0.2.0"
 				}
 			]
 		]

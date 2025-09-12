@@ -4,7 +4,7 @@ import {Dictionary} from './CONST';
 
 
 export const defaultSettingElements:Array<ShardFormElement> = [
-    {type:'toggle', id:'enabled', data:{display:{translate:'shard.misc.moduleCommandSetting.enabled'}, defaultValue:true}},
+    {type:'toggle', id:'enabled', data:{display:{translate:'shard.formCommon.isEnabled'}, defaultValue:true}},
     {type:'toggle', id:'showModuleTag', data:{display:{translate:'shard.misc.moduleCommandSetting.showModuleTag'}, defaultValue:true}},
     {type:'textArray', id:'requiredTags', data:{
         display: {translate:'shard.misc.moduleCommandSetting.requiredTags'},
