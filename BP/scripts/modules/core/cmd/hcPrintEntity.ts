@@ -1,6 +1,7 @@
-import {CommandPermissionLevel, CustomCommandParamType, Entity} from '@minecraft/server';
+import {system, CommandPermissionLevel, CustomCommandParamType, Entity} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {Hardcopy} from '../module';
+import {EntityToObject} from '../../../util/entity';
+import {ItemStackToObject} from '../../../util/item';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -10,18 +11,24 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (targets.length !== 1) {return {message:{translate:'shard.core.cmd.hcPrintEntity'}, status:1}};
     const target = targets[0];
 
-    let compiled;
-    let compiledString: string;
-    if (target.typeId == 'minecraft:item') {compiled = Hardcopy.compileItem(target.getComponent('minecraft:item').itemStack)}
-    else {compiled = Hardcopy.compileEntity(target)};
-    compiledString = JSON.stringify(compiled);
-    // 2 layer string reformatting.
-    if (!rawStrings) {
-        compiledString = compiledString.replaceAll('"','\\"').replaceAll('\\\\"','\\\\\\"');
-    };
+    system.run(()=>{
+        let compiled;
+        let compiledString: string;
+        if (target.typeId == 'minecraft:item') {
+            compiled = {type:'item', data:ItemStackToObject(target.getComponent('item').itemStack)};
+        }
+        else {
+            compiled = {type:'entity', data:EntityToObject(target)};
+        };
+        compiledString = JSON.stringify(compiled);
+        // 2 layer string reformatting.
+        if (!rawStrings) {
+            compiledString = compiledString.replaceAll('"','\\"').replaceAll('\\\\"','\\\\\\"');
+        };
+        // Print.
+        console.warn(compiledString);
+    });
 
-    // Print.
-    console.warn(compiledString);
     return undefined;
 };
 
