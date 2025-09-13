@@ -30,6 +30,9 @@ There are plenty of features to play around with & so many more to come! If you 
 ## `core`:
 Provides essential functionality for the add-on. Cannot be disabled.
 
+**Settings:**
+- `Send welcome message?`
+
 **Commands:**
 - `/discord`: Get the Discord invite. Link can be changed in command's settings.
 - `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
@@ -105,6 +108,20 @@ Provides entity statistics & current entity state tracking. Data is stored in sc
 **States:**
 - `sh.st.is[Jumping,Sneaking,Sprinting,Swimming,Falling,Flying,Gliding,Climbing,Sleeping,Emoting`
 
+## `clutter`:
+Removes large groups of entities.
+
+**Settings:**
+- `Group radius`: Radius size of entity groups.
+- `Count threshold`: Amount of entities that need to be in a group to be removed.
+- `Countdown`: Countdown before entities are removed.
+- `Countdown text`: Countdown text displayed at entity groups.
+- `Exclude named?`: Excludes all named entities.
+- `Include items?`: Include all items.
+- `Include projectiles?`: Include entities like arrow, snowball, ender pearl, & wind charge.
+- `Include passive mobs?`: Include entities like cow, pig, sheep, & chicken.
+- `Include hostile mobs?`: Include mobs like zombie, creeper, skeleton, & spider.
+
 ## `display`:
 Provides tools for interacting with display entities for holographic text & bossbars.
 
@@ -149,6 +166,5 @@ Provides tools for rendering shapes in the world using particles.
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
-- `clutter`: Removes dense groups of entities over a certain threshold. Can be configured to target or ignore certain entities.
 - `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
