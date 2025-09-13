@@ -4,7 +4,7 @@ import {ShardListener} from './listener';
 import * as ShardEventServer from './event_server';
 import {ShardCommand, ShardCommandContext, ShardCommandResult} from './command';
 import {ShardForm, ShardFormElement} from './form';
-import {MCData} from './util';
+import {MCData, Deepcopy} from './util';
 import * as RawMessageParser from './raw_message_parser';
 
 
@@ -20,7 +20,7 @@ export const EventSources:Dictionary<any> = {
 };
 export const defaultPersisData:Dictionary<any> = {
     settings: {},
-    commandSettings: {}
+    commandSettings: {},
 };
 
 
@@ -47,6 +47,7 @@ export interface ShardModuleData {
     commandEnums?: Dictionary<Array<string>>,
     extraDefaultPersisData?: Dictionary<any>,
     settingElements?: Array<ShardFormElement>,
+    enabledByDefault?: boolean,
 };
 
 
@@ -57,6 +58,7 @@ export class ShardModule {
     readonly details: ShardModuleDetails;
     /**Called when the module is initialized.*/
     init: () => void;
+    enabledByDefault: boolean;
     /**Event listeners.*/
     listeners: Dictionary<ShardListener>;
     /**Commands.*/
@@ -97,9 +99,14 @@ export class ShardModule {
         this.sessionData = {};
         if (data.extraDefaultPersisData) {this.extraDefaultPersisData = data.extraDefaultPersisData}
         else {this.extraDefaultPersisData = {}};
-        this.persisData = Object.assign({}, defaultPersisData);
-        Object.assign(this.persisData, this.extraDefaultPersisData);
+        this.persisData = Deepcopy(defaultPersisData);
+        this.persisData = Object.assign(this.persisData, Deepcopy(this.extraDefaultPersisData));
         this.persisData.settings = this.getDefaultSettings();
+        this.enabledByDefault = true;
+        if (data.enabledByDefault == false) {
+            (this.settingElements[0].data as any).defaultValue = false;
+            this.enabledByDefault = false;
+        };
         this.persisDataReady = false;
         this.worldReady = false;
 
@@ -214,14 +221,14 @@ export class ShardModule {
     /**Set `persisData` then save it with `saveData`.*/
     setData(data:Dictionary<any>):void {
         this.persisData = data;
-        this.saveData()
+        this.saveData();
     };
 
 
     /**Resets module persistent data to it's default state.*/
     resetData():void {
-        const newData = Object.assign(Object.assign({},this.extraDefaultPersisData), defaultPersisData);
-        // Add default module settings.
+        let newData = Object.assign({}, Deepcopy(defaultPersisData));
+        newData = Object.assign(newData, Deepcopy(this.extraDefaultPersisData));
         newData.settings = this.getDefaultSettings();
         // Add default command settings.
         for (const key in this.commands) {
@@ -244,9 +251,7 @@ export class ShardModule {
         const settings = {};
         this.settingElements.forEach(element => {
             const elementData = element.data as Dictionary<any>;
-            // Apply default value if available.
-            if (!elementData.defaultValue) {settings[element.id] = undefined}
-            else {settings[element.id] = elementData.defaultValue};
+            settings[element.id] = elementData.defaultValue;
         });
         return settings;
     };

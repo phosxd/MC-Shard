@@ -21,6 +21,15 @@ export function VersionToBuildNumber(version:Array<number>) {
 
 
 
+
+/**Returns a deepcopy of the object.*/
+export function Deepcopy(object:any):any {
+    return JSON.parse(JSON.stringify(object));
+};
+
+
+
+
 /**Converts a location to a string.*/
 export function LocationToString(location:Vector3) {
     return `${location.x} ${location.y} ${location.z}`;

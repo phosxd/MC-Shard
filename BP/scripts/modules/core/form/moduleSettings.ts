@@ -3,6 +3,7 @@ import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormModalResponse} f
 import {ShardModule} from '../../../Shard/module';
 import {ShardCommandContext} from '../../../Shard/command';
 import {PermaEnabledModules} from '../../../Shard/CONST';
+import {Deepcopy} from '../../../Shard/util';
 import {Module} from '../module';
 
 
@@ -13,7 +14,7 @@ function Builder(context:ShardCommandContext, ...args) {
     elements.push({type:'title', id:'title', data:{display:{rawtext:[module.details.displayName, {text:' - '}, {translate:'shard.general.settings'}]}}});
     // Add module settings.
     module.settingElements.forEach(element => {
-        const newElement = element as any; // Retype to `any` so no errors are shown in-editor when trying to set `defaultValue` on an element that does not support it.
+        const newElement = Deepcopy(element);
         // Set default value to value of the setting.
         newElement.data.defaultValue = module.persisData.settings[element.id];
         elements.push(newElement);

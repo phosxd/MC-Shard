@@ -6,7 +6,7 @@
 export const LANG = {
     shard: {
         misc: {
-            commandModuleDisabled: '§cEnable the §e%s§c module to use this command.',
+            commandModuleDisabled: '§cEnable the §7%s§c module to use this command.',
             commandDisabled: '§cThis command is disabled.',
             commandUnavailable: '§cThis command is unavailable.',
             missingPermission: '§cYou do not have permission to do this.',
@@ -33,14 +33,14 @@ export const LANG = {
                     success: '§9%s',
                 },
                 module: {
-                    info: '\n§5ID: §e%s§r\n§5Description: §e%s§r\n§5Commands: §r%s§r',
-                    disabled: 'Disabled module §e%s§r.',
-                    cannotDisable: '§cCannot disable §e%s§c module.',
-                    enabled: 'Enabled module §e%s§r.',
-                    clearData: 'Deleted all data for the §e%s§r module.',
+                    info: '\n§5ID: §7%s§r\n§5Description: §7%s§r\n§5Commands: §r%s§r',
+                    disabled: 'Disabled module §7%s§r.',
+                    cannotDisable: '§cCannot disable §7%s§c module.',
+                    enabled: 'Enabled module §7%s§r.',
+                    clearData: 'Deleted all data for the §7%s§r module.',
                 },
                 shardMemory: {
-                    success: '\n§5Disk Space Used: §e%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',
+                    success: '\n§5Disk Space Used: §7%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',
                 },
             },
         },
@@ -56,7 +56,7 @@ export const LANG = {
                     radiusOutOfBounds: 'Radius must be between 1 & 50.',
                 },
                 dupe: {
-                    success: 'Duplicated %s §e%s§r.',
+                    success: 'Duplicated %s §7%s§r.',
                     noItem: '§cYou need to be holding an item.',
                 },
                 eat: {
@@ -87,8 +87,8 @@ export const LANG = {
                     slotIndexOutOfRange: 'Slot index must be between 0 & 8.',
                 },
                 repair: {
-                    success: 'Repaired §e%s§r.',
-                    failure: '§e%s§c cannot be repaired.',
+                    success: 'Repaired §7%s§r.',
+                    failure: '§7%s§c cannot be repaired.',
                     noItem: '§cYou need to be holding an item.',
                 },
                 thru: {
@@ -115,13 +115,13 @@ export const LANG = {
             brief: 'Provides border functionality.',
             cmd: {
                 addBorder: {
-                    success: 'Added new border "§e%s§r" starting from %s & ending at %s.',
+                    success: 'Added new border "§7%s§r" starting from %s & ending at %s.',
                     nameTaken: '§cCannot create border with duplicate name.',
                     invalidStyle: '§cCannot create border with invalid style. Available styles: %s.',
                     mustBeInverted: '§cNormal borders are not yet supported, only inverted borders should be created.',
                 },
                 removeBorder: {
-                    success: 'Removed border "§e%s§r".',
+                    success: 'Removed border "§7%s§r".',
                     doesNotExist: '§cCannot delete a border that does not exist.',
                 },
                 listBorders: {
@@ -136,14 +136,14 @@ export const LANG = {
             brief: 'Provides regions to edit world mutability & player abilities.',
             cmd: {
                 addRegion: {
-                    success: 'Added new region "§e%s§r" starting from %s & ending at %s.',
+                    success: 'Added new region "§7%s§r" starting from %s & ending at %s.',
                     nameTaken: '§cCannot create region with duplicate name.',
                 },
                 editRegion: {
                     doesNotExist: ' §cCannot edit a region that does not exist.',
                 },
                 removeRegion: {
-                    success: 'Removed region "§e%s§r".',
+                    success: 'Removed region "§7%s§r".',
                     doesNotExist: '§cCannot delete a region that does not exist.',
                 },
                 listRegions: {
@@ -154,14 +154,14 @@ export const LANG = {
             form: {},
         },
         draw: {
-            displayName: '§r[§cD§er§aa§9w§r]',
+            displayName: '§r[§cD§7r§aa§9w§r]',
             brief: 'Provides tools for rendering shapes in the world using particles.',
             cmd: {
                 drawCuboid: {
                     success: 'Rendering cuboid at %s for %s clients.',
                 },
                 drawOptions: {
-                    success: 'All drawing options:\n- §ealpha_fade_in\n§r- §ealpha_sustain\n§r- §ealpha_fade_out\n§r- §esize_x_fade_in\n§r- §esize_x_sustain\n§r- §esize_x_fade_out\n§r- §esize_y_fade_in\n§r- §esize_y_sustain\n§r- §esize_y_fade_out',
+                    success: 'All drawing options:\n- §7alpha_fade_in\n§r- §7alpha_sustain\n§r- §7alpha_fade_out\n§r- §7size_x_fade_in\n§r- §7size_x_sustain\n§r- §7size_x_fade_out\n§r- §7size_y_fade_in\n§r- §7size_y_sustain\n§r- §7size_y_fade_out',
                 },
             },
         },
@@ -175,7 +175,7 @@ export const LANG = {
                 party: {
                     success: 'Now partying with %s friends!',
                     noFriends: 'Trying to party by yourself? Sadge...',
-                    alreadyPartying: '§cYou are already partying!',
+                    alreadyPartying: '§cCannot do that now.',
                 },
             },
         },

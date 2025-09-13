@@ -22,12 +22,10 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         // Add randomized tag to user.
         system.run(()=>{
             (context.target as Entity).addTag(randomizedTag);
-            console.warn('added');
         });
         // Remove randomized tag from user, after all command iterations.
         system.runTimeout(()=>{
             (context.target as Entity).removeTag(randomizedTag);
-            console.warn('removed');
         }, (interval*times)+1);
         // Add command parameter.
         commandParts.push(`as @e[tag=${randomizedTag}] at @e[tag=${randomizedTag}]`);

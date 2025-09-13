@@ -2,6 +2,7 @@ import {CommandPermissionLevel} from '@minecraft/server';
 import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormModalResponse} from '../../../Shard/form';
 import {ShardModule} from '../../../Shard/module';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {Deepcopy} from '../../../Shard/util';
 import {Module} from '../module';
 
 
@@ -17,7 +18,7 @@ function Builder(context:ShardCommandContext, ...args) {
     elements.push({type:'label', id:'body', data:{display:{text:command.details.brief}}});
     // Add command settings.
     command.settingElements.forEach(element => {
-        const newElement = element as any; // Retype to `any` so no errors are shown in-editor when trying to set `defaultValue` on an element that does not support it.
+        const newElement = Deepcopy(element);
         // Set default value to value of the setting.
         newElement.data.defaultValue = commandData[element.id];
         elements.push(newElement);
