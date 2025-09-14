@@ -12,6 +12,8 @@ export const LANG = {
             missingPermission: '§cYou do not have permission to do this.',
             targetLocationOutOfBounds: '§cTarget location is out of bounds.',
             targetLocationObstructed: '§cTarget location is obstructed.',
+            createDuplicateName: '§cCannot create with duplicate name.',
+            createInvalidParam: '§cCannot create with invalid %s.',
             woosh: 'Woosh!',
             moduleOption: {
                 commands: 'Commands',
@@ -126,7 +128,7 @@ export const LANG = {
                 },
                 listBorders: {
                     success: 'All Borders: %s',
-                    noBorders: '§cThere are currently no borders.',
+                    none: '§cThere are currently no borders.',
                 },
             },
             form: {},
@@ -148,7 +150,7 @@ export const LANG = {
                 },
                 listRegions: {
                     success: 'All Regions: %s',
-                    noRegions: '§cThere are currently no regions.',
+                    none: '§cThere are currently no regions.',
                 },
             },
             form: {},
@@ -176,6 +178,27 @@ export const LANG = {
                     success: 'Now partying with %s friends!',
                     noFriends: 'Trying to party by yourself? Sadge...',
                     alreadyPartying: '§cCannot do that now.',
+                },
+            },
+        },
+        event: {
+            displayName: '§r[§gEvent§r]',
+            brief: 'Run advanced commands on server events.',
+            cmd: {
+                addEvent: {
+                    success: 'Added new event "§7%s§r".',
+                },
+                removeEvent: {
+                    success: 'Removed event "§7%s§r".',
+                    doesNotExist: '§cCannot delete an event that does not exist.',
+                },
+                editEvent: {
+                    success: 'Edit an event.',
+                    doesNotExist: '§cCannot edit an event that does not exist.',
+                },
+                listEvents: {
+                    none: '§cThere are currently no events.',
+                    success: 'All Events: %s',
                 },
             },
         },

@@ -2,9 +2,8 @@ import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShardModule} from '../../../Shard/module';
 import {Dictionary, CommandNamespace, PermaEnabledModules} from '../../../Shard/CONST';
-import {Module, Modules} from '../module';
-
-
+import {Module} from '../module';
+import {Modules} from '../../modules';
 
 
 function moduleConfig(context:ShardCommandContext, module_key:string) {
@@ -23,7 +22,7 @@ function moduleActionInfo(context:ShardCommandContext, module_key:string) {
         commandList.push(value.details.id);
     };
     commandList = commandList.sort(); // Sort alphabetically.
-    let commandListString:string = commandList.join('\n §r- §e/');
+    let commandListString:string = commandList.join('\n §r- §7/');
 
     // Return message.
     return {message:{translate:'shard.core.cmd.module.info', with:{rawtext: [{text:module.details.id}, module.details.brief, {text:commandListString}]}}, status:0};

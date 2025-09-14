@@ -1,7 +1,7 @@
-import {CommandPermissionLevel, CustomCommandParamType, Entity} from '@minecraft/server';
+import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {CommandNamespace} from '../../../Shard/CONST';
-import {Hardcopy, Modules} from '../module';
+import {Modules} from '../../modules';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {

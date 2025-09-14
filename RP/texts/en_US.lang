@@ -8,6 +8,8 @@ shard.misc.commandUnavailable=§cThis command is unavailable.
 shard.misc.missingPermission=§cYou do not have permission to do this.
 shard.misc.targetLocationOutOfBounds=§cTarget location is out of bounds.
 shard.misc.targetLocationObstructed=§cTarget location is obstructed.
+shard.misc.createDuplicateName=§cCannot create with duplicate name.
+shard.misc.createInvalidParam=§cCannot create with invalid %s.
 shard.misc.woosh=Woosh!
 
 shard.misc.moduleOption.commands=Commands
@@ -164,7 +166,6 @@ shard.border.brief=Provides border functionality.
 ## cmd: addBorder
 shard.border.cmd.addBorder.brief=Add a new border. Set inverted for world border.
 shard.border.cmd.addBorder.success=Added new border "§7%s§r" starting from %s & ending at %s.
-shard.border.cmd.addBorder.nameTaken=§cCannot create border with duplicate name.
 shard.border.cmd.addBorder.invalidStyle=§cCannot create border with invalid style. Available styles: %s.
 shard.border.cmd.addBorder.mustBeInverted=§cNormal borders are not yet supported, only inverted borders should be created.
 ## cmd: removeBorder
@@ -173,7 +174,7 @@ shard.border.cmd.removeBorder.success=Removed border "§7%s§r".
 shard.border.cmd.removeBorder.doesNotExist=§cCannot delete a border that does not exist.
 ## cmd: listBorders
 shard.border.cmd.listBorders.brief=List all borders.
-shard.border.cmd.listBorders.noBorder=§cThere are currently no borders.
+shard.border.cmd.listBorders.none=§cThere are currently no borders.
 shard.border.cmd.listBorders.success=All Borders: %s
 
 ## "region" module texts.
@@ -181,11 +182,10 @@ shard.border.cmd.listBorders.success=All Borders: %s
 shard.region.displayName=§r[§gRegion§r]
 shard.region.brief=Provides regions to edit world mutability & player abilities.
 ## cmd: addRegion
-shard.region.cmd.addRegion.brief=Adds a new region.
+shard.region.cmd.addRegion.brief=Add a new region.
 shard.region.cmd.addRegion.success=Added new region "§7%s§r" starting from %s & ending at %s.
-shard.region.cmd.addRegion.nameTaken=§cCannot create region with duplicate name.
 ## cmd: removeRegion
-shard.region.cmd.removeRegion.brief=Removes a region.
+shard.region.cmd.removeRegion.brief=Remove a region.
 shard.region.cmd.removeRegion.success=Removed region "§7%s§r".
 shard.region.cmd.removeRegion.doesNotExist=§cCannot delete a region that does not exist.
 ## cmd: editRegion
@@ -193,12 +193,8 @@ shard.region.cmd.editRegion.brief=Edit a region.
 shard.region.cmd.editRegion.doesNotExist=§cCannot edit a region that does not exist.
 ## cmd: listRegions
 shard.region.cmd.listRegions.brief=List all regions.
-shard.region.cmd.listRegions.noRegions=§cThere are currently no regions.
+shard.region.cmd.listRegions.none=§cThere are currently no regions.
 shard.region.cmd.listRegions.success=All Regions: %s
-## form: main
-shard.region.form.main.viewAll=View All Regions
-## form: viewAll
-shard.region.form.viewAll.body=Edit a region.
 ## form: edit
 shard.region.form.edit.title=Edit Region
 shard.region.form.edit.name=Name
@@ -302,3 +298,22 @@ shard.clutter.setting.includePassiveMobs=Include passive mobs?
 shard.clutter.setting.includePassiveMobsTooltip=Include mobs like cow, pig, sheep, & chicken.
 shard.clutter.setting.includeHostileMobs=Include hostile mobs?
 shard.clutter.setting.includeHostileMobsTooltip=Include mobs like zombie, creeper, skeleton, & spider.
+
+## "event" module texts.
+## ---------------------
+shard.event.displayName=§r[§gEvent§r]
+shard.event.brief=Run advanced commands on server events.
+## cmd: addEvent
+shard.event.cmd.addEvent.brief=Add a new event.
+shard.event.cmd.addEvent.success=Added new event "§7%s§r".
+## cmd: removeEvent
+shard.event.cmd.removeEvent.brief=Remove an event.
+shard.event.cmd.removeEvent.success=Removed event "§7%s§r".
+shard.event.cmd.removeEvent.doesNotExist=§cCannot delete an event that does not exist.
+## cmd: editEvent
+shard.event.cmd.editEvent.brief=Edit an event.
+shard.event.cmd.editEvent.doesNotExist=§cCannot edit an event that does not exist.
+## cmd: listEvents
+shard.event.cmd.listEvents.brief=List all events.
+shard.event.cmd.listEvents.none=§cThere are currently no events.
+shard.event.cmd.listEvents.success=All Events: %s

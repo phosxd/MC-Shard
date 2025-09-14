@@ -2,16 +2,6 @@ import {system} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
-//import * as mainForm from './forms/main';
-
-
-export var Modules:Dictionary<ShardModule>;
-// Import modules after they have all initialized.
-system.runTimeout(()=>{
-    import('../modules').then(modules => {
-        Modules = modules.Modules;
-    });
-},10);
 
 
 // Instantiate Module.
@@ -41,7 +31,6 @@ export const Module = new ShardModule(
             'form/shard',
         ],
         commandEnums: CommandEnums,
-        //mainForm: mainForm.MAIN,
         settingElements: [
             {type:'toggle', id:'sendWelcomeMessage', data:{display:'shard.core.setting.sendWelcomeMessage', defaultValue:true}},
         ],

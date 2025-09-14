@@ -2,7 +2,8 @@ import {Vector3} from '@minecraft/server';
 import {VersionToBuildNumber} from './util';
 
 
-/**Namespace used for features initialized with scripts.
+/**
+ * Namespace used for features initialized with scripts.
  * Should always adhere to Minecraft namespace rules.
 */
 export const Namespace:string = 'sh';
@@ -21,7 +22,8 @@ export const BuildNumber = VersionToBuildNumber(Version);
 export const DiscordLink:string = 'dsc.gg/mc-shard';
 
 
-/**Feature flags for modules to read.
+/**
+ * Feature flags for modules to read.
  * Adding or removing these may lead to modules having different behavior.
 */
 export const Features = [
@@ -29,7 +31,8 @@ export const Features = [
 ];
 
 
-/**Every module the add-on includes.
+/**
+ * Every module the add-on includes.
  * Can be modified to include new modules or exclude existing ones.
  * Must be valid module folder names that actually exist.
 */
@@ -43,6 +46,7 @@ export const ModuleNames = [
     'draw',
     'fun',
     'clutter',
+    'event',
 ];
 
 /**Modules that cannot be disabled during run-time.*/
@@ -62,7 +66,8 @@ export interface Dictionary<T> {
 };
 
 
-/**Vectors representing a correct rectangular area of block locations in world space.
+/**
+ * Vectors representing a correct rectangular area of block locations in world space.
  * 
  * Start & end values are assumed to be correct but cannot be guaranteed. Correction should be ensured before use.
  * 

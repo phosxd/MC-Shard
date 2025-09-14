@@ -13,7 +13,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     const area:AlignedArea = AlignArea({start:start, end:end});
 
     const currentRegion = Module.persisData.regions[name];
-    if (currentRegion) {return {message:{translate:'shard.region.cmd.addRegion.nameTaken'}, status:1}};
+    if (currentRegion) {return {message:{translate:'shard.misc.createDuplicateName'}, status:1}};
 
     const newRegion:Region = {
         name: name,
