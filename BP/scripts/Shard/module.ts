@@ -230,6 +230,7 @@ export class ShardModule {
         let newData = Object.assign({}, Deepcopy(defaultPersisData));
         newData = Object.assign(newData, Deepcopy(this.extraDefaultPersisData));
         newData.settings = this.getDefaultSettings();
+        newData.settings.enabled = this.enabledByDefault;
         // Add default command settings.
         for (const key in this.commands) {
             const command = this.commands[key];

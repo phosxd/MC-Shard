@@ -1,0 +1,62 @@
+import {} from '@minecraft/server';
+import {Dictionary} from '../Shard/CONST';
+import {StringifyVector2, StringifyVector3} from '../Shard/util';
+
+
+/**
+ * Formats the `str`.
+ * 
+ * @param {boolean} rawResults If true, will not tamper with the formatting results. Otherwise certain values may be changed to suit strings.
+*/
+export function Format(str:string, env:Dictionary<any>, rawResults:boolean=false):string {
+    let result = str;
+    const originalParts:Array<string> = [];
+    // Parse `str` for parts to format.
+    let foundSign:boolean = false;
+    let buffer:string = '';
+    for (const index in str.split('')){
+        const char = str[index]
+        if (!foundSign && char != '$') {continue};
+        if (!foundSign && char == '$') {
+            foundSign = true;
+        }
+        else if (buffer.length == 1 && char != '{') {
+            foundSign = false;
+            buffer = '';
+            continue;
+        }
+        else if (char == '}') {
+            originalParts.push(buffer+char);
+            foundSign = false;
+            buffer = '';
+            continue;
+        }
+        buffer += char;
+    };
+    // Replace original parts.
+    originalParts.forEach(part => {
+        const code = part.slice(2, -1); // Removes "${" & "}".
+        let controlledScope = new Function(...Object.keys(env), `try {return ${code}} catch {};`);
+        let evalResult = controlledScope(...Object.values(env));
+        // Edit eval result to have string friendly values.
+        switch (typeof(evalResult)) {
+            case 'object': {
+                // Vector3
+                if (evalResult.x && evalResult.y && evalResult.z) {
+                    evalResult = StringifyVector3(evalResult);
+                }
+                // Vector2
+                else if (evalResult.x && evalResult.y && !evalResult.z) {
+                    evalResult = StringifyVector2(evalResult);
+                };
+            };
+            case 'undefined': {
+                evalResult = '';
+            };
+        };
+        // Apply result.
+        result = result.replace(part, String(evalResult));
+    });
+
+    return result;
+};

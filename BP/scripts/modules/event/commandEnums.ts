@@ -1,7 +1,4 @@
+import EventVariables from './eventVariables';
 export default {
-    eventId: [
-        'playerPlaceBlock',
-        'playerBreakBlock',
-        'playerInteractWithBlock',
-    ],
+    eventId: Object.keys(EventVariables),
 };

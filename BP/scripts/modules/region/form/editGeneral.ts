@@ -14,7 +14,7 @@ function Builder(context:ShardCommandContext, ...args) {
     const elements:Array<ShardFormElement> = [];
     elements.push({type:'title', id:'title', data:{display:{rawtext:[Module.details.displayName, {text:' - '}, {translate:'shard.region.form.edit.title'}]}}});
     if (message) {
-        elements.push({type:'title', id:'message', data:{display:message}});
+        elements.push({type:'label', id:'message', data:{display:message}});
     };
     elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.region.form.edit.name'}, placeholder:{translate:'shard.region.form.edit.namePlaceholder'}, defaultValue:region.name}});
     elements.push({type:'vector3Box', id:'start', data:{display:{translate:'shard.region.form.edit.start'}, placeholder:{translate:'shard.region.form.edit.startPlaceholder'}, defaultValue:LocationToString(region.area.start)}});

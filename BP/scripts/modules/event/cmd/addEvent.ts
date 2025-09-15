@@ -1,12 +1,14 @@
 import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module, Event} from '../module';
+import EventVariables from '../eventVariables';
 import CommandEnums from '../commandEnums';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const eventId:string = args[1];
+    if (!Object.keys(EventVariables).includes(eventId)) {return};
 
     const currentEvent = Module.persisData.events[name];
     if (currentEvent) {return {message:{translate:'shard.misc.createDuplicateName'}, status:1}};
@@ -15,7 +17,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     const newEvent:Event = {
         name: name,
         eventId: eventId,
-        actorCommands: {},
+        actors: {},
     };
     Module.persisData.events[name] = newEvent;
     Module.saveData();

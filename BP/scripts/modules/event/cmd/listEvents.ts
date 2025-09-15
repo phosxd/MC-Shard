@@ -4,8 +4,6 @@ import {Module, Event} from '../module';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    const name:string = args[0];
-
     const eventKeys:Array<string> = Object.keys(Module.persisData.events);
     if (eventKeys.length == 0) {return {message:{translate:'shard.event.cmd.listEvents.none'}, status:1}};
 

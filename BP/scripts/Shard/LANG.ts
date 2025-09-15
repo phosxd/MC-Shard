@@ -200,6 +200,9 @@ export const LANG = {
                     none: '§cThere are currently no events.',
                     success: 'All Events: %s',
                 },
+                eventVariables: {
+                    success: 'Variables can be used in event commands (E.g. "${player.name}" or "${player.hasTag(\'example\')}").\nVariables for "§7%s§r": %s',
+                },
             },
         },
     },

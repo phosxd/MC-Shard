@@ -30,9 +30,11 @@ export function Deepcopy(object:any):any {
 
 
 
-/**Converts a location to a string.*/
+/**
+ * Same as `StringifyVector3`.
+*/
 export function LocationToString(location:Vector3) {
-    return `${location.x} ${location.y} ${location.z}`;
+    return StringifyVector3(location);
 };
 
 
@@ -64,6 +66,20 @@ export function LocationOutOfBounds(location:Vector3):boolean {
     return false;
 };
 
+
+/**
+ * Stringifies `Vector3`.
+*/
+export function StringifyVector3(vector:Vector3):string {
+    return `${vector.x} ${vector.y} ${vector.z}`;
+};
+
+/**
+ * Stringifies `Vector2`.
+*/
+export function StringifyVector2(vector:Vector2):string {
+    return `${vector.x} ${vector.y}`;
+};
 
 /**Returns a new Vector3 with added values.*/
 export function AddVector3(a:Vector3, b:Vector3|number):Vector3 {

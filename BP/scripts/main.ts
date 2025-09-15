@@ -9,6 +9,7 @@ import './Shard/util';
 import './Shard/raw_message_parser';
 import './util/entity';
 import './util/item';
+import './util/string';
 
 // Classes & their interfaces.
 import './Shard/module';

@@ -31,6 +31,7 @@ shard.formCommon.dismiss=Dismiss
 shard.formCommon.okay=Okay
 shard.formCommon.yes=Yes
 shard.formCommon.no=No
+shard.formCommon.enterUniqueName=Enter a unique name for this...
 shard.formCommon.isEnabled=Is enabled?
 shard.formCommon.invalidLocation=§cExpected valid location. Try again.
 shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
@@ -211,8 +212,6 @@ shard.region.form.rules.title=Region Rules
 shard.region.form.rules.add=§2Add Rule
 ## form: editRule
 shard.region.form.editRule.title=Add/Edit Rule
-shard.region.form.editRule.name=Name
-shard.region.form.editRule.namePlaceholder=Enter unique name for this...
 shard.region.form.editRule.event=Event
 shard.region.form.editRule.eventTooltip=The event this rule acts upon.
 shard.region.form.editRule.event.tick=Tick
@@ -317,3 +316,13 @@ shard.event.cmd.editEvent.doesNotExist=§cCannot edit an event that does not exi
 shard.event.cmd.listEvents.brief=List all events.
 shard.event.cmd.listEvents.none=§cThere are currently no events.
 shard.event.cmd.listEvents.success=All Events: %s
+## cmd: eventVariables
+shard.event.cmd.eventVariables.brief=List all variables for an event. For advanced users.
+shard.event.cmd.eventVariables.success=Variables can be used in event commands (E.g. "${player.name}" or "${player.hasTag('example')}").\nVariables for "§7%s§r": %s
+## form: edit
+shard.event.form.edit.title=Edit Event
+shard.event.form.edit.body=EventID: §7%s§r
+shard.event.form.edit.@player=Player Command
+shard.event.form.edit.@player.tooltip=Command to run on the player who initiated the event.
+shard.event.form.edit.@block=Block Command
+shard.event.form.edit.@block.tooltip=Command to run on the block.
