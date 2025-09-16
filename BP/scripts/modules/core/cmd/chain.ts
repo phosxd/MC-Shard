@@ -1,0 +1,54 @@
+import {system, Entity, Block, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
+import {StringifyVector3} from '../../../Shard/util';
+
+
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    const firstCommand:string = args[0];
+    const secondCommand:string = args[1];
+    let delayTicks:number = args[2];
+    if (!delayTicks) {delayTicks = 0};
+
+    if (['player','entity'].includes(context.targetType)) {
+        const entity = context.target as Entity;
+        system.run(()=>{
+            if (!entity.isValid) {return};
+            entity.runCommand(firstCommand);
+        });
+        system.runTimeout(()=>{
+            if (!entity.isValid) {return};
+            entity.runCommand(secondCommand);
+        },delayTicks);
+    }
+    else if (context.targetType == 'block') {
+        const block = context.target as Block;
+        system.run(()=>{
+            block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${firstCommand}`);
+        });
+        system.runTimeout(()=>{
+            block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${secondCommand}`);
+        },delayTicks);
+    };
+
+    return undefined;
+};
+
+
+
+
+// Initialize Command.
+export const MAIN = new ShardCommand(
+    {
+        id: 'chain',
+        brief: 'shard.core.cmd.chain.brief',
+        permissionLevel: CommandPermissionLevel.GameDirectors,
+        mandatoryParameters: [
+            {name:'firstCommand', type:CustomCommandParamType.String},
+            {name:'secondCommand', type:CustomCommandParamType.String},
+        ],
+        optionalParameters: [
+            {name:'delayTicks', type:CustomCommandParamType.Integer},
+        ],
+    },
+    {callback: Callback},
+);

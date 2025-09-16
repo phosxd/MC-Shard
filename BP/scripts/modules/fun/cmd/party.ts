@@ -1,4 +1,4 @@
-import {system, world, Dimension, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, MolangVariableMap} from '@minecraft/server';
+import {system, Dimension, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, MolangVariableMap} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {AddVector3} from '../../../Shard/util';
 import {partying} from '../module';

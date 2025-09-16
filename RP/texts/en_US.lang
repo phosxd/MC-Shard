@@ -79,7 +79,11 @@ shard.core.cmd.moduleDataLoad.brief=Load custom module data. If text is too long
 ## cmd: moduleDataPrint
 shard.core.cmd.moduleDataPrint.brief=Print module data.
 ## cmd: repeat
-shard.core.cmd.repeat.brief=Repeats a command.
+shard.core.cmd.repeat.brief=Repeat a command.
+## cmd: chain
+shard.core.cmd.chain.brief=Run 2 commands in sequence.
+## cmd: condition
+shard.core.cmd.condition.brief=Run command if condition returns true.
 ## cmd: shard
 shard.core.cmd.shard.brief=Shard info.
 ## cmd: shardmemory
@@ -273,6 +277,8 @@ shard.fun.cmd.party.brief=Let's get it started in here!
 shard.fun.cmd.party.success=Now partying with %s friends!
 shard.fun.cmd.party.noFriends=Trying to party by yourself? Sadge...
 shard.fun.cmd.party.alreadyPartying=§cCannot do that now.
+## cmd: emote
+shard.fun.cmd.emote.brief=Make a pose.
 
 ## "clutter" module texts.
 ## -----------------------

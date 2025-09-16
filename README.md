@@ -35,13 +35,15 @@ Provides essential functionality for the add-on. Cannot be disabled.
 
 **Commands:**
 - `/discord`: Get the Discord invite. Link can be changed in command's settings.
+- `/chain`: Run 2 commands in sequence.
+- `/condition`: Run command if condition returns trye.
+- `/repeat`: Repeat a command.
 - `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
 - `/hc.load`: Load hard-copy data.
 - `/hc.print.entity`: Print an entity as a hard-copy. Some components, & entity variants are not copied.
 - `/module`: Configure a module.
 - `/module.data.print`: Print module data.
 - `/module.data.load`: Load custom module data.
-- `/repeat`: Repeats a command.
 - `/shard`: Shard info.
 - `/shardmemory`: Shard memory info.
 
@@ -106,7 +108,7 @@ Provides entity statistics & current entity state tracking. Data is stored in sc
 - `sh.tk.mobileState`
 
 **States:**
-- `sh.st.is[Jumping,Sneaking,Sprinting,Swimming,Falling,Flying,Gliding,Climbing,Sleeping,Emoting`
+- `sh.st.is[Jumping,Sneaking,Sprinting,Swimming,Falling,Flying,Gliding,Climbing,Sleeping,Emoting]`
 
 ## `clutter`:
 Removes large groups of entities.
@@ -155,7 +157,32 @@ Provides regions to edit world mutability & player abilities. Can also run comma
 **Commands:**
 - `/addregion`: Add a new region.
 - `/removeregion`: Remove a region.
+- `/editregion`: Edit a region.
 - `/listregions`: List all regions.
+
+## `event`:
+Run advanced commands on server events.
+
+**Events:**
+- `playerPlaceBlock`
+- `playerBreakBlock`
+- `playerInteractWithBlock`
+- `playerDropItem`
+- `explosion`
+
+**Upcoming Events:**
+- `playerSpawn`
+- `playerUseItem`
+- `playerStartSprint` / `playerStopSprint`
+- `playerStartJump` / `playerStopJump`
+- `playerStartSneak` / `playerStopSneak`
+
+**Commands:**
+- `/addevent`: Add a new event.
+- `/removeevent`: Remove an event.
+- `/editevent`: Edit an event.
+- `/listevents`: List all events.
+- `/eventvariables`: List all variables for an event. For advanced users.
 
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.

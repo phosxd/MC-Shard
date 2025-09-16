@@ -15,17 +15,6 @@ export const LANG = {
             createDuplicateName: '§cCannot create with duplicate name.',
             createInvalidParam: '§cCannot create with invalid %s.',
             woosh: 'Woosh!',
-            moduleOption: {
-                commands: 'Commands',
-                settings: 'Settings',
-            },
-        },
-        formCommon: {
-            done: 'Done',
-            dismiss: 'Dismiss',
-            okay: 'Okay',
-            yes: 'Yes',
-            no: 'No',
         },
         core: {
             displayName: '§r[§dShard§r]',

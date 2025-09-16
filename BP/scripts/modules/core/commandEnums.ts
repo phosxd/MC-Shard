@@ -7,4 +7,18 @@ export default {
         'enable',
         'reset',
     ],
+    operator: [
+        'equalTo',
+        'notEqualTo',
+        'lessThanOrEqualTo',
+        'moreThanOrEqualTo',
+        'lessThan',
+        'moreThan',
+        '==',
+        '!=',
+        '<=',
+        '>=',
+        '<',
+        '>',
+    ],
 };

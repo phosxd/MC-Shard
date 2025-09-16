@@ -14,6 +14,8 @@ export const Module = new ShardModule(
     {
         childPaths: [
             'event/playerSpawn',
+            'cmd/chain',
+            'cmd/condition',
             'cmd/discord',
             'cmd/eval',
             'cmd/hcLoad',
