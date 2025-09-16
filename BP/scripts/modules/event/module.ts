@@ -20,11 +20,14 @@ export const Module = new ShardModule(
     {id:'event', displayName:{translate:'shard.event.displayName'}, brief:{translate:'shard.event.brief'}},
     {
         childPaths: [
+            'event/buttonPush',
             'event/explosion',
             'event/playerBreakBlock',
             'event/playerDropItem',
             'event/playerInteractWithBlock',
             'event/playerPlaceBlock',
+            'event/playerSpawn',
+            'event/playerUseItem',
             'cmd/addEvent',
             'cmd/editEvent',
             'cmd/eventVariables',

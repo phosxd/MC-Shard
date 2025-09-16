@@ -14,22 +14,26 @@ export default {
         '@player: Player',
         '@block: Block',
     ],
-    // playerUseItem: [
-    //     '@player: Player',
-    //     'item: ItemStack',
-    // ],
+    playerUseItem: [
+        '@player: Player',
+        'item: ItemStack',
+    ],
     playerDropItem: [
         '@player: Player',
         '@droppedItem: Entity',
         'item: ItemStack',
     ],
-    // playerSpawn: [
-    //     '@player: Player',
-    //     'initialSpawn: boolean'
-    // ],
+    playerSpawn: [
+        '@player: Player',
+        'initialSpawn: boolean'
+    ],
     explosion: [
         '@source: Entity',
     ],
+    buttonPush: [
+        '@source: Entity',
+        '@block: Block',
+    ]
 } as {
     [key:string]: Array<string>,
 };

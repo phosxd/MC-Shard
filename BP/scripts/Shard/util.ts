@@ -1,4 +1,4 @@
-import {world, Entity, Block, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
+import {world, World, Entity, Block, ItemStack, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
 
 
@@ -358,7 +358,7 @@ const mcDataCharCap:number = 32700;
 */
 export const MCData = {
     // Get persistent data.
-    'get': (key:string, Holder=world) => {
+    'get': (key:string, Holder:ItemStack|Entity|World=world) => {
         let result:Array<any> = [];
         let i:number = -1;
         while (true) {
@@ -373,7 +373,7 @@ export const MCData = {
 
 
     // Set persistent data.
-    'set': (key:string, value:Dictionary<any>, Holder=world) => {
+    'set': (key:string, value:Dictionary<any>, Holder:ItemStack|Entity|World=world) => {
         const stringValue = JSON.stringify(value);
         // Set all occupied parts to `undefined`. To erase previous data.
         let i:number = -1;
