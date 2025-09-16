@@ -11,7 +11,8 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     const end:Vector3 = args[2];
     const inverted:boolean = args[3];
     const damage:number = args[4];
-    const styleId:string = args[5];
+    let styleId:string = args[5];
+    if (!styleId) {styleId = 'hidden'};
     const area:AlignedArea = AlignArea({start:start, end:end});
 
     const currentBorder = Module.persisData.borders[name];

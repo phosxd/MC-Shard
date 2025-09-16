@@ -1,5 +1,6 @@
 import {system, world, Player, Entity} from '@minecraft/server';
 import {Dictionary} from './CONST';
+import {AddVector3} from './util';
 
 
 export class TickEventSignal {
@@ -73,11 +74,13 @@ system.run(tick);
 // So I am keeping the old logic until I find a way to detect dropping items from cursor inventory.
 world.afterEvents.entitySpawn.subscribe(event => {
     if (event.entity.typeId != 'minecraft:item') return;
-    // Get dropped item.
-    const player = event.entity.dimension.getEntities({type:'minecraft:player', location:event.entity.location, maxDistance:3, closest:1})[0];
+    if (!event.entity.isValid) {return};
+    // Get player that dropped.
+    const player = event.entity.dimension.getEntities({type:'minecraft:player', location:event.entity.location, maxDistance:2.5, closest:1})[0];
     if (!player) return;
     // Run listeners.
     afterEvents.playerDropItem._listeners.forEach(listener => {
+        if (!event.entity.isValid) {return};
         listener({
             player: player,
             droppedItem: event.entity,

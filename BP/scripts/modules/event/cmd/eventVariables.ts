@@ -1,6 +1,5 @@
 import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {Module, Event} from '../module';
 import EventVariables from '../eventVariables';
 
 

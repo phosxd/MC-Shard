@@ -1,4 +1,4 @@
-import {system, PlayerBreakBlockBeforeEvent, Block} from '@minecraft/server';
+import {system, PlayerBreakBlockBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {StringifyVector3} from '../../../Shard/util';
 import {Format} from '../../../util/string';
@@ -26,7 +26,7 @@ function Callback(event:PlayerBreakBlockBeforeEvent) {
             if (playerActor) {
                 try {player.runCommand(Format(playerActor.command, env))} catch {};
             };
-            if (playerActor) {
+            if (blockActor) {
                 try {block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${Format(blockActor.command, env)}`)} catch {};
             };
         });

@@ -36,7 +36,7 @@ function Builder(context:ShardCommandContext, ...args) {
     if (message) {
         elements.push({type:'label', id:'message', data:{display:message}});
     };
-    elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.region.form.editRule.name'}, placeholder:{translate:'shard.region.form.editRule.namePlaceholder'}, defaultValue:defaults.name}});
+    elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.general.name'}, placeholder:{translate:'shard.formCommon.enterUniqueName'}, defaultValue:defaults.name}});
     elements.push({type:'dropdown', id:'eventIdIndex', data:{
         display:{translate:'shard.region.form.editRule.event'},
         items: [

@@ -30,24 +30,15 @@ function Builder(context:ShardCommandContext, ...args) {
     elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.general.name'}, placeholder:{translate:'shard.formCommon.enterUniqueName'}, defaultValue:event.name}});
 
     // Add actor command options.
-    if (eventActorIds.includes('player')) {
-        let actor = eventActors.player;
+    eventActorIds.forEach(actorId => {
+        let actor = eventActors[actorId];
         if (!actor) {actor = {command:''}};
-        elements.push({type:'textBox', id:'@player', data:{
-            display: {translate:'shard.event.form.edit.@player'},
-            tooltip: {translate:'shard.event.form.edit.@player.tooltip'},
+        elements.push({type:'textBox', id:'@'+actorId, data:{
+            display: {translate:'shard.event.form.edit.@'+actorId},
+            tooltip: {translate:'shard.event.form.edit.@'+actorId+'.tooltip'},
             defaultValue: actor.command,
         }});
-    };
-    if (eventActorIds.includes('block')) {
-        let actor = eventActors.block;
-        if (!actor) {actor = {command:''}};
-        elements.push({type:'textBox', id:'@block', data:{
-            display: {translate:'shard.event.form.edit.@block'},
-            tooltip: {translate:'shard.event.form.edit.@block.tooltip'},
-            defaultValue: actor.command,
-        }});
-    };
+    });
 
     return new ShardFormBuilder({type:'modal'}, {elements:elements, callbackArgs:[eventName]});
 };
@@ -67,13 +58,10 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
     event.name = newName;
 
     // Actor commands.
-    const playerCommand = response.map['@player'];
-    if (playerCommand != undefined) {
-        event.actors.player = {command: playerCommand};
-    };
-    const blockCommand = response.map['@block'];
-    if (blockCommand != undefined) {
-        event.actors.block = {command: blockCommand};
+    for (const key in response.map) {
+        const value = response.map[key];
+        if (!key.startsWith('@')) {continue};
+        event.actors[key.replace('@','')] = {command: value};
     };
 
     // Save.
