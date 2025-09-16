@@ -161,18 +161,19 @@ Provides regions to edit world mutability & player abilities. Can also run comma
 - `/listregions`: List all regions.
 
 ## `event`:
-Run advanced commands on server events.
+Run advanced commands on world events.
 
 **Events:**
 - `playerPlaceBlock`
 - `playerBreakBlock`
 - `playerInteractWithBlock`
+- `playerUseItem`
 - `playerDropItem`
+- `playerSpawn`
 - `explosion`
+- `buttonPush`
 
 **Upcoming Events:**
-- `playerSpawn`
-- `playerUseItem`
 - `playerStartSprint` / `playerStopSprint`
 - `playerStartJump` / `playerStopJump`
 - `playerStartSneak` / `playerStopSneak`

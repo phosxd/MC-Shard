@@ -172,7 +172,7 @@ export const LANG = {
         },
         event: {
             displayName: '§r[§gEvent§r]',
-            brief: 'Run advanced commands on server events.',
+            brief: 'Run advanced commands on world events.',
             cmd: {
                 addEvent: {
                     success: 'Added new event "§7%s§r".',

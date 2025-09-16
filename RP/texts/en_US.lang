@@ -307,7 +307,7 @@ shard.clutter.setting.includeHostileMobsTooltip=Include mobs like zombie, creepe
 ## "event" module texts.
 ## ---------------------
 shard.event.displayName=§r[§gEvent§r]
-shard.event.brief=Run advanced commands on server events.
+shard.event.brief=Run advanced commands on world events.
 ## cmd: addEvent
 shard.event.cmd.addEvent.brief=Add a new event.
 shard.event.cmd.addEvent.success=Added new event "§7%s§r".
