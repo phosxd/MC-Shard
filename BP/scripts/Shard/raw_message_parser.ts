@@ -2,7 +2,8 @@ import {RawMessage} from '@minecraft/server';
 import {translate} from './LANG';
 
 
-/**Attempts to replicate the functionality you would get if you sent a raw message in Minecraft.
+/**
+ * Attempts to replicate the functionality you would get if you sent a raw message in Minecraft.
  * 
  * `score` parameter has no effect.
  * 

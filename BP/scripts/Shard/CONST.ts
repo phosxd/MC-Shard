@@ -40,6 +40,7 @@ export const ModuleNames = [
     'core',
     'util',
     'tracker',
+    'blacklist',
     'border',
     'region',
     'display',

@@ -1,10 +1,10 @@
 {
-	"format_version": "1.20.80",
+	"format_version": "1.21.10",
 	"minecraft:client_entity": {
 		"description": {
 			"identifier": "shard:display",
 			"materials": {
-				"default": "entity_alphatest"
+				"default": "entity"
 			},
 			"textures": {
 				"default": "textures/empty"

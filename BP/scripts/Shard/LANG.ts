@@ -101,6 +101,15 @@ export const LANG = {
                 },
             },
         },
+        blacklist: {
+            displayName: '§r[§gBlacklist§r]',
+            brief: 'Removes blacklisted items from normal players.',
+            cmd: {
+                blacklistPreset: {
+                    success: 'Loaded preset §7%s§r.',
+                },
+            },
+        },
         border: {
             displayName: '§r[§gBorder§r]',
             brief: 'Provides border functionality.',

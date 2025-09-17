@@ -1,7 +1,7 @@
 import {system, ButtonPushAfterEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {StringifyVector3} from '../../../Shard/util';
-import {Format} from '../../../util/string';
+import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
 
@@ -15,7 +15,7 @@ function Callback(event:ButtonPushAfterEvent) {
             const sourceActor = event.actors.source;
             const blockActor = event.actors.block;
             if (sourceActor) {
-                try {source.runCommand(Format(sourceActor.command, env))} catch {};
+                try {source.runCommand(StringFormat(sourceActor.command, env))} catch {};
             };
             if (blockActor) {
                 try {block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${Format(blockActor.command, env)}`)} catch {};

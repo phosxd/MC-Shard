@@ -1,7 +1,7 @@
 import {PlayerPlaceBlockAfterEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {StringifyVector3} from '../../../Shard/util';
-import {Format} from '../../../util/string';
+import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
 
@@ -14,10 +14,10 @@ function Callback(event:PlayerPlaceBlockAfterEvent) {
         const playerActor = event.actors.player;
         const blockActor = event.actors.block;
         if (playerActor) {
-            try {player.runCommand(Format(playerActor.command, env))} catch {};
+            try {player.runCommand(StringFormat(playerActor.command, env))} catch {};
         };
         if (playerActor) {
-            try {block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${Format(blockActor.command, env)}`)} catch {};
+            try {block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${StringFormat(blockActor.command, env)}`)} catch {};
         };
     });
 };

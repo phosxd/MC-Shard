@@ -1,7 +1,6 @@
 import {world, World, Entity, Block, ItemStack, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
-
-
+import {StringEqualSplit} from '../util/string';
 
 
 /**Converts a Build Number to a Version.*/
@@ -227,22 +226,6 @@ export function LocationInArea(location:Vector3, area:AlignedArea) {
 };
 
 
-/**Split a string into equal parts.*/
-export function EqualSplitString(value:string, parts:number) {
-    let result:Array<string> = [];
-    const partLength = Math.floor(value.length/parts);
-    const remainder = value.length%parts;
-    let startIndex:number = 0;
-    for (let i:number = 0; i < parts; i++) {
-        const length:number = partLength + (i<remainder?1:0);
-        result.push(value.slice(startIndex, startIndex+length));
-        startIndex += length;
-    };
-
-    return result;
-};
-
-
 
 
 /**Specifies what each CommandPermissionLevel value is equal to or greater than.*/
@@ -253,7 +236,8 @@ const cplMap:Dictionary<Array<number>> = {
     3: [0,1,2,3], // Host
     4: [0,1,2,3,4], // Owner
 };
-/**Compares two command permission level values.
+/**
+ * Compares two command permission level values.
  * 
  * Returns `true` if `a` is equal to or higher than `b`.
  * */
@@ -274,22 +258,8 @@ export function GetAllEntities(options?:EntityQueryOptions) {
 };
 
 
-/**Tests if the Entity Selector applies to the `Entity`.
- * 
- * Cannot be called in `read-only` mode.
-*/
-export function SelectorApplies(entity:Entity, selector:string):boolean {
-    const testTag = `sh:testSelector.${Math.random()}`;
-    entity.runCommand(`tag ${selector} add ${testTag}`);
-    if (entity.hasTag(testTag)) {
-        entity.removeTag(testTag);
-        return true;
-    };
-    return false;
-};
-
-
-/**Returns true if `Entity` has any of the tags. If no tags in `tags` returns true.
+/**
+ * Returns true if `Entity` has any of the tags. If no tags in `tags` returns true.
  * Tags starting with "!" will return true if the `Entity` does NOT have the tag.
 */
 export function EntityHasAnyTags(entity:Entity, tags:Array<string>):boolean {
@@ -303,7 +273,8 @@ export function EntityHasAnyTags(entity:Entity, tags:Array<string>):boolean {
 };
 
 
-/**Returns true if `Entity` has all of the tags. If no tags in `tags` returns true.
+/**
+ * Returns true if `Entity` has all of the tags. If no tags in `tags` returns true.
  * Tags starting with "!" will return true if the `Entity` does NOT have the tag.
 */
 export function EntityHasAllTags(entity:Entity, tags:Array<string>):boolean {
@@ -388,7 +359,7 @@ export const MCData = {
         // Dynamic properties must be split when they are large enough due to the limits imposed by the Minecraft Server API.
         let parts = Math.round(stringValue.length / mcDataCharCap);
         if (parts < 1) { parts = 1; };
-        const splitValue = EqualSplitString(stringValue, parts);
+        const splitValue = StringEqualSplit(stringValue, parts);
         for (let i:number = 0; i < parts; i++) {
             Holder.setDynamicProperty(`${key}[${i}]`, splitValue[i]);
         };

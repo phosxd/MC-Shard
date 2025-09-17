@@ -208,3 +208,25 @@ export function ObjectToEntity(data:EntityObject, dimension:Dimension, location:
     // Return.
     return entity;
 };
+
+
+
+
+/**
+ * Tests if the Entity Selector applies to the `Entity`.
+ * Selector example: `type=cow,r=5,c=1`.
+ * 
+ * Cannot be called in `read-only` mode.
+*/
+export function SelectorApplies(entity:Entity, selector:string):boolean {
+    const testTag = `sh:selectorTest`;
+    entity.removeTag(testTag); // Just in case the entity somehow has the tag already.
+    entity.runCommand(`tag @s[${selector}] add ${testTag}`); // Add tag if selector selects the entity.
+    // Return true if entity has tag.
+    if (entity.hasTag(testTag)) {
+        entity.removeTag(testTag);
+        return true;
+    };
+    // Otherwise return false.
+    return false;
+};

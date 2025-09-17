@@ -1,6 +1,6 @@
 import {ItemUseAfterEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {Format} from '../../../util/string';
+import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
 
@@ -12,7 +12,7 @@ function Callback(event:ItemUseAfterEvent) {
         if (event.eventId != 'playerUseItem') {return};
         const playerActor = event.actors.player;
         if (playerActor) {
-            try {player.runCommand(Format(playerActor.command, env))} catch {};
+            try {player.runCommand(StringFormat(playerActor.command, env))} catch {};
         };
     });
 };

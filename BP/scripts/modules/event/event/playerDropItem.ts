@@ -1,7 +1,7 @@
 import {} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {PlayerDropItemEvent} from '../../../Shard/event_server';
-import {Format} from '../../../util/string';
+import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
 
@@ -14,10 +14,10 @@ function Callback(event:PlayerDropItemEvent) {
         const playerActor = event.actors.player;
         const droppedItemActor = event.actors.droppedItem;
         if (playerActor) {
-            try {player.runCommand(Format(playerActor.command, env))} catch {};
+            try {player.runCommand(StringFormat(playerActor.command, env))} catch {};
         };
         if (droppedItemActor) {
-            try {droppedItem.runCommand(Format(droppedItemActor.command, env))} catch {};
+            try {droppedItem.runCommand(StringFormat(droppedItemActor.command, env))} catch {};
         };
     });
 };

@@ -3,13 +3,13 @@
 //
 // Navigate to the "CONST" file under "Shard" to configure hard-coded values.
 
+import './util/entity';
+import './util/item';
+import './util/string';
 import './Shard/CONST';
 import './Shard/LANG';
 import './Shard/util';
 import './Shard/raw_message_parser';
-import './util/entity';
-import './util/item';
-import './util/string';
 
 // Classes & their interfaces.
 import './Shard/module';

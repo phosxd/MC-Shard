@@ -1,6 +1,6 @@
 import {system, ExplosionBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {Format} from '../../../util/string';
+import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
 
@@ -13,7 +13,7 @@ function Callback(event:ExplosionBeforeEvent) {
             if (event.eventId != 'explosion') {return};
             const sourceActor = event.actors.source;
             if (sourceActor) {
-                try {source.runCommand(Format(sourceActor.command, env))} catch {};
+                try {source.runCommand(StringFormat(sourceActor.command, env))} catch {};
             };
         });
     });

@@ -164,6 +164,24 @@ shard.tracker.displayName=§r[§3Tracker§r]
 shard.tracker.brief=Provides entity statistics & current entity state tracking.
 shard.trackers.form.main.body=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
 
+## "blacklist" module texts.
+## -------------------------
+shard.blacklist.displayName=§r[§gBlacklist§r]
+shard.blacklist.brief=Removes blacklisted items from normal players.
+## cmd: blacklist
+shard.blacklist.cmd.blacklist.brief=Manage the blacklist.
+## cmd: blacklistpreset
+shard.blacklist.cmd.blacklistPreset.brief=Load a blacklist preset.
+shard.blacklist.cmd.blacklstPreset.success=Loaded preset §7%s§r.
+## form: items
+shard.blacklist.form.items.title=Blacklisted Items
+shard.blacklist.form.items.add=§2Add Item
+## form: editItem
+shard.blacklist.form.editItem.title=Add/Edit Blacklisted Item
+shard.blacklist.form.editItem.typeId=Item Type ID
+shard.blacklist.form.editItem.typeId.placeholder=E.g. "diamond_sword" or "custom:item".
+shard.blacklist.form.editItem.remove=Remove item?
+
 ## "border" module texts.
 ## ----------------------
 shard.border.displayName=§r[§gBorder§r]

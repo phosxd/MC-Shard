@@ -4,11 +4,29 @@ import {StringifyVector2, StringifyVector3} from '../Shard/util';
 
 
 /**
+ * Split `str` into equal parts.
+*/
+export function StringEqualSplit(value:string, parts:number) {
+    let result:Array<string> = [];
+    const partLength = Math.floor(value.length/parts);
+    const remainder = value.length%parts;
+    let startIndex:number = 0;
+    for (let i:number = 0; i < parts; i++) {
+        const length:number = partLength + (i<remainder?1:0);
+        result.push(value.slice(startIndex, startIndex+length));
+        startIndex += length;
+    };
+
+    return result;
+};
+
+
+/**
  * Formats the `str`.
  * 
  * @param {boolean} rawResults If true, will not tamper with the formatting results. Otherwise certain values may be changed to suit strings.
 */
-export function Format(str:string, env:Dictionary<any>, rawResults:boolean=false):string {
+export function StringFormat(str:string, env:Dictionary<any>, rawResults:boolean=false):string {
     let result = str;
     const originalParts:Array<string> = [];
     // Parse `str` for parts to format.
