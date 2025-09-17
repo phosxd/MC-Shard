@@ -130,6 +130,13 @@ Provides tools for interacting with display entities for holographic text & boss
 **Commands:**
 - `/adddisplay`: Summon a new display entity.
 
+## `blacklist`:
+Removes blacklisted items from normal players.
+
+**Commands:**
+- `/blacklist`: Manage the blacklist.
+- `/blacklistpreset`: Load a blacklist preset.
+
 ## `border`:
 Provides border tools. This is mostly unfinished as there is no style editor & only 1 default style ("hidden"). There is also no support for non-inverted borders yet.
 
@@ -194,5 +201,4 @@ Provides tools for rendering shapes in the world using particles.
 
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
-- `blacklist`: Blacklist certain entities, items, & blocks for regular players. Includes commands for summoning entities that wont be cleared by the blacklist.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
