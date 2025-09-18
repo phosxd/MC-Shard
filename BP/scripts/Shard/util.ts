@@ -29,6 +29,13 @@ export function Deepcopy(object:any):any {
 
 
 
+/**Return a random element from the array.*/
+export function RandomElement(array:Array<any>):any {
+    return array[Math.floor(Math.random() * array.length)];
+};
+
+
+
 /**
  * Same as `StringifyVector3`.
 */
@@ -344,7 +351,7 @@ export const MCData = {
 
 
     // Set persistent data.
-    'set': (key:string, value:Dictionary<any>, Holder:ItemStack|Entity|World=world) => {
+    'set': (key:string, value:Dictionary<any>|undefined, Holder:ItemStack|Entity|World=world) => {
         const stringValue = JSON.stringify(value);
         // Set all occupied parts to `undefined`. To erase previous data.
         let i:number = -1;
@@ -355,10 +362,11 @@ export const MCData = {
             if (x == undefined) {break}
             else {Holder.setDynamicProperty(id, undefined)};
         };
+        if (value == undefined) {return};
         // Set parts to new value.
         // Dynamic properties must be split when they are large enough due to the limits imposed by the Minecraft Server API.
-        let parts = Math.round(stringValue.length / mcDataCharCap);
-        if (parts < 1) { parts = 1; };
+        let parts = Math.ceil(stringValue.length / mcDataCharCap);
+        if (parts < 1) {parts = 1};
         const splitValue = StringEqualSplit(stringValue, parts);
         for (let i:number = 0; i < parts; i++) {
             Holder.setDynamicProperty(`${key}[${i}]`, splitValue[i]);

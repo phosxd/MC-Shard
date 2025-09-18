@@ -408,7 +408,7 @@ export class ShardFormBuilder {
             if (['numberBox','textBox','vector3Box','numberArray','textArray'].includes(element.type)) {
                 const elementData = element.data as ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray;
                 let defaultValue = elementData.defaultValue;
-                if (defaultValue) {defaultValue = String(elementData.defaultValue)};
+                if (defaultValue !== undefined) {defaultValue = String(elementData.defaultValue)};
                 let placeholder = elementData.placeholder;
                 if (!placeholder) {placeholder = ''};
                 formData.textField(elementData.display, placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});

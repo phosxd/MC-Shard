@@ -44,7 +44,7 @@ export const LANG = {
                 },
                 drain: {
                     success: 'Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.',
-                    radiusOutOfBounds: 'Radius must be between 1 & 50.',
+                    radiusOutOfBounds: '§cRadius must be between 1 & 50.',
                 },
                 dupe: {
                     success: 'Duplicated %s §7%s§r.',
@@ -202,6 +202,20 @@ export const LANG = {
                     success: 'Variables can be used in event commands (E.g. "${player.name}" or "${player.hasTag(\'example\')}").\nVariables for "§7%s§r": %s',
                 },
             },
+        },
+        antixray: {
+            displayName: '§r[§4Anti-Xray§r]',
+            brief: 'Prevents Xray from finding valueable ores.',
+            cmd: {
+                unspoof: {
+                    success: 'Unspoofing all ores in a radius of %s. Result will be sent after complete.',
+                    result: '§aUnspoofed %s ores.',
+                    radiusOutOfBounds: '§cRadius must be between 1 & 300.',
+                },
+                wipeDm: {
+                    success: 'Deleted all spoofed block dedicated data.',
+                },
+            }
         },
     },
 };

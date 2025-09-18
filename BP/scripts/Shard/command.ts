@@ -55,7 +55,9 @@ export interface ShardCommandData {
 /**Class for command context.*/
 export class ShardCommandContext {
     source: Block|Entity|Player; // The original executor of the command (If using slash commands, wil be the same as target).
-    sourceType: 'world'|'block'|'entity'|'player';
+    sourceEntity: Entity;
+    sourceBlock: Block;
+    sourceType: string;
     target: Block|Entity|Player; // The target executor of the command.
     targetType: 'world'|'block'|'entity'|'player';
     dimension: Dimension; // Dimension.

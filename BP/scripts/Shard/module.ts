@@ -295,6 +295,9 @@ export class ShardModule {
         else if (Origin.initiator) {context = ShardCommandContext.generate(Origin.initiator)}
         else if (Origin.sourceBlock) {context = ShardCommandContext.generate(Origin.sourceBlock)}
         else if (Origin.sourceType == CustomCommandSource.Server) {context = new ShardCommandContext(undefined,'world',undefined,undefined,undefined,undefined,undefined)};
+        context.sourceEntity = Origin.sourceEntity;
+        context.sourceBlock = Origin.sourceBlock;
+        context.sourceType = Origin.sourceType;
 
         let result:ShardCommandResult|undefined = Command.execute(context, args);
 

@@ -48,6 +48,7 @@ export const ModuleNames = [
     'fun',
     'clutter',
     'event',
+    'antixray',
 ];
 
 /**Modules that cannot be disabled during run-time.*/

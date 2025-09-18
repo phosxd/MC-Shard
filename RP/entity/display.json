@@ -4,7 +4,7 @@
 		"description": {
 			"identifier": "shard:display",
 			"materials": {
-				"default": "entity"
+				"default": "entity_alphatest"
 			},
 			"textures": {
 				"default": "textures/empty"
