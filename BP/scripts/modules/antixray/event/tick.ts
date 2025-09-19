@@ -1,6 +1,7 @@
 import {system, world, Dimension, Block, BlockVolume, Vector3} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {RoundVector3} from '../../../Shard/util';
+import {GetBlockNeighbors} from '../../../util/block';
 import {Module, TickCosts, GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks} from '../module';
 
 const playersRunningJob = new Set();
@@ -50,19 +51,7 @@ function* spoofArea(originLocation:Vector3, dimension:Dimension, ownerId:string)
 
 
 export function isBlockExposed(block:Block) {
-    const neighbors = [
-        block.north(),
-        block.east(),
-        block.south(),
-        block.west(),
-    ];
-    if (block.location.y+1 < block.dimension.heightRange.max) {
-        neighbors.push(block.above());
-    };
-    if (block.location.y-1 > block.dimension.heightRange.min) {
-        neighbors.push(block.below());
-    };
-    return neighbors.some(value => {
+    return GetBlockNeighbors(block).some(value => {
         return !SolidBlocks.includes(value?.typeId);
     });
 };

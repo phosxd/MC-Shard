@@ -1,6 +1,7 @@
-import {Vector3} from '@minecraft/server';
+import {world, Dimension, Block, Vector3} from '@minecraft/server';
 import {ShardModule} from '../../Shard/module';
 import {StringifyVector3} from '../../Shard/util';
+import {GetBlockNeighbors} from '../../util/block';
 
 export const ShortDimensionId = {
     'minecraft:overworld': 'o',
@@ -70,6 +71,28 @@ export const SolidBlocks:Array<string> = ReplaceableBlocks.concat([
 ].map(value => {return 'minecraft:'+value})).concat(SpoofBlock);
 
 
+export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
+    // Get spoofed block at location.
+    const key = GetDmk(block.dimension.id, block.location);
+    const spoofedBlock = world.getDynamicProperty(key) as number;
+    // Return if doesn't exist.
+    if (spoofedBlock === undefined) {return};
+    // Restore original block & remove spoofed block data.
+    block.setType(ReplaceableBlocks[spoofedBlock]);
+    world.setDynamicProperty(key, undefined);
+
+    // Run on neighbors.
+    if (includeNeighbors) {
+        GetBlockNeighbors(block).forEach(block => {
+            if (block.typeId !== SpoofBlock) {return};
+            UnspoofBlock(block);
+        });
+    };
+};
+
+
+
+
 // Instantiate Module.
 export const Module = new ShardModule(
     {
@@ -80,6 +103,7 @@ export const Module = new ShardModule(
     {
         enabledByDefault: false,
         childPaths: [
+            'event/explosion',
             'event/playerBreakBlock',
             'event/tick',
             'cmd/unspoof',
