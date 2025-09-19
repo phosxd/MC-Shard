@@ -50,7 +50,7 @@ function* spoofArea(originLocation:Vector3, dimension:Dimension, ownerId:string)
 };
 
 
-export function isBlockExposed(block:Block) {
+function isBlockExposed(block:Block) {
     return GetBlockNeighbors(block).some(value => {
         return !SolidBlocks.includes(value?.typeId);
     });

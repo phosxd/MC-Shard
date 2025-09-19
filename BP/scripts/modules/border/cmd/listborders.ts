@@ -4,7 +4,7 @@ import {LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Border} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
 
     const borderKeys:Array<string> = Object.keys(Module.persisData.borders);

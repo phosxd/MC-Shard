@@ -4,7 +4,7 @@ import {EntityToObject} from '../../../util/entity';
 import {ItemStackToObject} from '../../../util/item';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const targets:Array<Entity> = args[0];
     const rawStrings:boolean = args[1];
     // Return error if incorrect target count.

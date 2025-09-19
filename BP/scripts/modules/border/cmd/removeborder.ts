@@ -3,7 +3,7 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const currentBorder = Module.persisData.borders[name];
     if (!currentBorder) {return {message:{translate:'shard.border.cmd.removeBorder.doesNotExist'}, status:1}};

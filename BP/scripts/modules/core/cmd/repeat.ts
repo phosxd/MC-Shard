@@ -1,8 +1,6 @@
-import {system, Entity, Block, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {LocationToString} from '../../../Shard/util';
-
-
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -18,21 +16,21 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     const randomizedTag:string = `sh:locator:${Math.random()}`;
 
     // Add extra command parameters if user is an entity.
-    if (['entity','player'].includes(context.targetType)) {
+    if (['entity','player'].includes(context.sourceType)) {
         // Add randomized tag to user.
         system.run(()=>{
-            (context.target as Entity).addTag(randomizedTag);
+            context.sourceEntity.addTag(randomizedTag);
         });
         // Remove randomized tag from user, after all command iterations.
         system.runTimeout(()=>{
-            (context.target as Entity).removeTag(randomizedTag);
+            context.sourceEntity.removeTag(randomizedTag);
         }, (interval*times)+1);
         // Add command parameter.
         commandParts.push(`as @e[tag=${randomizedTag}] at @e[tag=${randomizedTag}]`);
     };
     // Add extra command parameters if user is a block.
-    if (context.targetType == 'block') {
-        const block = context.target as Block;
+    if (context.sourceType == 'block') {
+        const block = context.sourceBlock;
         commandParts.push(`positioned ${LocationToString(block.location)}`);
     };
 

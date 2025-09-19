@@ -207,10 +207,13 @@ export const LANG = {
             displayName: '§r[§4Anti-Xray§r]',
             brief: 'Prevents Xray from finding valueable ores.',
             cmd: {
+                forceSpoof: {
+                    success: 'Force spoofing all ores between %s & %s. Result will be sent after complete.',
+                    result: '§aForce spoofed %s ores.',
+                },
                 unspoof: {
-                    success: 'Unspoofing all ores in a radius of %s. Result will be sent after complete.',
+                    success: 'Unspoofing all ores between %s & %s. Result will be sent after complete.',
                     result: '§aUnspoofed %s ores.',
-                    radiusOutOfBounds: '§cRadius must be between 1 & 300.',
                 },
                 wipeDm: {
                     success: 'Deleted all spoofed block dedicated data.',

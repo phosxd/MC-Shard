@@ -2,7 +2,7 @@ import {system, world, PlayerBreakBlockBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {StringifyVector3} from '../../../Shard/util';
 import {GetBlockNeighbors} from '../../../util/block';
-import {Module, GetDmk, SpoofBlock, UnspoofBlock} from '../module';
+import {GetDmk, UnspoofBlock} from '../module';
 
 
 function Callback(event:PlayerBreakBlockBeforeEvent) {

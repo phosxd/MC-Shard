@@ -2,7 +2,7 @@ import {world, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-function Callback(context:ShardCommandContext, ...args) {
+function Callback(context:ShardCommandContext, args:Array<any>) {
     const diskBytes = world.getDynamicPropertyTotalByteCount();
     const diskMegabytes = (diskBytes/1000)/1000;
     return {message:{translate:'shard.core.cmd.shardMemory.success', with:[String(diskMegabytes), String(diskBytes)]}, status:0};

@@ -1,7 +1,7 @@
-import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShardModule} from '../../../Shard/module';
-import {Dictionary, CommandNamespace, PermaEnabledModules} from '../../../Shard/CONST';
+import {CommandNamespace, PermaEnabledModules} from '../../../Shard/CONST';
 import {Module} from '../module';
 import {Modules} from '../../modules';
 
@@ -13,7 +13,7 @@ function moduleConfig(context:ShardCommandContext, module_key:string) {
 };
 
 
-function moduleActionInfo(context:ShardCommandContext, module_key:string) {
+function moduleActionInfo(module_key:string) {
     const module:ShardModule = Modules[module_key];
     // Generate command list.
     let commandList:Array<string> = [''];
@@ -37,7 +37,6 @@ function moduleActionDisable(module_key:string) {
 
     const module:ShardModule = Modules[module_key];
     module.disable();
-
     return {message:{translate:'shard.core.cmd.module.disabled', with:[module_key]}, status:0};
 };
 
@@ -45,7 +44,6 @@ function moduleActionDisable(module_key:string) {
 function moduleActionEnable(module_key:string) {
     const module:ShardModule = Modules[module_key];
     module.enable()
-
     return {message:{translate:'shard.core.cmd.module.enabled', with:[module_key]}, status:0};
 };
 
@@ -53,23 +51,22 @@ function moduleActionEnable(module_key:string) {
 function moduleActionClearData(module_key:string) {
     const module:ShardModule = Modules[module_key];
     module.resetData();
-
     return {message:{translate:'shard.core.cmd.module.clearData', with:[module_key]}, status:0};
 };
 
 
 
 
-function Callback(Context:ShardCommandContext, Options:Array<any>) {
-    let module_key:string = Options[0];
-    let action:string = Options[1];
+function Callback(context:ShardCommandContext, args:Array<any>) {
+    let module_key:string = args[0];
+    let action:string = args[1];
 
     switch (action) {
         case 'disable': return moduleActionDisable(module_key);
         case 'enable': return moduleActionEnable(module_key);
         case 'reset': return moduleActionClearData(module_key);
-        case 'info': return moduleActionInfo(Context, module_key);
-        default: return moduleConfig(Context, module_key);
+        case 'info': return moduleActionInfo(module_key);
+        default: return moduleConfig(context, module_key);
     };
 };
 
@@ -90,7 +87,5 @@ export const MAIN = new ShardCommand(
         ],
         important: true,
     },
-    {
-        callback: Callback,
-    },
+    {callback: Callback},
 );

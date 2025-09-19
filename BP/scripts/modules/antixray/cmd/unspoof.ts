@@ -1,16 +1,12 @@
 import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {AddVector3} from '../../../Shard/util';
-import {GetDmk, SpoofBlock, ReplaceableBlocks} from '../module';
-
-const MinRadius:number = 1;
-const MaxRadius:number = 300;
+import {StringifyVector3, RoundVector3} from '../../../Shard/util';
+import {GetDmk, UnspoofBlock, SpoofBlock, ReplaceableBlocks} from '../module';
 
 
-function* unspoofArea(radius:number, originLocation:Vector3, dimension:Dimension, player?:Player) {
+function* unspoofArea(volume:BlockVolume, dimension:Dimension, player?:Player) {
     let spoofedBlocks:number = 0;
     // Iterate on every spoof block in the radius.
-    const volume = new BlockVolume(AddVector3(originLocation, -radius), AddVector3(originLocation, radius));
     const spoofBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
     for (const location of spoofBlocks.getBlockLocationIterator()) {
         const block = dimension.getBlock(location);
@@ -18,8 +14,7 @@ function* unspoofArea(radius:number, originLocation:Vector3, dimension:Dimension
         const key = GetDmk(dimension.id, location);
         const data = world.getDynamicProperty(key) as number;
         if (data) {
-            dimension.setBlockType(location, ReplaceableBlocks[data]);
-            world.setDynamicProperty(key, undefined);
+            UnspoofBlock(block);
             spoofedBlocks += 1;
         };
         yield;
@@ -31,14 +26,13 @@ function* unspoofArea(radius:number, originLocation:Vector3, dimension:Dimension
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    const radius:number = args[0];
-    // Return error if radius out of bounds.
-    if (radius > MaxRadius || radius < MinRadius) {return {message:{translate:'shard.antixray.cmd.unspoof.radiusOutOfBounds'}, status:1}};
-    let player: Player;
-    if (context.targetType == 'player') {player = context.target as Player};
-    system.runJob(unspoofArea(radius, context.location, context.dimension, player));
+    const volume = new BlockVolume(args[0] as Vector3, args[1] as Vector3);
+    const sendResult = args[2] as boolean;
+    let player = context.sourcePlayer;
+    if (sendResult === false) {player = undefined};
+    system.runJob(unspoofArea(volume, context.dimension, player));
 
-    return {message:{translate:'shard.antixray.cmd.unspoof.success', with:[String(radius)]}, status:0};
+    return {message:{translate:'shard.antixray.cmd.unspoof.success', with:[StringifyVector3(RoundVector3(args[0])), StringifyVector3(RoundVector3(args[1]))]}, status:0};
 };
 
 
@@ -47,10 +41,14 @@ export const MAIN = new ShardCommand(
     {
         id: 'antixray.unspoof',
         brief: 'shard.antixray.cmd.unspoof.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
-            {name:'radius', type:CustomCommandParamType.Integer}
-        ]
+            {name:'start', type:CustomCommandParamType.Location},
+            {name:'end', type:CustomCommandParamType.Location},
+        ],
+        optionalParameters: [
+            {name:'sendResult', type:CustomCommandParamType.Boolean},
+        ],
     },
     {callback: Callback},
 );

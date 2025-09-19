@@ -460,16 +460,16 @@ export class ShardForm {
 
     /**Show the form UI to the context target, then calls `callback`.*/
     show(context:ShardCommandContext, args:Array<any>=[], builder?:ShardFormBuilder):void {
-        if (context.targetType !== 'player') {return};
-        const target = context.target as Player;
-        if (CompareCommandPermissionLevel(target.commandPermissionLevel, this.details.permissionLevel) == false) {return};
+        if (context.sourceType !== 'player') {return};
+        const player = context.sourcePlayer;
+        if (CompareCommandPermissionLevel(player.commandPermissionLevel, this.details.permissionLevel) == false) {return};
         
         // Run in an "after" context.
         system.run(()=>{
             // Build form, if none suplied.
             if (!builder) {builder = this.buildForm(context, ...args)};
             // Show form.
-            builder.build().show(target).then(response => {
+            builder.build().show(player).then(response => {
                 // If player cannot open the form, queue & retry every half second.
                 if (response.cancelationReason == FormCancelationReason.UserBusy) {
                     system.runTimeout(this.show.bind(this,context, builder.callbackArgs), 10);

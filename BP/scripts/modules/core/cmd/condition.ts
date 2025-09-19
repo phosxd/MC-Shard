@@ -1,4 +1,4 @@
-import {system, Entity, Block, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {StringifyVector3} from '../../../Shard/util';
 
@@ -57,15 +57,15 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (passed == false) {return undefined};
 
     // Run command.
-    if (['player','entity'].includes(context.targetType)) {
-        const entity = context.target as Entity;
+    if (['player','entity'].includes(context.sourceType)) {
+        const entity = context.sourceEntity;
         system.run(()=>{
             if (!entity.isValid) {return};
             entity.runCommand(command);
         });
     }
-    else if (context.targetType == 'block') {
-        const block = context.target as Block;
+    else if (context.sourceType == 'block') {
+        const block = context.sourceBlock;
         system.run(()=>{
             block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${command}`);
         });

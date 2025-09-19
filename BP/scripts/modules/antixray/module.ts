@@ -1,4 +1,4 @@
-import {world, Dimension, Block, Vector3} from '@minecraft/server';
+import {world, Block, Vector3} from '@minecraft/server';
 import {ShardModule} from '../../Shard/module';
 import {StringifyVector3} from '../../Shard/util';
 import {GetBlockNeighbors} from '../../util/block';
@@ -106,6 +106,7 @@ export const Module = new ShardModule(
             'event/explosion',
             'event/playerBreakBlock',
             'event/tick',
+            'cmd/forceSpoof',
             'cmd/unspoof',
             'cmd/wipeDm',
         ],

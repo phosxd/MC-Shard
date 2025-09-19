@@ -4,7 +4,7 @@ import {CommandNamespace} from '../../../Shard/CONST';
 import {Modules} from '../../modules';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const moduleId:string = args[0];
     const rawStrings:boolean = args[1];
     // Get module data.

@@ -1,7 +1,7 @@
-import {system, ExplosionBeforeEvent, BlockVolume, Block} from '@minecraft/server';
+import {system, ExplosionBeforeEvent, Block} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {AddVector3, StringifyVector3} from '../../../Shard/util';
-import {Module, SpoofBlock, UnspoofBlock} from '../module';
+import {StringifyVector3} from '../../../Shard/util';
+import {SpoofBlock, UnspoofBlock} from '../module';
 
 
 function Callback(event:ExplosionBeforeEvent) {

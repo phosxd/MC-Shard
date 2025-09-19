@@ -2,7 +2,7 @@ import {system, world, RawMessage, CustomCommandOrigin, CustomCommandSource, Cus
 import {Dictionary, CommandNamespace} from './CONST';
 import {ShardListener} from './listener';
 import * as ShardEventServer from './event_server';
-import {ShardCommand, ShardCommandContext, ShardCommandResult} from './command';
+import {ShardCommand, GenerateCommandContext, ShardCommandResult} from './command';
 import {ShardForm, ShardFormElement} from './form';
 import {MCData, Deepcopy} from './util';
 import * as RawMessageParser from './raw_message_parser';
@@ -290,16 +290,28 @@ export class ShardModule {
         };
 
         // Generate context.
-        let context:ShardCommandContext
-        if (Origin.sourceEntity) {context = ShardCommandContext.generate(Origin.sourceEntity)}
-        else if (Origin.initiator) {context = ShardCommandContext.generate(Origin.initiator)}
-        else if (Origin.sourceBlock) {context = ShardCommandContext.generate(Origin.sourceBlock)}
-        else if (Origin.sourceType == CustomCommandSource.Server) {context = new ShardCommandContext(undefined,'world',undefined,undefined,undefined,undefined,undefined)};
-        context.sourceEntity = Origin.sourceEntity;
-        context.sourceBlock = Origin.sourceBlock;
-        context.sourceType = Origin.sourceType;
-
-        let result:ShardCommandResult|undefined = Command.execute(context, args);
+        let source;
+        switch (Origin.sourceType) {
+            case 'Entity': {
+                source = Origin.sourceEntity;
+                break;
+            };
+            case 'Block': {
+                source = Origin.sourceBlock;
+                break;
+            };
+            case 'NPCDialogue': {
+                source = Origin.initiator;
+                break;
+            };
+            case 'Server': {
+                source = world;
+                break;
+            };
+        };
+        const context = GenerateCommandContext(source);
+        // Run command
+        const result:ShardCommandResult|undefined = Command.execute(context, args);
 
         // Return command output.
         if (result) {

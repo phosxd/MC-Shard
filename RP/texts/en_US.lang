@@ -365,11 +365,14 @@ shard.antixray.setting.spoofInterval=Spoof Interval (seconds)
 shard.antixray.setting.spoofInterval.tooltip=How often spoof jobs start.
 shard.antixray.setting.spoofSpeed=Spoof Speed
 shard.antixray.setting.spoofSpeed.tooltip=How fast spoof jobs are. Pick the value that best suits your hardware, high values may cause lag.
+## cmd: forceSpoof
+shard.antixray.cmd.forceSpoof.brief=Force spoof all ores in volume.
+shard.antixray.cmd.forceSpoof.success=Force spoofing all ores between %s & %s. Result will be sent after complete.
+shard.antixray.cmd.forceSpoof.result=§aForce spoofed %s ores.
 ## cmd: unspoof
-shard.antixray.cmd.unspoof.brief=Unspoof all ores in the radius.
-shard.antixray.cmd.unspoof.success=Unspoofing all ores in a radius of %s. Result will be sent after complete.
+shard.antixray.cmd.unspoof.brief=Unspoof all ores in volume.
+shard.antixray.cmd.unspoof.success=Unspoofing all ores between %s & %s. Result will be sent after complete.
 shard.antixray.cmd.unspoof.result=§aUnspoofed %s ores.
-shard.antixray.cmd.unspoof.radiusOutOfBounds=§cRadius must be between 1 & 300.
 ## cmd: wipeDM
 shard.antixray.cmd.wipeDm.brief=Delete all spoofed block data. Spoofed blocks will not be recoverable.
 shard.antixray.cmd.wipeDm.success=Deleted all spoofed block dedicated data.

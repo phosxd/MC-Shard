@@ -4,14 +4,10 @@ import {DiscordLink} from '../../../Shard/CONST';
 import {Module} from '../module';
 
 
-
-
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const settings = Module.persisData.commandSettings[MAIN.details.id];
     return {message:{translate:'shard.core.cmd.discord.success', with:[settings.link]}, status:0};
 };
-
-
 
 
 // Initialize Command.

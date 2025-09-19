@@ -3,14 +3,9 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-
-
-function Callback(context:ShardCommandContext, ...args) {
+function Callback(context:ShardCommandContext, _args:Array<any>) {
     Module.forms.shard.show(context);
-    return undefined;
 };
-
-
 
 
 // Initialize Command.
@@ -20,7 +15,5 @@ export const MAIN = new ShardCommand(
         brief: 'shard.core.cmd.shard.brief',
         permissionLevel: CommandPermissionLevel.Any
     },
-    {
-        callback: Callback,
-    }
+    {callback: Callback},
 );
