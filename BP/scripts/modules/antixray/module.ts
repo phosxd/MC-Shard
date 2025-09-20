@@ -15,16 +15,9 @@ export function GetDmk(dimensionId:string, location:Vector3):string {
     return DmkHeader+':'+ShortDimensionId[dimensionId]+StringifyVector3(location);
 };
 
-/**
- * Determines the cost of operations for iterations in a spoof job.
-*/
-export const TickCosts = {
-    base: 0.05,
-    checkExists: 0.1,
-    checkType: 0.25,
-    full: 1,
-};
-
+/**Size of */
+export const SpoofVolumeChunkSize = 16;
+export const SpoofVolumeChunkSizeHalf = SpoofVolumeChunkSize/2;
 export const SpoofBlock = 'minecraft:purple_concrete';
 /**Blocks to spoof.*/
 export const ReplaceableBlocks:Array<string> = [
@@ -113,23 +106,17 @@ export const Module = new ShardModule(
         settingElements: [
             {type:'label', id:'warning', data:{display:{translate:'shard.antixray.warning'}}},
             {type:'divider', id:'warningDiv', data:{}},
-            {type:'numberBox', id:'spoofRadius', data:{
-                display: {translate:'shard.antixray.setting.spoofRadius'},
-                tooltip: 'shard.antixray.setting.spoofRadius.tooltip',
-                min:0, max:200,
-                defaultValue: 25,
+            {type:'slider', id:'spoofDistance', data:{
+                display: {translate:'shard.antixray.setting.spoofDistance'},
+                tooltip: 'shard.antixray.setting.spoofDistance.tooltip',
+                min:0, max:128, step:16,
+                defaultValue: 48,
             }},
             {type:'numberBox', id:'spoofInterval', data:{
                 display: {translate:'shard.antixray.setting.spoofInterval'},
                 tooltip: 'shard.antixray.setting.spoofInterval.tooltip',
                 min:1, max:100,
                 defaultValue: 5,
-            }},
-            {type:'slider', id:'spoofSpeed', data:{
-                display: {translate:'shard.antixray.setting.spoofSpeed'},
-                tooltip: 'shard.antixray.setting.spoofSpeed.tooltip',
-                min:1, max:40,
-                defaultValue: 15,
             }},
         ],
     },

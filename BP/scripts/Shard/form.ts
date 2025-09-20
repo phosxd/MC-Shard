@@ -211,7 +211,7 @@ export class ShardFormBuilder {
                     with:{rawtext:[elementDisplay, {text:String(elementData.min)}, {text:String(elementData.max)}]},
                 }};
                 // Invalid step error.
-                if (elementData.step && value%elementData.step != 1) {
+                if (elementData.step && value%elementData.step !== 0) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.invalidStep',
                     with:{rawtext:[elementDisplay, {text:String(elementData.step)}]},
                 }};

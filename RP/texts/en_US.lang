@@ -358,9 +358,9 @@ shard.event.form.edit.@droppedItem.tooltip=Command to run on the dropped item en
 ## "antixray" module texts.
 shard.antixray.displayName=§r[§4Anti-Xray§r]
 shard.antixray.brief=Prevents Xray from finding valueable ores.
-shard.antixray.warning=WARNING. Do not enable this module without understanding the risks.\n\n§6This module is experimental. Some settings may be removed or changed.§r\n\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This may cause lag with many players online & computationally intensive settings.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
-shard.antixray.setting.spoofRadius=Spoof Radius
-shard.antixray.setting.spoofRadius.tooltip=Obstructed ores within this radius will be rendered as purple concrete. The larger this number is, the longer it takes to spoof all ores.
+shard.antixray.warning=WARNING. Do not enable this module without understanding the risks.\n\n§6This module is experimental. Some settings may be removed or changed.§r\n\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This could cause a little bit of lag when many players online.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
+shard.antixray.setting.spoofDistance=Spoof Distance
+shard.antixray.setting.spoofDistance.tooltip=How far (from the player) ores get spoofed. Even at high values, this is limited to the server's simulation distance.
 shard.antixray.setting.spoofInterval=Spoof Interval (seconds)
 shard.antixray.setting.spoofInterval.tooltip=How often spoof jobs start.
 shard.antixray.setting.spoofSpeed=Spoof Speed

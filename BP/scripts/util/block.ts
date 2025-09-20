@@ -7,6 +7,7 @@ import {Block, Vector3} from '@minecraft/server';
  * @returns {Array<Block>} [north, east, south, west, above?, below?]
 */
 export function GetBlockNeighbors(block:Block):Array<Block> {
+    if (!block) {return []};
     const neighbors:Array<Block> = [
         block.north(),
         block.east(),

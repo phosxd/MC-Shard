@@ -1,8 +1,8 @@
-import {system, world, Dimension, Block, BlockVolume, Vector3} from '@minecraft/server';
+import {system, world, Dimension, Block, Vector3, BlockVolume} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {RoundVector3} from '../../../Shard/util';
+import {RoundVector3, AddVector3, SubtractVector3, MultiplyVector3} from '../../../Shard/util';
 import {GetBlockNeighbors} from '../../../util/block';
-import {Module, TickCosts, GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks} from '../module';
+import {Module, GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks, SpoofVolumeChunkSize, SpoofVolumeChunkSizeHalf} from '../module';
 
 const playersRunningJob = new Set();
 
@@ -19,32 +19,32 @@ function Callback() {
 
 
 function* spoofArea(originLocation:Vector3, dimension:Dimension, ownerId:string) {
-    const spoofDistance:number = Module.persisData.settings.spoofRadius;
-    let costPerTick:number = 50 * Module.persisData.settings.spoofSpeed;
-    // const volume = new BlockVolume(AddVector3(originLocation, -spoofDistance), AddVector3(originLocation, spoofDistance));
-    // const blocksToReplace = dimension.getBlocks(volume, {includeTypes:ReplaceableBlocks}, true);
-    // for (const location of blocksToReplace.getBlockLocationIterator()) {
-    let cost = 0;
-    for (let x:number = originLocation.x-spoofDistance; x < originLocation.x+spoofDistance; x++) {
-    for (let y:number = originLocation.y-spoofDistance; y < originLocation.y+spoofDistance; y++) {
-    for (let z:number = originLocation.z-spoofDistance; z < originLocation.z+spoofDistance; z++) {
-        if (cost >= costPerTick) {cost = 0; yield};
-        cost += TickCosts.base;
-        const location:Vector3 = {x:x,y:y,z:z};
-        if (location.y > dimension.heightRange.max || location.y < dimension.heightRange.min) {continue};
-        cost += TickCosts.checkExists;
-        const block = dimension.getBlock(location);
-        if (!block) {continue};
-        cost += TickCosts.checkType;
-        if (!ReplaceableBlocks.includes(block.typeId)) {continue};
-        const key = GetDmk(dimension.id, location);
-        if (world.getDynamicProperty(key)) {continue};
-        if (isBlockExposed(block)) {continue}; // If block exposed, dont spoof.
-        // Save block type before replace.
-        world.setDynamicProperty(key, ReplaceableBlocks.indexOf(block.typeId));
-        // Replace block.
-        dimension.setBlockType(location, SpoofBlock);
-        cost += TickCosts.full;
+    const spoofDistance:number = Module.persisData.settings.spoofDistance;
+    // Get volumes to iterate over.
+    const chunks = Math.floor(spoofDistance/SpoofVolumeChunkSize);
+    const chunksHalf = chunks/2;
+    for (let x:number=-chunksHalf; x < chunksHalf; x++) {
+    for (let y:number=-chunksHalf; y < chunksHalf; y++) {
+    for (let z:number=-chunksHalf; z < chunksHalf; z++) {
+        const chunkLocation = AddVector3(MultiplyVector3({x:x,y:y,z:z}, SpoofVolumeChunkSize+1), originLocation);
+        const volume = new BlockVolume(
+            SubtractVector3(chunkLocation, SpoofVolumeChunkSizeHalf),
+            AddVector3(chunkLocation, SpoofVolumeChunkSizeHalf),
+        );
+        yield;
+        for (const location of dimension.getBlocks(volume, {includeTypes:ReplaceableBlocks}, true).getBlockLocationIterator()) {
+            yield;
+            const block = dimension.getBlock(location);
+            if (!block) {continue};
+            const key = GetDmk(dimension.id, location);
+            if (world.getDynamicProperty(key)) {continue};
+            if (isBlockExposed(block)) {continue}; // If block exposed, dont spoof.
+            // Save block type before replace.
+            world.setDynamicProperty(key, ReplaceableBlocks.indexOf(block.typeId));
+            // Replace block.
+            dimension.setBlockType(location, SpoofBlock);
+        };
+        yield;
     }}};
     playersRunningJob.delete(ownerId);
 };

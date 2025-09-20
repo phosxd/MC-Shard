@@ -113,6 +113,32 @@ export function SubtractVector3(a:Vector3, b:Vector3|number):Vector3 {
 };
 
 
+/**Returns a new Vector3 with multiplied values.*/
+export function MultiplyVector3(a:Vector3, b:Vector3|number):Vector3 {
+    if (typeof b == 'number') {
+        b = {x:b, y:b, z:b};
+    };
+    return {
+        x: a.x*b.x,
+        y: a.y*b.y,
+        z: a.z*b.z,
+    };
+};
+
+
+/**Returns a new Vector3 with divided values.*/
+export function DivideVector3(a:Vector3, b:Vector3|number):Vector3 {
+    if (typeof b == 'number') {
+        b = {x:b, y:b, z:b};
+    };
+    return {
+        x: a.x/b.x,
+        y: a.y/b.y,
+        z: a.z/b.z,
+    };
+};
+
+
 /**Returns a new Vector3 with normalized values.*/
 export function NormalizeVector3(vector:Vector3):Vector3 {
     let length = Math.sqrt(vector.x**2 + vector.y**2 + vector.z**2);
@@ -133,6 +159,16 @@ export function RoundVector3(vector:Vector3):Vector3 {
         x: Math.round(vector.x),
         y: Math.round(vector.y),
         z: Math.round(vector.z),
+    };
+};
+
+
+/**Returns a new Vector3 with floored values.*/
+export function FloorVector3(vector:Vector3):Vector3 {
+    return {
+        x: Math.floor(vector.x),
+        y: Math.floor(vector.y),
+        z: Math.floor(vector.z),
     };
 };
 
