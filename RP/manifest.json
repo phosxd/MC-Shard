@@ -6,7 +6,7 @@
 		]
 	},
 	"header": {
-		"name": "Shard v0.2",
+		"name": "Shard v0.2.1",
 		"description": "JOIN: dsc.gg/mc-shard",
 		"min_engine_version": [
 			1,
@@ -18,7 +18,7 @@
 		"version": [
 			0,
 			2,
-			0
+			1
 		]
 	},
 	"modules": [
@@ -38,7 +38,7 @@
 			"version": [
 				0,
 				2,
-				0
+				1
 			]
 		}
 	]

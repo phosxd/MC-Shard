@@ -12,7 +12,7 @@ export const Namespace:string = 'sh';
 export const CommandNamespace:string = Namespace;
 
 /**The current version of the add-on.*/
-export const Version:Array<number> = [0,2,0];
+export const Version:Array<number> = [0,2,1];
 /**Version as a string value. Derived from `Version`.*/
 export const VersionString:string = Version.join('.');
 /**Build number used for integral versioning. Derived from `Version`.*/

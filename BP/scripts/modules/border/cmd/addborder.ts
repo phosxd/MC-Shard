@@ -5,7 +5,7 @@ import {AlignArea, LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Border} from '../module';
 
 
-function Callback(_context:ShardCommandContext, args:Array<any>) {
+function Callback(context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const start:Vector3 = args[1];
     const end:Vector3 = args[2];

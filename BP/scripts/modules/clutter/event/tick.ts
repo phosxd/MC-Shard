@@ -37,7 +37,10 @@ function getIncludedEntities(options={}, dimension?:Dimension):Array<Entity> {
 
     let result:Array<Entity> = [];
     if (Module.persisData.settings.includeItems) {
-        result = result.concat(getEntities(Object.assign({type:'minecraft:item'}, options)));
+        result = result.concat(
+            getEntities(Object.assign({type:'minecraft:item'}, options)),
+            getEntities(Object.assign({type:'minecraft:xp_orb'}, options)),
+        );
     };
     if (Module.persisData.settings.includeProjectiles) {
         result = result.concat(
