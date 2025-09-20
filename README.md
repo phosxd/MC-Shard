@@ -2,7 +2,7 @@ Shard is an upcoming all-in-one add-on for servers & realms! With a fully modula
 
 This is not a complete build! Although the ground-work is out of the way, there are still many things subject to change & with incomplete implementations.
 
-Version: **0.2** (in-dev).
+Version: **0.2**.
 
 # Installation:
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
@@ -26,7 +26,7 @@ You can configure modules by using the `/module <module>` command. Disabling a m
 
 There are plenty of features to play around with & so many more to come! If you need any help, join the Discord & we will try our best.
 
-# Modules:
+# Utility Modules:
 ## `core`:
 Provides essential functionality for the add-on. Cannot be disabled.
 
@@ -81,6 +81,14 @@ Some commands may also be removed from this module & re-implemented in other mod
 - `/dupe`: Duplicate the item in your hand.
 - `/rename`: Rename entities or held items.
 
+## `display`:
+Provides tools for interacting with display entities for holographic text & bossbars.
+
+**Commands:**
+- `/adddisplay`: Summon a new display entity.
+
+# Functional Modules:
+
 ## `tracker`:
 Provides entity statistics & current entity state tracking. Data is stored in scoreboards, or "sh.st" tags. Tracker tags must be applied to entities you want to track.
 
@@ -123,12 +131,6 @@ Removes large groups of entities.
 - `Include projectiles?`: Include entities like arrow, snowball, ender pearl, & wind charge.
 - `Include passive mobs?`: Include entities like cow, pig, sheep, & chicken.
 - `Include hostile mobs?`: Include mobs like zombie, creeper, skeleton, & spider.
-
-## `display`:
-Provides tools for interacting with display entities for holographic text & bossbars.
-
-**Commands:**
-- `/adddisplay`: Summon a new display entity.
 
 ## `blacklist`:
 Removes blacklisted items from normal players.
@@ -191,6 +193,18 @@ Run advanced commands on world events.
 - `/editevent`: Edit an event.
 - `/listevents`: List all events.
 - `/eventvariables`: List all variables for an event. For advanced users.
+
+# Anti-Cheat Modules:
+
+## `antixray`:
+Prevents Xray from finding valueable ores.
+
+**Commands:**
+- `/antixray.forcespoof`: Force spoof all ores in volume.
+- `/antixray.unspoof`: Unspoof all ores in volume.
+- `/antixray.wipedm`: Delete all spoofed block data. Spoofed blocks will not be recoverable.
+
+# Other Modules:
 
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.
