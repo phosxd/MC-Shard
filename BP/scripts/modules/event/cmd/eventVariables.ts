@@ -3,7 +3,7 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import EventVariables from '../eventVariables';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const eventId:string = args[0];
     if (!Object.keys(EventVariables).includes(eventId)) {return};
 

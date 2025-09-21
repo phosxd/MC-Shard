@@ -5,7 +5,7 @@ import {LocationToString, RoundVector3} from '../../../Shard/util';
 import {ParticleOptions} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const targets:Array<Entity> = args[0];
     const location:Vector3 = args[1];
     const size:Vector3 = args[2];

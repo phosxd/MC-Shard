@@ -8,12 +8,13 @@ export const Module = new ShardModule(
         id: 'template',
         displayName: {text:'[Template]'},
         brief: {text:'Module template.'},
+        description: {text:'Detailed information about this module template. It\'s a template for a module. Who would have guessed?'}
     },
     {
         childPaths: [
             'event/example',
             'cmd/example',
-            'form/example'
+            'form/example',
         ],
         commandEnums: CommandEnums,
         settingElements: [

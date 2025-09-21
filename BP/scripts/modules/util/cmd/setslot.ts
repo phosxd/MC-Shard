@@ -20,6 +20,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         if (entity.typeId !== 'minecraft:player') {return};
         const player:Player = entity as Player;
         system.run(()=>{
+            if (!player.isValid) {return};
             player.selectedSlotIndex = slot;
         });
         count += 1;

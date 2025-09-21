@@ -2,7 +2,7 @@ import {system, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, _args:Array<any>) {
     // Crash after 3 seconds.
     system.runTimeout(()=>{
         while (true) {

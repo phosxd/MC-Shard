@@ -1,13 +1,12 @@
-import {system, Player, Entity, Container, ItemStack, ItemDurabilityComponent, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {system, Container, ItemStack, ItemDurabilityComponent, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
-    if (context.targetType !== 'player') {return undefined};
-    const player = context.target as Player;
-
+function Callback(context:ShardCommandContext, _args:Array<any>) {
+    const player = context.sourcePlayer;
+    if (!player) {return};
     // Get player inventory & item durability component.
     let invContainer:Container = player.getComponent('inventory').container;
     let stack:ItemStack = invContainer.getSlot(player.selectedSlotIndex).getItem();

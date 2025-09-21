@@ -1,4 +1,4 @@
-import {system, Entity, Vector3, CommandPermissionLevel} from '@minecraft/server';
+import {system, Vector3, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 const MaxWallDistance:number = 10;
@@ -7,8 +7,9 @@ const MaxWallThickness:number = 4;
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
-    const entity:Entity = context.target as Entity;
+function Callback(context:ShardCommandContext, _args:Array<any>) {
+    const entity = context.sourceEntity;
+    if (!entity) {return};
     const raycast = entity.getBlockFromViewDirection({maxDistance:MaxWallDistance, includeLiquidBlocks:false});
     if (raycast === undefined) {return {message:{translate:'shard.util.cmd.thru.noBlocks'}, status:1}};
     const direction = entity.getViewDirection();
@@ -24,6 +25,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         if (checkBlock.isAir === true || checkBlock.isLiquid === true) {
             // 1 tick later... Teleport target.
             system.run(()=>{
+                if (!entity.isValid) {return};
                 entity.teleport(checkLocation);
             });
             return {message:{translate:'shard.misc.woosh'}, status:0};

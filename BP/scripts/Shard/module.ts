@@ -33,6 +33,8 @@ export interface ShardModuleDetails {
     displayName: RawMessage,
     /**Brief module description.*/
     brief: RawMessage,
+    /**Full module description. Put things like examples & explanations here.*/
+    description?: RawMessage,
     /**Features or other modules that this module depends on.*/
     dependencies?: {
         features?: Array<string>,
@@ -311,7 +313,7 @@ export class ShardModule {
         };
         const context = GenerateCommandContext(source);
         // Run command
-        const result:ShardCommandResult|undefined = Command.execute(context, args);
+        const result = Command.execute(context, args);
 
         // Return command output.
         if (result) {

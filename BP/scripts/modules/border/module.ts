@@ -13,34 +13,6 @@ export interface Border {
 };
 
 
-export interface BorderStyle {
-    type: 'none',//|'flat'|'particle'|'physical',
-    name: string,
-    styleFlat?: {
-        color: RGBA,
-    },
-    styleParticle?: {
-        particle: string,
-    },
-    stylePhysical?: {
-        block: string,
-        thickness: number,
-    }
-    renderOptions?: {
-        visibleDistance: number, // "-1" is unlimited.
-    },
-};
-
-
-// Default border styles.
-export const defaultBorderStyles:Dictionary<BorderStyle> = {
-    hidden: {
-        type: 'none',
-        name: 'hidden',
-    },
-};
-
-
 
 
 // Instantiate Module.
@@ -55,7 +27,6 @@ export const Module = new ShardModule(
         ],
         extraDefaultPersisData: {
             borders: {},
-            borderStyles: defaultBorderStyles,
         },
     },
 );

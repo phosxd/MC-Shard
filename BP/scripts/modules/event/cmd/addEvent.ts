@@ -5,7 +5,7 @@ import EventVariables from '../eventVariables';
 import CommandEnums from '../commandEnums';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const eventId:string = args[1];
     if (!Object.keys(EventVariables).includes(eventId)) {return};

@@ -30,6 +30,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         // Rename entity.
         if (item_or_entity == 'entity') {
             system.run(()=>{
+                if (!entity.isValid) {return};
                 entity.nameTag = name;
             });
         };

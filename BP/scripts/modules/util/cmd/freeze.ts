@@ -3,21 +3,22 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {FixVector3, FixVector2} from '../../../Shard/util';
 import {Module} from '../module';
 
-const default_time:number = 999999;
+const defaultTime:number = 999999;
 
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     let time:number = args[1];
     // If no specified time, set default time.
     if (time == undefined) {
-        time = default_time;
+        time = defaultTime;
     };
     // Apply to targets.
     let count:number = 0;
     targets.forEach(entity => {
+        if (!entity.isValid) {return};
         let data = Module.persisData.frozenEntities[entity.id];
         // If no frozen entity data, generate frozen entity data.
         if (data == undefined) {data = {time:Number(time.toPrecision(2)), location:FixVector3(entity.location,3), rotation:FixVector2(entity.getRotation(),3)}}

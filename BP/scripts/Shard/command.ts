@@ -45,7 +45,7 @@ export interface ShardCommandDetails {
 
 
 export interface ShardCommandData {
-    callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined,
+    callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined|void,
     /**Form elements linked to command settings.*/
     settingElements?: Array<ShardFormElement>,
 };
@@ -65,7 +65,7 @@ export interface ShardCommandContext {
     target: Block|Entity|Player,
     /**Deprecated.*/
     targetType: 'world'|'block'|'entity'|'player';
-}
+};
 
 
 /**Generate new context from an `Entity`, `Player`, or `Block`. */
@@ -92,6 +92,7 @@ export function GenerateCommandContext(from:Block|Entity|Player|World):ShardComm
     if (from instanceof Player) {
         sourceType = 'player';
         sourcePlayer = from;
+        targetType = sourceType;
     };
     if (from instanceof Block) {
         sourceType = 'block';
@@ -132,7 +133,7 @@ export class ShardCommand {
     /**Command settings that are persistently saved.*/
     settingElements: Array<ShardFormElement>;
     /**Called when the command is run.*/
-    callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined;
+    callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined|void;
 
 
     /**Called when command is run without proper permissions.*/
@@ -150,7 +151,7 @@ export class ShardCommand {
 
 
     /**Executes the command.*/
-    execute(context:ShardCommandContext, ...args): ShardCommandResult|undefined {
+    execute(context:ShardCommandContext, ...args): ShardCommandResult|undefined|void {
         return this.callback(context, ...args);
     };
 

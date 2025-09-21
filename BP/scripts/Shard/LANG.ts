@@ -14,6 +14,7 @@ export const LANG = {
             targetLocationObstructed: '§cTarget location is obstructed.',
             createDuplicateName: '§cCannot create with duplicate name.',
             createInvalidParam: '§cCannot create with invalid %s.',
+            playerNotFound: '§cCannot find player.',
             woosh: 'Woosh!',
         },
         core: {

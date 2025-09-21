@@ -1,10 +1,9 @@
-import {system, Player, GameMode, CommandPermissionLevel} from '@minecraft/server';
+import {system, GameMode, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    system.run(()=>{(context.target as Player).setGameMode(GameMode.Survival)});
-    return undefined;
+    system.run(()=>{context.sourcePlayer?.setGameMode(GameMode.Survival)});
 };
 
 

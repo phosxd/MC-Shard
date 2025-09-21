@@ -9,8 +9,12 @@ import {Module} from '../module';
 function Builder(context:ShardCommandContext, ...args) {
     const module:ShardModule = args[0];
     const elements:Array<ShardFormElement> = [];
-    elements.push({type:'title', id:'title', data:{display: module.details.displayName}});
-    elements.push({type:'body', id:'body', data:{display: module.details.brief}});
+    elements.push({type:'title', id:'title', data:{display:module.details.displayName}});
+    elements.push({type:'body', id:'brief', data:{display:module.details.brief}});
+    if (module.details.description) {
+        elements.push({type:'body', id:'description', data:{display:module.details.description}});
+        elements.push({type:'divider', id:'descDiv', data:{}});
+    };
     if (module.settingElements.length != 0) {
         elements.push({type:'button', id:'settings', data:{display:{translate:'shard.misc.moduleOption.settings'}}});
     };

@@ -8,13 +8,16 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     // If no specified targets, set the user as the target & if the user is not an entity or player, then return.
     if (targets == undefined) {
-        if (context.targetType !== 'entity' && context.targetType !== 'player') {return};
-        targets = [context.target as Entity];
+        if (!context.sourceEntity) {return};
+        targets = [context.sourceEntity];
     };
     // Apply to targets.
     let count:number = 0;
     targets.forEach(entity => {
-        system.run(()=>{entity.runCommand('effect @s instant_health 1 200 true')});
+        system.run(()=>{
+            if (!entity.isValid) {return};
+            entity.runCommand('effect @s instant_health 1 200 true');
+        });
         count += 1;
     });
 

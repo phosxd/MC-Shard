@@ -3,11 +3,12 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    if (!(context.target instanceof Entity)) {return undefined};
+    if (!context.sourcePlayer) {return};
     system.run(()=>{
-        (context.target as Entity).kill();
+        if (!context.sourcePlayer.isValid) {return};
+        context.sourcePlayer.kill();
     });
-    return undefined;
+    return;
 };
 
 

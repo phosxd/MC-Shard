@@ -3,7 +3,7 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module, Event} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, _args:Array<any>) {
     const eventKeys:Array<string> = Object.keys(Module.persisData.events);
     if (eventKeys.length == 0) {return {message:{translate:'shard.event.cmd.listEvents.none'}, status:1}};
 

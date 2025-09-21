@@ -55,6 +55,9 @@ export function RenderSquare(location:Vector3, target:Dimension|Player, color:RG
     // If not in unloaded chunk, spawn particle.
     if (target instanceof Dimension) {
         if (target.getBlock(location) == undefined) {return};
+    }
+    else {
+        if (target.dimension.getBlock(location) == undefined) {return};
     };
     target.spawnParticle('shard:square', location, molang);
 };

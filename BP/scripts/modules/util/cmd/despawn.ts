@@ -2,16 +2,14 @@ import {system, CommandPermissionLevel, Entity, CustomCommandParamType} from '@m
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     // Despawn targets.
     let count:number = 0;
     targets.forEach(entity => {
-        if (!entity.isValid) {return};
         if (entity.typeId == 'minecraft:player') {return};
         system.run(()=>{
+            if (!entity.isValid) {return};
             entity.remove();
         });
         count += 1;
@@ -19,8 +17,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     return {message:{translate:'shard.util.cmd.despawn.success', with:[String(count)]}, status:0};
 };
-
-
 
 
 // Initialize Command.

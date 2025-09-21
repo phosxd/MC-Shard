@@ -8,7 +8,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (!Module.persisData.events[name]) {return {message:{translate:'shard.event.cmd.editEvent.doesNotExist'}, status:1}};
     // Show edit form.
     Module.forms.edit.show(context, [name]);
-    return undefined;
 };
 
 

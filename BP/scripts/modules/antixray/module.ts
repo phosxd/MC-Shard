@@ -92,6 +92,7 @@ export const Module = new ShardModule(
         id: 'antixray',
         displayName: {translate:'shard.antixray.displayName'},
         brief: {translate:'shard.antixray.brief'},
+        description: {translate:'shard.antixray.description'},
     },
     {
         enabledByDefault: false,
@@ -104,8 +105,6 @@ export const Module = new ShardModule(
             'cmd/wipeDm',
         ],
         settingElements: [
-            {type:'label', id:'warning', data:{display:{translate:'shard.antixray.warning'}}},
-            {type:'divider', id:'warningDiv', data:{}},
             {type:'slider', id:'spoofDistance', data:{
                 display: {translate:'shard.antixray.setting.spoofDistance'},
                 tooltip: 'shard.antixray.setting.spoofDistance.tooltip',

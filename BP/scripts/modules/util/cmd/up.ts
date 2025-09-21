@@ -3,7 +3,8 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    const entity:Entity = context.target as Entity;
+    const entity = context.sourceEntity;
+    if (!entity) {return};
     // Get target block & location. Return error if out of bounds.
     let amount:number = args[0];
     let target_location = entity.location; target_location.y += amount;
@@ -15,6 +16,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     
     // 1 tick later... Set support block & teleport target.
     system.run(()=>{
+        if (!entity.isValid) {return};
         target_block.setType('glass');
         let teleport_location = entity.location; teleport_location.y = target_block.above().location.y;
         entity.teleport(teleport_location);

@@ -10,6 +10,7 @@ shard.misc.targetLocationOutOfBounds=§cTarget location is out of bounds.
 shard.misc.targetLocationObstructed=§cTarget location is obstructed.
 shard.misc.createDuplicateName=§cCannot create with duplicate name.
 shard.misc.createInvalidParam=§cCannot create with invalid %s.
+shard.misc.playerNotFound=§cCannot find player.
 shard.misc.woosh=Woosh!
 
 shard.misc.moduleOption.commands=Commands
@@ -162,7 +163,7 @@ shard.util.cmd.up.brief=Teleport up with a platform.
 ## -----------------------
 shard.tracker.displayName=§r[§3Tracker§r]
 shard.tracker.brief=Provides entity statistics & current entity state tracking.
-shard.trackers.form.main.body=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
+shard.trackers.description=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
 
 ## "blacklist" module texts.
 ## -------------------------
@@ -358,7 +359,7 @@ shard.event.form.edit.@droppedItem.tooltip=Command to run on the dropped item en
 ## "antixray" module texts.
 shard.antixray.displayName=§r[§4Anti-Xray§r]
 shard.antixray.brief=Prevents Xray from finding valueable ores.
-shard.antixray.warning=WARNING. Do not enable this module without understanding the risks.\n\n§6This module is experimental. Some settings may be removed or changed.§r\n\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This could cause a little bit of lag when many players online.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
+shard.antixray.description=WARNING. Do not enable this module without understanding the risks.\n\n§6This module is experimental. Some settings may be removed or changed.§r\n\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This could cause a little bit of lag when many players online.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
 shard.antixray.setting.spoofDistance=Spoof Distance
 shard.antixray.setting.spoofDistance.tooltip=How far (from the player) ores get spoofed. Even at high values, this is limited to the server's simulation distance.
 shard.antixray.setting.spoofInterval=Spoof Interval (seconds)

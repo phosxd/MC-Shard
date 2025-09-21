@@ -1,22 +1,23 @@
 import {system, Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
-const default_time:number = 5;
+const defaultTime:number = 5;
 
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     let time:number = args[1];
     // If no specified time, set default time.
     if (time == undefined) {
-        time = default_time;
+        time = defaultTime;
     };
     // Apply to targets.
     let count:number = 0;
     targets.forEach(entity => {
         system.run(()=>{
+            if (!entity.isValid) {return};
             if (time == 0) {entity.extinguishFire()}
             else {entity.setOnFire(time)};
         });

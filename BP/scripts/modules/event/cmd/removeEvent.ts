@@ -3,7 +3,7 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const currentEvent = Module.persisData.events[name];
     if (!currentEvent) {return {message:{translate:'shard.event.cmd.removeEvent.doesNotExist'}, status:1}};

@@ -18,15 +18,15 @@ const animationMap = {
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    if (context.targetType != 'player') {return};
-    const player = context.target as Player;
+    const player = context.sourcePlayer;
+    if (!player) {return};
     const pose = args[0];
     const animation = animationMap[pose];
     if (!animation) {return};
     system.run(()=>{
+        if (!player.isValid) {return};
         player.playAnimation(animation, {blendOutTime:blendOutTime, stopExpression:stopExpression, controller:'entity.default'});
     });
-    return undefined;
 };
 
 
