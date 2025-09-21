@@ -1,6 +1,7 @@
 import {ShardModule} from '../../Shard/module';
 
 export const entityGroupTag:string = 'sh.clutter.groupped';
+export const exclusionTag:string = 'sh.clutter.exclude';
 
 
 // Instantiate Module.
@@ -9,6 +10,7 @@ export const Module = new ShardModule(
         id: 'clutter',
         displayName: {translate:'shard.clutter.displayName'},
         brief: {translate:'shard.clutter.brief'},
+        description: {translate:'shard.clutter.description'},
     },
     {
         enabledByDefault: false,

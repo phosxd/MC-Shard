@@ -163,7 +163,7 @@ shard.util.cmd.up.brief=Teleport up with a platform.
 ## -----------------------
 shard.tracker.displayName=§r[§3Tracker§r]
 shard.tracker.brief=Provides entity statistics & current entity state tracking.
-shard.trackers.description=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
+shard.tracker.description=Use "/tag <entity> add <tracker>" to start tracking entities. Data is stored in scoreboards, or "sh.st" tags.\n\nAll trackers: %s\n§rAll scoreboards: %s\n§rAll state tags: %s
 
 ## "blacklist" module texts.
 ## -------------------------
@@ -303,6 +303,7 @@ shard.fun.cmd.emote.brief=Make a pose.
 ## -----------------------
 shard.clutter.displayName=§r[§gClutter§r]
 shard.clutter.brief=Removes large groups of entities.
+shard.clutter.description=To prevent certain entities from being removed, you can apply the "§7sh.clutter.exclude§r" tag to them.
 shard.clutter.setting.groupRadius=Group radius
 shard.clutter.setting.groupRadiusTooltip=Radius size of entity groups.
 shard.clutter.setting.threshold=Count threshold
@@ -355,6 +356,10 @@ shard.event.form.edit.@block=Block Command
 shard.event.form.edit.@block.tooltip=Command to run on the block.
 shard.event.form.edit.@droppedItem=Dropped Item Command
 shard.event.form.edit.@droppedItem.tooltip=Command to run on the dropped item entity.
+shard.event.form.edit.@deadEntity=Dead Entity Command
+shard.event.form.edit.@deadEntity.tooltip=Command to run on the entity who died.
+shard.event.form.edit.@damagingEntity=Damaging Entity Command
+shard.event.form.edit.@damagingEntity.tooltip=Command to run on the entity that killed.
 
 ## "antixray" module texts.
 shard.antixray.displayName=§r[§4Anti-Xray§r]

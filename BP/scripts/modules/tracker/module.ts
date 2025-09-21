@@ -78,7 +78,7 @@ export const Module = new ShardModule(
         id: 'tracker',
         displayName: {translate:'shard.tracker.displayName'},
         brief: {translate:'shard.tracker.brief'},
-        description: {translate:'shard.tracker.description'},
+        description: {translate:'shard.tracker.description', with:[trackersList, scoreboardsList, statesList]},
     },
     {
         childPaths: [

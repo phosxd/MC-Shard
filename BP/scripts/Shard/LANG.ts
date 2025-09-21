@@ -1,4 +1,5 @@
-/**Using this until custom commands support returning raw-text in their reply messages.
+/**
+ * Using this until custom commands support returning raw-text in their reply messages.
  * I am currently using my own raw-text parser to simulate raw-text so that when support comes it's a clean switch.
  * 
  * All texts are also defined in `RP/texts`. Command texts can be found there too, however they are not used.
@@ -110,6 +111,10 @@ export const LANG = {
                     success: 'Loaded preset §7%s§r.',
                 },
             },
+        },
+        clutter: {
+            displayName: '§r[§gClutter§r]',
+            brief: 'Removes large groups of entities.',
         },
         border: {
             displayName: '§r[§gBorder§r]',

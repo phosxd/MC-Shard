@@ -6,7 +6,7 @@
 		]
 	},
 	"header": {
-		"name": "Shard v0.2.2",
+		"name": "Shard v0.3",
 		"description": "JOIN: dsc.gg/mc-shard",
 		"min_engine_version": [
 			1,
@@ -17,8 +17,8 @@
 		"pack_scope": "world",
 		"version": [
 			0,
-			2,
-			2
+			3,
+			0
 		]
 	},
 	"modules": [
@@ -37,8 +37,8 @@
 			"uuid": "55f284d0-90ed-439c-bf35-3df11c35fa09",
 			"version": [
 				0,
-				2,
-				2
+				3,
+				0
 			]
 		}
 	]

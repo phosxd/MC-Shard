@@ -2,7 +2,7 @@ Shard is an upcoming all-in-one add-on for servers & realms! With a fully modula
 
 This is not a complete build! Although the ground-work is out of the way, there are still many things subject to change & with incomplete implementations.
 
-Version: **0.2.2** (in-dev).
+Version: **0.3** (in-dev).
 
 # Installation:
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
@@ -127,7 +127,7 @@ Removes large groups of entities.
 - `Countdown`: Countdown before entities are removed.
 - `Countdown text`: Countdown text displayed at entity groups.
 - `Exclude named?`: Excludes all named entities.
-- `Include items?`: Include all items.
+- `Include items?`: Include all items & xp orbs.
 - `Include projectiles?`: Include entities like arrow, snowball, ender pearl, & wind charge.
 - `Include passive mobs?`: Include entities like cow, pig, sheep, & chicken.
 - `Include hostile mobs?`: Include mobs like zombie, creeper, skeleton, & spider.
@@ -179,10 +179,12 @@ Run advanced commands on world events.
 - `playerUseItem`
 - `playerDropItem`
 - `playerSpawn`
+- `entityDie`
 - `explosion`
 - `buttonPush`
 
 **Upcoming Events:**
+- `playerInteractWithEntity`
 - `playerStartSprint` / `playerStopSprint`
 - `playerStartJump` / `playerStopJump`
 - `playerStartSneak` / `playerStopSneak`
@@ -198,6 +200,10 @@ Run advanced commands on world events.
 
 ## `antixray`:
 Prevents Xray from finding valueable ores.
+
+**Settings:**
+- `Spoof Distance`
+- `Spoof Interval`
 
 **Commands:**
 - `/antixray.forcespoof`: Force spoof all ores in volume.

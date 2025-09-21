@@ -12,7 +12,7 @@ function Builder(context:ShardCommandContext, ...args) {
     elements.push({type:'title', id:'title', data:{display:module.details.displayName}});
     elements.push({type:'body', id:'brief', data:{display:module.details.brief}});
     if (module.details.description) {
-        elements.push({type:'body', id:'description', data:{display:module.details.description}});
+        elements.push({type:'label', id:'description', data:{display:module.details.description}});
         elements.push({type:'divider', id:'descDiv', data:{}});
     };
     if (module.settingElements.length != 0) {

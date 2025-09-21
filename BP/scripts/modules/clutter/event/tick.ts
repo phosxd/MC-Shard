@@ -1,7 +1,7 @@
 import {system, Dimension, Entity} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
 import {GetAllEntities} from '../../../Shard/util';
-import {Module, entityGroupTag} from '../module';
+import {Module, entityGroupTag, exclusionTag} from '../module';
 
 
 function Callback() {
@@ -65,7 +65,9 @@ function getIncludedEntities(options={}, dimension?:Dimension):Array<Entity> {
     if (Module.persisData.settings.includeHostileMobs) {
         result = result.concat(getEntities(Object.assign({families:['monster']}, options)));
     };
-    return result;
+    return result.filter(entity => {
+        return !entity.hasTag(exclusionTag);
+    });
 };
 
 

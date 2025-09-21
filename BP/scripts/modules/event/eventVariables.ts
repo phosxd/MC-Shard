@@ -27,13 +27,18 @@ export default {
         '@player: Player',
         'initialSpawn: boolean'
     ],
+    entityDie: [
+        '@deadEntity: Entity',
+        '@damagingEntity: Entity',
+        'damageSource: EntityDamageSource',
+    ],
     explosion: [
         '@source: Entity',
     ],
     buttonPush: [
         '@source: Entity',
         '@block: Block',
-    ]
+    ],
 } as {
     [key:string]: Array<string>,
 };

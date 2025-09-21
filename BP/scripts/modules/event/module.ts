@@ -21,6 +21,7 @@ export const Module = new ShardModule(
     {
         childPaths: [
             'event/buttonPush',
+            'event/entityDie',
             'event/explosion',
             'event/playerBreakBlock',
             'event/playerDropItem',
