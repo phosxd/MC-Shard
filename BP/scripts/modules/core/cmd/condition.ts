@@ -16,10 +16,10 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     // Check condition.
     if (operator == 'equalTo' || operator == '==') {
-        if (valueA == valueB) {passed = true};
+        if (valueA === valueB) {passed = true};
     }
     else if (operator == 'notEqualTo' || operator == '!=') {
-        if (valueA != valueB) {passed = true};
+        if (valueA !== valueB) {passed = true};
     }
     else if (operator == 'lessThanOrEqualTo' || operator == '<=') {
         if (validNumbers) {
@@ -68,6 +68,11 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         const block = context.sourceBlock;
         system.run(()=>{
             block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${command}`);
+        });
+    }
+    else {
+        system.run(()=>{
+            context.dimension.runCommand(command);
         });
     };
 

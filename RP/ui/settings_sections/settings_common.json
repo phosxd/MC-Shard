@@ -1,0 +1,27 @@
+{
+  "namespace": "settings_common",
+  "option_text_edit_control@common.text_edit_box": {
+    "$option_text_edit_control_size|default": [ "100%", "30px" ],
+    "size": "$option_text_edit_control_size",
+    "max_length": "$max_text_edit_length",
+    "enabled_newline": "$enabled_newline",
+    "$enabled_newline|default": false,
+    "$text_edit_box_content_binding_name": "$option_binding_name",
+    "$text_edit_box_binding_collection_name": "$option_binding_name",
+    "$text_edit_box_binding_type": "global",
+    "$text_box_enabled_binding_name": "$option_enabled_binding_name",
+    "enabled": "$enabled",
+    "$place_holder_text": "$option_place_holder_text",
+    "$text_box_tts_header": "$option_label",
+    "$tts_override_control_value|default": " ",
+    "tts_override_control_value": "$tts_override_control_value",
+
+    "variables": [
+      {
+        "requires": "(not $option_enabled_binding_name or not $enabled)",
+        "$text_box_enabled_binding_name": "#not_data_bound",
+        "$text_edit_box_enabled_binding_type": "none"
+      }
+    ]
+  }
+}

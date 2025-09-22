@@ -13,6 +13,7 @@ export default {
     playerInteractWithBlock: [
         '@player: Player',
         '@block: Block',
+        "blockFace: 'Up'|'Down'|'North'|'East'|'South'|'West'",
     ],
     playerUseItem: [
         '@player: Player',
@@ -26,6 +27,11 @@ export default {
     playerSpawn: [
         '@player: Player',
         'initialSpawn: boolean'
+    ],
+    playerInteractWithEntity: [
+        '@player: Player',
+        '@targetEntity: Entity',
+        'item: ItemStack',
     ],
     entityDie: [
         '@deadEntity: Entity',

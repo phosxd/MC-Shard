@@ -13,11 +13,13 @@ export interface Event {
 };
 
 
-
-
 // Instantiate Module.
 export const Module = new ShardModule(
-    {id:'event', displayName:{translate:'shard.event.displayName'}, brief:{translate:'shard.event.brief'}},
+    {
+        id: 'event',
+        displayName: {translate:'shard.event.displayName'},
+        brief: {translate:'shard.event.brief'},
+    },
     {
         childPaths: [
             'event/buttonPush',
@@ -26,6 +28,7 @@ export const Module = new ShardModule(
             'event/playerBreakBlock',
             'event/playerDropItem',
             'event/playerInteractWithBlock',
+            'event/playerInteractWithEntity',
             'event/playerPlaceBlock',
             'event/playerSpawn',
             'event/playerUseItem',
