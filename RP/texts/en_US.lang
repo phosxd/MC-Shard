@@ -90,6 +90,9 @@ shard.core.cmd.shard.brief=Shard info.
 ## cmd: shardmemory
 shard.core.cmd.shardMemory.brief=Shard memory info.
 shard.core.cmd.shardMemory.success=\n§5Disk Space Used: §7%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.
+## cmd: popup
+shard.core.cmd.popup.brief=Show a popup message.
+shard.core.cmd.popup.success=Sent popup to %s clients.
 ## form: shard
 shard.core.form.shard.title=§l§dShard §fGuide
 shard.core.form.shard.body=§fRepo: §9github.com/phosxd/mc-shard§r\nJoin the Discord or visit the open-source Shard repository for more info.\n\nShard is an open-source, compatible, all-in-one, servers & realms add-on with a multitude of modules. Use §7/module§r to configure individual modules & settings.
@@ -188,7 +191,7 @@ shard.blacklist.form.editItem.remove=Remove item?
 shard.border.displayName=§r[§gBorder§r]
 shard.border.brief=Provides border functionality.
 ## cmd: addBorder
-shard.border.cmd.addBorder.brief=Add a new border. Set inverted for world border.
+shard.border.cmd.addBorder.brief=Add a new border in this dimension. Set inverted for world border.
 shard.border.cmd.addBorder.success=Added new border "§7%s§r" starting from %s & ending at %s.
 shard.border.cmd.addBorder.invalidStyle=§cCannot create border with invalid style. Available styles: %s.
 shard.border.cmd.addBorder.mustBeInverted=§cNormal borders are not yet supported, only inverted borders should be created.
@@ -206,7 +209,7 @@ shard.border.cmd.listBorders.success=All Borders: %s
 shard.region.displayName=§r[§gRegion§r]
 shard.region.brief=Provides regions to edit world mutability & player abilities.
 ## cmd: addRegion
-shard.region.cmd.addRegion.brief=Add a new region.
+shard.region.cmd.addRegion.brief=Add a new region in this dimension.
 shard.region.cmd.addRegion.success=Added new region "§7%s§r" starting from %s & ending at %s.
 ## cmd: removeRegion
 shard.region.cmd.removeRegion.brief=Remove a region.

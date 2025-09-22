@@ -1,5 +1,3 @@
-import {system} from '@minecraft/server';
-import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
 
@@ -23,6 +21,7 @@ export const Module = new ShardModule(
             'cmd/module',
             'cmd/moduleDataLoad',
             'cmd/moduleDataPrint',
+            'cmd/popup',
             'cmd/repeat',
             'cmd/shard',
             'cmd/shardMemory',
@@ -30,7 +29,7 @@ export const Module = new ShardModule(
             'form/moduleCommands',
             'form/moduleCommandSettings',
             'form/moduleSettings',
-            'form/shard',
+            'form/popup',
         ],
         commandEnums: CommandEnums,
         settingElements: [

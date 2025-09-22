@@ -6,8 +6,6 @@ import {Module} from '../module';
 const defaultTime:number = 999999;
 
 
-
-
 function Callback(_context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     let time:number = args[1];
@@ -31,8 +29,6 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
 
     return {message:{translate:'shard.util.cmd.freeze.success', with:[String(count), String(time)]}, status:0};
 };
-
-
 
 
 // Initialize Command.

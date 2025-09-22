@@ -7,7 +7,7 @@ const max_slot:number = 8;
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const targets:Array<Entity> = args[0];
     const slot:number = args[1];
     // Return error if slot index is out of range.
@@ -18,7 +18,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     let count:number = 0;
     targets.forEach(entity => {
         if (entity.typeId !== 'minecraft:player') {return};
-        const player:Player = entity as Player;
+        const player = entity as Player;
         system.run(()=>{
             if (!player.isValid) {return};
             player.selectedSlotIndex = slot;

@@ -4,9 +4,9 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
-    if (context.targetType !== 'player') {return undefined};
-    const player:Player = context.target as Player;
+function Callback(context:ShardCommandContext, _args:Array<any>) {
+    const player = context.sourcePlayer;
+    if (!player) {return};
 
     // Get player inventory & clone held item stack.
     let invContainer:Container = player.getComponent('inventory').container;

@@ -2,7 +2,7 @@ import {CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, _args:Array<any>) {
     return {message:{translate:'shard.draw.cmd.drawOptions.success'}, status:0};
 };
 

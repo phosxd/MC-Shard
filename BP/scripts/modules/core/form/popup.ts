@@ -3,17 +3,14 @@ import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormMessageResponse}
 import {ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-/**Build the form. `args` should only contain one item of type `ShardModule`.*/
 function Builder(context:ShardCommandContext, ...args) {
+    const title = args[0];
+    const body = args[1];
     const elements:Array<ShardFormElement> = [];
-    elements.push({type:'title', id:'title', data:{display:{translate:'shard.core.form.shard.title'}}});
-    elements.push({type:'body', id:'body', data:{display:{translate:'shard.core.form.shard.body'}}});
+    elements.push({type:'title', id:'title', data:{display:title}});
+    elements.push({type:'body', id:'body', data:{display:body}});
     return new ShardFormBuilder({type:'message'}, {elements:elements, callbackArgs:args});
 };
-
-
 
 
 function Callback(context:ShardCommandContext, response:ShardFormMessageResponse, ...args) {
@@ -21,16 +18,8 @@ function Callback(context:ShardCommandContext, response:ShardFormMessageResponse
 };
 
 
-
-
 // Initialize form.
 export const MAIN = new ShardForm(
-    {
-        id: 'shard',
-        permissionLevel: CommandPermissionLevel.Any,
-    },
-    {
-        buildForm: Builder,
-        callback: Callback,
-    },
+    {id:'popup', permissionLevel:CommandPermissionLevel.Any},
+    {buildForm:Builder, callback:Callback},
 );

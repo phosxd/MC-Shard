@@ -3,9 +3,8 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(context:ShardCommandContext, _args:Array<any>) {
     Module.forms.items.show(context);
-    return undefined;
 };
 
 

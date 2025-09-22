@@ -5,8 +5,6 @@ const MaxWallDistance:number = 10;
 const MaxWallThickness:number = 4;
 
 
-
-
 function Callback(context:ShardCommandContext, _args:Array<any>) {
     const entity = context.sourceEntity;
     if (!entity) {return};
@@ -34,8 +32,6 @@ function Callback(context:ShardCommandContext, _args:Array<any>) {
 
     return {message:{translate:'shard.util.cmd.thru.tooThick'}, status:0};
 };
-
-
 
 
 // Initialize Command.

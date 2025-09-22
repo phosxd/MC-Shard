@@ -2,8 +2,6 @@ import {system, Entity, CommandPermissionLevel, CustomCommandParamType} from '@m
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
 function Callback(context:ShardCommandContext, args:Array<any>) {
     let targets:Array<Entity> = args[0];
     // If no specified targets, set the user as the target & if the user is not an entity or player, then return.
@@ -23,8 +21,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     return {message:{translate:'shard.util.cmd.heal.success', with:[String(count)]}, status:0};
 };
-
-
 
 
 // Initialize Command.

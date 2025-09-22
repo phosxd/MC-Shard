@@ -35,6 +35,9 @@ export const LANG = {
                 shardMemory: {
                     success: '\n§5Disk Space Used: §7%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',
                 },
+                popup: {
+                    success: 'Sent popup to %s clients.',
+                },
             },
         },
         util: {

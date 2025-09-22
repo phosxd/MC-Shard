@@ -1,4 +1,4 @@
-import {system, world, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
+import {system, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {LocationToString} from '../../../Shard/util';
 
@@ -8,20 +8,13 @@ const default_causeFire:boolean = false;
 const default_allowUnderwater:boolean = false;
 
 
-
-
 function Callback(context:ShardCommandContext, args:Array<any>) {
-    let location:Vector3 = args[0];
+    const location:Vector3 = args[0];
     let radius:number = args[1];
     let breakBlocks:boolean = args[2];
     let causeFire:boolean = args[3];
     let allowUnderwater:boolean = args[4];
     let source:Array<Entity> = args[5];
-    let dimension = context.target.dimension;
-    // If no context target, set dimension to overworld.
-    if (context.targetType == 'world') {
-        dimension = world.getDimension('overworld');
-    };
     // Set undefined parameters to default.
     if (radius == undefined) {radius = default_radius};
     if (breakBlocks == undefined) {breakBlocks = default_breakBlocks};
@@ -31,13 +24,11 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     // Create explosion.
     system.run(()=>{
-        dimension.createExplosion(location, radius, {breaksBlocks:breakBlocks, causesFire:causeFire, allowUnderwater:allowUnderwater, source:source[0]});
+        context.dimension.createExplosion(location, radius, {breaksBlocks:breakBlocks, causesFire:causeFire, allowUnderwater:allowUnderwater, source:source[0]});
     });
 
     return {message:{translate:'shard.util.cmd.explode.success', with:[LocationToString(location)]}, status:0};
 };
-
-
 
 
 // Initialize Command.

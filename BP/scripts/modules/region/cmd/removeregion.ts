@@ -3,7 +3,7 @@ import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {Module} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const currentRegion = Module.persisData.regions[name];
     if (!currentRegion) {return {message:{translate:'shard.region.cmd.removeRegion.doesNotExist'}, status:1}};

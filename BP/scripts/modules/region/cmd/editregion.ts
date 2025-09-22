@@ -10,7 +10,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (!Module.persisData.regions[name]) {return {message:{translate:'shard.region.cmd.editRegion.doesNotExist'}, status:1}};
     // Show edit form.
     Module.forms.edit.show(context, [name]);
-    return undefined;
 };
 
 

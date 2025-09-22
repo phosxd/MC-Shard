@@ -4,7 +4,7 @@ import {LocationToString, RoundVector3} from '../../../Shard/util';
 import {Module, Region} from '../module';
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const name:string = args[0];
     const regionKeys:Array<string> = Object.keys(Module.persisData.regions);
     if (regionKeys.length == 0) {return {message:{translate:'shard.region.cmd.listRegions.none'}, status:1}};

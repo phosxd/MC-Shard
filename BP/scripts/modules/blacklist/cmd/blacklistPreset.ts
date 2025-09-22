@@ -15,7 +15,7 @@ export const creativeModePreset:Array<BlacklistItem> = [
 ];
 
 
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const preset:string = args[0];
     if (preset == 'empty') {
         Module.persisData.items = [];

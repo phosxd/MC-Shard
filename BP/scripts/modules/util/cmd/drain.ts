@@ -6,8 +6,6 @@ const MinRadius:number = 1;
 const MaxRadius:number = 50;
 
 
-
-
 function* clearLiquidBlocks(radius:number, location:Vector3, dimension:Dimension) {
     // Iterate on every block in the radius.
     for (let x:number = -radius; x < radius; x++) {
@@ -29,7 +27,8 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     // Return error if radius out of bounds.
     if (radius > MaxRadius || radius < MinRadius) {return {message:{translate:'shard.util.cmd.drain.radiusOutOfBounds'}, status:1}};
     // Run job.
-    system.runJob(clearLiquidBlocks(radius, context.target.location, context.target.dimension));
+    if (!context.location) {return {status:0}};
+    system.runJob(clearLiquidBlocks(radius, context.location, context.dimension));
     
     return {message:{translate:'shard.util.cmd.drain.success', with:[String(radius)]}, status:0};
 };

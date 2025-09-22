@@ -2,9 +2,7 @@ import {system, Player, Entity, EntityInventoryComponent, ItemStack, CommandPerm
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 
-
-
-function Callback(context:ShardCommandContext, args:Array<any>) {
+function Callback(_context:ShardCommandContext, args:Array<any>) {
     const item_or_entity:'item'|'entity' = args[0];
     const targets:Array<Entity> = args[1];
     const name:string = args[2];
@@ -40,8 +38,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (item_or_entity == 'item') {return {message:{translate:'shard.util.cmd.rename.successItem', with:[String(count), name]}, status:0}};
     if (item_or_entity == 'entity') {return {message:{translate:'shard.util.cmd.rename.successEntity', with:[String(count), name]}, status:0}};
 };
-
-
 
 
 // Initialize Command.

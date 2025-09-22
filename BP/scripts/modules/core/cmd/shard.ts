@@ -4,7 +4,7 @@ import {Module} from '../module';
 
 
 function Callback(context:ShardCommandContext, _args:Array<any>) {
-    Module.forms.shard.show(context);
+    Module.forms.popup.show(context, [{translate:'shard.core.form.shard.title'}, {translate:'shard.core.form.shard.body'}]);
 };
 
 
