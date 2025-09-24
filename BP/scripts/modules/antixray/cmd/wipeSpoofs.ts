@@ -31,7 +31,10 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         dimension.runCommand(`tickingarea add circle ${stringLocation} 2 "${tickingAreaName}"`);
         // Wait until location is loaded.
         yield {dimension:dimension, location:location};
-        // Unspoof small area.
+        // Unspoof block.
+        const block = dimension.getBlock(location);
+        UnspoofBlock(block);
+        // Unspoof nearby blocks.
         const volume = new BlockVolume(AddVector3(location, -20), AddVector3(location, 20));
         const spoofedBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
         for (const location of spoofedBlocks.getBlockLocationIterator()) {
@@ -39,7 +42,7 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
             if (block == undefined) {continue};
             const key = GetDmk(dimension.id, location);
             const data = world.getDynamicProperty(key) as number;
-            if (data !== undefined) {
+            if (data != undefined) {
                 UnspoofBlock(block);
             };
         };

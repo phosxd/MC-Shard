@@ -23,6 +23,11 @@ export interface RegionRule {
         anyOf: Array<string>,
         allOf: Array<string>,
     },
+    /**Item types this rule will affect.*/
+    itemTypes: {
+        anyOf: Array<string>,
+        allOf: Array<string>,
+    },
     /**Command run when event is triggered.*/
     command: string,
     /**If true, will try to revert actions caused by the event. Not applicable to all events.*/
@@ -38,6 +43,7 @@ export const commandEventIndexMap = [
     'playerBreakBlock',
     'playerInteractWithBlock',
     'playerDropItem',
+    'playerUseItem',
     'explosion',
 ];
 
@@ -55,11 +61,12 @@ export const Module = new ShardModule(
         enabledByDefault: false,
         childPaths: [
             'event/explosion',
-            'event/tick',
+            'event/itemUse',
             'event/playerBreakBlock',
             'event/playerInteractWithBlock',
             'event/playerPlaceBlock',
             'event/playerDropItem',
+            'event/tick',
             'cmd/addRegion',
             'cmd/editRegion',
             'cmd/listRegions',

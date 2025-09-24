@@ -332,31 +332,33 @@ export function EntityHasAllTags(entity:Entity, tags:Array<string>):boolean {
 };
 
 
-/**Returns true if `Block` is any of the block types. If no block types in `blockTypes` returns true.
- * Block types starting with "!" will return true if the `Block` is not the type.
+/**
+ * Returns true if `object` is any of the types. If no items in `types`, returns true.
+ * Types starting with "!" will return true if the `object` is not the type.
 */
-export function BlockIsAnyType(block:Block, blockTypes:Array<string>):boolean {
-    if (blockTypes.length == 0) {return true};
+export function IsAnyType(object:ItemStack|Entity|Block, types:Array<string>):boolean {
+    if (types.length == 0) {return true};
     let result = false;
-    blockTypes.forEach(type => {
+    types.forEach(type => {
         if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
         if (result == true) {return};
-        if (block.typeId == type || (type.split(':')[1].startsWith('!') && block.typeId != type.replace('!',''))) {result = true};
+        if (object.typeId == type || (type.split(':')[1].startsWith('!') && object.typeId != type.replace('!',''))) {result = true};
     });
     return result;
 };
 
 
-/**Returns true if `Block` is all of the block types. If no block types in `blockTypes` returns true.
- * Block types starting with "!" will return true if the `Block` is not the type.
+/**
+ * Returns true if `object` is all of the types. If no items in `types`, returns true.
+ * Types starting with "!" will return true if the `object` is not the type.
 */
-export function BlockIsAllTypes(block:Block, blockTypes:Array<string>):boolean {
-    if (blockTypes.length == 0) {return true};
+export function IsAllTypes(object:ItemStack|Entity|Block, types:Array<string>):boolean {
+    if (types.length == 0) {return true};
     let result;
-    blockTypes.forEach(type => {
+    types.forEach(type => {
         if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
         if (result == false) {return};
-        if (block.typeId == type || (type.split(':')[1].startsWith('!') && block.typeId != type.replace('!',''))) {result = true}
+        if (object.typeId == type || (type.split(':')[1].startsWith('!') && object.typeId != type.replace('!',''))) {result = true}
         else {result = false};
     });
     return result;

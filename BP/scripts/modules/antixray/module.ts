@@ -41,6 +41,9 @@ export const ReplaceableBlocks = Object.freeze([
     'ancient_debris',
     'lit_redstone_ore',
     'lit_deepslate_redstone_ore',
+    'raw_copper_block',
+    'raw_iron_block',
+    'raw_gold_block',
 ].map(value => {return 'minecraft:'+value}));
 /**
  * Natural blocks that are common around ores & that are solid.
@@ -63,6 +66,7 @@ export const SolidBlocks = Object.freeze(ReplaceableBlocks.concat([
     'netherrack',
     'blackstone',
     'basalt',
+    'magma',
 ].map(value => {return 'minecraft:'+value})).concat(SpoofBlock));
 
 

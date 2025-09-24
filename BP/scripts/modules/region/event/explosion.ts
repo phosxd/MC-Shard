@@ -1,6 +1,6 @@
 import {system, ExplosionBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, BlockIsAnyType, BlockIsAllTypes} from '../../../Shard/util';
+import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -25,7 +25,7 @@ function Callback(event:ExplosionBeforeEvent) {
             // Remove blocks from explosion.
             if (rule.revert) {
                 event.setImpactedBlocks(blocks.filter((value)=>{
-                    return !BlockIsAnyType(value, rule.blockTypes.anyOf) || !BlockIsAllTypes(value, rule.blockTypes.allOf);
+                    return !IsAnyType(value, rule.blockTypes.anyOf) || !IsAllTypes(value, rule.blockTypes.allOf);
                 }));
             };
             const previousSourceLocation = event.source.location;

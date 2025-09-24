@@ -21,10 +21,15 @@ function Builder(context:ShardCommandContext, ...args) {
             anyOf: [],
             allOf: [],
         },
+        itemTypes: {
+            anyOf: [],
+            allOf: [],
+        },
     };
     if (rule) {
-        defaults.tags = rule.tags;
-        defaults.blockTypes = rule.blockTypes;
+        if (rule.tags) {defaults.tags = rule.tags};
+        if (rule.blockTypes) {defaults.blockTypes = rule.blockTypes};
+        if (rule.itemTypes) {defaults.itemTypes = rule.itemTypes};
         defaults.command = rule.command;
         defaults.eventIdIndex = commandEventIndexMap.indexOf(rule.eventId);
         if (defaults.eventIdIndex == -1) {defaults.eventIdIndex = 0};
@@ -48,6 +53,7 @@ function Builder(context:ShardCommandContext, ...args) {
             {translate:'shard.region.form.editRule.event.playerBreakBlock'},
             {translate:'shard.region.form.editRule.event.playerInteractWithBlock'},
             {translate:'shard.region.form.editRule.event.playerDropItem'},
+            {translate:'shard.region.form.editRule.event.playerUseItem'},
             {translate:'shard.region.form.editRule.event.explosion'},
         ],
         defaultValue: defaults.eventIdIndex,
@@ -73,6 +79,16 @@ function Builder(context:ShardCommandContext, ...args) {
         itemMax: 64,
         defaultValue: defaults.blockTypes.anyOf.concat(defaults.blockTypes.allOf),
     }});
+    elements.push({type:'textArray', id:'itemTypes', data:{
+        display: {translate:'shard.region.form.editRule.itemTypes'},
+        placeholder: {translate:'shard.region.form.editRule.itemTypesPlaceholder'},
+        tooltip: {translate:'shard.region.form.editRule.itemTypesTooltip'},
+        min: 0,
+        max: 64,
+        itemMin: 1,
+        itemMax: 64,
+        defaultValue: defaults.itemTypes.anyOf.concat(defaults.itemTypes.allOf),
+    }});
     elements.push({type:'textBox', id:'command', data:{display:{translate:'shard.region.form.editRule.command'}, placeholder:{translate:'shard.region.form.editRule.commandPlaceholder'}, defaultValue:defaults.command}});
     elements.push({type:'toggle', id:'revert', data:{display:{translate:'shard.region.form.editRule.revert'}, tooltip:{translate:'shard.region.form.editRule.revertTooltip'}, defaultValue:defaults.revert}});
     elements.push({type:'toggle', id:'remove', data:{display:{translate:'shard.region.form.editRule.remove'}, defaultValue:false}});
@@ -88,6 +104,7 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
     const eventId:string = commandEventIndexMap[eventIdIndex];
     const tags:Array<string> = response.map.tags;
     const blockTypes:Array<string> = response.map.blockTypes;
+    const itemTypes:Array<string> = response.map.itemTypes;
     const command:string = response.map.command;
     const revert:boolean = response.map.revert;
     const remove:boolean = response.map.remove;
@@ -120,6 +137,10 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
             blockTypes: {
                 anyOf: blockTypes.filter((value)=>{if (value.startsWith('!')) {return false}; return true;}),
                 allOf: blockTypes.filter((value)=>{if (value.startsWith('!')) {return true}; return false;}),
+            },
+            itemTypes: {
+                anyOf: itemTypes.filter((value)=>{if (value.startsWith('!')) {return false}; return true;}),
+                allOf: itemTypes.filter((value)=>{if (value.startsWith('!')) {return true}; return false;}),
             },
             command: command,
             revert: revert,

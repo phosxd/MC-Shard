@@ -415,7 +415,7 @@ export class ShardFormBuilder {
                 let placeholder = elementData.placeholder;
                 if (!placeholder) {placeholder = ''};
                 let multiline = (elementData as ShardFormTextBox).multiline;
-                if (!multiline) {defaultValue = (defaultValue as string).replaceAll('\n','$n')};
+                if (!multiline && defaultValue != undefined) {defaultValue = (defaultValue as string).replaceAll('\n','$n')};
                 formData.textField(elementData.display, placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});
             };
         });
