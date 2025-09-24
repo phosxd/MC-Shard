@@ -8,6 +8,11 @@ export const ShortDimensionId = {
     'minecraft:nether': 'n',
     'minecraft:the_end': 'e',
 };
+export const ShortDimensionIdToNormal = {
+    'o': 'minecraft:overworld',
+    'n': 'minecraft:nether',
+    'e': 'minecraft:the_end',
+};
 // Due to how memory intensive this module is, spoofed blocks are stored outside of the module data but instead in dedicated dyanmic properties.
 export const DmkHeader:string = 'antixray:sb';
 /**Get dedicated memory key. Used for dedicated dyanmic properties.*/
@@ -69,7 +74,7 @@ export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
     const key = GetDmk(block.dimension.id, block.location);
     const spoofedBlock = world.getDynamicProperty(key) as number;
     // Return if doesn't exist.
-    if (spoofedBlock === undefined) {return};
+    if (spoofedBlock == undefined) {return};
     // Restore original block & remove spoofed block data.
     block.setType(ReplaceableBlocks[spoofedBlock]);
     world.setDynamicProperty(key, undefined);
@@ -77,8 +82,9 @@ export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
     // Run on neighbors.
     if (includeNeighbors) {
         GetBlockNeighbors(block).forEach(block => {
+            if (!block) {return};
             if (block.typeId !== SpoofBlock) {return};
-            UnspoofBlock(block);
+            UnspoofBlock(block, false);
         });
     };
 };
@@ -103,6 +109,7 @@ export const Module = new ShardModule(
             'cmd/forceSpoof',
             'cmd/unspoof',
             'cmd/wipeDm',
+            'cmd/wipeSpoofs',
         ],
         settingElements: [
             {type:'slider', id:'spoofDistance', data:{

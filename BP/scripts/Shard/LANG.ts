@@ -227,6 +227,11 @@ export const LANG = {
                 wipeDm: {
                     success: 'Deleted all spoofed block dedicated data.',
                 },
+                wipeSpoofs: {
+                    success: 'Unspoofing all ores in the world. Result will be sent after complete.',
+                    inProgress: '§cUnspoofing already in progress. §7%s/%s§c complete.',
+                    failed:'§cCould not finish unspoofing job for an unknown reason. Try again.',
+                },
             }
         },
     },

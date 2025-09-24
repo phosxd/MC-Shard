@@ -387,3 +387,8 @@ shard.antixray.cmd.unspoof.result=§aUnspoofed %s ores.
 ## cmd: wipeDM
 shard.antixray.cmd.wipeDm.brief=Delete all spoofed block data. Spoofed blocks will not be recoverable.
 shard.antixray.cmd.wipeDm.success=Deleted all spoofed block dedicated data.
+## cmd: wipeSpoofs
+shard.antixray.cmd.wipeSpoofs.brief=Unspoof all ores in the world. At least 1 ticking-area slot must be available!
+shard.antixray.cmd.wipeSpoofs.success=Unspoofing all ores in the world. Result will be sent after complete.
+shard.antixray.cmd.wipeSpoofs.inProgress=§cUnspoofing already in progress. §7%s/%s§c complete.
+shard.antixray.cmd.wipeSpoofs.failed=§cCould not finish unspoofing job for an unknown reason. Try again.

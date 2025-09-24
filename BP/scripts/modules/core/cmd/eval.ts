@@ -4,7 +4,7 @@ system;
 world;
 
 
-function Callback(_context:ShardCommandContext, args:Array<any>) {
+function Callback(context:ShardCommandContext, args:Array<any>) {
     return {message:eval(args[0]), status:0};
 };
 
