@@ -140,10 +140,10 @@ Removes blacklisted items from normal players.
 - `/blacklistpreset`: Load a blacklist preset.
 
 ## `border`:
-Provides border tools. This is mostly unfinished as there is no style editor & only 1 default style ("hidden"). There is also no support for non-inverted borders yet.
+Provides border tools. This is mostly unfinished as there is only 1 style & no support for non-inverted borders yet.
 
 **Upcoming Features:**
-- `Border Style Editor`: In the `border` module settings there will be UI where you can create border styles with options like flat color, physical blocks as border, particles, & render distance.
+- `More Border Styles`
 - `Border Message`: In `border` module settings you will be able to set the message that the player sees when colliding with a border.
 
 **Commands:**
@@ -160,6 +160,7 @@ Provides regions to edit world mutability & player abilities. Can also run comma
 - `Player Place Block`
 - `Player Break Block`
 - `Player Interact With Block`
+- `Player Use Item`
 - `Player Drop Item`
 - `Explosion`
 
@@ -176,6 +177,7 @@ Run advanced commands on world events.
 - `playerPlaceBlock`
 - `playerBreakBlock`
 - `playerInteractWithBlock`
+- `playerInteractWithEntity`
 - `playerUseItem`
 - `playerDropItem`
 - `playerSpawn`
@@ -184,7 +186,6 @@ Run advanced commands on world events.
 - `buttonPush`
 
 **Upcoming Events:**
-- `playerInteractWithEntity`
 - `playerStartSprint` / `playerStopSprint`
 - `playerStartJump` / `playerStopJump`
 - `playerStartSneak` / `playerStopSneak`
@@ -208,7 +209,7 @@ Prevents Xray from finding valueable ores.
 **Commands:**
 - `/antixray.forcespoof`: Force spoof all ores in volume.
 - `/antixray.unspoof`: Unspoof all ores in volume.
-- `/antixray.wipedm`: Delete all spoofed block data. Spoofed blocks will not be recoverable.
+- `/antixray.wipespoofs`: Unspoof all ores in the world. At least 1 ticking-area slot must be available!
 
 # Other Modules:
 
@@ -222,3 +223,5 @@ Provides tools for rendering shapes in the world using particles.
 # Upcoming Modules:
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
+- `capitator`: Quickly mine trees & ores. Would work with durability, silk touch, & fortune.
+- `shardscript`: Save & use multiline command or JS scripts that can make use of variables & other formatting. This will require me to make a custom text input element for modal forms with JSON UI ;-;
