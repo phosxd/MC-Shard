@@ -1,31 +1,8 @@
 {
   "namespace": "server_form",
+
+  // Override max text edit length.
   "custom_input@settings_common.option_text_edit": {
-    // "$option_label": "#custom_text",
-    // "$option_place_holder_text": "#custom_placeholder_text",
-    // "$text_edit_box_placeholder_content_binding_name": "$option_place_holder_text",
-    // "$text_edit_box_placeholder_content_binding_type": "collection",
-    // "$text_edit_box_grid_collection_name": "custom_form",
-
     "$max_text_edit_length": 10000
-
-    // "$text_edit_box_content_binding_type": "collection",
-    // "$text_edit_box_content_binding_name": "#custom_input_text",
-
-    // "$option_binding_name": "#custom_input_text",
-    // "$text_box_enabled_binding_name": "#custom_input_enabled",
-    // "$text_box_name": "custom_input",
-
-    // "$option_tooltip_binding_type": "collection",
-    // "$option_tooltip_collection_name": "custom_form",
-    // "$option_tooltip_text_binding_name": "#custom_tooltip_text",
-    // "$option_tooltip_area": "inside_header_panel",
-    // "$label_bindings": [
-    //   {
-    //     "binding_name": "#custom_text",
-    //     "binding_type": "collection",
-    //     "binding_collection_name": "custom_form"
-    //   }
-    // ]
   }
 }

@@ -1,18 +1,9 @@
 import {world, Block, Vector3} from '@minecraft/server';
 import {ShardModule} from '../../Shard/module';
+import {ShortDimensionId} from '../../Shard/CONST';
 import {StringifyVector3} from '../../Shard/util';
 import {GetBlockNeighbors} from '../../util/block';
 
-export const ShortDimensionId = {
-    'minecraft:overworld': 'o',
-    'minecraft:nether': 'n',
-    'minecraft:the_end': 'e',
-};
-export const ShortDimensionIdToNormal = {
-    'o': 'minecraft:overworld',
-    'n': 'minecraft:nether',
-    'e': 'minecraft:the_end',
-};
 // Due to how memory intensive this module is, spoofed blocks are stored outside of the module data but instead in dedicated dyanmic properties.
 export const DmkHeader:string = 'antixray:sb';
 /**Get dedicated memory key. Used for dedicated dyanmic properties.*/
@@ -20,12 +11,15 @@ export function GetDmk(dimensionId:string, location:Vector3):string {
     return DmkHeader+':'+ShortDimensionId[dimensionId]+StringifyVector3(location);
 };
 
-/**Size of */
 export const SpoofVolumeChunkSize = 16;
 export const SpoofVolumeChunkSizeHalf = SpoofVolumeChunkSize/2;
+/**Block used in place of spoofed blocks.*/
 export const SpoofBlock = 'minecraft:purple_concrete';
-/**Blocks to spoof.*/
-export const ReplaceableBlocks:Array<string> = [
+/**
+ * Blocks that can be spoofed.
+ * Removing or changing order of items will cause spoofed blocks to become unrecoverable or switch types.
+*/
+export const ReplaceableBlocks = Object.freeze([
     'coal_ore',
     'copper_ore',
     'iron_ore',
@@ -47,9 +41,12 @@ export const ReplaceableBlocks:Array<string> = [
     'ancient_debris',
     'lit_redstone_ore',
     'lit_deepslate_redstone_ore',
-].map(value => {return 'minecraft:'+value});
-/**Natural blocks that are common around ores & that are solid.*/
-export const SolidBlocks:Array<string> = ReplaceableBlocks.concat([
+].map(value => {return 'minecraft:'+value}));
+/**
+ * Natural blocks that are common around ores & that are solid.
+ * Used to determine if a replaceable block is exposed.
+*/
+export const SolidBlocks = Object.freeze(ReplaceableBlocks.concat([
     'bedrock',
     'dirt',
     'stone',
@@ -66,7 +63,7 @@ export const SolidBlocks:Array<string> = ReplaceableBlocks.concat([
     'netherrack',
     'blackstone',
     'basalt',
-].map(value => {return 'minecraft:'+value})).concat(SpoofBlock);
+].map(value => {return 'minecraft:'+value})).concat(SpoofBlock));
 
 
 export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
@@ -108,7 +105,6 @@ export const Module = new ShardModule(
             'event/tick',
             'cmd/forceSpoof',
             'cmd/unspoof',
-            'cmd/wipeDm',
             'cmd/wipeSpoofs',
         ],
         settingElements: [

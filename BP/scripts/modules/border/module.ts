@@ -13,12 +13,15 @@ export interface Border {
 };
 
 
-
-
 // Instantiate Module.
 export const Module = new ShardModule(
-    {id:'border', displayName:{translate:'shard.border.displayName'}, brief:{translate:'shard.border.brief'}},
     {
+        id: 'border',
+        displayName: {translate:'shard.border.displayName'},
+        brief: {translate:'shard.border.brief'},
+    },
+    {
+        enabledByDefault: false,
         childPaths: [
             'event/tick',
             'cmd/addBorder',

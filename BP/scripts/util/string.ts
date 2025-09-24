@@ -22,6 +22,20 @@ export function StringEqualSplit(value:string, parts:number) {
 
 
 /**
+ * Formats the `str` with common variables.
+ * 
+ * List:
+ * - `$n` = '\n'
+*/
+export function StringFormatCommon(str:string):string {
+    let result = str
+        .replaceAll('$n','\n')
+    ;
+    return result;
+};
+
+
+/**
  * Formats the `str`.
  * 
  * @param {boolean} rawResults If true, will not tamper with the formatting results. Otherwise certain values may be changed to suit strings.

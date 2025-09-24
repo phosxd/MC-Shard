@@ -21,6 +21,7 @@ export const Module = new ShardModule(
         brief: {translate:'shard.event.brief'},
     },
     {
+        enabledByDefault: false,
         childPaths: [
             'event/buttonPush',
             'event/entityDie',

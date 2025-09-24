@@ -83,11 +83,29 @@ export interface AlignedArea {
 
 //export type CardinalDirection = 'North'|'East'|'South'|'West'|'Up'|'Down';
 
-export const CardinalDirectionMap = {
+export const CardinalDirectionMap = Object.freeze({
     'north': {x:0,y:0,z:1},
     'east': {x:1,y:0,z:0},
     'south': {x:0,y:0,z:-1},
     'west': {x:-1,y:0,z:0},
     'up': {x:0,y:1,z:0},
     'down': {x:0,y:-1,z:0},
-};
+});
+
+
+/**
+ * Short dimension IDs.
+*/
+export const ShortDimensionId = Object.freeze({
+    'minecraft:overworld': 'o',
+    'minecraft:nether': 'n',
+    'minecraft:the_end': 'e',
+});
+/**
+ * Short dimension IDs to normal dimension IDs.
+*/
+export const ShortDimensionIdToNormal = Object.freeze({
+    'o': 'minecraft:overworld',
+    'n': 'minecraft:nether',
+    'e': 'minecraft:the_end',
+});

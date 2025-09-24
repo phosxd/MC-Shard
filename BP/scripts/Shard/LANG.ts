@@ -224,15 +224,16 @@ export const LANG = {
                     success: 'Unspoofing all ores between %s & %s. Result will be sent after complete.',
                     result: '§aUnspoofed %s ores.',
                 },
-                wipeDm: {
-                    success: 'Deleted all spoofed block dedicated data.',
-                },
                 wipeSpoofs: {
                     success: 'Unspoofing all ores in the world. Result will be sent after complete.',
                     inProgress: '§cUnspoofing already in progress. §7%s/%s§c complete.',
                     failed:'§cCould not finish unspoofing job for an unknown reason. Try again.',
                 },
             }
+        },
+        capitator: {
+            displayName: '§r[§2Capitator§r]',
+            brief: 'Quickly mine trees & ores',
         },
     },
 };

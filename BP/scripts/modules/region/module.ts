@@ -52,6 +52,7 @@ export const Module = new ShardModule(
         brief: {translate:'shard.region.brief'},
     },
     {
+        enabledByDefault: false,
         childPaths: [
             'event/explosion',
             'event/tick',

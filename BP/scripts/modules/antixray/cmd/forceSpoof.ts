@@ -14,7 +14,7 @@ function* forceSpoofArea(volume:BlockVolume, dimension:Dimension, player?:Player
         if (block == undefined) {continue};
         const key = GetDmk(dimension.id, location);
         const data = world.getDynamicProperty(key) as number;
-        if (!data) {
+        if (data == undefined) {
             if (!ReplaceableBlocks.includes(block.typeId)) {continue};
             if (isBlockExposed(block)) {continue}; // If block exposed, dont spoof.
             // Save block type before replace.

@@ -2,6 +2,7 @@ import {system, CommandPermissionLevel, Player, RawMessage, Vector3} from '@mine
 import {ActionFormData, ModalFormData, MessageFormData, ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {Dictionary} from './CONST';
 import {CompareCommandPermissionLevel, StringToLocation} from './util';
+import {StringFormatCommon} from '../util/string';
 import {toRawMessage} from './raw_message_parser';
 import {ShardCommandContext} from './command';
 
@@ -64,6 +65,8 @@ export interface ShardFormNumberBox {
 };
 export interface ShardFormTextBox {
     display: string|RawMessage,
+    /**Do not use this, not fully implemented.*/
+    multiline?: boolean,
     min: number,
     max: number,
     placeholder?: string|RawMessage,
@@ -240,7 +243,7 @@ export class ShardFormBuilder {
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const value = response.formValues[index] as string;
-                shardResponse.map[element.id] = value;
+                shardResponse.map[element.id] = StringFormatCommon(value);
                 // Out of range error.
                 if (value.length > elementData.max || value.length < elementData.min) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.outOfRangeLength',
@@ -411,6 +414,8 @@ export class ShardFormBuilder {
                 if (defaultValue !== undefined) {defaultValue = String(elementData.defaultValue)};
                 let placeholder = elementData.placeholder;
                 if (!placeholder) {placeholder = ''};
+                let multiline = (elementData as ShardFormTextBox).multiline;
+                if (!multiline) {defaultValue = (defaultValue as string).replaceAll('\n','$n')};
                 formData.textField(elementData.display, placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});
             };
         });

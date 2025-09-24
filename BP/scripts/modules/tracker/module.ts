@@ -81,6 +81,7 @@ export const Module = new ShardModule(
         description: {translate:'shard.tracker.description', with:[trackersList, scoreboardsList, statesList]},
     },
     {
+        enabledByDefault: false,
         childPaths: [
             'event/entityDie',
             'event/entityHealthChange',

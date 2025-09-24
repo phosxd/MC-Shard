@@ -1,5 +1,6 @@
 import {World, CustomCommandParameter, CommandPermissionLevel, Dimension, RawMessage, Vector3, Vector2, CustomCommandStatus, Block, Entity, Player} from '@minecraft/server';
 import {ShardFormElement} from './form';
+import {StringFormatCommon} from '../util/string';
 import {Dictionary} from './CONST';
 
 
@@ -130,14 +131,14 @@ export function GenerateCommandContext(from:Block|Entity|Player|World):ShardComm
 export class ShardCommand {
     /**Command's constant details.*/
     readonly details: ShardCommandDetails;
-    /**Command settings that are persistently saved.*/
+    /**Command settings that are persistently saved in parent module.*/
     settingElements: Array<ShardFormElement>;
     /**Called when the command is run.*/
-    callback: (context:ShardCommandContext, ...args) => ShardCommandResult|undefined|void;
+    callback: (context:ShardCommandContext, args) => ShardCommandResult|undefined|void;
 
 
     /**Called when command is run without proper permissions.*/
-    illegalCallback(_context:ShardCommandContext, ..._args): ShardCommandResult {
+    illegalCallback(_context:ShardCommandContext, _args): ShardCommandResult {
         return {message:{translate:'shard.misc.missingPermission'}, status:1};
     };
 
@@ -151,8 +152,17 @@ export class ShardCommand {
 
 
     /**Executes the command.*/
-    execute(context:ShardCommandContext, ...args): ShardCommandResult|undefined|void {
-        return this.callback(context, ...args);
+    execute(context:ShardCommandContext, args): ShardCommandResult|undefined|void {
+        const newArgs = [];
+        // Format string args.
+        args.forEach(arg => {
+            if (typeof arg == 'string') {
+                newArgs.push(StringFormatCommon(arg));
+            }
+            else {newArgs.push(arg)};
+        });
+        // Return callback result.
+        return this.callback(context, newArgs);
     };
 
 

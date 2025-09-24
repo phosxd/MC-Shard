@@ -13,6 +13,7 @@ export const Module = new ShardModule(
         brief: {translate:'shard.fun.brief'},
     },
     {
+        enabledByDefault: false,
         childPaths: [
             'cmd/crash',
             'cmd/emote',

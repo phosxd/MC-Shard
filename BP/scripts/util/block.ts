@@ -1,4 +1,4 @@
-import {Block, Vector3} from '@minecraft/server';
+import {Block} from '@minecraft/server';
 
 
 /**
@@ -21,4 +21,13 @@ export function GetBlockNeighbors(block:Block):Array<Block> {
         neighbors.push(block.below());
     };
     return neighbors;
+};
+
+
+/**
+ * Returns `true` if the block is an ore.
+*/
+export function IsOre(block:Block):boolean {
+    if (block.typeId.endsWith('_ore')) {return true};
+    return ['minecraft:ancient_debris'].includes(block.typeId);
 };

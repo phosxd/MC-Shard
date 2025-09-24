@@ -1,7 +1,8 @@
-import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player, GameMode} from '@minecraft/server';
+import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {StringifyVector3, StringToLocation, RoundVector3, AddVector3} from '../../../Shard/util';
-import {Module, DmkHeader, GetDmk, ShortDimensionIdToNormal, UnspoofBlock, SpoofBlock, ReplaceableBlocks} from '../module';
+import {ShortDimensionIdToNormal} from '../../../Shard/CONST';
+import {StringToLocation, AddVector3} from '../../../Shard/util';
+import {DmkHeader, GetDmk, UnspoofBlock, SpoofBlock} from '../module';
 
 const tickingAreaName = 'shard:antixray.wipeSpoofs';
 /**Whether or not this command is already in use.*/
@@ -32,8 +33,8 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         yield {dimension:dimension, location:location};
         // Unspoof small area.
         const volume = new BlockVolume(AddVector3(location, -20), AddVector3(location, 20));
-        const spoofBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
-        for (const location of spoofBlocks.getBlockLocationIterator()) {
+        const spoofedBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
+        for (const location of spoofedBlocks.getBlockLocationIterator()) {
             const block = dimension.getBlock(location);
             if (block == undefined) {continue};
             const key = GetDmk(dimension.id, location);
@@ -78,6 +79,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
             return;
         };
         if (!readyForNext) {return};
+        // Run next generator iteration.
         const result = generator.next();
         const value = result.value as any;
         // If received value, wait until block at location is loaded.
@@ -94,6 +96,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
             };
             system.run(checkBlock);
         }
+        // Quit if done.
         else if (result.done) {
             system.clearRun(runId);
             inUse = false;

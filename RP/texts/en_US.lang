@@ -272,6 +272,7 @@ shard.display.cmd.addDisplay.brief=Summon a new display entity.
 shard.display.cmd.addDisplay.success=Summoned "%s" at %s.
 ## form: edit
 shard.display.form.edit.text=Text
+shard.display.form.edit.text.tooltip=Use "$n" for new line.
 shard.display.form.edit.textPlaceholder=Enter display text here...
 shard.display.form.edit.isBossbar=Is Bossbar? (Glitchy sometimes)
 shard.display.form.edit.killToggle=Remove this display?
@@ -384,11 +385,19 @@ shard.antixray.cmd.forceSpoof.result=§aForce spoofed %s ores.
 shard.antixray.cmd.unspoof.brief=Unspoof all ores in volume.
 shard.antixray.cmd.unspoof.success=Unspoofing all ores between %s & %s. Result will be sent after complete.
 shard.antixray.cmd.unspoof.result=§aUnspoofed %s ores.
-## cmd: wipeDM
-shard.antixray.cmd.wipeDm.brief=Delete all spoofed block data. Spoofed blocks will not be recoverable.
-shard.antixray.cmd.wipeDm.success=Deleted all spoofed block dedicated data.
 ## cmd: wipeSpoofs
 shard.antixray.cmd.wipeSpoofs.brief=Unspoof all ores in the world. At least 1 ticking-area slot must be available!
 shard.antixray.cmd.wipeSpoofs.success=Unspoofing all ores in the world. Result will be sent after complete.
 shard.antixray.cmd.wipeSpoofs.inProgress=§cUnspoofing already in progress. §7%s/%s§c complete.
 shard.antixray.cmd.wipeSpoofs.failed=§cCould not finish unspoofing job for an unknown reason. Try again.
+
+## "capitator" module texts.
+shard.capitator.displayName=§r[§2Capitator§r]
+shard.capitator.brief=Quickly mine trees & ores.
+shard.capitator.description=
+shard.capitator.setting.requireSneak=Require sneak?
+shard.capitator.setting.requireSneak.tooltip=If true, player needs to sneak for capitator to activate.
+shard.capitator.setting.doTrees=Do trees?
+shard.capitator.setting.doTrees.tooltip=If true, capitator works for trees.
+shard.capitator.setting.doOres=Do ores?
+shard.capitator.setting.doOres.tooltip=If true, capitator works for ores.

@@ -1,26 +1,26 @@
 import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {StringifyVector3, RoundVector3} from '../../../Shard/util';
-import {GetDmk, UnspoofBlock, SpoofBlock, ReplaceableBlocks} from '../module';
+import {GetDmk, UnspoofBlock, SpoofBlock} from '../module';
 
 
 function* unspoofArea(volume:BlockVolume, dimension:Dimension, player?:Player) {
-    let spoofedBlocks:number = 0;
-    // Iterate on every spoof block in the radius.
-    const spoofBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
-    for (const location of spoofBlocks.getBlockLocationIterator()) {
+    let blocksUnspoofed:number = 0;
+    // Iterate on every spoofed block in the radius.
+    const spoofedBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
+    for (const location of spoofedBlocks.getBlockLocationIterator()) {
         const block = dimension.getBlock(location);
         if (block == undefined) {continue};
         const key = GetDmk(dimension.id, location);
         const data = world.getDynamicProperty(key) as number;
         if (data !== undefined) {
             UnspoofBlock(block);
-            spoofedBlocks += 1;
+            blocksUnspoofed += 1;
         };
         yield;
     };
     if (player) {
-        player.sendMessage({translate:'shard.antixray.cmd.unspoof.result', with:[String(spoofedBlocks)]});
+        player.sendMessage({translate:'shard.antixray.cmd.unspoof.result', with:[String(blocksUnspoofed)]});
     };
 };
 
