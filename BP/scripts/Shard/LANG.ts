@@ -18,6 +18,24 @@ export const LANG = {
             playerNotFound: '§cCannot find player.',
             woosh: 'Woosh!',
         },
+        error: {
+            playerNotFound: '§cCannot find player.',
+            missingPermission: '§cYou do not have permission to do this.',
+            commandDisabled: '§cThis command is disabled.',
+            commandModuleDisabled: '§cEnable the §7%s§c module to use this command.',
+            duplicateName: '§cExpected unique name.',
+            invalidName: '§cName contains invalid characters.',
+            outOfRange: '§c"%s" should be between %s & %s.',
+            outOfRangeLength: '§c"%s" length should be between %s & %s.',
+            outOfRangeArray: '§c"%s" item count should be between %s & %s.',
+            outOfRangeArrayItem: '§c"%s" item value should be between %s & %s.',
+            outOfRangeArrayItemLength: '§c"%s" item length should be between %s & %s.',
+            invalidStep: '§c"%s" expected a step of %s.',
+            invalidNumber: '§c"%s" expected a valid number.',
+            invalidLocation: '§c"%s" expected a valid location.',
+            invalidSelector: '§c"%s" expected a valid entity selector.',
+            invalidCharacters: '§c"%s" contains invalid characters.',
+        },
         core: {
             displayName: '§r[§dShard§r]',
             brief: 'Handles core functionality & module management.',
@@ -43,9 +61,17 @@ export const LANG = {
         util: {
             displayName: '§r[§gSimple Utility§r]',
             brief: 'Provides various helpful commands.',
+            common: {
+                noItem: '§cYou need to be holding an item.',
+            },
             cmd: {
                 despawn: {
                     success: 'Removed %s entities.',
+                },
+                disenchant: {
+                    success: 'Disenchanted §7%s§r.',
+                    noEnchantable: '§7%s§c cannot be disenchanted.',
+                    invalidEnchantment: '§7%s§c is not a valid enchantment.'
                 },
                 drain: {
                     success: 'Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.',
@@ -53,7 +79,10 @@ export const LANG = {
                 },
                 dupe: {
                     success: 'Duplicated %s §7%s§r.',
-                    noItem: '§cYou need to be holding an item.',
+                },
+                durability: {
+                    success: 'Set durability damage to §7%s/%s§r.',
+                    noDurability: '§7%s§c does not have durability.',
                 },
                 eat: {
                     success: 'Replenished %s entities.',
@@ -85,7 +114,6 @@ export const LANG = {
                 repair: {
                     success: 'Repaired §7%s§r.',
                     failure: '§7%s§c cannot be repaired.',
-                    noItem: '§cYou need to be holding an item.',
                 },
                 thru: {
                     noBlocks: 'No blocks in range to teleport through.',

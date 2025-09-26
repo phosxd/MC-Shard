@@ -1,3 +1,6 @@
+// Common constant variables can be found here & modified.
+// Refer to module files for module-specific constants.
+
 import {Vector3} from '@minecraft/server';
 import {VersionToBuildNumber} from './util';
 
@@ -7,7 +10,6 @@ import {VersionToBuildNumber} from './util';
  * Should always adhere to Minecraft namespace rules.
 */
 export const Namespace:string = 'sh';
-
 /**Namespace used when initializing custom commands & custom command enums.*/
 export const CommandNamespace:string = Namespace;
 

@@ -1,6 +1,7 @@
 import {system, ItemUseBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {LocationInArea, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -24,7 +25,7 @@ function Callback(event:ItemUseBeforeEvent) {
                 event.cancel = true;
             };
             system.run(()=>{try{
-                player.runCommand(`execute positioned ${LocationToString(player.location)} run ${rule.command}`);
+                player.runCommand(`execute positioned ${StringifyVector(player.location)} run ${rule.command}`);
             }catch {}});
         };
     };

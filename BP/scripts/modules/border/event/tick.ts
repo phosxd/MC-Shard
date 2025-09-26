@@ -1,6 +1,7 @@
 import {Entity, Vector3} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {GetAllEntities, LocationInArea, SubtractVector3, GetClosestPointInArea} from '../../../Shard/util';
+import {GetAllEntities, LocationInArea, GetClosestPointInArea} from '../../../Shard/util';
+import {AddVector, FlipVector} from '../../../util/vector';
 import {afterEvents} from '../../../Shard/event_server';
 import {Module, Border} from '../module';
 
@@ -23,11 +24,11 @@ function Callback() {
             // I cant get non-inverted borders to not freeze entities in place on contact, so this should only ever be used inverted.
 
             // Calculate direction to push entity.
-            let direction:Vector3 = SubtractVector3(
+            const direction = AddVector(
                 entity.location,
-                GetClosestPointInArea(entity.location, border.area),
-            );
-            let location:Vector3 = SubtractVector3(entity.location, direction);
+                FlipVector(GetClosestPointInArea(entity.location, border.area)),
+            ) as Vector3;
+            const location = AddVector(entity.location, FlipVector(direction)) as Vector3;
 
             // Apply.
             entity.teleport(location);

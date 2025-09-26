@@ -1,7 +1,7 @@
 import {world, Dimension, Entity} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {Dictionary} from '../../../Shard/CONST';
-import {GetAllEntities, LocationInArea, LocationToString, GetAreaCenter, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
+import {GetAllEntities, LocationInArea, GetAreaCenter, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {afterEvents} from '../../../Shard/event_server';
 import {Module, Region, RegionRule} from '../module';
 
@@ -62,7 +62,7 @@ function Callback() {
         for (const key in region.rules) {
             const rule:RegionRule = region.rules[key];
             if (rule.eventId == 'tick') {
-                try {dimension.runCommand('execute positioned '+LocationToString(GetAreaCenter(region.area))+' run '+rule.command)} catch {};
+                try {dimension.runCommand('execute positioned '+StringifyVector(GetAreaCenter(region.area))+' run '+rule.command)} catch {};
             };
         };
     };

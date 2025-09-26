@@ -1,6 +1,6 @@
 import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {StringifyVector3, RoundVector3} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {GetDmk, UnspoofBlock, SpoofBlock} from '../module';
 
 
@@ -32,7 +32,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (sendResult === false) {player = undefined};
     system.runJob(unspoofArea(volume, context.dimension, player));
 
-    return {message:{translate:'shard.antixray.cmd.unspoof.success', with:[StringifyVector3(RoundVector3(args[0])), StringifyVector3(RoundVector3(args[1]))]}, status:0};
+    return {message:{translate:'shard.antixray.cmd.unspoof.success', with:[StringifyVector(RoundVector(args[0])), StringifyVector(RoundVector(args[1]))]}, status:0};
 };
 
 

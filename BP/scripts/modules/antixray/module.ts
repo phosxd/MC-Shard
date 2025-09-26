@@ -1,14 +1,14 @@
 import {world, Block, Vector3} from '@minecraft/server';
 import {ShardModule} from '../../Shard/module';
 import {ShortDimensionId} from '../../Shard/CONST';
-import {StringifyVector3} from '../../Shard/util';
+import {StringifyVector} from '../../util/vector';
 import {GetBlockNeighbors} from '../../util/block';
 
 // Due to how memory intensive this module is, spoofed blocks are stored outside of the module data but instead in dedicated dyanmic properties.
 export const DmkHeader:string = 'antixray:sb';
 /**Get dedicated memory key. Used for dedicated dyanmic properties.*/
 export function GetDmk(dimensionId:string, location:Vector3):string {
-    return DmkHeader+':'+ShortDimensionId[dimensionId]+StringifyVector3(location);
+    return DmkHeader+':'+ShortDimensionId[dimensionId]+StringifyVector(location);
 };
 
 export const SpoofVolumeChunkSize = 16;

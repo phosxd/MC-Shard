@@ -1,6 +1,6 @@
 import {system, Dimension, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, MolangVariableMap} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {AddVector3} from '../../../Shard/util';
+import {AddVector} from '../../../util/vector';
 import {partying} from '../module';
 
 
@@ -76,7 +76,7 @@ function generateParticles(dimension:Dimension, location:Vector3) {
     for (let i:number=0; i < particleCount; i++) {
         const variables = new MolangVariableMap();
         variables.setColorRGB('note_color', {red:Math.random(), green:Math.random(), blue:Math.random()});
-        dimension.spawnParticle('minecraft:note_particle', AddVector3(location, randomParticleLocation()), variables);
+        dimension.spawnParticle('minecraft:note_particle', AddVector(location, randomParticleLocation()) as Vector3, variables);
     };
 };
 

@@ -1,7 +1,7 @@
 import {system, CommandPermissionLevel, CustomCommandParamType, Entity, Player, Vector3, RGBA} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {RenderCuboid} from '../module';
-import {LocationToString, RoundVector3} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {ParticleOptions} from '../module';
 
 
@@ -22,7 +22,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
         system.run(()=>{RenderCuboid(location, entity as Player, color, size, particleOptions, lifetime)});
     });
 
-    return {message:{translate:'shard.draw.cmd.drawCuboid.success', with:[LocationToString(RoundVector3(location)), String(count)]}, status:0};
+    return {message:{translate:'shard.draw.cmd.drawCuboid.success', with:[StringifyVector(RoundVector(location)), String(count)]}, status:0};
 };
 
 

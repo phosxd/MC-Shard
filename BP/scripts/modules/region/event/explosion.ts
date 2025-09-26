@@ -1,6 +1,7 @@
 import {system, ExplosionBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {LocationInArea, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -30,7 +31,7 @@ function Callback(event:ExplosionBeforeEvent) {
             };
             const previousSourceLocation = event.source.location;
             system.run(()=>{
-                try {event.dimension.runCommand(`execute positioned ${LocationToString(previousSourceLocation)} run ${rule.command}`)} catch {};
+                try {event.dimension.runCommand(`execute positioned ${StringifyVector(previousSourceLocation)} run ${rule.command}`)} catch {};
             });
         };
     };

@@ -1,6 +1,6 @@
 import {system, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {NormalizeVector3, MultiplyVector3} from '../../../Shard/util';
+import {NormalizeVector, MultiplyVector} from '../../../util/vector';
 
 
 function Callback(_context:ShardCommandContext, args:Array<any>) {
@@ -14,7 +14,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
         // Calculate vector.
         let vector:Vector3 = {x:location.x-entity.location.x, y:(location.y-entity.location.y)/1.5, z:location.z-entity.location.z};
         if (force) {
-            vector = MultiplyVector3(NormalizeVector3(vector), force); // Normalize so location doesn't impact force.
+            vector = MultiplyVector(NormalizeVector(vector), force) as Vector3; // Normalize so location doesn't impact force.
         };
         // Apply.
         system.run(()=>{

@@ -1,6 +1,6 @@
 import {Entity, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {FixVector3, FixVector2} from '../../../Shard/util';
+import {FixVector} from '../../../util/vector';
 import {Module} from '../module';
 
 const defaultTime:number = 999999;
@@ -19,7 +19,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
         if (!entity.isValid) {return};
         let data = Module.persisData.frozenEntities[entity.id];
         // If no frozen entity data, generate frozen entity data.
-        if (data == undefined) {data = {time:Number(time.toPrecision(2)), location:FixVector3(entity.location,3), rotation:FixVector2(entity.getRotation(),3)}}
+        if (data == undefined) {data = {time:Number(time.toPrecision(2)), location:FixVector(entity.location,3), rotation:FixVector(entity.getRotation(),3)}}
         // Only update time if frozen entity data is still valid.
         else {data.time = time};
         // Update data.

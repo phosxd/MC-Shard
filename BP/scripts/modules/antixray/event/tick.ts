@@ -1,6 +1,6 @@
 import {system, world, Dimension, Block, Vector3, BlockVolume} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {RoundVector3, AddVector3, SubtractVector3, MultiplyVector3} from '../../../Shard/util';
+import {RoundVector, AddVector, MultiplyVector} from '../../../util/vector';
 import {GetBlockNeighbors} from '../../../util/block';
 import {Module, GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks, SpoofVolumeChunkSize, SpoofVolumeChunkSizeHalf} from '../module';
 
@@ -12,7 +12,7 @@ function Callback() {
         world.getAllPlayers().forEach(player => {
             if (playersRunningJob.has(player.id)) {return};
             playersRunningJob.add(player.id);
-            system.runJob(spoofArea(RoundVector3(player.location), player.dimension, player.id));
+            system.runJob(spoofArea(RoundVector(player.location) as Vector3, player.dimension, player.id));
         });
     };
 };
@@ -26,13 +26,13 @@ function* spoofArea(originLocation:Vector3, dimension:Dimension, ownerId:string)
     for (let x:number=-chunksHalf; x < chunksHalf; x++) {
     for (let y:number=-chunksHalf; y < chunksHalf; y++) {
     for (let z:number=-chunksHalf; z < chunksHalf; z++) {
-        const chunkLocation = AddVector3(MultiplyVector3({x:x,y:y,z:z}, SpoofVolumeChunkSize+1), originLocation);
+        const chunkLocation = AddVector(MultiplyVector({x:x,y:y,z:z}, SpoofVolumeChunkSize+1), originLocation) as Vector3;
         const volume = new BlockVolume(
-            SubtractVector3(chunkLocation, SpoofVolumeChunkSizeHalf),
-            AddVector3(chunkLocation, SpoofVolumeChunkSizeHalf),
+            AddVector(chunkLocation, -SpoofVolumeChunkSizeHalf) as Vector3,
+            AddVector(chunkLocation, SpoofVolumeChunkSizeHalf) as Vector3,
         );
         yield;
-        for (const location of dimension.getBlocks(volume, {includeTypes:ReplaceableBlocks}, true).getBlockLocationIterator()) {
+        for (const location of dimension.getBlocks(volume, {includeTypes:Object.assign([],ReplaceableBlocks)}, true).getBlockLocationIterator()) {
             yield;
             const block = dimension.getBlock(location);
             if (!block) {continue};

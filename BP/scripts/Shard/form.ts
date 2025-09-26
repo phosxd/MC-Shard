@@ -1,7 +1,8 @@
 import {system, CommandPermissionLevel, Player, RawMessage, Vector3} from '@minecraft/server';
 import {ActionFormData, ModalFormData, MessageFormData, ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {Dictionary} from './CONST';
-import {CompareCommandPermissionLevel, StringToLocation} from './util';
+import {CompareCommandPermissionLevel} from './util';
+import {StringToVector} from '../util/vector';
 import {StringFormatCommon} from '../util/string';
 import {toRawMessage} from './raw_message_parser';
 import {ShardCommandContext} from './command';
@@ -13,10 +14,10 @@ import {ShardCommandContext} from './command';
 
 
 export interface ShardFormElement {
-    type: 'title'|'body'|'label'|'divider'|'button'|'dropdown'|'toggle'|'slider'|'numberBox'|'textBox'|'vector3Box'|'numberArray'|'textArray',
+    type: 'title'|'body'|'label'|'footnote'|'divider'|'button'|'dropdown'|'toggle'|'slider'|'numberBox'|'textBox'|'vector3Box'|'numberArray'|'textArray',
     /**Unique ID which the element is referenced by in callbacks.*/
     id: string,
-    data: ShardFormTitle|ShardFormBody|ShardFormLabel|ShardFormDivider|ShardFormButton|ShardFormDropdown|ShardFormToggle|ShardFormSlider|ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray,
+    data: ShardFormTitle|ShardFormBody|ShardFormLabel|ShardFormFootnote|ShardFormDivider|ShardFormButton|ShardFormDropdown|ShardFormToggle|ShardFormSlider|ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray,
 };
 
 
@@ -27,6 +28,9 @@ export interface ShardFormBody {
     display: string|RawMessage,
 };
 export interface ShardFormLabel {
+    display: string|RawMessage,
+};
+export interface ShardFormFootnote {
     display: string|RawMessage,
 };
 export interface ShardFormDivider {};
@@ -256,8 +260,8 @@ export class ShardFormBuilder {
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
-                const value = StringToLocation(rawValue);
-                shardResponse.map[element.id] = value.location;
+                const value = StringToVector(rawValue, 3);
+                shardResponse.map[element.id] = value.vector;
                 // Invalid location error.
                 if (value.status != 0) {
                     shardResponse.errors[element.id] = {translate:'shard.formError.invalidLocation',
@@ -341,6 +345,10 @@ export class ShardFormBuilder {
                 const elementData = element.data as ShardFormLabel;
                 formData.label(elementData.display);
             };
+            if (element.type == 'footnote') {
+                const elementData = element.data as ShardFormFootnote;
+                formData.button(elementData.display, 'shard:footnote');
+            };
             if (element.type == 'divider') {
                 formData.divider();
             };
@@ -363,6 +371,10 @@ export class ShardFormBuilder {
             if (element.type == 'label') {
                 const elementData = element.data as ShardFormLabel;
                 formData.label(elementData.display);
+            };
+            if (element.type == 'footnote') {
+                const elementData = element.data as ShardFormFootnote;
+                formData.button(elementData.display, 'shard:footnote');
             };
             if (element.type == 'divider') {
                 formData.divider();
@@ -392,6 +404,10 @@ export class ShardFormBuilder {
             if (element.type == 'label') {
                 const elementData = element.data as ShardFormLabel;
                 formData.label(elementData.display);
+            };
+            if (element.type == 'footnote') {
+                const elementData = element.data as ShardFormFootnote;
+                formData.textField(elementData.display, 'shard:footnote');
             };
             if (element.type == 'divider') {
                 formData.divider();

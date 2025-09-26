@@ -1,7 +1,8 @@
 import {Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {AlignedArea} from '../../../Shard/CONST';
-import {AlignArea, LocationToString, RoundVector3} from '../../../Shard/util';
+import {AlignArea} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {Module, Region} from '../module';
 
 
@@ -25,7 +26,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     Module.persisData.regions[name] = newRegion;
     Module.saveData();
 
-    return {message:{translate:'shard.region.cmd.addRegion.success', with:[name, LocationToString(RoundVector3(start)), LocationToString(RoundVector3(end))]}, status:0};
+    return {message:{translate:'shard.region.cmd.addRegion.success', with:[name, StringifyVector(RoundVector(start)), StringifyVector(RoundVector(end))]}, status:0};
 };
 
 

@@ -1,6 +1,5 @@
 import {system, world, Player, Entity} from '@minecraft/server';
 import {Dictionary} from './CONST';
-import {AddVector3} from './util';
 
 
 export class TickEventSignal {

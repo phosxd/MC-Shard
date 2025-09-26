@@ -1,7 +1,7 @@
 import {system, CommandPermissionLevel, CustomCommandParamType, Vector3} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationToString, RoundVector3} from '../../../Shard/util';
-import {Module, BossbarEvent} from '../module';
+import {StringifyVector, RoundVector} from '../../../util/vector';
+import {BossbarEvent} from '../module';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -14,7 +14,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         const display = context.dimension.spawnEntity('shard:display', location, spawnOptions);
         display.nameTag = text;
     });
-    return {message:{translate:'shard.display.cmd.addDisplay.success', with:[text, LocationToString(RoundVector3(location))]}, status:0};
+    return {message:{translate:'shard.display.cmd.addDisplay.success', with:[text, StringifyVector(RoundVector(location))]}, status:0};
 };
 
 

@@ -1,6 +1,7 @@
 import {ShardListener} from '../../../Shard/listener';
 import {PlayerDropItemEvent} from '../../../Shard/event_server';
-import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
+import {LocationInArea, EntityHasAnyTags, EntityHasAllTags} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -24,7 +25,7 @@ function Callback(event:PlayerDropItemEvent) {
                 event.droppedItem.remove();
                 player.getComponent('inventory').container.addItem(droppedItemStack);
             };
-            try {player.runCommand(`execute positioned ${LocationToString(event.player.location)} run ${rule.command}`)} catch {};
+            try {player.runCommand(`execute positioned ${StringifyVector(event.player.location)} run ${rule.command}`)} catch {};
         };
     };
 };

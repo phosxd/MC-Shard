@@ -1,6 +1,7 @@
 import {system, PlayerBreakBlockBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {LocationInArea, LocationToString, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {LocationInArea, EntityHasAnyTags, EntityHasAllTags, IsAnyType, IsAllTypes} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {Module, Region, RegionRule} from '../module';
 
 
@@ -20,7 +21,7 @@ function Callback(event:PlayerBreakBlockBeforeEvent) {
             if (!EntityHasAnyTags(player, rule.tags.anyOf) || !EntityHasAllTags(player, rule.tags.allOf) || !IsAnyType(event.block, rule.blockTypes.anyOf) || !IsAllTypes(event.block, rule.blockTypes.allOf)) {continue};
             if (rule.revert) {event.cancel = true};
             system.run(()=>{
-                try {player.runCommand(`execute positioned ${LocationToString(event.block.location)} run ${rule.command}`)} catch {};
+                try {player.runCommand(`execute positioned ${StringifyVector(event.block.location)} run ${rule.command}`)} catch {};
             });
         };
     };

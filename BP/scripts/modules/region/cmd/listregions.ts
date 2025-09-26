@@ -1,6 +1,6 @@
 import {CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationToString, RoundVector3} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {Module, Region} from '../module';
 
 
@@ -12,7 +12,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
     let list:string = '';
     regionKeys.forEach(key => {
         const region:Region = Module.persisData.regions[key];
-        list += '\n§r- §5Name: §7'+region.name+' §5Start: §7'+LocationToString(RoundVector3(region.area.start))+' §5End: §7'+LocationToString(RoundVector3(region.area.end))+' §5Inverted: §7'+String(region.inverted);
+        list += '\n§r- §5Name: §7'+region.name+' §5Start: §7'+StringifyVector(RoundVector(region.area.start))+' §5End: §7'+StringifyVector(RoundVector(region.area.end))+' §5Inverted: §7'+String(region.inverted);
     });
 
     return {message:{translate:'shard.region.cmd.listRegions.success', with:[list]}, status:0};

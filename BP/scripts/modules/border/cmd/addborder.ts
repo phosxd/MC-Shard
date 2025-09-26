@@ -1,7 +1,8 @@
 import {Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {AlignedArea} from '../../../Shard/CONST';
-import {AlignArea, LocationToString, RoundVector3} from '../../../Shard/util';
+import {AlignArea} from '../../../Shard/util';
+import {RoundVector, StringifyVector} from '../../../util/vector';
 import {Module, Border} from '../module';
 
 
@@ -33,7 +34,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     Module.persisData.borders[name] = newBorder;
     Module.saveData();
 
-    return {message:{translate:'shard.border.cmd.addBorder.success', with:[name, LocationToString(RoundVector3(start)), LocationToString(RoundVector3(end))]}, status:0};
+    return {message:{translate:'shard.border.cmd.addBorder.success', with:[name, StringifyVector(RoundVector(start)), StringifyVector(RoundVector(end))]}, status:0};
 };
 
 

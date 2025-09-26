@@ -1,6 +1,6 @@
 import {system, ExplosionBeforeEvent, Block} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {StringifyVector3} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {SpoofBlock, UnspoofBlock} from '../module';
 
 
@@ -14,7 +14,7 @@ function Callback(event:ExplosionBeforeEvent) {
         };
         system.run(()=>{
             UnspoofBlock(block, true);
-            event.dimension.runCommand(`setblock ${StringifyVector3(block.location)} air destroy`);
+            event.dimension.runCommand(`setblock ${StringifyVector(block.location)} air destroy`);
         });
     });
     event.setImpactedBlocks(newImpactedBlocks);

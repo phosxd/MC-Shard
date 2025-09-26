@@ -1,7 +1,7 @@
 import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShortDimensionIdToNormal} from '../../../Shard/CONST';
-import {StringToLocation, AddVector3} from '../../../Shard/util';
+import {StringToVector, AddVector} from '../../../util/vector';
 import {DmkHeader, GetDmk, UnspoofBlock, SpoofBlock} from '../module';
 
 const tickingAreaName = 'shard:antixray.wipeSpoofs';
@@ -26,7 +26,7 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         const dimensionId = ShortDimensionIdToNormal[noHeaderKey[0]];
         const stringLocation = noHeaderKey.replace(noHeaderKey[0],'');
         const dimension = world.getDimension(dimensionId);
-        const location = StringToLocation(stringLocation).location;
+        const location = StringToVector(stringLocation, 3).vector as Vector3;
         // Add chunk loader.
         dimension.runCommand(`tickingarea add circle ${stringLocation} 2 "${tickingAreaName}"`);
         // Wait until location is loaded.
@@ -35,7 +35,7 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         const block = dimension.getBlock(location);
         UnspoofBlock(block);
         // Unspoof nearby blocks.
-        const volume = new BlockVolume(AddVector3(location, -20), AddVector3(location, 20));
+        const volume = new BlockVolume(AddVector(location, -20) as Vector3, AddVector(location, 20) as Vector3);
         const spoofedBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
         for (const location of spoofedBlocks.getBlockLocationIterator()) {
             const block = dimension.getBlock(location);

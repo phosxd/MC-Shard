@@ -1,6 +1,6 @@
 import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Block, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {StringifyVector3, RoundVector3} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {GetBlockNeighbors} from '../../../util/block';
 import {GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks} from '../module';
 
@@ -8,7 +8,7 @@ import {GetDmk, SpoofBlock, ReplaceableBlocks, SolidBlocks} from '../module';
 function* forceSpoofArea(volume:BlockVolume, dimension:Dimension, player?:Player) {
     let spoofedBlocks:number = 0;
     // Iterate on every spoof block in the radius.
-    const blocks = dimension.getBlocks(volume, {includeTypes:ReplaceableBlocks}, true);
+    const blocks = dimension.getBlocks(volume, {includeTypes:Object.assign([],ReplaceableBlocks)}, true);
     for (const location of blocks.getBlockLocationIterator()) {
         const block = dimension.getBlock(location);
         if (block == undefined) {continue};
@@ -45,7 +45,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (sendResult === false) {player = undefined};
     system.runJob(forceSpoofArea(volume, context.dimension, player));
 
-    return {message:{translate:'shard.antixray.cmd.forceSpoof.success', with:[StringifyVector3(RoundVector3(args[0])), StringifyVector3(RoundVector3(args[1]))]}, status:0};
+    return {message:{translate:'shard.antixray.cmd.forceSpoof.success', with:[StringifyVector(RoundVector(args[0])), StringifyVector(RoundVector(args[1]))]}, status:0};
 };
 
 

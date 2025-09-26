@@ -1,6 +1,6 @@
 import {system, Entity, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationToString} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 
 const default_radius:number = 4; // TNT explosion radius.
 const default_breakBlocks:boolean = true;
@@ -27,7 +27,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         context.dimension.createExplosion(location, radius, {breaksBlocks:breakBlocks, causesFire:causeFire, allowUnderwater:allowUnderwater, source:source[0]});
     });
 
-    return {message:{translate:'shard.util.cmd.explode.success', with:[LocationToString(location)]}, status:0};
+    return {message:{translate:'shard.util.cmd.explode.success', with:[StringifyVector(location)]}, status:0};
 };
 
 

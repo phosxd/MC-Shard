@@ -1,6 +1,6 @@
 import {CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationToString, RoundVector3} from '../../../Shard/util';
+import {StringifyVector, RoundVector} from '../../../util/vector';
 import {Module, Border} from '../module';
 
 
@@ -13,7 +13,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
     let list:string = '';
     borderKeys.forEach(key => {
         const border:Border = Module.persisData.borders[key];
-        list += '\n§r- §5Name: §7'+border.name+' §5Start: §7'+LocationToString(RoundVector3(border.area.start))+' §5End: §7'+LocationToString(RoundVector3(border.area.end))+' §5Inverted: §7'+String(border.inverted);
+        list += '\n§r- §5Name: §7'+border.name+' §5Start: §7'+StringifyVector(RoundVector(border.area.start))+' §5End: §7'+StringifyVector(RoundVector(border.area.end))+' §5Inverted: §7'+String(border.inverted);
     });
 
     return {message:{translate:'shard.border.cmd.listBorders.success', with:[list]}, status:0};

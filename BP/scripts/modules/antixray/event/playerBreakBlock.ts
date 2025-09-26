@@ -1,6 +1,6 @@
 import {system, world, PlayerBreakBlockBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {StringifyVector3} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {GetBlockNeighbors} from '../../../util/block';
 import {GetDmk, UnspoofBlock} from '../module';
 
@@ -13,7 +13,7 @@ function Callback(event:PlayerBreakBlockBeforeEvent) {
         event.cancel = true;
         system.run(()=>{
             UnspoofBlock(event.block, true);
-            event.player.runCommand(`setblock ${StringifyVector3(event.block.location)} air destroy`);
+            event.player.runCommand(`setblock ${StringifyVector(event.block.location)} air destroy`);
         });
     };
     // Unspoof neighboring blocks.

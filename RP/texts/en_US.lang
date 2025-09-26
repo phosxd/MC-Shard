@@ -34,10 +34,8 @@ shard.formCommon.yes=Yes
 shard.formCommon.no=No
 shard.formCommon.enterUniqueName=Enter a unique name for this...
 shard.formCommon.isEnabled=Is enabled?
-shard.formCommon.invalidLocation=§cExpected valid location. Try again.
-shard.formCommon.invalidSelector=§cExpected valid entity selector. Try again.
-shard.formCommon.duplicateName=§cExpected unique name. Try again.
-shard.formCommon.invalidName=§cName contains invalid characters. Try again.
+shard.formCommon.duplicateName=§cExpected unique name.
+shard.formCommon.invalidName=§cName contains invalid characters.
 shard.formError.outOfRange=§c"%s" should be between %s & %s.
 shard.formError.outOfRangeLength=§c"%s" length should be between %s & %s.
 shard.formError.outOfRangeArray=§c"%s" item count should be between %s & %s.
@@ -48,6 +46,24 @@ shard.formError.invalidNumber=§c"%s" expected a valid number.
 shard.formError.invalidLocation=§c"%s" expected a valid location.
 shard.formError.invalidSelector=§c"%s" expected a valid entity selector.
 shard.formError.invalidCharacters=§c"%s" contains invalid characters.
+
+## Common error texts.
+shard.error.playerNotFound=§cCannot find player.
+shard.error.missingPermission=§cYou do not have permission to do this.
+shard.error.commandDisabled=§cThis command is disabled.
+shard.error.commandModuleDisabled=§cEnable the §7%s§c module to use this command.
+shard.error.duplicateName=§cExpected unique name.
+shard.error.invalidName=§cName contains invalid characters.
+shard.error.outOfRange=§c"%s" should be between %s & %s.
+shard.error.outOfRangeLength=§c"%s" length should be between %s & %s.
+shard.error.outOfRangeArray=§c"%s" item count should be between %s & %s.
+shard.error.outOfRangeArrayItem=§c"%s" item value should be between %s & %s.
+shard.error.outOfRangeArrayItemLength=§c"%s" item length should be between %s & %s.
+shard.error.invalidStep=§c"%s" expected a step of %s.
+shard.error.invalidNumber=§c"%s" expected a valid number.
+shard.error.invalidLocation=§c"%s" expected a valid location.
+shard.error.invalidSelector=§c"%s" expected a valid entity selector.
+shard.error.invalidCharacters=§c"%s" contains invalid characters.
 
 ## "core" module texts.
 ## --------------------
@@ -101,12 +117,18 @@ shard.core.form.shard.body=§fRepo: §9github.com/phosxd/mc-shard§r\nJoin the D
 ## --------------------
 shard.util.displayName=§r[§gSimple Utility§r]
 shard.util.brief=Provides various helpful commands.
+shard.util.common.noItem=§cYou need to be holding an item.
 ## cmd: a
 shard.util.cmd.a.brief=Adventure mode.
 ## cmd: c
 shard.util.cmd.c.brief=Creative mode.
 ## cmd: despawn
 shard.util.cmd.despawn.success=Removed %s entities.
+## cmd: disenchant
+shard.util.cmd.disenchant.brief=Disenchant the item in your hand.
+shard.util.cmd.disenchant.success=Disenchanted §7%s§r.
+shard.util.cmd.disenchant.noEnchantable=§7%s§c cannot be disenchanted.
+shard.util.cmd.disenchant.invalidEnchantment=§7%s§c is not a valid enchantment.
 ## cmd: drain
 shard.util.cmd.drain.brief=Remove liquid blocks in a radius.
 shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.
@@ -114,7 +136,10 @@ shard.util.cmd.drain.radiusOutOfBounds=§cRadius must be between 1 & 50.
 ## cmd: dupe
 shard.util.cmd.dupe.brief=Duplicate the item in your hand.
 shard.util.cmd.dupe.success=Duplicated %s §7%s§r.
-shard.util.cmd.dupe.noItem=§cYou need to be holding an item.
+## cmd: durability
+shard.util.cmd.durability.brief=Set durability of the item in your hand. Value is a percentage.
+shard.util.cmd.durability.success=Set durability damage to §7%s/%s§r.
+shard.util.cmd.durability.noDurability=§7%s§c does not have durability.
 ## cmd: eat
 shard.util.cmd.eat.brief=Replenishes all hunger bars.
 shard.util.cmd.eat.success=Replenished %s entities.
@@ -144,7 +169,6 @@ shard.util.cmd.rename.successItem=Renamed items held by %s entities to "%s".
 shard.util.cmd.repair.brief=Repair the item in your hand.
 shard.util.cmd.repair.success=Repaired §7%s§r.
 shard.util.cmd.repair.failure=§7%s§c cannot be repaired.
-shard.util.cmd.repair.noItem=§cYou need to be holding an item.
 ## cmd: s
 shard.util.cmd.s.brief=Survival mode.
 ## cmd: setslot

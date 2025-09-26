@@ -1,6 +1,6 @@
 import {system, PlayerInteractWithBlockBeforeEvent} from '@minecraft/server';
 import {ShardListener} from '../../../Shard/listener';
-import {StringifyVector3} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {StringFormat} from '../../../util/string';
 import {Module, Event} from '../module';
 
@@ -18,7 +18,7 @@ function Callback(event:PlayerInteractWithBlockBeforeEvent) {
                 try {player.runCommand(StringFormat(playerActor.command, env))} catch {};
             };
             if (blockActor) {
-                try {block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${StringFormat(blockActor.command, env)}`)} catch {};
+                try {block.dimension.runCommand(`execute positioned ${StringifyVector(block.location)} run ${StringFormat(blockActor.command, env)}`)} catch {};
             };
         });
     });

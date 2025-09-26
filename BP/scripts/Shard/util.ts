@@ -4,7 +4,7 @@ import {StringEqualSplit} from '../util/string';
 
 
 /**Converts a Build Number to a Version.*/
-export function BuildNumberToVersion(buildNumber:number) {
+export function BuildNumberToVersion(buildNumber:number): Array<number> {
     return [
         Math.floor(buildNumber/1000),
         Math.floor((buildNumber%1000)/100),
@@ -14,7 +14,7 @@ export function BuildNumberToVersion(buildNumber:number) {
 
 
 /**Converts a Version to a Build Number.*/
-export function VersionToBuildNumber(version:Array<number>) {
+export function VersionToBuildNumber(version:Array<number>): number {
     return version[0]*1000 + version[1]*100 + version[2];
 };
 
@@ -22,185 +22,34 @@ export function VersionToBuildNumber(version:Array<number>) {
 
 
 /**Returns a deepcopy of the object.*/
-export function Deepcopy(object:any):any {
+export function Deepcopy(object) {
     return JSON.parse(JSON.stringify(object));
+};
+
+
+
+/**
+ * Convert range of value from `a` to `b`.
+*/
+export function Lerp(a:{min:number,max:number}, b:{min:number,max:number}, value:number): number {
+    return (b.min + (((value-a.min) / (a.max-a.min)) * (b.max-b.min)));
 };
 
 
 
 
 /**Return a random element from the array.*/
-export function RandomElement(array:Array<any>):any {
+export function RandomElement(array:Array<any>) {
     return array[Math.floor(Math.random() * array.length)];
 };
 
 
 
-/**
- * Same as `StringifyVector3`.
-*/
-export function LocationToString(location:Vector3) {
-    return StringifyVector3(location);
-};
-
-
-/**Converts a string to a location.*/
-export function StringToLocation(value:string):{status:number, location?:Vector3} {
-    if (value == undefined) {return {status:1}};
-
-    const splitValue:Array<string> = value.split(' ');
-    let x:any = splitValue[0];
-    let y:any = splitValue[1];
-    let z:any = splitValue[2];
-    if (x == undefined || y == undefined || z == undefined) {
-        return {status:1};
-    };
-    x = Number(x);
-    y = Number(y);
-    z = Number(z);
-    if (isNaN(x) || isNaN(y) || isNaN(z)) {
-        return {status:1};
-    };
-
-    return {status:0, location:{x:x,y:y,z:z}};
-};
-
 
 /**Determines if a block location is out of bounds.*/
-export function LocationOutOfBounds(location:Vector3):boolean {
+export function LocationOutOfBounds(location:Vector3): boolean {
     if (location.y > 256 || location.y < -64) {return true};
     return false;
-};
-
-
-/**
- * Stringifies `Vector3`.
-*/
-export function StringifyVector3(vector:Vector3):string {
-    return `${vector.x} ${vector.y} ${vector.z}`;
-};
-
-/**
- * Stringifies `Vector2`.
-*/
-export function StringifyVector2(vector:Vector2):string {
-    return `${vector.x} ${vector.y}`;
-};
-
-/**Returns a new Vector3 with added values.*/
-export function AddVector3(a:Vector3, b:Vector3|number):Vector3 {
-    if (typeof b == 'number') {
-        b = {x:b, y:b, z:b};
-    };
-    return {
-        x: a.x+b.x,
-        y: a.y+b.y,
-        z: a.z+b.z,
-    };
-};
-
-
-/**Returns a new Vector3 with subtracted values.*/
-export function SubtractVector3(a:Vector3, b:Vector3|number):Vector3 {
-    if (typeof b == 'number') {
-        b = {x:b, y:b, z:b};
-    };
-    return {
-        x: a.x-b.x,
-        y: a.y-b.y,
-        z: a.z-b.z,
-    };
-};
-
-
-/**Returns a new Vector3 with multiplied values.*/
-export function MultiplyVector3(a:Vector3, b:Vector3|number):Vector3 {
-    if (typeof b == 'number') {
-        b = {x:b, y:b, z:b};
-    };
-    return {
-        x: a.x*b.x,
-        y: a.y*b.y,
-        z: a.z*b.z,
-    };
-};
-
-
-/**Returns a new Vector3 with divided values.*/
-export function DivideVector3(a:Vector3, b:Vector3|number):Vector3 {
-    if (typeof b == 'number') {
-        b = {x:b, y:b, z:b};
-    };
-    return {
-        x: a.x/b.x,
-        y: a.y/b.y,
-        z: a.z/b.z,
-    };
-};
-
-
-/**Returns a new Vector3 with normalized values.*/
-export function NormalizeVector3(vector:Vector3):Vector3 {
-    let length = Math.sqrt(vector.x**2 + vector.y**2 + vector.z**2);
-    if (length == 0) {
-        return {x:0,y:0,z:0};
-    };
-    return {
-        x: vector.x / length,
-        y: vector.y / length,
-        z: vector.z / length,
-    };
-};
-
-
-/**Returns a new Vector3 with rounded values.*/
-export function RoundVector3(vector:Vector3):Vector3 {
-    return {
-        x: Math.round(vector.x),
-        y: Math.round(vector.y),
-        z: Math.round(vector.z),
-    };
-};
-
-
-/**Returns a new Vector3 with floored values.*/
-export function FloorVector3(vector:Vector3):Vector3 {
-    return {
-        x: Math.floor(vector.x),
-        y: Math.floor(vector.y),
-        z: Math.floor(vector.z),
-    };
-};
-
-
-/**Returns a new Vector3 with sign flipped values.
- * Equivalant to `var number = -number`.
-*/
-export function FlipVector3(vector:Vector3):Vector3 {
-    return {
-        x: -vector.x,
-        y: -vector.y,
-        z: -vector.z,
-    };
-};
-
-
-/**Returns a new Vector3 with the new precision.*/
-export function FixVector3(vector:Vector3, precision:number):Vector3 {
-    let newVector:Vector3 = {x:0,y:0,z:0};
-    newVector.x = Number(vector.x.toPrecision(precision));
-    newVector.y = Number(vector.y.toPrecision(precision));
-    newVector.z = Number(vector.z.toPrecision(precision));
-    return newVector;
-};
-
-
-/**Returns a new Vector2 with the new precision.*/
-export function FixVector2(vector:Vector2, precision:number):Vector2 {
-    let newVector:Vector2 = {x:0,y:0};
-    newVector.x = Number(vector.x.toPrecision(precision));
-    newVector.y = Number(vector.y.toPrecision(precision));
-    return newVector;
 };
 
 

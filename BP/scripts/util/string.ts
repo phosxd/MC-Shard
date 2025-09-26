@@ -1,6 +1,6 @@
 import {} from '@minecraft/server';
 import {Dictionary} from '../Shard/CONST';
-import {StringifyVector2, StringifyVector3} from '../Shard/util';
+import {StringifyVector} from './vector';
 
 
 /**
@@ -75,11 +75,11 @@ export function StringFormat(str:string, env:Dictionary<any>, rawResults:boolean
             case 'object': {
                 // Vector3
                 if (evalResult.x && evalResult.y && evalResult.z) {
-                    evalResult = StringifyVector3(evalResult);
+                    evalResult = StringifyVector(evalResult);
                 }
                 // Vector2
                 else if (evalResult.x && evalResult.y && !evalResult.z) {
-                    evalResult = StringifyVector2(evalResult);
+                    evalResult = StringifyVector(evalResult);
                 };
             };
             case 'undefined': {

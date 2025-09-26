@@ -1,7 +1,8 @@
 import {CommandPermissionLevel, Vector3} from '@minecraft/server';
 import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormModalResponse} from '../../../Shard/form';
 import {ShardCommandContext} from '../../../Shard/command';
-import {LocationToString, AlignArea} from '../../../Shard/util';
+import {AlignArea} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 import {Module, Region} from '../module';
 
 
@@ -17,8 +18,8 @@ function Builder(context:ShardCommandContext, ...args) {
         elements.push({type:'label', id:'message', data:{display:message}});
     };
     elements.push({type:'textBox', id:'name', data:{display:{translate:'shard.region.form.edit.name'}, placeholder:{translate:'shard.region.form.edit.namePlaceholder'}, defaultValue:region.name}});
-    elements.push({type:'vector3Box', id:'start', data:{display:{translate:'shard.region.form.edit.start'}, placeholder:{translate:'shard.region.form.edit.startPlaceholder'}, defaultValue:LocationToString(region.area.start)}});
-    elements.push({type:'vector3Box', id:'end', data:{display:{translate:'shard.region.form.edit.end'}, placeholder:{translate:'shard.region.form.edit.endPlaceholder'}, defaultValue:LocationToString(region.area.end)}});
+    elements.push({type:'vector3Box', id:'start', data:{display:{translate:'shard.region.form.edit.start'}, placeholder:{translate:'shard.region.form.edit.startPlaceholder'}, defaultValue:StringifyVector(region.area.start)}});
+    elements.push({type:'vector3Box', id:'end', data:{display:{translate:'shard.region.form.edit.end'}, placeholder:{translate:'shard.region.form.edit.endPlaceholder'}, defaultValue:StringifyVector(region.area.end)}});
     elements.push({type:'toggle', id:'inverted', data:{display:{translate:'shard.region.form.edit.inverted'}, defaultValue:region.inverted}});
     return new ShardFormBuilder({type:'modal'}, {elements:elements, callbackArgs:[regionName]});
 };

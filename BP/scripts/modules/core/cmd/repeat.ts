@@ -1,6 +1,6 @@
 import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationToString} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -31,7 +31,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     // Add extra command parameters if user is a block.
     if (context.sourceType == 'block') {
         const block = context.sourceBlock;
-        commandParts.push(`positioned ${LocationToString(block.location)}`);
+        commandParts.push(`positioned ${StringifyVector(block.location)}`);
     };
 
     // Finalize the command then start executing it.

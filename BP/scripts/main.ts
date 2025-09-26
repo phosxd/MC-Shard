@@ -3,10 +3,11 @@
 //
 // Navigate to the "CONST" file under "Shard" to configure hard-coded values.
 
+import './util/string';
+import './util/vector';
 import './util/block';
 import './util/entity';
 import './util/item';
-import './util/string';
 import './Shard/CONST';
 import './Shard/LANG';
 import './Shard/util';

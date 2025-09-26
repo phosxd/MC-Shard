@@ -1,6 +1,6 @@
 import {system, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {StringifyVector3} from '../../../Shard/util';
+import {StringifyVector} from '../../../util/vector';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -67,7 +67,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     else if (context.sourceType == 'block') {
         const block = context.sourceBlock;
         system.run(()=>{
-            block.dimension.runCommand(`execute positioned ${StringifyVector3(block.location)} run ${command}`);
+            block.dimension.runCommand(`execute positioned ${StringifyVector(block.location)} run ${command}`);
         });
     }
     else {
