@@ -117,7 +117,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'antixray.wipespoofs',
         brief: 'shard.antixray.cmd.wipespoofs.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         optionalParameters: [
             {name:'sendResult', type:CustomCommandParamType.Boolean},
         ],

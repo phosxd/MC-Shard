@@ -21,7 +21,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'eventvariables',
         brief: 'shard.event.cmd.eventVariables.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:'sh:eventId', type:CustomCommandParamType.Enum},
         ],

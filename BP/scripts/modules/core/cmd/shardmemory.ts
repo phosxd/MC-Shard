@@ -14,7 +14,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'shardmemory',
         brief: 'shard.core.cmd.shardMemory.brief',
-        permissionLevel: CommandPermissionLevel.Admin
+        permissionLevel: CommandPermissionLevel.GameDirectors
     },
     {callback: Callback},
 );

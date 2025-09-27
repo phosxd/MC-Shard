@@ -20,7 +20,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'editregion',
         brief: 'shard.region.cmd.editRegion.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:'name', type:CustomCommandParamType.String},
         ],

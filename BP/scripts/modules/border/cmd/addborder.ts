@@ -20,8 +20,6 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     if (currentBorder) {return {message:{translate:'shard.misc.createDuplicateName'}, status:1}};
     const style = Module.persisData.borderStyles[styleId];
     if (!style) {return {message:{translate:'shard.border.cmd.addBorder.invalidStyle', with:['"'+Object.keys(Module.persisData.borderStyles).join('", "')+'"']}, status:1}};
-    // I cant get non-inverted borders to not just freeze entities in place on contact, so this should only ever be used inverted.
-    if (!inverted) {return {message:{translate:'shard.border.cmd.addBorder.mustBeInverted'}, status:1}};
 
     const newBorder:Border = {
         name: name,

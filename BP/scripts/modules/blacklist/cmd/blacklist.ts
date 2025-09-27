@@ -13,7 +13,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'blacklist',
         brief: 'shard.blacklist.cmd.blacklist.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
     },
     {callback: Callback},
 );

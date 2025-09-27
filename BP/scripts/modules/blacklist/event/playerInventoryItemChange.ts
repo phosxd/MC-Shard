@@ -6,7 +6,7 @@ import {Module, BlacklistItem} from '../module';
 
 function Callback(event:PlayerInventoryItemChangeAfterEvent) {
     if (!event.itemStack) {return};
-    if (CompareCommandPermissionLevel(event.player.commandPermissionLevel, CommandPermissionLevel.Admin)) {
+    if (CompareCommandPermissionLevel(event.player.commandPermissionLevel, CommandPermissionLevel.GameDirectors)) {
         return;
     };
 

@@ -2,7 +2,7 @@ import {Dictionary} from '../Shard/CONST';
 import {system, Dimension, Entity, Vector2, Vector3, EntityInventoryComponent, EquipmentSlot} from '@minecraft/server';
 import {ItemStackObject, ItemStackToObject, ObjectToItemStack} from './item';
 
-const equipmentSlots = ['Head','Chest','Legs','Feet','Offhand','Mainhand'];
+const equipmentSlots = ['Head','Chest','Legs','Feet','Offhand'];
 const inventoryEntityTypeId = 'shard:inventory';
 
 

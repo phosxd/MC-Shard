@@ -69,6 +69,6 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
 
 // Initialize form.
 export const MAIN = new ShardForm(
-    {id:'editItem', permissionLevel:CommandPermissionLevel.Admin},
+    {id:'editItem', permissionLevel:CommandPermissionLevel.GameDirectors},
     {buildForm:Builder, callback:Callback},
 );

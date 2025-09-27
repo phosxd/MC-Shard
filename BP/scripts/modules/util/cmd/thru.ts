@@ -39,7 +39,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'thru',
         brief: 'shard.util.cmd.thru.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
     },
     {callback: Callback},
 );

@@ -166,7 +166,6 @@ export const LANG = {
                     success: 'Added new border "§7%s§r" starting from %s & ending at %s.',
                     nameTaken: '§cCannot create border with duplicate name.',
                     invalidStyle: '§cCannot create border with invalid style. Available styles: %s.',
-                    mustBeInverted: '§cNormal borders are not yet supported, only inverted borders should be created.',
                 },
                 removeBorder: {
                     success: 'Removed border "§7%s§r".',

@@ -31,7 +31,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'up',
         brief: 'shard.util.cmd.up.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:'distance', type:CustomCommandParamType.Integer},
         ],

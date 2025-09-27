@@ -9,6 +9,6 @@ function Callback(context:ShardCommandContext, _args:Array<any>) {
 
 // Initialize Command.
 export const MAIN = new ShardCommand(
-    {id:'a', brief:'shard.util.cmd.a.brief', permissionLevel:CommandPermissionLevel.Admin},
+    {id:'a', brief:'shard.util.cmd.a.brief', permissionLevel:CommandPermissionLevel.GameDirectors},
     {callback: Callback},
 );

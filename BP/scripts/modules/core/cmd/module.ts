@@ -78,7 +78,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'module',
         brief: 'shard.core.cmd.module.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
         mandatoryParameters: [
             {name:CommandNamespace+':'+'module', type:CustomCommandParamType.Enum},
         ],

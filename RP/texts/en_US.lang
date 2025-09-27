@@ -228,7 +228,6 @@ shard.border.brief=Provides border functionality.
 shard.border.cmd.addBorder.brief=Add a new border in this dimension. Set inverted for world border.
 shard.border.cmd.addBorder.success=Added new border "§7%s§r" starting from %s & ending at %s.
 shard.border.cmd.addBorder.invalidStyle=§cCannot create border with invalid style. Available styles: %s.
-shard.border.cmd.addBorder.mustBeInverted=§cNormal borders are not yet supported, only inverted borders should be created.
 ## cmd: removeBorder
 shard.border.cmd.removeBorder.brief=Remove a border.
 shard.border.cmd.removeBorder.success=Removed border "§7%s§r".

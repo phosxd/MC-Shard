@@ -1,21 +1,58 @@
 import {system, world, Player, Entity} from '@minecraft/server';
 import {Dictionary} from './CONST';
+import {GetAllEntities} from './util';
 
 
-export class TickEventSignal {
-    _listeners: Array<()=>void>;
+export class EventSignal {
     /**Database for listeners to share data & communicate with each other.*/
     sharedData: Dictionary<any>;
-
+    /**All listeners for this event.*/
+    _listeners: Array<any>;
     constructor() {
         this._listeners = [];
         this.sharedData = {};
     };
-    subscribe(callback:()=>void):void {
+
+    _subscribe(callback): void {
         this._listeners.push(callback);
     };
-    unsubscribe(callback:()=>void):void {
+    _unsubscribe(callback): void {
         this._listeners.splice(this._listeners.indexOf(callback), 1);
+    };
+    subscribe(callback:()=>void): void {
+        this._subscribe(callback);
+    };
+    unsubscribe(callback:Function): void {
+        this._unsubscribe(callback);
+    };
+
+    /**
+     * Call all listeners for this event.
+     * If a return value is expected, do not use this.
+    */
+    call(...args): void {
+        // Reset `sharedData`.
+        Object.keys(this.sharedData).forEach(key => {
+            delete this.sharedData[key];
+        });
+        // Call listeners.
+        this._listeners.forEach(listener => {
+            listener(...args);
+        });
+    };
+};
+
+
+export class TickEventSignal extends EventSignal {};
+
+
+export interface EntityTickEvent {
+    entity: Entity,
+};
+
+export class EntityTickEventSignal extends EventSignal {
+    subscribe(callback:(event:EntityTickEvent)=>void): void {
+        this._subscribe(callback);
     };
 };
 
@@ -24,17 +61,10 @@ export interface PlayerDropItemEvent {
     player: Player,
     droppedItem: Entity,
 };
-export class PlayerDropItemEventSignal {
-    _listeners:Array<(event:PlayerDropItemEvent)=>void>;
 
-    constructor() {
-        this._listeners = [];
-    };
-    subscribe(callback:(event:PlayerDropItemEvent)=>void):void {
-        this._listeners.push(callback);
-    };
-    unsubscribe(callback:(event:PlayerDropItemEvent)=>void):void {
-        this._listeners.splice(this._listeners.indexOf(callback), 1);
+export class PlayerDropItemEventSignal extends EventSignal {
+    subscribe(callback:(event:PlayerDropItemEvent)=>void): void {
+        this._subscribe(callback);
     };
 };
 
@@ -43,9 +73,14 @@ export class PlayerDropItemEventSignal {
 
 // All Shard after events.
 export const afterEvents = {
-    /**Runs every server tick (1/20th seconds).*/
+    /**Runs every server tick.*/
     tick: new TickEventSignal(),
-    /**Runs when a player drops an item from their inventory.*/
+    /**Runs every server tick for each entity.*/
+    entityTick: new EntityTickEventSignal(),
+    /**
+     * Runs when a player drops an item from their inventory.
+     * *Can produce false positives.*
+    */
     playerDropItem: new PlayerDropItemEventSignal(),
 };
 
@@ -54,18 +89,20 @@ export const afterEvents = {
 
 // Tick loop.
 function tick() {
-    // Remove data from previous tick.
-    Object.keys(afterEvents.tick.sharedData).forEach(key => {
-        delete afterEvents.tick.sharedData[key];
-    });
-    // Run listeners.
-    afterEvents.tick._listeners.forEach(listener => {
-        listener();
-    });
-    
-    system.run(tick);
+    // Run tick listeners.
+    afterEvents.tick.call();
+    // Run entity tick listeners.
+    if (afterEvents.entityTick._listeners.length > 0) {
+        const allEntities = GetAllEntities();
+        allEntities.forEach(entity => {
+            if (!entity.isValid) {return};
+            afterEvents.entityTick.call(entity);
+        });
+    };
 };
-system.run(tick);
+
+// Start loop.
+system.runInterval(tick, 1);
 
 
 // Player drop item event.

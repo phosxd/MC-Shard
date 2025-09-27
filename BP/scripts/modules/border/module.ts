@@ -23,7 +23,7 @@ export const Module = new ShardModule(
     {
         enabledByDefault: false,
         childPaths: [
-            'event/tick',
+            'event/entityTick',
             'cmd/addBorder',
             'cmd/listBorders',
             'cmd/removeBorder',

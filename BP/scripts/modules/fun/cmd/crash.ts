@@ -19,7 +19,7 @@ export const MAIN = new ShardCommand(
     {
         id: 'crash',
         brief: 'shard.fun.cmd.crash.brief',
-        permissionLevel: CommandPermissionLevel.Admin,
+        permissionLevel: CommandPermissionLevel.GameDirectors,
     },
     {callback: Callback},
 );

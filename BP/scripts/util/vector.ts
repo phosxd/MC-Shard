@@ -76,6 +76,24 @@ export function AddVector(a, b) {
 
 
 /**
+ * Returns a new vector with subtracted values.
+ * 
+ * @param a `AnyVector`.
+ * @param b `AnyVector` or `number`.
+*/
+export function SubtractVector(a, b) {
+    if (typeof b == 'number') {
+        b = NewVector(Object.keys(a).length, b);
+    };
+    let newVector = {};
+    for (const key of Object.keys(a)) {
+        newVector[key] = a[key]-b[key];
+    };
+    return newVector;
+};
+
+
+/**
  * Returns a new vector with multiplied values.
  * 
  * @param a `AnyVector`.
