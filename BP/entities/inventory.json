@@ -1,8 +1,8 @@
 {
-	"format_version": "1.19.0",
+	"format_version": "1.21.30",
 	"minecraft:entity": {
 		"description": {
-			"identifier": "shard:loader",
+			"identifier": "shard:inventory",
 			"is_spawnable": false,
 			"is_summonable": true
 		},
@@ -30,9 +30,11 @@
 				}
 			},
 			"minecraft:persistent": {},
-			"minecraft:tick_world": {
-				"radius": 2,
-				"never_despawn": true
+			"minecraft:inventory": {
+				"container_type": "container",
+				"inventory_size": 120,
+				"can_be_siphoned_from": false,
+				"private": true
 			}
 		}
 	}

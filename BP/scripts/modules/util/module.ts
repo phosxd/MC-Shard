@@ -25,6 +25,8 @@ export const Module = new ShardModule(
             'cmd/explode',
             'cmd/freeze',
             'cmd/heal',
+            'cmd/inventory',
+            'cmd/inventoryList',
             'cmd/push',
             'cmd/pushchat',
             'cmd/rename',
@@ -39,6 +41,7 @@ export const Module = new ShardModule(
         commandEnums: CommandEnums,
         extraDefaultPersisData: {
             frozenEntities: {},
+            inventoryIds: {},
         },
     },
 );

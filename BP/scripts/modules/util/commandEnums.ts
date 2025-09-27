@@ -3,4 +3,9 @@ export default {
         'item',
         'entity',
     ],
+    inventoryOption: [
+        'save',
+        'load',
+        'delete',
+    ],
 };

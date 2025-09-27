@@ -23,6 +23,7 @@ export const LANG = {
             missingPermission: '§cYou do not have permission to do this.',
             commandDisabled: '§cThis command is disabled.',
             commandModuleDisabled: '§cEnable the §7%s§c module to use this command.',
+            invalidOption: '§c"%s" is not a valid option.',
             duplicateName: '§cExpected unique name.',
             invalidName: '§cName contains invalid characters.',
             outOfRange: '§c"%s" should be between %s & %s.',
@@ -100,12 +101,22 @@ export const LANG = {
                 heal: {
                     success: 'Healed %s entities.',
                 },
+                inventory: {
+                    saveSuccess: 'Saved (global?: %s) inventory as §7%s§r.',
+                    loadSuccess: 'Loaded (global?: %s) inventory §7%s§r.',
+                    deleteSuccess: 'Deleted inventory §7%s§r for %s.',
+                    doesNotExist: '§cInventory §7%s§c does not exist for "§7%s§c".',
+                    couldNotLoad: '§cCould not load saved inventory §7%s§c from "§7%s§c". Data may be corrupted or missing.',
+                },
+                inventoryList: {
+                    success: 'All saved inventories: %s',
+                },
                 push: {
                     success: 'Applied an impulse to %s entities.',
                 },
                 rename: {
-                    successEntity: 'Renamed %s entities to "%s".',
-                    successItem: 'Renamed items held by %s entities to "%s".',
+                    successEntity: 'Renamed %s entities to "§7%s§r".',
+                    successItem: 'Renamed items held by %s entities to "§7%s§r".',
                 },
                 setSlot: {
                     success: 'Set %s players\' slot to %s.',

@@ -1,8 +1,9 @@
 import {Dictionary} from '../Shard/CONST';
-import {system, Dimension, Entity, Vector2, Vector3} from '@minecraft/server';
+import {system, Dimension, Entity, Vector2, Vector3, EntityInventoryComponent, EquipmentSlot} from '@minecraft/server';
 import {ItemStackObject, ItemStackToObject, ObjectToItemStack} from './item';
 
-const equipmentSlots = ['head','chest','legs','feet','offhand'];
+const equipmentSlots = ['Head','Chest','Legs','Feet','Offhand','Mainhand'];
+const inventoryEntityTypeId = 'shard:inventory';
 
 
 /**
@@ -229,4 +230,52 @@ export function SelectorApplies(entity:Entity, selector:string):boolean {
     };
     // Otherwise return false.
     return false;
+};
+
+
+
+
+/**
+ * Clones the `source` entity's inventory to the `target` entity's inventory.
+ * `cloneEquipment` should only be used if both entities can support it.
+*/
+export function CloneInventory(source:Entity, target:Entity, cloneEquipment:boolean=true): void {
+    /**
+     * Used for simulating an equipment component when entity does not have one.
+     * `startIndex` default value is tuned for `shard:inventory` inventory size & should not be used for other entities.
+    */
+    function sudoEqu(inv, startIndex=101) {
+        return {
+            getEquipment: (slot) => {
+                return inv.getItem(startIndex + equipmentSlots.indexOf(slot));
+            },
+            setEquipment: (slot, item) => {
+                return inv.setItem(startIndex + equipmentSlots.indexOf(slot), item);
+            },
+        };
+    };
+    // Get inventories.
+    const sourceInv = source.getComponent('inventory').container;
+    const targetInv = target.getComponent('inventory').container;
+    let sourceEqu:any = source.getComponent('equippable');
+    let targetEqu:any = target.getComponent('equippable');
+    if (sourceEqu == undefined) {sourceEqu = sudoEqu(sourceInv)};
+    if (targetEqu == undefined) {targetEqu = sudoEqu(targetInv)};
+    // Main inventory cloning.
+    for (let i=0; i < sourceInv.size && i < targetInv.size; i++) {
+        let item = sourceInv.getItem(i);
+        if (item == undefined) {targetInv.setItem(i, undefined); continue};
+        targetInv.setItem(i, item.clone());
+    };
+    // Equipment cloning.
+    if (cloneEquipment == true) {
+        equipmentSlots.forEach(slot => {
+            const item = sourceEqu.getEquipment(slot);
+            if (item == undefined) {
+                targetEqu.setEquipment(slot, undefined);
+                return;
+            };
+            targetEqu.setEquipment(slot, item.clone());
+        });
+    };
 };

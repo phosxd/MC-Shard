@@ -156,6 +156,16 @@ shard.util.cmd.freeze.success=Froze %s entities for %s seconds.
 ## cmd: heal
 shard.util.cmd.heal.brief=Regenerate all health.
 shard.util.cmd.heal.success=Healed %s entities.
+## cmd: inventory
+shard.util.cmd.inventory.brief=Manage player or global inventories.
+shard.util.cmd.inventory.saveSuccess=Saved (global?: %s) inventory as §7%s§r.
+shard.util.cmd.inventory.loadSuccess=Loaded (global?: %s) inventory §7%s§r.
+shard.util.cmd.inventory.deleteSuccess=Deleted inventory §7%s§r for %s.
+shard.util.cmd.inventory.doesNotExist=§cInventory §7%s§c does not exist for "§7%s§c".
+shard.util.cmd.inventory.couldNotLoad=§cCould not load saved inventory §7%s§c from "§7%s§c". Data may be corrupted or missing.
+## cmd: inventoryList
+shard.util.cmd.inventoryList.brief=List all saved inventories.
+shard.util.cmd.inventoryList.success=All saved inventories: %s
 ## cmd: push
 shard.util.cmd.push.brief=Pushes an entity towards the location. Cannot be applied to items. May be unreliable when applied to players.
 shard.util.cmd.push.success=Applied an impulse to %s entities.
@@ -163,8 +173,8 @@ shard.util.cmd.push.success=Applied an impulse to %s entities.
 shard.util.cmd.pushChat.brief=Pushes all previous chat messages off-screen.
 ## cmd: rename
 shard.util.cmd.rename.brief=Rename entities or held items.
-shard.util.cmd.rename.successEntity=Renamed %s entities to "%s".
-shard.util.cmd.rename.successItem=Renamed items held by %s entities to "%s".
+shard.util.cmd.rename.successEntity=Renamed %s entities to "§7%s§r".
+shard.util.cmd.rename.successItem=Renamed items held by %s entities to "§7%s§r".
 ## cmd: repair
 shard.util.cmd.repair.brief=Repair the item in your hand.
 shard.util.cmd.repair.success=Repaired §7%s§r.
