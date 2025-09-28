@@ -1,32 +1,61 @@
+<div align="middle">
+
+<img src="https://github.com/phosxd/MC-Shard/blob/0.2/BP/pack_icon.png?raw=true" height=175 align=""></img>
+
+[![Release](https://img.shields.io/github/v/release/phosxd/mc-shard)](https://github.com/phosxd/mc-shard/releases)
+[![Release](https://img.shields.io/badge/Join_us!-gray?style=flat&logo=discord)](https://dsc.gg/mc-shard)
+
+**Source version**: `0.3-dev`
+
 Shard is an upcoming all-in-one add-on for servers & realms! With a fully modular & customizable design, Shard will have a vast multitude of management, utility, fun, survival+, & moderation modules soon.
 
 This is not a complete build! Although the ground-work is out of the way, there are still many things subject to change & with incomplete implementations.
 
-Version: **0.3** (in-dev).
+</div>
+
+---
 
 # Installation:
 Shard is only available for Minecraft Bedrock 1.21.100 or higher.
-- Download the latest release on [Github](https://github.com/phosxd/mc-shard) or [Discord](https://dsc.gg/mc-shard).
-- Double click or open the downloaded `.mcaddon` file.
-- Apply the pack to your world. Make sure to apply the resource pack AND the behavior pack.
 
-You DO NOT need:
+**1.** Download the latest release from [Github](https://github.com/phosxd/mc-shard/releases).
+
+Do not use the source code `BP` & `RP` packs as they use TypeScript files that need to be compiled to JavaScript.
+
+**2.** Open the downloaded `.mcaddon` file with Minecraft, or unzip then drag the `BP` & `RP` folders to their respective locations in your Minecraft directory.
+
+**3.** Apply the packs to your world. Make sure to apply the resource pack AND the behavior pack, one cannot work without the other.
+
+**You do NOT need**:
 - Beta-APIs.
 - Any experimental features enabled.
+- BDS software.
 
-You DO need:
+**You DO need**:
 - Cheats enabled.
 
-If you followed the instructions perfectly, when entering your world you should receive a pretty "This server is running Shard" message.
+If you followed the instructions perfectly, upon entering your world you should receive a pretty "This server is running Shard" message.
 
-# Getting started:
+---
+
+# Usage:
+
+---
+
+<details>
+<summary><b>Getting started</b></summary>
 To get started, type `/sh:` in chat (but do not send) to view auto-completes for every command for every Shard module.
 
 You can configure modules by using the `/module <module>` command. Disabling a module will disable all it's commands & events. You can also configure settings for individual commands.
 
 There are plenty of features to play around with & so many more to come! If you need any help, join the Discord & we will try our best.
+</details>
 
-# Utility Modules:
+---
+
+<details>
+<summary><b>Utility Modules</b></summary>
+
 ## `core`:
 Provides essential functionality for the add-on. Cannot be disabled.
 
@@ -38,7 +67,7 @@ Provides essential functionality for the add-on. Cannot be disabled.
 - `/chain`: Run 2 commands in sequence.
 - `/condition`: Run command if condition returns trye.
 - `/repeat`: Repeat a command.
-- `/eval`: Run TypeScript code in an uncontrolled environment. Intended for developer use only.
+- `/eval`: Run code with variable formatting. Intended for developer use only.
 - `/hc.load`: Load hard-copy data.
 - `/hc.print.entity`: Print an entity as a hard-copy. Some components, & entity variants are not copied.
 - `/module`: Configure a module.
@@ -59,11 +88,9 @@ Some commands may also be removed from this module & re-implemented in other mod
 - `/qcopy`: Save the targeted block.
 - `/qpaste`: Load the saved block.
 - `/qrotate`: Rotate the targeted block.
-- `/inventory`: Save or load an inventory.
-- `/hotbar`: Save or load a hotbar.
 
 **Commands:**
-- `/c, /s, /a, /sp`: Change user's game-mode. Far quicker than `/gamemode`.
+- `/c, /s, /a, /sp`: Change user's game-mode. Quicker than `/gamemode`.
 - `/pushchat`: Pushes all previous chat messages off-screen.
 - `/suicide`: Kill's the user. Useful if stuck.
 - `/despawn`: Remove entities without death animations & without dropping loot/XP. Cannot use on players.
@@ -80,6 +107,8 @@ Some commands may also be removed from this module & re-implemented in other mod
 - `/repair`: Repair the item in your hand.
 - `/dupe`: Duplicate the item in your hand.
 - `/rename`: Rename entities or held items.
+- `/inventory`: Manage player or global inventories.
+- `/inventory.list`: List all saved inventories.
 
 ## `display`:
 Provides tools for interacting with display entities for holographic text & bossbars.
@@ -87,7 +116,12 @@ Provides tools for interacting with display entities for holographic text & boss
 **Commands:**
 - `/adddisplay`: Summon a new display entity.
 
-# Functional Modules:
+</details>
+
+---
+
+<details>
+<summary><b>Functional Modules</b></summary>
 
 ## `tracker`:
 Provides entity statistics & current entity state tracking. Data is stored in scoreboards, or "sh.st" tags. Tracker tags must be applied to entities you want to track.
@@ -197,7 +231,12 @@ Run advanced commands on world events.
 - `/listevents`: List all events.
 - `/eventvariables`: List all variables for an event. For advanced users.
 
-# Anti-Cheat Modules:
+</details>
+
+---
+
+<details>
+<summary><b>Anti-Cheat Modules</b></summary>
 
 ## `antixray`:
 Prevents Xray from finding valueable ores.
@@ -211,7 +250,12 @@ Prevents Xray from finding valueable ores.
 - `/antixray.unspoof`: Unspoof all ores in volume.
 - `/antixray.wipespoofs`: Unspoof all ores in the world. At least 1 ticking-area slot must be available!
 
-# Other Modules:
+</details>
+
+---
+
+<details>
+<summary><b>Other Modules</b></summary>
 
 ## `draw`:
 Provides tools for rendering shapes in the world using particles.
@@ -220,8 +264,15 @@ Provides tools for rendering shapes in the world using particles.
 - `/drawcuboid`: Renders a cuboid for the targets. "options" expects valid JSON, see "/sh:drawoptions" for option list.
 - `/drawoptions`: List all drawing options.
 
-# Upcoming Modules:
+</details>
+
+---
+
+<details>
+<summary><b>Upcoming Modules</b></summary>
+
 Join the Discord to see more potential modules. There are plently more modules that I have not listed here or on the Discord because either I am not sure I want to make it, or it may only be possible with Beta-APIs.
 - `sidebar`: Manages the right sidebar visible to all players. Includes commands for editing & modifying it.
 - `capitator`: Quickly mine trees & ores. Would work with durability, silk touch, & fortune.
-- `shardscript`: Save & use multiline command or JS scripts that can make use of variables & other formatting. This will require me to make a custom text input element for modal forms with JSON UI ;-;
+
+</details>
