@@ -36,22 +36,18 @@ Do not use the source code `BP` & `RP` packs as they use TypeScript files that n
 
 If you followed the instructions perfectly, upon entering your world you should receive a pretty "This server is running Shard" message.
 
----
-
 # Usage:
-
----
 
 <details>
 <summary><b>Getting started</b></summary>
+
 To get started, type `/sh:` in chat (but do not send) to view auto-completes for every command for every Shard module.
 
 You can configure modules by using the `/module <module>` command. Disabling a module will disable all it's commands & events. You can also configure settings for individual commands.
 
 There are plenty of features to play around with & so many more to come! If you need any help, join the Discord & we will try our best.
-</details>
 
----
+</details>
 
 <details>
 <summary><b>Utility Modules</b></summary>
@@ -117,8 +113,6 @@ Provides tools for interacting with display entities for holographic text & boss
 - `/adddisplay`: Summon a new display entity.
 
 </details>
-
----
 
 <details>
 <summary><b>Functional Modules</b></summary>
@@ -233,8 +227,6 @@ Run advanced commands on world events.
 
 </details>
 
----
-
 <details>
 <summary><b>Anti-Cheat Modules</b></summary>
 
@@ -252,8 +244,6 @@ Prevents Xray from finding valueable ores.
 
 </details>
 
----
-
 <details>
 <summary><b>Other Modules</b></summary>
 
@@ -265,8 +255,6 @@ Provides tools for rendering shapes in the world using particles.
 - `/drawoptions`: List all drawing options.
 
 </details>
-
----
 
 <details>
 <summary><b>Upcoming Modules</b></summary>
