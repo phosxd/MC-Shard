@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="500.00003"
+   height="225"
+   viewBox="0 0 132.29167 59.53125"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs1"><linearGradient
+       id="linearGradient1"><stop
+         style="stop-color:#8300b3;stop-opacity:1;"
+         offset="0.00165837"
+         id="stop1" /><stop
+         style="stop-color:#ecb3ff;stop-opacity:1;"
+         offset="0.99834162"
+         id="stop2" /></linearGradient><linearGradient
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="59.531242"
+       y1="30.114336"
+       x2="127.04696"
+       y2="30.114336"
+       gradientUnits="userSpaceOnUse" /></defs><g
+     id="layer1"><rect
+       style="fill:#000000;fill-opacity:0;stroke:none;stroke-width:0.529167;stroke-linecap:square;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect4"
+       width="132.29167"
+       height="59.53125"
+       x="0"
+       y="0" /><image
+       width="59.53125"
+       height="59.53125"
+       preserveAspectRatio="none"
+       style="image-rendering:optimizeSpeed"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoUlEQVQ4jeWRoRKCQBRFjw7V4qbl&#10;B/wWAh9BJJtNVMlGu3WDX2KgmSBh4QPWwMD4dt+AWW+8c9+Z9+6D31PJ2Vc4/20+CY0nDwAmyIl8&#10;swTYamZPR0tDS8PaNirgU2sQAcgo5mDljhFEA4n7Mgq/Y4/BAlDmI+Ti6jmTchC9RCXC2IHBisGe&#10;Tj1BBYQDBsvAC4Abtdg6AkzB0LtzXXznP+sNMIQzycGxNL0AAAAASUVORK5CYII=&#10;"
+       id="image1"
+       x="0"
+       y="0" /><text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:24.1905px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Ultra-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:url(#linearGradient2);fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-linecap:square;stroke-miterlimit:8;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="58.442677"
+       y="39.18578"
+       id="text1"><tspan
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:24.1905px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Ultra-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:url(#linearGradient2);fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
+         x="58.442677"
+         y="39.18578">Shard</tspan></text></g></svg>

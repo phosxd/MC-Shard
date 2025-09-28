@@ -1,9 +1,9 @@
 <div align="middle">
 
-<img src="https://github.com/phosxd/MC-Shard/blob/0.2/BP/pack_icon.png?raw=true" height=175 align=""></img>
-
 [![Release](https://img.shields.io/github/v/release/phosxd/mc-shard)](https://github.com/phosxd/mc-shard/releases)
 [![Release](https://img.shields.io/badge/Join_us!-gray?style=flat&logo=discord)](https://dsc.gg/mc-shard)
+
+<img src="./assets/banner.png" align=""></img>
 
 **Source version**: `0.3-dev`
 
