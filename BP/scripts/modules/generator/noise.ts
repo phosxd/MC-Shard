@@ -1,12 +1,40 @@
-export const ValueNoise = {
+import {NormalizeVector} from '../../util/vector';
+import * as Perlin from './perlin';
+
+
+export function Seed(x:number, y:number, seed:number): number {
+    return (x*(seed+y)) + (y*(seed+x))
+};
+
+
+export const RandomNoise = {
     /**
-     * @param seed The offset to apply to `x` & `y`.
+     * mulberry32 based random noise.
     */
     get(x:number, y:number, seed:number) {
-        const seededX = x+seed;
-        const seededY = y+seed;
-        return (
-            (Math.sin(x+y) * Math.cos(x-y))
-        );
+        return mulberry32(Seed(x, y, seed))();
     },
+};
+
+
+export const PerlinNoise = {
+    get(x:number, y:number, seed:number, scale:number=1) {
+        Perlin.seed(seed);
+        // Making x/y absolute is bad, I'm gonna try to find a better solution that accounts for the `perlin2` not accepting negative values.
+        x = Math.abs(x);
+        y = Math.abs(y);
+        return (Perlin.perlin2(x*scale, y*scale) + 1) / 2; // Rescale from "-1 to 1" to "0 to 1".
+    },
+};
+
+
+
+
+export function mulberry32(seed) {
+    return function() {
+        let t = (seed += 0x6D2B79F5);
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
 };

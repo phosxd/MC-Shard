@@ -276,6 +276,18 @@ export const LANG = {
             displayName: '§r[§2Capitator§r]',
             brief: 'Quickly mine trees & ores',
         },
+        generator: {
+            displayName: '§r[§6Generator§r]',
+            brief: 'Provides tools for generating custom terrain.',
+            cmd: {
+                forEachBlock: {
+                    success: 'Running now.',
+                },
+                generate: {
+                    success: 'Running now.',
+                },
+            },
+        },
     },
 };
 

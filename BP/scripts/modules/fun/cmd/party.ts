@@ -20,7 +20,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
         return {message:{translate:'shard.fun.cmd.party.alreadyPartying'}, status:1};
     };
     // Get nearby entities to party with.
-    const friends:Array<Entity> = context.target.dimension.getEntities({excludeTypes:['player', 'item', 'armor_stand'], excludeFamilies:['inanimate'], location:context.location, maxDistance:partyDistance});
+    const friends:Array<Entity> = context.target.dimension.getEntities({excludeTypes:['player', 'item'], excludeFamilies:['inanimate'], location:context.location, maxDistance:partyDistance});
     if (friends.length < 1) {
         return {message:{translate:'shard.fun.cmd.party.noFriends'}, status:1};
     };

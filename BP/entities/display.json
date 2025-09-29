@@ -50,7 +50,13 @@
 					}
 				]
 			},
-			"minecraft:persistent": {}
+			"minecraft:persistent": {},
+			"minecraft:type_family": {
+				"family": [
+					"inanimate",
+					"dummy"
+				]
+			}
 		},
 		"component_groups": {
 			"shard:bossbar_range_1": {

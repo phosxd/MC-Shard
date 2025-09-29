@@ -33,6 +33,12 @@
 			"minecraft:tick_world": {
 				"radius": 2,
 				"never_despawn": true
+			},
+			"minecraft:type_family": {
+				"family": [
+					"inanimate",
+					"dummy"
+				]
 			}
 		}
 	}

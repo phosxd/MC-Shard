@@ -35,6 +35,12 @@
 				"inventory_size": 120,
 				"can_be_siphoned_from": false,
 				"private": true
+			},
+			"minecraft:type_family": {
+				"family": [
+					"inanimate",
+					"dummy"
+				]
 			}
 		}
 	}
