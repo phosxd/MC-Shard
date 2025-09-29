@@ -77,7 +77,7 @@ export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
     // Return if doesn't exist.
     if (spoofedBlock == undefined) {return};
     // Restore original block & remove spoofed block data.
-    block.setType(ReplaceableBlocks[spoofedBlock]);
+    if (ReplaceableBlocks[spoofedBlock] != undefined) {block.setType(ReplaceableBlocks[spoofedBlock])};
     world.setDynamicProperty(key, undefined);
 
     // Run on neighbors.

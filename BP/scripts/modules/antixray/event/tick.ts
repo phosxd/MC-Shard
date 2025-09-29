@@ -37,7 +37,7 @@ function* spoofArea(originLocation:Vector3, dimension:Dimension, ownerId:string)
             const block = dimension.getBlock(location);
             if (!block) {continue};
             const key = GetDmk(dimension.id, location);
-            if (world.getDynamicProperty(key)) {continue};
+            if (world.getDynamicProperty(key) !== undefined) {continue};
             if (isBlockExposed(block)) {continue}; // If block exposed, dont spoof.
             // Save block type before replace.
             world.setDynamicProperty(key, ReplaceableBlocks.indexOf(block.typeId));

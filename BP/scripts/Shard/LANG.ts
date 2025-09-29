@@ -44,6 +44,9 @@ export const LANG = {
                 discord: {
                     success: '§9%s',
                 },
+                eval: {
+                    success: 'Running the code now.',
+                },
                 module: {
                     info: '\n§5ID: §7%s§r\n§5Description: §7%s§r\n§5Commands: §r%s§r',
                     disabled: 'Disabled module §7%s§r.',

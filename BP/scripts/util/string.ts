@@ -67,7 +67,10 @@ export function StringFormat(str:string, env:Dictionary<any>, rawResults:boolean
     };
     // Replace original parts.
     originalParts.forEach(part => {
-        const code = part.slice(2, -1); // Removes "${" & "}".
+        const code = part
+            .slice(2, -1) // Removes "${" & "}".
+            .replaceAll('!!(', '{').replaceAll(')!!', '}')
+        ;
         let controlledScope = new Function(...Object.keys(env), `try {return ${code}} catch {};`);
         let evalResult = controlledScope(...Object.values(env));
         // Edit eval result to have string friendly values.
@@ -81,6 +84,7 @@ export function StringFormat(str:string, env:Dictionary<any>, rawResults:boolean
                 else if (evalResult.x && evalResult.y && !evalResult.z) {
                     evalResult = StringifyVector(evalResult);
                 };
+                break;
             };
             case 'undefined': {
                 evalResult = '';

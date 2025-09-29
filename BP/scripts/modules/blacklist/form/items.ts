@@ -1,7 +1,7 @@
 import {CommandPermissionLevel} from '@minecraft/server';
 import {ShardForm, ShardFormBuilder, ShardFormElement, ShardFormActionResponse} from '../../../Shard/form';
 import {ShardCommandContext} from '../../../Shard/command';
-import {Module, BlacklistItem} from '../module';
+import {Module} from '../module';
 
 
 function Builder(context:ShardCommandContext, ...args) {

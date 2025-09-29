@@ -1,4 +1,4 @@
-import {world, World, Entity, Block, ItemStack, Vector2, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
+import {world, World, Entity, Block, ItemStack, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
 import {StringEqualSplit} from '../util/string';
 

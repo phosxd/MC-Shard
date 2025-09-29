@@ -60,6 +60,7 @@ export const Module = new ShardModule(
     {
         enabledByDefault: false,
         childPaths: [
+            'event/entityTick',
             'event/explosion',
             'event/itemUse',
             'event/playerBreakBlock',

@@ -52,6 +52,7 @@ shard.error.playerNotFound=§cCannot find player.
 shard.error.missingPermission=§cYou do not have permission to do this.
 shard.error.commandDisabled=§cThis command is disabled.
 shard.error.commandModuleDisabled=§cEnable the §7%s§c module to use this command.
+shard.error.invalidOption=§c"%s" is not a valid option.
 shard.error.duplicateName=§cExpected unique name.
 shard.error.invalidName=§cName contains invalid characters.
 shard.error.outOfRange=§c"%s" should be between %s & %s.
@@ -78,8 +79,8 @@ shard.core.cmd.discord.success=§9%s
 shard.core.cmd.discord.setting.link=Link
 shard.core.cmd.discord.setting.linkPlaceholder=Enter Discord link...
 ## cmd: eval
-shard.core.cmd.eval.brief=Run TypeScript code in an uncontrolled environment. Intended for developer use only.
-shard.core.cmd.eval.run=Running provided code now.
+shard.core.cmd.eval.brief=Run code with variable formatting. Intended for developer use only.
+shard.core.cmd.eval.success=Running the code now.
 ## cmd: hcLoad
 shard.core.cmd.hcLoad.brief=Load hard-copy data. If text is too long, use a command block.
 ## cmd: hcPrintEntity
@@ -218,7 +219,7 @@ shard.blacklist.form.items.add=§2Add Item
 shard.blacklist.form.editItem.title=Add/Edit Blacklisted Item
 shard.blacklist.form.editItem.typeId=Item Type ID
 shard.blacklist.form.editItem.typeId.placeholder=E.g. "diamond_sword" or "custom:item".
-shard.blacklist.form.editItem.remove=Remove item?
+shard.blacklist.form.editItem.remove=Remove blacklist item?
 
 ## "border" module texts.
 ## ----------------------
@@ -388,7 +389,7 @@ shard.event.cmd.eventVariables.brief=List all variables for an event. For advanc
 shard.event.cmd.eventVariables.success=Variables can be used in event commands (E.g. "${player.name}" or "${player.hasTag('example')}").\nVariables for "§7%s§r": %s
 ## form: edit
 shard.event.form.edit.title=Edit Event
-shard.event.form.edit.body=EventID: §7%s§r
+shard.event.form.edit.body=Event ID: §7%s§r
 shard.event.form.edit.@player=Player Command
 shard.event.form.edit.@player.tooltip=Command to run on the player who initiated the event.
 shard.event.form.edit.@source=Source Entity Command
@@ -438,3 +439,9 @@ shard.capitator.setting.doTrees=Do trees?
 shard.capitator.setting.doTrees.tooltip=If true, capitator works for trees.
 shard.capitator.setting.doOres=Do ores?
 shard.capitator.setting.doOres.tooltip=If true, capitator works for ores.
+
+## "generator" module texts.
+shard.generator.displayName=§r[§6Generator§r]
+shard.generator.brief=Provides tools for generating custom terrain.
+## cmd: generate
+shard.generator.cmd.generate.brief=Generate custom terrain.

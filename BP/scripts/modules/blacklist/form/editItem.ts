@@ -43,13 +43,13 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
         return;
     };
     // Reshow with error if name is taken.
-    if (Module.persisData.items[newName] && newName != name) {
+    if (newName !== name && Module.persisData.items[newName]) {
         MAIN.show(context, [name, {translate:'shard.formCommon.duplicateName'}]);
         return;
     };
 
     // Edit item.
-    if (newName != name && name != undefined) {
+    if (newName !== name && name != undefined) {
         Module.persisData.items[newName] = Module.persisData.items[name];
         delete Module.persisData.items[name];
     }
@@ -57,6 +57,7 @@ function Callback(context:ShardCommandContext, response:ShardFormModalResponse, 
         Module.persisData.items[newName] = {
             typeId: typeId,
         } as BlacklistItem;
+        console.warn(JSON.stringify(Module.persisData.items));
     };
     Module.saveData();
 
