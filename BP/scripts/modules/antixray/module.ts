@@ -5,14 +5,19 @@ import {StringifyVector} from '../../util/vector';
 import {GetBlockNeighbors} from '../../util/block';
 
 // Due to how memory intensive this module is, spoofed blocks are stored outside of the module data but instead in dedicated dyanmic properties.
-export const DmkHeader:string = 'antixray:sb';
+export const DmkHeaderOld:string = 'antixray:sb';
+export const DmkHeader:string = 'axsb'; // Anti-Xray Spoofed Block (A-X-S-B).
+/**Get dedicated memory key. Used for dedicated dyanmic properties.*/
+export function GetDmkOld(dimensionId:string, location:Vector3):string {
+    return DmkHeaderOld+':'+ShortDimensionId[dimensionId]+StringifyVector(location);
+};
 /**Get dedicated memory key. Used for dedicated dyanmic properties.*/
 export function GetDmk(dimensionId:string, location:Vector3):string {
-    return DmkHeader+':'+ShortDimensionId[dimensionId]+StringifyVector(location);
+    return DmkHeader+ShortDimensionId[dimensionId]+StringifyVector(location);
 };
 
 export const SpoofVolumeChunkSize = 16;
-export const SpoofVolumeChunkSizeHalf = SpoofVolumeChunkSize/2;
+export const SpoofVolumeChunkSizeHalf = SpoofVolumeChunkSize/2; // Pre-compute chunk size half.
 /**Block used in place of spoofed blocks.*/
 export const SpoofBlock = 'minecraft:purple_concrete';
 /**
@@ -70,14 +75,19 @@ export const SolidBlocks = Object.freeze(ReplaceableBlocks.concat([
 ].map(value => {return 'minecraft:'+value})).concat(SpoofBlock));
 
 
-export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
+export function UnspoofBlock(block:Block, includeNeighbors:boolean=false): boolean {
     // Get spoofed block at location.
-    const key = GetDmk(block.dimension.id, block.location);
-    const spoofedBlock = world.getDynamicProperty(key) as number;
-    // Return if doesn't exist.
-    if (spoofedBlock == undefined) {return};
+    let key = GetDmk(block.dimension.id, block.location);
+    let data = world.getDynamicProperty(key) as number;
+    // If doesn't exist, try old key.
+    if (data == undefined) {
+        key = GetDmkOld(block.dimension.id, block.location);
+        data = world.getDynamicProperty(key) as number;
+        // Return if still does not exist.
+        if (data == undefined) {return false};
+    };
     // Restore original block & remove spoofed block data.
-    if (ReplaceableBlocks[spoofedBlock] != undefined) {block.setType(ReplaceableBlocks[spoofedBlock])};
+    if (ReplaceableBlocks[data] != undefined) {block.setType(ReplaceableBlocks[data])};
     world.setDynamicProperty(key, undefined);
 
     // Run on neighbors.
@@ -88,6 +98,8 @@ export function UnspoofBlock(block:Block, includeNeighbors:boolean=false) {
             UnspoofBlock(block, false);
         });
     };
+
+    return true;
 };
 
 

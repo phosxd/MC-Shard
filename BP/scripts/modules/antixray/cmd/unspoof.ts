@@ -1,7 +1,7 @@
-import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
+import {system, CommandPermissionLevel, CustomCommandParamType, BlockVolume, Vector3, Dimension, Player} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {StringifyVector, RoundVector} from '../../../util/vector';
-import {GetDmk, UnspoofBlock, SpoofBlock} from '../module';
+import {UnspoofBlock, SpoofBlock} from '../module';
 
 
 function* unspoofArea(volume:BlockVolume, dimension:Dimension, player?:Player) {
@@ -11,12 +11,8 @@ function* unspoofArea(volume:BlockVolume, dimension:Dimension, player?:Player) {
     for (const location of spoofedBlocks.getBlockLocationIterator()) {
         const block = dimension.getBlock(location);
         if (block == undefined) {continue};
-        const key = GetDmk(dimension.id, location);
-        const data = world.getDynamicProperty(key) as number;
-        if (data !== undefined) {
-            UnspoofBlock(block);
-            blocksUnspoofed += 1;
-        };
+        const unspoofed = UnspoofBlock(block);
+        if (unspoofed) {blocksUnspoofed += 1};
         yield;
     };
     if (player) {

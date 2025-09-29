@@ -2,7 +2,7 @@ import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolu
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShortDimensionIdToNormal} from '../../../Shard/CONST';
 import {StringToVector, AddVector} from '../../../util/vector';
-import {DmkHeader, GetDmk, UnspoofBlock, SpoofBlock} from '../module';
+import {DmkHeader, DmkHeaderOld, GetDmk, UnspoofBlock, SpoofBlock} from '../module';
 
 const tickingAreaName = 'shard:antixray.wipeSpoofs';
 /**Whether or not this command is already in use.*/
@@ -12,19 +12,28 @@ let goal:number = 0;
 
 
 function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:Player) {
-    originDimension.runCommand(`tickingarea remove "${tickingAreaName}"`);
-    // Iterate on every saved spoof block.
+    originDimension.runCommand(`tickingarea remove "${tickingAreaName}"`); // Remove any previous ticking area.
+    // Get all spoofed block keys.
     const keys = world.getDynamicPropertyIds().filter(value => {
-        return value.startsWith(DmkHeader);
+        return value.startsWith(DmkHeader) || value.startsWith(DmkHeaderOld);
+    });
+    const keysNoHeader = keys.map(value => {
+        if (value.startsWith(DmkHeader)) {
+            return value.replace(DmkHeader,'');
+        }
+        else if (value.startsWith(DmkHeaderOld)) {
+            return value.replace(DmkHeaderOld,'').replace(':','');
+        };
     });
     goal = keys.length;
     for (const index in keys) {
         const key = keys[index];
+        const keyNoHeader = keysNoHeader[index];
         progress += 1;
         if (world.getDynamicProperty(key) == undefined) {continue};
-        const noHeaderKey = key.replace(DmkHeader,'').replace(':','');
-        const dimensionId = ShortDimensionIdToNormal[noHeaderKey[0]];
-        const stringLocation = noHeaderKey.replace(noHeaderKey[0],'');
+        // Decode key to get dimension & location.
+        const dimensionId = ShortDimensionIdToNormal[keyNoHeader[0]];
+        const stringLocation = keyNoHeader.replace(keyNoHeader[0],'');
         const dimension = world.getDimension(dimensionId);
         const location = StringToVector(stringLocation, 3).vector as Vector3;
         // Add chunk loader.
@@ -40,11 +49,7 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         for (const location of spoofedBlocks.getBlockLocationIterator()) {
             const block = dimension.getBlock(location);
             if (block == undefined) {continue};
-            const key = GetDmk(dimension.id, location);
-            const data = world.getDynamicProperty(key) as number;
-            if (data != undefined) {
-                UnspoofBlock(block);
-            };
+            UnspoofBlock(block);
         };
         // Remove loader then yield.
         dimension.runCommand(`tickingarea remove "${tickingAreaName}"`);
@@ -91,8 +96,8 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
             let attempts:number = 0;
             const checkBlock = ()=>{
                 attempts += 1;
-                // If chunk not loaded after 30 ticks, return failed.
-                if (attempts == 30) {failed = true; return};
+                // If chunk not loaded after 80 ticks, return failed.
+                if (attempts == 80) {failed = true; return};
                 const block = value.dimension.getBlock(value.location);
                 if (!block) {system.run(checkBlock)}
                 else {readyForNext = true};
