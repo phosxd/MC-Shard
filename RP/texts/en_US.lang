@@ -449,3 +449,6 @@ shard.generator.cmd.forEachBlock.success=Running now.
 ## cmd: generate
 shard.generator.cmd.generate.brief=Generate custom terrain.
 shard.generator.cmd.generate.success=Running now.
+## cmd: smoothen
+shard.generator.cmd.smoothen.brief=Smoothen blocks. Do not use on blocks with data in them.
+shard.generator.cmd.smoothen.success=Running now.

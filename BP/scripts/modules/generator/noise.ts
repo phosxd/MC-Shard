@@ -1,5 +1,7 @@
-import {NormalizeVector} from '../../util/vector';
 import * as Perlin from './perlin';
+
+/**Current seed.*/
+let currentSeed: number;
 
 
 export function Seed(x:number, y:number, seed:number): number {
@@ -18,12 +20,19 @@ export const RandomNoise = {
 
 
 export const PerlinNoise = {
+    get(x:number, y:number, seed:number, scale:number=1, smoothing:number=0) {
+        if (currentSeed !== seed) {Perlin.seed(seed)};
+        currentSeed = seed;
+        return (Perlin.perlin2(x*scale, y*scale) + 1) / 2; // Rescale from "-1-1" to "0-1".
+    },
+};
+
+
+export const SimplexNoise = {
     get(x:number, y:number, seed:number, scale:number=1) {
-        Perlin.seed(seed);
-        // Making x/y absolute is bad, I'm gonna try to find a better solution that accounts for the `perlin2` not accepting negative values.
-        x = Math.abs(x);
-        y = Math.abs(y);
-        return (Perlin.perlin2(x*scale, y*scale) + 1) / 2; // Rescale from "-1 to 1" to "0 to 1".
+        if (currentSeed !== seed) {Perlin.seed(seed)};
+        currentSeed = seed;
+        return (Perlin.simplex2(x*scale, y*scale) + 1) / 2; // Rescale from "-1-1" to "0-1".
     },
 };
 

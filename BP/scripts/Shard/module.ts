@@ -47,6 +47,7 @@ export interface ShardModuleData {
     init?: ()=>void,
     childPaths: Array<string>,
     commandEnums?: Dictionary<Array<string>>,
+    defaultProperties?: Dictionary<any>,
     extraDefaultPersisData?: Dictionary<any>,
     settingElements?: Array<ShardFormElement>,
     enabledByDefault?: boolean,
@@ -69,14 +70,24 @@ export class ShardModule {
     commandEnums: Dictionary<Array<string>>;
     /**Forms.*/
     forms: Dictionary<ShardForm>;
-    /**Additional default persistent data.*/
+    defaultProperties: Dictionary<any>;
+    /**
+     * (Deprecated)
+     * Additional default persistent data.
+    */
     extraDefaultPersisData: Dictionary<any>;
     /**Module settings that are persistently saved.*/
     settingElements: Array<ShardFormElement>;
 
-    /**Arbitrary data for the module. Will be lost after restart.*/
+    /**
+     * (Deprecated)
+     * Arbitrary data for the module. Will be lost after restart.
+    */
     sessionData: Dictionary<any>;
-    /**Arbitrary persistent data for the module.
+    /**
+     * (Deprecated, use properties instead)
+     * 
+     * Arbitrary persistent data for the module.
      * 
      * Use `saveData` to save this to MC `world` dynamic properties.
     */
@@ -98,6 +109,9 @@ export class ShardModule {
         this.settingElements = [...defaultSettingElements];
         if (data.settingElements) {this.settingElements = this.settingElements.concat(data.settingElements)};
 
+        // Module data.
+        if (data.defaultProperties) {this.defaultProperties = Deepcopy(data.defaultProperties)}
+        else {this.defaultProperties = {}};
         this.sessionData = {};
         if (data.extraDefaultPersisData) {this.extraDefaultPersisData = data.extraDefaultPersisData}
         else {this.extraDefaultPersisData = {}};
@@ -112,8 +126,8 @@ export class ShardModule {
         this.persisDataReady = false;
         this.worldReady = false;
 
+        // Import children.
         (async () => {
-            // Import children.
             this.listeners = {};
             this.commands = {};
             this.forms = {};
@@ -144,10 +158,21 @@ export class ShardModule {
     /**Runs after children are imported.*/
     afterChildImports() {
         // Get persistent data in an "after" context.
+        // Update properties.
         system.run(()=>{
-           let storedData = this.getData();
-           if (storedData) {this.persisData = Object.assign(this.persisData, storedData)};
-           this.persisDataReady = true;
+            // persis
+            let storedData = this.getData();
+            if (storedData) {this.persisData = Object.assign(this.persisData, storedData)};
+            this.persisDataReady = true;
+            // prop
+            Object.keys(this.defaultProperties).forEach(key => {
+                const currentValue = this.getProperty(key);
+                const newValue = this.defaultProperties[key];
+                // Override current property if mismatched type.
+                if (typeof currentValue !== typeof newValue) {
+                    this.setProperty(key, newValue);
+                };
+            });
         });
 
         // Flag world as ready when ready.
@@ -214,21 +239,47 @@ export class ShardModule {
     };
 
 
-    /**Get persistent data saved in MC `world` dynamic properties.*/
-    getData():Dictionary<any>|undefined {
+    /**Get persistent module property.*/
+    getProperty(id): any {
+        return MCData.get(`${this.details.id}:${id}`);
+    };
+
+
+    /**Get all persistent property IDs.*/
+    getPropertyIds(): Array<string> {
+        return world.getDynamicPropertyIds().filter(id => {
+            return id.startsWith(`${this.details.id}:`);
+        });
+    };
+
+
+    /**Set persistent module property. Set undefined to delete.*/
+    setProperty(id, value:Dictionary<any>|undefined): any {
+        return MCData.set(`${this.details.id}:${id}`, value);
+    };
+
+
+    /**Get persistent data saved in MC `world` dynamic properties.
+     * (Deprecated)
+    */
+    getData(): Dictionary<any>|undefined {
         return MCData.get(this.details.id);
     };
 
     
-    /**Set `persisData` then save it with `saveData`.*/
-    setData(data:Dictionary<any>):void {
+    /**Set `persisData` then save it with `saveData`.
+     * (Deprecated)
+    */
+    setData(data:Dictionary<any>): void {
         this.persisData = data;
         this.saveData();
     };
 
 
-    /**Resets module persistent data to it's default state.*/
-    resetData():void {
+    /**Resets module persistent data to it's default state.
+     * (Deprecated)
+    */
+    resetData(): void {
         let newData = Object.assign({}, Deepcopy(defaultPersisData));
         newData = Object.assign(newData, Deepcopy(this.extraDefaultPersisData));
         newData.settings = this.getDefaultSettings();
@@ -243,7 +294,9 @@ export class ShardModule {
     };
 
 
-    /**Save `persisData` using `MCData` API in `ShardAPI/util`*/
+    /**Save `persisData` using `MCData` API in `ShardAPI/util`.
+     * (Deprecated)
+    */
     saveData():void {
         MCData.set(this.details.id, this.persisData);
     };

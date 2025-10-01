@@ -1,6 +1,6 @@
 import {system, BlockVolume, Vector3, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {generateTerrain, terrainPresets} from '../module';
+import {Module, generateTerrain, terrainPresets} from '../module';
 
 
 function Callback(context:ShardCommandContext, args:Array<any>) {
@@ -8,7 +8,12 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
     const to = args[1] as Vector3;
     const terrainId = args[2] as string;
     const seed = args[3] as number;
-    system.runJob(generateTerrain(context.dimension, new BlockVolume(from, to), terrainPresets[terrainId], seed));
+    const speed = args[4] as number;
+    let terrain;
+    const allTerrain = Module.getProperty('terrain');
+    if (allTerrain[terrainId]) {terrain = allTerrain[terrainId]}
+    else {terrain = terrainPresets[terrainId]};
+    system.runJob(generateTerrain(context.dimension, new BlockVolume(from, to), terrain, seed, speed));
     return {message:{translate:'shard.generator.cmd.generate.success'}, status:0};
 };
 
@@ -26,6 +31,7 @@ export const MAIN = new ShardCommand(
         ],
         optionalParameters: [
             {name:'seed', type:CustomCommandParamType.Float},
+            {name:'speed', type:CustomCommandParamType.Integer},
         ],
         important: false,
     },

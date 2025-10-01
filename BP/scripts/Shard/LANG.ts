@@ -286,6 +286,9 @@ export const LANG = {
                 generate: {
                     success: 'Running now.',
                 },
+                smoothen: {
+                    success: 'Running now.',
+                },
             },
         },
     },
