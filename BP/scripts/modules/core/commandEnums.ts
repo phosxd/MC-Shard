@@ -22,8 +22,6 @@ export default {
         '>',
     ],
     evalMode: [
-        'command',
-        'javascript',
         'cmd',
         'js',
     ],

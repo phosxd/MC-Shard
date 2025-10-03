@@ -408,7 +408,7 @@ shard.event.form.edit.@damagingEntity.tooltip=Command to run on the entity that 
 ## "antixray" module texts.
 shard.antixray.displayName=§r[§4Anti-Xray§r]
 shard.antixray.brief=Prevents Xray from finding valueable ores.
-shard.antixray.description=WARNING. Do not enable this module without understanding the risks.\n\n§6This module is experimental. Some settings may be removed or changed.§r\n\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This could cause a little bit of lag when many players online.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
+shard.antixray.description=WARNING. Do not enable this module without understanding the risks.\nWhile enabled this module replaces ore blocks with purple concrete until they become uncovered. This could cause a little bit of lag when many players online.\n\nTo restore spoofed ores, use "/sh:antixray.unspoof".
 shard.antixray.setting.spoofDistance=Spoof Distance
 shard.antixray.setting.spoofDistance.tooltip=How far (from the player) ores get spoofed. Even at high values, this is limited to the server's simulation distance.
 shard.antixray.setting.spoofInterval=Spoof Interval (seconds)
@@ -443,12 +443,16 @@ shard.capitator.setting.doOres.tooltip=If true, capitator works for ores.
 ## "generator" module texts.
 shard.generator.displayName=§r[§6Generator§r]
 shard.generator.brief=Provides tools for generating custom terrain.
+shard.generator.description=§cThis module is in development. Do not use custom terrain unless you know what you are doing.§r
 ## cmd: forEachBlock
 shard.generator.cmd.forEachBlock.brief=Run a command on every block in the volume.
 shard.generator.cmd.forEachBlock.success=Running now.
 ## cmd: generate
 shard.generator.cmd.generate.brief=Generate custom terrain.
-shard.generator.cmd.generate.success=Running now.
-## cmd: smoothen
-shard.generator.cmd.smoothen.brief=Smoothen blocks. Do not use on blocks with data in them.
-shard.generator.cmd.smoothen.success=Running now.
+shard.generator.cmd.generate.success=Generating terrain now (skipping unloaded chunks).
+## cmd: addTerrain
+shard.generator.cmd.addTerrain.brief=Add custom terrain. Expects a valid `Terrain` JSON Object.
+shard.generator.cmd.addTerrain.success=Added new custom terrain §7%s§r.
+## cmd: removeTerrain
+shard.generator.cmd.removeTerrain.brief=Remove custom terrain.
+shard.generator.cmd.removeTerrain.success=Removed custom terrain §7%s§r.

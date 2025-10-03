@@ -284,10 +284,13 @@ export const LANG = {
                     success: 'Running now.',
                 },
                 generate: {
-                    success: 'Running now.',
+                    success: 'Generating terrain now (skipping unloaded chunks).',
                 },
-                smoothen: {
-                    success: 'Running now.',
+                addTerrain: {
+                    success: 'Added new custom terrain §7%s§r.',
+                },
+                removeTerrain: {
+                    success: 'Removed custom terrain §7%s§r.',
                 },
             },
         },

@@ -11,7 +11,7 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
     // Delete terrain.
     delete allTerrain[id];
     Module.setProperty('terrain', allTerrain);
-    //return {message:{translate:'shard.generator.cmd.removeTerrain.success'}, status:0};
+    return {message:{translate:'shard.generator.cmd.removeTerrain.success', with:[id]}, status:0};
 };
 
 

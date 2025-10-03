@@ -1,6 +1,6 @@
 import {CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {Module} from '../module';
+import {Module, GetTerrain} from '../module';
 
 
 function Callback(_context:ShardCommandContext, args:Array<any>) {
@@ -8,12 +8,11 @@ function Callback(_context:ShardCommandContext, args:Array<any>) {
     const json = (args[1] as string);
     const allTerrain = Module.getProperty('terrain');
     // Return error if name taken.
-    if (allTerrain[id]) {return {message:{translate:'shard.error.duplicateName'}, status:1}};
+    if (GetTerrain(id)) {return {message:{translate:'shard.error.duplicateName'}, status:1}};
     // Add terrain.
-    console.warn(json);
     allTerrain[id] = JSON.parse(json);
     Module.setProperty('terrain', allTerrain);
-    //return {message:{translate:'shard.generator.cmd.addTerrain.success'}, status:0};
+    return {message:{translate:'shard.generator.cmd.addTerrain.success', with:[id]}, status:0};
 };
 
 

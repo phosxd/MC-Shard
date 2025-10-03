@@ -36,6 +36,25 @@ export function Lerp(a:{min:number,max:number}, b:{min:number,max:number}, value
 };
 
 
+/**
+ * Blend `a` & `b` together using `ratio`. Ratio of 1 returns `a`, ratio of 0 returns `b`.
+ * 
+ * (Sidenote, I didnt make this function with negative numbers in mind so I have no idea how it will treat them so uh dont use them just to be safe lol)
+*/
+export function Blend(a:number, b:number, ratio:number): number {
+    if (a == 0 && b == 0) {return 0}; // Ratio of 0 is impossible to calculate, so NaN gets returned. Instead return 0.
+    // Define min/max values.
+    const min = Math.min(a,b);
+    const max = Math.max(a,b);
+    // If `max` is `b`, we need to flip the ratio so `1` still relates to `a`.
+    if (max == b) {
+        ratio = Math.abs(Lerp({min:0,max:1}, {min:-1,max:0}, ratio));
+    };
+    // Return result.
+    return Lerp({min:0,max:max}, {min:min,max:max}, max*ratio);
+};
+
+
 
 
 /**Return a random element from the array.*/
