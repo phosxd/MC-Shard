@@ -3,7 +3,7 @@ import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
 import {mulberry32, Seed, RandomNoise, PerlinNoise, SimplexNoise} from './noise';
-import {Blend} from '../../Shard/util';
+import {Blend, AssumeNamespace} from '../../Shard/util';
 
 
 export interface TerrainReference {
@@ -43,10 +43,9 @@ export interface HeightmapNoise {
     */
     scale?: number,
     /**
-     * Apply smoothing based on direct neighbor values.
-     * By default `0`.
+     * Noise values (before amplification) below this value are set to 0.
     */
-    smoothing?: number,
+    threshold?: number,
     /**
      * Isolates higher values by making lower values exponentially lower.
      * As a side effect, overall value is lowered.
@@ -62,6 +61,11 @@ export interface HeightmapNoise {
 
 
 export interface Heightmap {
+    /**
+     * Layer name. Used for referencing in merge layers.
+     * If undefined, layer index is used as name.
+    */
+    name?: string,
     /**
      * Noise images that are applied one after another.
      * This affects the shape & pattern of the generated terrain.
@@ -105,12 +109,28 @@ export interface Heightmap {
      * - This ensures this layer fits nicely on top of previous layers.
     */
     mergeMode?: 'none'|'previousLayer'|'previousLayerExposed'|'previousLayerNotExposed'|'highestPoint',
-    /**Starting height override. By default `0`.*/
+    /**
+     * Works in conjunction with `mergeMode`. Only applicable when `mergeMode` is a "previousLayer" mode.
+    */
+    mergeLayer?: string,
+    /**
+     * Starting height. Min/max height build from this value.
+     * By default `1`.
+    */
     startHeight?: number,
-    /**The maximum height. If `noiseArray` returns a value too high, it is capped to `maxHeight` blocks.*/
+    /**
+     * The maximum height. If `noiseArray` returns a value too high, it is capped to `maxHeight` blocks.
+    */
     maxHeight: number,
-    /**The minimum height.*/
+    /**
+     * The minimum height. If 0 no blocks are placed.
+     * By default `1`.
+    */
     minHeight?: number,
+    /**
+     * Block types this heightmap's blocks can be placed on.
+    */
+    canPlaceOn?: Array<string>,
     /**Block type placed on the surface.*/
     surfaceBlock?: string,
     /**Block type placed from the bottom to the surface.*/
@@ -139,24 +159,26 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         {
             mergeMode: 'highestPoint',
             integrity: 0.1,
-            maxHeight: 0,
-            minHeight: 0,
+            maxHeight: 1,
+            minHeight: 1,
             surfaceBlock: 'short_grass',
+            canPlaceOn: ['grass_block'],
         },
         {
             mergeMode: 'highestPoint',
             integrity: 0.02,
-            maxHeight: 0,
-            minHeight: 0,
+            maxHeight: 1,
+            minHeight: 1,
             surfaceBlock: 'tall_grass',
+            canPlaceOn: ['grass_block'],
         },
         // Flowers.
         {
             mergeMode: 'highestPoint',
             integrity: 0.005,
-            maxHeight: 0,
-            minHeight: 0,
+            maxHeight: 1,
             surfaceBlock: 'dandelion',
+            canPlaceOn: ['grass_block'],
         },
         // Place air over the flower (to remove any tall grass).
         {
@@ -164,19 +186,21 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             integrity: 0.005,
             maxHeight: 1,
             minHeight: 1,
+            startHeight: 2,
             surfaceBlock: 'air',
+            canPlaceOn: ['dandelion'],
         },
     ],
     desertOverlay: [
         // Surface.
         {
             mergeMode: 'highestPoint',
-            maxHeight: 1,
+            maxHeight: 2,
             fillBlock: 'sandstone',
         },
         {
             mergeMode: 'highestPoint',
-            maxHeight: 2,
+            maxHeight: 3,
             fillBlock: 'sand',
         },
         // Dead bushes.
@@ -184,33 +208,69 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             integrity: 0.01,
             integrityLayer: 1,
             mergeMode: 'highestPoint',
-            maxHeight: 0,
-            fillBlock: 'deadbush',
+            maxHeight: 1,
+            minHeight: 1,
+            surfaceBlock: 'deadbush',
+            canPlaceOn: ['sand'],
         },
         // Cacti.
         {
-            integrity: 0.005,
+            noiseArray: [
+                {noise: {
+                    type: 'random',
+                    amplitude: 4,
+                }},
+            ],
+            integrity: 0.006,
             integrityLayer: 2,
             clearanceArea: {
                 from: {x:-1,y:0,z:-1},
                 to: {x:1,y:0,z:1},
             },
             mergeMode: 'highestPoint',
-            maxHeight: 3,
-            minHeight: 1,
+            maxHeight: 4,
+            minHeight: 2,
+            startHeight: 1,
             fillBlock: 'cactus',
+            canPlaceOn: ['sand'],
         },
         // Cactus flowers.
         {
-            integrity: 0.002,
+            integrity: 0.003,
             integrityLayer: 2,
             clearanceArea: {
                 from: {x:-1,y:0,z:-1},
                 to: {x:1,y:0,z:1},
             },
             mergeMode: 'highestPoint',
-            maxHeight: 0,
-            fillBlock: 'cactus_flower',
+            maxHeight: 1,
+            minHeight: 1,
+            startHeight: 1,
+            surfaceBlock: 'cactus_flower',
+            canPlaceOn: ['cactus'],
+        },
+    ],
+    snowOverlay: [
+        // Surface.
+        {
+            mergeMode: 'highestPoint',
+            maxHeight: 4,
+            fillBlock: 'dirt',
+            surfaceBlock: 'grass_block',
+        },
+        // Snow decoration.
+        {
+            mergeMode: 'highestPoint',
+            maxHeight: 1,
+            surfaceBlock: 'snow',
+            canPlaceOn: ['grass_block'],
+        },
+        {
+            mergeMode: 'highestPoint',
+            integrity: 0.02,
+            maxHeight: 1,
+            surfaceBlock: 'snow_layer',
+            canPlaceOn: ['snow', 'grass_block'],
         },
     ],
     desert: [
@@ -218,14 +278,14 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         {
             noiseArray: [
                 {noise: {
-                    type: 'perlin',
-                    amplitude: 10,
-                    scale: 0.025,
-                    smoothing: 1,
+                    type: 'simplex',
+                    amplitude: 8,
+                    scale: 0.009,
                 }},
             ],
             maxHeight: 10,
             minHeight: 2,
+            startHeight: 0,
             fillBlock: 'stone',
         },
         {id: 'desertOverlay'},
@@ -243,6 +303,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             ],
             maxHeight: 20,
             minHeight: 3,
+            startHeight: 0,
             fillBlock: 'stone',
         },
         {id: 'plainsOverlay'},
@@ -260,6 +321,25 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             ],
             maxHeight: 30,
             minHeight: 3,
+            startHeight: 0,
+            fillBlock: 'stone',
+        },
+        {id: 'plainsOverlay'},
+    ],
+    divots: [
+        // Ground level.
+        {
+            noiseArray: [
+                {noise: {
+                    type: 'simplex',
+                    amplitude: 25,
+                    scale: 0.009,
+                    neighborizedFlooring: 0.5,
+                }},
+            ],
+            maxHeight: 12,
+            minHeight: 3,
+            startHeight: 0,
             fillBlock: 'stone',
         },
         {id: 'plainsOverlay'},
@@ -284,9 +364,44 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             ],
             maxHeight: 100,
             minHeight: 1,
+            startHeight: 0,
+            fillBlock: 'stone',
+        },
+        // Overlay
+        {id: 'plainsOverlay'},
+    ],
+    sparseRocks: [
+        // Ground.
+        {
+            name: 'sr-ground',
+            noiseArray: [
+                {noise: {
+                    type: 'simplex',
+                    amplitude: 8,
+                    scale: 0.015,
+                }},
+            ],
+            maxHeight: 10,
+            startHeight: 0,
             fillBlock: 'stone',
         },
         {id: 'plainsOverlay'},
+        // Rocks.
+        {
+            noiseArray: [
+                {noise: {
+                    type: 'perlin',
+                    amplitude: 100,
+                    scale: 0.03,
+                    threshold: 0.72,
+                }},
+            ],
+            mergeMode: 'previousLayer',
+            mergeLayer: 'sr-ground',
+            maxHeight: 90,
+            startHeight: 1,
+            fillBlock: 'stone',
+        },
     ],
 };
 
@@ -301,13 +416,16 @@ export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrai
     for (const location of flatVolume.getBlockLocationIterator()) {
         iter += 1;
         if (iter%iterationsPerTick == 0) {yield};
-        const terrainBuffer = Object.assign([],terrain);
-        const integrityLayers = {};
         // Remove all blocks in this column.
         dimension.fillBlocks(new BlockVolume(location, {x:location.x, y:volume.to.y, z:location.z}), 'air', {ignoreChunkBoundErrors:true});
+        // Set up data.
+        const terrainBuffer = Object.assign([],terrain);
+        const integrityLayers = {};
+        const heightmapValues = {};
         // Run each terrain item.
-        let lastHeightmapValue: number;
+        let index = -1;
         while (terrainBuffer.length > 0) {
+            index += 1;
             const map = terrainBuffer[0];
             terrainBuffer.shift();
             // If is a reference, add the referenced objects to the buffer.
@@ -320,10 +438,12 @@ export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrai
                 });
                 continue;
             };
-            const startHeight = (map.startHeight != undefined ? map.startHeight : 0);
-            const minHeight = (map.minHeight != undefined ? map.minHeight : 0);
+            const name = (map.name != undefined ? map.name : String(index));
+            const startHeight = (map.startHeight != undefined ? map.startHeight : 1);
+            const minHeight = (map.minHeight != undefined ? map.minHeight : 1);
             const integrity = (map.integrity != undefined ? map.integrity : 1);
             const integrityLayer = (map.integrityLayer != undefined ? map.integrityLayer : 0);
+            const mergeLayer = (map.mergeLayer != undefined ? map.mergeLayer : index);
 
             // Integrity.
             if (integrityLayers[integrityLayer] == undefined) {
@@ -342,32 +462,31 @@ export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrai
                     const blendRatio = item.blendRatio != undefined ? item.blendRatio : 1;
                     const options = {
                         scale: noise.scale,
-                        smoothing: noise.smoothing,
+                        threshold: noise.threshold,
                         flooring: noise.flooring,
                         neighborizedFlooring: noise.neighborizedFlooring,
                     };
                     let value = Math.max(
                         (getNoiseValue(noise.type, volume, location, mulberry32(seed+(noiseLayer*4))(), options) * noise.amplitude),
-                        minHeight-1,
+                        minHeight,
                     );
                     valueY = Blend(value, valueY, blendRatio); // Blend with `valueY`.
                 });
-                
             }
             else {valueY = map.maxHeight};
+            if (valueY <= 0) {continue};
             valueY = Math.min(valueY, map.maxHeight);
-            valueY += startHeight;
             let baseY = startHeight;
             // Location merge modes.
             if (map.mergeMode == 'highestPoint') {
                 const top = dimension.getTopmostBlock({x:location.x, z:location.z}, volume.to.y);
-                baseY += top.location.y+1;
+                baseY += top.location.y;
             }
-            else if (map.mergeMode == 'previousLayer' && lastHeightmapValue) {
-                baseY += lastHeightmapValue+1;
+            else if (map.mergeMode == 'previousLayer' && Object.keys(heightmapValues).length > 0) {
+                baseY += heightmapValues[mergeLayer];
             }
-            else if ((map.mergeMode == 'previousLayerExposed' || map.mergeMode == 'previousLayerNotExposed') && lastHeightmapValue) {
-                let top = lastHeightmapValue+1;
+            else if ((map.mergeMode == 'previousLayerExposed' || map.mergeMode == 'previousLayerNotExposed') && Object.keys(heightmapValues).length > 0) {
+                let top = heightmapValues[mergeLayer];
                 if (dimension.getBlock({x:location.x, y:top, z:location.z})?.above()?.isAir == (map.mergeMode == 'previousLayerNotExposed')) {top = location.y};
                 baseY += top;
             }
@@ -378,21 +497,33 @@ export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrai
             // Finalize location.
             const newLocation = {
                 x: location.x,
-                y: Math.min(baseY+valueY, volume.to.y), // Snap to highest allowed height if larger.
+                y: Math.min(baseY+(valueY-1), volume.to.y), // Snap to highest allowed height if larger.
                 z: location.z
             };
-            lastHeightmapValue = newLocation.y;
+            heightmapValues[name] = newLocation.y;
 
             // Check clearance.
             if (map.clearanceArea) {
                 const from = map.clearanceArea.from;
                 const to = map.clearanceArea.to;
                 const clearanceVolume = new BlockVolume(
-                    {x:newLocation.x+from.x, y:baseY+from.y, z:newLocation.z+from.z},
+                    {x:newLocation.x+from.x, y:baseY, z:newLocation.z+from.z},
                     {x:newLocation.x+to.x, y:newLocation.y+to.y, z:newLocation.z+to.z},
                 );
                 const areaObstructed = dimension.containsBlock(clearanceVolume, {excludeTypes:['air']}, true);
                 if (areaObstructed) {continue};
+            };
+            // Check placeable blocks.
+            if (map.canPlaceOn) {
+                let matched = false;
+                const blockPlacingOn = dimension.getBlock({x:location.x, y:baseY-1, z:location.z});
+                if (blockPlacingOn != undefined) {
+                    map.canPlaceOn.forEach(blockType => {
+                        blockType = AssumeNamespace(blockType);
+                        if (blockType == blockPlacingOn.typeId) {matched = true};
+                    });
+                    if (!matched) {continue};
+                };
             };
             // Set fill blocks.
             if (map.fillBlock) {
@@ -418,7 +549,8 @@ export const relativeNeighbors2d = Object.freeze([
     {x:-1, y:-1}, {x:1,y:-1},
 ]);
 export function getNoiseValue(type:string, operatingArea:BlockVolume, location:Vector3, seed:number, options:Dictionary<any>): number {
-    const smoothing = (options?.smoothing != undefined ? options.smoothing : 0);
+    const threshold = (options?.threshold != undefined ? options.threshold : 0);
+    const flooring = (options?.flooring != undefined ? options.flooring : 0);
     const neighborizedFlooring = (options?.neighborizedFlooring != undefined ? options.neighborizedFlooring : 0);
     let value: number;
     
@@ -451,17 +583,9 @@ export function getNoiseValue(type:string, operatingArea:BlockVolume, location:V
         default: {return 0};
     };
 
-    // Smoothing.
-    if (smoothing > 0) {
-        let newOptions = Object.assign({}, options);
-        newOptions.smoothing = 0;
-        let sum = value;
-        // Iterate on all neighbors
-        relativeNeighbors2d.forEach(vector => {
-            const neighborValue = getNoiseValue(type, operatingArea, {x:location.x+vector.x, y:location.y, z:location.z+vector.y}, seed, newOptions);
-            sum += neighborValue*smoothing;
-        });
-        value = sum / (relativeNeighbors2d.length+1)*smoothing;
+    // Flooring.
+    if (flooring > 0) {
+        value -= value*flooring;
     };
 
     // Neighborized flooring.
@@ -475,7 +599,10 @@ export function getNoiseValue(type:string, operatingArea:BlockVolume, location:V
         });
     };
 
-    return value;
+    // Threshold.
+    if (value < threshold) {return 0};
+
+    return value-threshold;
 };
 
 

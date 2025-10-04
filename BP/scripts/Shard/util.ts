@@ -159,6 +159,15 @@ export function CompareCommandPermissionLevel(a:CommandPermissionLevel, b:Comman
 
 
 
+/**
+ * Assigns "minecraft:" namespace if no namespace already present.
+*/
+export function AssumeNamespace(type:string): string {
+    if (!type.includes(':')) {type = 'minecraft:'+type};
+    return type;
+};
+
+
 /**Returns every entity in every dimension.*/
 export function GetAllEntities(options?:EntityQueryOptions) {
     return [
@@ -208,7 +217,7 @@ export function IsAnyType(object:ItemStack|Entity|Block, types:Array<string>):bo
     if (types.length == 0) {return true};
     let result = false;
     types.forEach(type => {
-        if (!type.includes(':')) {type = 'minecraft:'+type}; // Assume minecraft namespace if none.
+        type = AssumeNamespace(type);
         if (result == true) {return};
         if (object.typeId == type || (type.split(':')[1].startsWith('!') && object.typeId != type.replace('!',''))) {result = true};
     });
