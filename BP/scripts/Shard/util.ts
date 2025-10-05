@@ -249,9 +249,9 @@ const mcDataCharCap:number = 32700;
  * Saves & retieves data in "parts" to overcome maximum dynamic property string value length.
  * New parts are only created if absolutely needed.
 */
-export const MCData = {
+export const MCData = Object.freeze({
     // Get persistent data.
-    'get': (key:string, Holder:ItemStack|Entity|World=world) => {
+    get: (key:string, Holder:ItemStack|Entity|World=world) => {
         let result:Array<any> = [];
         let i:number = -1;
         while (true) {
@@ -266,7 +266,7 @@ export const MCData = {
 
 
     // Set persistent data.
-    'set': (key:string, value:Dictionary<any>|undefined, Holder:ItemStack|Entity|World=world) => {
+    set: (key:string, value:Dictionary<any>|Array<any>|undefined, Holder:ItemStack|Entity|World=world) => {
         const stringValue = JSON.stringify(value);
         // Set all occupied parts to `undefined`. To erase previous data.
         let i:number = -1;
@@ -287,4 +287,4 @@ export const MCData = {
             Holder.setDynamicProperty(`${key}[${i}]`, splitValue[i]);
         };
     },
-};
+});

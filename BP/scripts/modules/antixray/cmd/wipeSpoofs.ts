@@ -2,7 +2,7 @@ import {system, world, CommandPermissionLevel, CustomCommandParamType, BlockVolu
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 import {ShortDimensionIdToNormal} from '../../../Shard/CONST';
 import {StringToVector, AddVector} from '../../../util/vector';
-import {DmkHeader, DmkHeaderOld, GetDmk, UnspoofBlock, SpoofBlock} from '../module';
+import {DmkHeader, DmkHeaderOld, UnspoofBlock, SpoofBlock} from '../module';
 
 const tickingAreaName = 'shard:antixray.wipeSpoofs';
 /**Whether or not this command is already in use.*/
@@ -11,7 +11,7 @@ let progress:number = 0;
 let goal:number = 0;
 
 
-function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:Player) {
+function* wipeSpoofs(originDimension:Dimension, player?:Player) {
     originDimension.runCommand(`tickingarea remove "${tickingAreaName}"`); // Remove any previous ticking area.
     // Get all spoofed block keys.
     const keys = world.getDynamicPropertyIds().filter(value => {
@@ -41,14 +41,13 @@ function* wipeSpoofs(originLocation:Vector3, originDimension:Dimension, player?:
         // Wait until location is loaded.
         yield {dimension:dimension, location:location};
         // Unspoof block.
-        const block = dimension.getBlock(location);
-        UnspoofBlock(block);
+        UnspoofBlock(dimension.getBlock(location));
         // Unspoof nearby blocks.
         const volume = new BlockVolume(AddVector(location, -20) as Vector3, AddVector(location, 20) as Vector3);
         const spoofedBlocks = dimension.getBlocks(volume, {includeTypes:[SpoofBlock]}, true);
         for (const location of spoofedBlocks.getBlockLocationIterator()) {
             const block = dimension.getBlock(location);
-            if (block == undefined) {continue};
+            if (!block) {continue};
             UnspoofBlock(block);
         };
         // Remove loader then yield.
@@ -74,7 +73,7 @@ function Callback(context:ShardCommandContext, args:Array<any>) {
 
     // Run the generator.
     let readyForNext:boolean = true;
-    const generator = wipeSpoofs(originLocation, originDimension, player);
+    const generator = wipeSpoofs(originDimension, player);
     inUse = true;
     progress = 0;
     goal = 0;

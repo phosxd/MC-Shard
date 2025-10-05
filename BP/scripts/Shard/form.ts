@@ -17,40 +17,31 @@ export interface ShardFormElement {
     type: 'title'|'body'|'label'|'footnote'|'divider'|'button'|'dropdown'|'toggle'|'slider'|'numberBox'|'textBox'|'vector3Box'|'numberArray'|'textArray',
     /**Unique ID which the element is referenced by in callbacks.*/
     id: string,
-    data: ShardFormTitle|ShardFormBody|ShardFormLabel|ShardFormFootnote|ShardFormDivider|ShardFormButton|ShardFormDropdown|ShardFormToggle|ShardFormSlider|ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray,
+    data: ShardFormElementBase|ShardFormDivider,
 };
 
+export interface ShardFormElementBase {
+    display: string|RawMessage,
+}
 
-export interface ShardFormTitle {
-    display: string|RawMessage,
-};
-export interface ShardFormBody {
-    display: string|RawMessage,
-};
-export interface ShardFormLabel {
-    display: string|RawMessage,
-};
-export interface ShardFormFootnote {
-    display: string|RawMessage,
-};
+
+export interface ShardFormTitle extends ShardFormElementBase {};
+export interface ShardFormBody extends ShardFormElementBase {};
+export interface ShardFormLabel extends ShardFormElementBase {};
 export interface ShardFormDivider {};
-export interface ShardFormButton {
-    display: string|RawMessage,
+export interface ShardFormButton extends ShardFormElementBase {
     iconPath?: string,
 };
-export interface ShardFormDropdown {
-    display: string|RawMessage,
+export interface ShardFormDropdown extends ShardFormElementBase {
     items: Array<string|RawMessage>,
     defaultValue?: number,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormToggle {
-    display: string|RawMessage,
+export interface ShardFormToggle extends ShardFormElementBase {
     defaultValue?: boolean,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormSlider {
-    display: string|RawMessage,
+export interface ShardFormSlider extends ShardFormElementBase {
     min: number,
     max: number,
     /**If undefined, assume `1`.*/
@@ -58,8 +49,7 @@ export interface ShardFormSlider {
     defaultValue?: number,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormNumberBox {
-    display: string|RawMessage,
+export interface ShardFormNumberBox extends ShardFormElementBase {
     float: boolean,
     min: number,
     max: number,
@@ -67,8 +57,7 @@ export interface ShardFormNumberBox {
     defaultValue?: number,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormTextBox {
-    display: string|RawMessage,
+export interface ShardFormTextBox extends ShardFormElementBase {
     /**Do not use this, not fully implemented.*/
     multiline?: boolean,
     min: number,
@@ -77,14 +66,12 @@ export interface ShardFormTextBox {
     defaultValue?: string,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormVector3Box {
-    display: string|RawMessage,
+export interface ShardFormVector3Box extends ShardFormElementBase {
     placeholder?: string|RawMessage,
     defaultValue?: Vector3,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormNumberArray {
-    display: string|RawMessage,
+export interface ShardFormNumberArray extends ShardFormElementBase {
     min: number,
     max: number,
     /**Minimum value of each item in the array.*/
@@ -95,8 +82,7 @@ export interface ShardFormNumberArray {
     defaultValue?: Array<number>,
     tooltip?: string|RawMessage,
 };
-export interface ShardFormTextArray {
-    display: string|RawMessage,
+export interface ShardFormTextArray extends ShardFormElementBase {
     min: number,
     max: number,
     /**Minimum length of each item in the array.*/
@@ -154,7 +140,7 @@ export class ShardFormBuilder {
 
 
     /**Generate a Shard form response from a Minecraft form response.*/
-    generateResponse(response:MessageFormResponse|ActionFormResponse|ModalFormResponse):ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse {
+    generateResponse(response:MessageFormResponse|ActionFormResponse|ModalFormResponse): ShardFormMessageResponse|ShardFormActionResponse|ShardFormModalResponse {
         switch (this.details.type) {
             case 'message': {return this.generateMessageResponse(response)};
             case 'action': {return this.generateActionResponse(response)};
@@ -164,14 +150,14 @@ export class ShardFormBuilder {
 
 
     /**Generates a Shard message form response.*/
-    generateMessageResponse(response:MessageFormResponse):ShardFormMessageResponse {
+    generateMessageResponse(_response:MessageFormResponse): ShardFormMessageResponse {
         const shardResponse:ShardFormMessageResponse = {};
         return shardResponse;
     };
 
 
     /**Generates a Shard action form response.*/
-    generateActionResponse(response:ActionFormResponse):ShardFormActionResponse {
+    generateActionResponse(response:ActionFormResponse): ShardFormActionResponse {
         const shardResponse:ShardFormActionResponse = {
             selection: response.selection,
             selectedId: this.elements.filter((value)=>{return value.type == 'button'})[response.selection].id,
@@ -181,7 +167,7 @@ export class ShardFormBuilder {
 
 
     /**Generates a Shard modal form response.*/
-    generateModalResponse(response:ModalFormResponse):ShardFormModalResponse {
+    generateModalResponse(response:ModalFormResponse): ShardFormModalResponse {
         const shardResponse:ShardFormModalResponse = {
             map: {},
             errors: {},
@@ -190,6 +176,7 @@ export class ShardFormBuilder {
 
         // Elements.
         this.elements.forEach(element => {
+            const elementData = element.data as any;
             // Label element returns value `undefined` in `modal` forms. This needs to be accounted for.
             if (['label','divider'].includes(element.type)) {
                 index += 1;
@@ -207,7 +194,6 @@ export class ShardFormBuilder {
             };
             // Slider element.
             if (element.type == 'slider') {
-                const elementData = element.data as ShardFormSlider;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const value = response.formValues[index] as number;
@@ -225,7 +211,6 @@ export class ShardFormBuilder {
             };
             // Number box element.
             if (element.type == 'numberBox') {
-                const elementData = element.data as ShardFormNumberBox;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const value = Number(response.formValues[index]);
@@ -243,7 +228,6 @@ export class ShardFormBuilder {
             };
             // Text box element.
             if (element.type == 'textBox') {
-                const elementData = element.data as ShardFormTextBox;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const value = response.formValues[index] as string;
@@ -256,7 +240,6 @@ export class ShardFormBuilder {
             };
             // Vector3 box element.
             if (element.type == 'vector3Box') {
-                const elementData = element.data as ShardFormVector3Box;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
@@ -270,7 +253,6 @@ export class ShardFormBuilder {
             };
             // Number array element.
             if (element.type == 'numberArray') {
-                const elementData = element.data as ShardFormNumberArray;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
@@ -293,7 +275,6 @@ export class ShardFormBuilder {
             };
             // Text array element.
             if (element.type == 'textArray') {
-                const elementData = element.data as ShardFormNumberArray;
                 const elementDisplay = toRawMessage(elementData.display);
                 // Get value.
                 const rawValue = response.formValues[index] as string;
@@ -321,7 +302,7 @@ export class ShardFormBuilder {
     };
 
 
-    build():MessageFormData|ActionFormData|ModalFormData {
+    build(): MessageFormData|ActionFormData|ModalFormData {
         switch (this.details.type) {
             case 'message': {return this.buildMessage()};
             case 'action': {return this.buildAction()};
@@ -330,65 +311,69 @@ export class ShardFormBuilder {
     };
 
 
-    buildMessage():ActionFormData {
+    buildMessage(): ActionFormData {
         const formData = new ActionFormData();
         this.elements.forEach(element => {
-            if (element.type == 'title') {
-                const elementData = element.data as ShardFormTitle;
-                formData.title(elementData.display);
-            };
-            if (element.type == 'body') {
-                const elementData = element.data as ShardFormBody;
-                formData.body(elementData.display);
-            };
-            if (element.type == 'label') {
-                const elementData = element.data as ShardFormLabel;
-                formData.label(elementData.display);
-            };
-            if (element.type == 'footnote') {
-                const elementData = element.data as ShardFormFootnote;
-                formData.button(elementData.display, 'shard:footnote');
-            };
-            if (element.type == 'divider') {
-                formData.divider();
+            const elementData = element.data as any;
+            switch (element.type) {
+                case 'title': {
+                    formData.title(elementData.display);
+                    break;
+                };
+                case 'body': {
+                    formData.body(elementData.display);
+                    break;
+                };
+                case 'label': {
+                    formData.label(elementData.display);
+                    break;
+                };
+                case 'divider': {
+                    formData.divider();
+                    break;
+                };
+                case 'button': {
+                    formData.button(elementData.display, elementData.iconPath);
+                    break;
+                };
             };
         });
         return formData;
     };
 
 
-    buildAction():ActionFormData {
+    buildAction(): ActionFormData {
         const formData = new ActionFormData();
         this.elements.forEach(element => {
-            if (element.type == 'title') {
-                const elementData = element.data as ShardFormTitle;
-                formData.title(elementData.display);
-            };
-            if (element.type == 'body') {
-                const elementData = element.data as ShardFormBody;
-                formData.body(elementData.display);
-            };
-            if (element.type == 'label') {
-                const elementData = element.data as ShardFormLabel;
-                formData.label(elementData.display);
-            };
-            if (element.type == 'footnote') {
-                const elementData = element.data as ShardFormFootnote;
-                formData.button(elementData.display, 'shard:footnote');
-            };
-            if (element.type == 'divider') {
-                formData.divider();
-            };
-            if (element.type == 'button') {
-                const elementData = element.data as ShardFormButton;
-                formData.button(elementData.display, elementData.iconPath);
+            const elementData = element.data as any;
+            switch (element.type) {
+                case 'title': {
+                    formData.title(elementData.display);
+                    break;
+                };
+                case 'body': {
+                    formData.body(elementData.display);
+                    break;
+                };
+                case 'label': {
+                    formData.label(elementData.display);
+                    break;
+                };
+                case 'divider': {
+                    formData.divider();
+                    break;
+                };
+                case 'button': {
+                    formData.button(elementData.display, elementData.iconPath);
+                    break;
+                };
             };
         });
         return formData;
     };
 
 
-    buildModal():ModalFormData {
+    buildModal(): ModalFormData {
         const formData = new ModalFormData();
         // Apply error messages.
         Object.keys(this.errors).sort().forEach(key => {
@@ -397,42 +382,44 @@ export class ShardFormBuilder {
         });
         // Apply elements.
         this.elements.forEach(element => {
-            if (element.type == 'title') {
-                const elementData = element.data as ShardFormTitle;
-                formData.title(elementData.display);
-            };
-            if (element.type == 'label') {
-                const elementData = element.data as ShardFormLabel;
-                formData.label(elementData.display);
-            };
-            if (element.type == 'footnote') {
-                const elementData = element.data as ShardFormFootnote;
-                formData.textField(elementData.display, 'shard:footnote');
-            };
-            if (element.type == 'divider') {
-                formData.divider();
-            };
-            if (element.type == 'toggle') {
-                const elementData = element.data as ShardFormToggle;
-                formData.toggle(elementData.display, {defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
-            };
-            if (element.type == 'slider') {
-                const elementData = element.data as ShardFormSlider;
-                formData.slider(elementData.display, elementData.min, elementData.max, {valueStep:elementData.step, defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
-            };
-            if (element.type == 'dropdown') {
-                const elementData = element.data as ShardFormDropdown;
-                formData.dropdown(elementData.display, elementData.items, {defaultValueIndex:elementData.defaultValue, tooltip:elementData.tooltip});
-            }
-            if (['numberBox','textBox','vector3Box','numberArray','textArray'].includes(element.type)) {
-                const elementData = element.data as ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray;
-                let defaultValue = elementData.defaultValue;
-                if (defaultValue !== undefined) {defaultValue = String(elementData.defaultValue)};
-                let placeholder = elementData.placeholder;
-                if (!placeholder) {placeholder = ''};
-                let multiline = (elementData as ShardFormTextBox).multiline;
-                if (!multiline && defaultValue != undefined) {defaultValue = (defaultValue as string).replaceAll('\n','$n')};
-                formData.textField(elementData.display, placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});
+            const elementData = element.data as any;
+            switch (element.type) {
+                case 'title': {
+                    formData.title(elementData.display);
+                    break;
+                };
+                case 'label': {
+                    formData.label(elementData.display);
+                    break;
+                };
+                case 'divider': {
+                    formData.divider();
+                    break;
+                };
+                case 'toggle': {
+                    formData.toggle(elementData.display, {defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
+                    break;
+                };
+                case 'slider': {
+                    formData.slider(elementData.display, elementData.min, elementData.max, {valueStep:elementData.step, defaultValue:elementData.defaultValue, tooltip:elementData.tooltip});
+                    break;
+                };
+                case 'dropdown': {
+                    formData.dropdown(elementData.display, elementData.items, {defaultValueIndex:elementData.defaultValue, tooltip:elementData.tooltip});
+                    break;
+                };
+                default: {
+                    if (['numberBox','textBox','vector3Box','numberArray','textArray'].includes(element.type)) {
+                        const elementData = element.data as ShardFormNumberBox|ShardFormTextBox|ShardFormVector3Box|ShardFormNumberArray|ShardFormTextArray;
+                        let defaultValue = elementData.defaultValue;
+                        if (defaultValue !== undefined) {defaultValue = String(elementData.defaultValue)};
+                        let placeholder = elementData.placeholder;
+                        if (!placeholder) {placeholder = ''};
+                        let multiline = (elementData as ShardFormTextBox).multiline;
+                        if (!multiline && defaultValue != undefined) {defaultValue = (defaultValue as string).replaceAll('\n','$n')};
+                        formData.textField(elementData.display, placeholder, {defaultValue:defaultValue as string|undefined, tooltip:elementData.tooltip});
+                    };
+                };
             };
         });
         return formData;

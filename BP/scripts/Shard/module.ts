@@ -230,12 +230,14 @@ export class ShardModule {
     /**Enable this module, allowing all child events & commands to run.*/
     enable() {
         this.persisData.settings.enabled = true;
+        this.saveData();
     };
 
 
     /**Disable this module, prevents all child events & commands from running.*/
     disable(): void {
         this.persisData.settings.enabled = false;
+        this.saveData();
     };
 
 
@@ -294,16 +296,17 @@ export class ShardModule {
     };
 
 
-    /**Save `persisData` using `MCData` API in `ShardAPI/util`.
+    /**
+     * Save `persisData` using `MCData` API in `ShardAPI/util`.
      * (Deprecated)
     */
-    saveData():void {
+    saveData(): void {
         MCData.set(this.details.id, this.persisData);
     };
 
 
     /**Get default settings for this module.*/
-    getDefaultSettings():Dictionary<any> {
+    getDefaultSettings(): Dictionary<any> {
         const settings = {};
         this.settingElements.forEach(element => {
             const elementData = element.data as Dictionary<any>;
@@ -316,14 +319,14 @@ export class ShardModule {
 
 
     /**Passthrough for all event listeners of this module.*/
-    listenerPassthrough(listener:ShardListener, ...args):void {
+    listenerPassthrough(listener:ShardListener, ...args): void {
         if (!this.persisData.settings.enabled) {return};
         listener.callback(...args);
     };
 
 
     /**Passthrough for all slash commands of this module.*/
-    slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...args):CustomCommandResult|undefined {
+    slashCommandPassthrough(Command:ShardCommand, Origin:CustomCommandOrigin, ...args): CustomCommandResult|undefined {
         // Return error message if module disabled.
         if (!this.persisData.settings.enabled) {
             return {message:RawMessageParser.rawMessageToString({translate:'shard.misc.commandModuleDisabled', with:[this.details.id]}), status:1};

@@ -131,6 +131,10 @@ export interface Heightmap {
      * Block types this heightmap's blocks can be placed on.
     */
     canPlaceOn?: Array<string>,
+    /**
+     * Block types this heightmap's blocks can be replace.
+    */
+    canReplace?: Array<string>,
     /**Block type placed on the surface.*/
     surfaceBlock?: string,
     /**Block type placed from the bottom to the surface.*/
@@ -150,14 +154,17 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     plainsOverlay: [
         // Surface.
         {
+            name: 'plainsOverlay-1',
             mergeMode: 'highestPoint',
             maxHeight: 4,
             fillBlock: 'dirt',
             surfaceBlock: 'grass_block',
+            canReplace: ['air'],
         },
         // Grass decoration.
         {
-            mergeMode: 'highestPoint',
+            mergeMode: 'previousLayer',
+            mergeLayer: 'plainsOverlay-1',
             integrity: 0.1,
             maxHeight: 1,
             minHeight: 1,
@@ -165,7 +172,8 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             canPlaceOn: ['grass_block'],
         },
         {
-            mergeMode: 'highestPoint',
+            mergeMode: 'previousLayer',
+            mergeLayer: 'plainsOverlay-1',
             integrity: 0.02,
             maxHeight: 1,
             minHeight: 1,
@@ -174,7 +182,8 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Flowers.
         {
-            mergeMode: 'highestPoint',
+            mergeMode: 'previousLayer',
+            mergeLayer: 'plainsOverlay-1',
             integrity: 0.005,
             maxHeight: 1,
             surfaceBlock: 'dandelion',
@@ -182,7 +191,8 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Place air over the flower (to remove any tall grass).
         {
-            mergeMode: 'highestPoint',
+            mergeMode: 'previousLayer',
+            mergeLayer: 'plainsOverlay-1',
             integrity: 0.005,
             maxHeight: 1,
             minHeight: 1,
@@ -530,12 +540,23 @@ export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrai
                 dimension.fillBlocks(
                     new BlockVolume({x:location.x, y:baseY, z:location.z}, newLocation),
                     map.fillBlock,
-                    {ignoreChunkBoundErrors:true},
+                    {
+                        ignoreChunkBoundErrors: true,
+                        blockFilter: {
+                            includeTypes: map.canReplace,
+                        },
+                    },
                 );
             };
+            const currentBlock = dimension.getBlock(newLocation);
             // Set surface block.
-            if (map.surfaceBlock && dimension.getBlock(newLocation) != undefined) {
-                dimension.setBlockType(newLocation, map.surfaceBlock);
+            if (map.surfaceBlock && currentBlock != undefined) {
+                let canPlace = true;
+                // Check replaceable blocks.
+                if (map.canReplace && !map.fillBlock) {
+                    if (!map.canReplace.includes(AssumeNamespace(currentBlock.typeId))) {canPlace = false};
+                };
+                if (canPlace) {dimension.setBlockType(newLocation, map.surfaceBlock)};
             };
         };
     };
