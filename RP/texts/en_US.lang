@@ -194,6 +194,8 @@ shard.util.cmd.suicide.brief=Kills you. Helpful when stuck somewhere.
 shard.util.cmd.thru.brief=Teleport through a wall 4 blocks thick or less.
 shard.util.cmd.thru.noBlocks=No blocks in range to teleport through.
 shard.util.cmd.thru.tooThick=Wall is too thick to teleport through.
+## cmd: top
+shard.util.cmd.top.brief=Teleport to the top-most block.
 ## cmd: up
 shard.util.cmd.up.brief=Teleport up with a platform.
 

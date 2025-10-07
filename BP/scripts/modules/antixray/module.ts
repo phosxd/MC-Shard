@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {world, Block, Vector3} from '@minecraft/server';
 import {ShardModule} from '../../Shard/module';
 import {ShortDimensionId} from '../../Shard/CONST';

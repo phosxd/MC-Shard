@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {system, world, RawMessage, CustomCommandOrigin, CustomCommandSource, CustomCommandResult} from '@minecraft/server';
 import {Dictionary, CommandNamespace} from './CONST';
 import {ShardListener} from './listener';

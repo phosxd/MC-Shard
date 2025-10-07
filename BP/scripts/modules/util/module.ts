@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
 
@@ -34,9 +36,9 @@ export const Module = new ShardModule(
             'cmd/s',
             'cmd/setslot',
             'cmd/sp',
-            'cmd/suicide',
             'cmd/thru',
             'cmd/up',
+            'cmd/top',
         ],
         commandEnums: CommandEnums,
         extraDefaultPersisData: {

@@ -1,3 +1,4 @@
+// Copyright (c) 2025 PhosXD
 // Common constant variables can be found here & modified.
 // Refer to module files for module-specific constants.
 

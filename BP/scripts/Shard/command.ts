@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {World, CustomCommandParameter, CommandPermissionLevel, Dimension, RawMessage, Vector3, Vector2, CustomCommandStatus, Block, Entity, Player} from '@minecraft/server';
 import {ShardFormElement} from './form';
 import {StringFormatCommon} from '../util/string';

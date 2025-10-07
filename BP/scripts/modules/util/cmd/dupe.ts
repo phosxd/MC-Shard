@@ -9,8 +9,8 @@ function Callback(context:ShardCommandContext, _args:Array<any>) {
     if (!player) {return};
 
     // Get player inventory & clone held item stack.
-    let invContainer:Container = player.getComponent('inventory').container;
-    let stack:ItemStack = invContainer.getSlot(player.selectedSlotIndex).getItem();
+    const invContainer:Container = player.getComponent('inventory').container;
+    const stack:ItemStack = invContainer.getSlot(player.selectedSlotIndex).getItem();
     // Return error if no item stack in slot.
     if (stack == undefined) {return {message:{translate:'shard.util.cmd.dupe.noItem'}, status:1}};
     // Clone item stack.

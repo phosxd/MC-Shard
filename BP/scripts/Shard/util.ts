@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {world, World, Entity, Block, ItemStack, Vector3, CommandPermissionLevel, EntityQueryOptions} from '@minecraft/server';
 import {Dictionary, AlignedArea} from './CONST';
 import {StringEqualSplit} from '../util/string';

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {Dimension, Vector3, BlockVolume} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';

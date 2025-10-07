@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {system, world, ScoreboardObjective} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
 

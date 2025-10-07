@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {system, CommandPermissionLevel, Player, RawMessage, Vector3} from '@minecraft/server';
 import {ActionFormData, ModalFormData, MessageFormData, ActionFormResponse, ModalFormResponse, MessageFormResponse, FormCancelationReason} from '@minecraft/server-ui';
 import {Dictionary} from './CONST';

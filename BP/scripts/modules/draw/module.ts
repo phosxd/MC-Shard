@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {Dimension, Player, Vector2, Vector3, MolangVariableMap, RGBA} from '@minecraft/server';
 import {CardinalDirectionMap} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';

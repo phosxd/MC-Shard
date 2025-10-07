@@ -2,14 +2,14 @@ import {system, Vector3, CommandPermissionLevel} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
 
 const MaxWallDistance:number = 10;
-const MaxWallThickness:number = 4;
+const MaxWallThickness:number = 6;
 
 
 function Callback(context:ShardCommandContext, _args:Array<any>) {
     const entity = context.sourceEntity;
     if (!entity) {return};
     const raycast = entity.getBlockFromViewDirection({maxDistance:MaxWallDistance, includeLiquidBlocks:false});
-    if (raycast === undefined) {return {message:{translate:'shard.util.cmd.thru.noBlocks'}, status:1}};
+    if (raycast == undefined) {return {message:{translate:'shard.util.cmd.thru.noBlocks'}, status:1}};
     const direction = entity.getViewDirection();
     const checkLocation:Vector3 = raycast.block.location;
     // Search for other side of the wall.

@@ -1,3 +1,5 @@
+// Copyright (c) 2025 PhosXD
+
 import {RGBA} from '@minecraft/server';
 import {Dictionary, AlignedArea} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
