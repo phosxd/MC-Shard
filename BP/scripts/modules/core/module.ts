@@ -23,6 +23,8 @@ export const Module = new ShardModule(
             'cmd/module',
             'cmd/moduleDataLoad',
             'cmd/moduleDataPrint',
+            'cmd/moduleProperty',
+            'cmd/modulePropertyIds',
             'cmd/popup',
             'cmd/repeat',
             'cmd/shard',

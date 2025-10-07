@@ -96,6 +96,11 @@ shard.core.cmd.module.clearData=Deleted all data for the §7%s§r module.
 shard.core.cmd.moduleDataLoad.brief=Load custom module data. If text is too long, use a command block.
 ## cmd: moduleDataPrint
 shard.core.cmd.moduleDataPrint.brief=Print module data.
+## cmd: moduleProperty
+shard.core.cmd.moduleProperty.brief=Set or print module property. Set value to "undefined" to delete.
+## cmd: modulePropertyIds
+shard.core.cmd.modulePropertyIds.brief=List all module properties.
+shard.core.cmd.modulePropertyIds.success=Module property IDs: %s\n§rWhen setting/getting properties, do not include the prefix or array index.
 ## cmd: repeat
 shard.core.cmd.repeat.brief=Repeat a command.
 ## cmd: chain
@@ -132,7 +137,7 @@ shard.util.cmd.disenchant.noEnchantable=§7%s§c cannot be disenchanted.
 shard.util.cmd.disenchant.invalidEnchantment=§7%s§c is not a valid enchantment.
 ## cmd: drain
 shard.util.cmd.drain.brief=Remove liquid blocks in a radius.
-shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.
+shard.util.cmd.drain.success=Removing all liquid blocks in a radius of %s.
 shard.util.cmd.drain.radiusOutOfBounds=§cRadius must be between 1 & 50.
 ## cmd: dupe
 shard.util.cmd.dupe.brief=Duplicate the item in your hand.

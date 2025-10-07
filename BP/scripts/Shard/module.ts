@@ -244,7 +244,7 @@ export class ShardModule {
 
 
     /**Get persistent module property.*/
-    getProperty(id): any {
+    getProperty(id:string): any {
         return MCData.get(`${this.details.id}:${id}`);
     };
 
@@ -258,7 +258,7 @@ export class ShardModule {
 
 
     /**Set persistent module property. Set undefined to delete.*/
-    setProperty(id, value:Dictionary<any>|undefined): any {
+    setProperty(id:string, value:Dictionary<any>|undefined): any {
         return MCData.set(`${this.details.id}:${id}`, value);
     };
 

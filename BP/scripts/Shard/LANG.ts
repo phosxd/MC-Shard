@@ -54,6 +54,9 @@ export const LANG = {
                     enabled: 'Enabled module §7%s§r.',
                     clearData: 'Deleted all data for the §7%s§r module.',
                 },
+                modulePropertyIds: {
+                    success: 'Module property IDs: %s\n§rWhen setting/getting properties, do not include the prefix or array index.',
+                },
                 shardMemory: {
                     success: '\n§5Disk Space Used: §7%sMB (%s Bytes)§r\n§4If disk space is over 5MB, something may be wrong & you should try clearing data on some modules.',
                 },
@@ -78,7 +81,7 @@ export const LANG = {
                     invalidEnchantment: '§7%s§c is not a valid enchantment.'
                 },
                 drain: {
-                    success: 'Removing all liquid blocks in a radius of %s. This may take a while if using a large radius.',
+                    success: 'Removing all liquid blocks in a radius of %s.',
                     radiusOutOfBounds: '§cRadius must be between 1 & 50.',
                 },
                 dupe: {

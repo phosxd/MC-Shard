@@ -1,26 +1,26 @@
 import {system, Dimension, Vector3, BlockVolume, CommandPermissionLevel, CustomCommandParamType} from '@minecraft/server';
 import {ShardCommand, ShardCommandContext} from '../../../Shard/command';
-import {LocationOutOfBounds} from '../../../Shard/util';
-import {AddVector} from '../../../util/vector';
 
 const MinRadius:number = 1;
 const MaxRadius:number = 50;
 
 
 function* clearLiquidBlocks(distance:number, location:Vector3, dimension:Dimension) {
-    const volume = new BlockVolume(
-        AddVector(location, distance) as Vector3,
-        AddVector(location, -distance) as Vector3,
-    );
     // Iterate on every block in the radius.
-    for (const location of volume.getBlockLocationIterator()) {
-        if (LocationOutOfBounds(location)) {continue};
-        const block = dimension.getBlock(location);
-        if (block == undefined) {continue};
-        // If block is liquid, set to air.
-        if (block.isLiquid) {block.setType('air')};
+    for (let x:number = -distance; x < distance; x++) {
+    for (let z:number = -distance; z < distance; z++) {
+        let blockLocation = {x:location.x+x, y:location.y-distance, z:location.z+z};
+        // Remove liquid blocks.
+        dimension.fillBlocks(
+            new BlockVolume(blockLocation, {x:blockLocation.x, y:blockLocation.y+distance, z:blockLocation.z}),
+            'air',
+            {
+                ignoreChunkBoundErrors: true,
+                blockFilter:{includeTypes: ['water','lava']},
+            },
+        );
         yield;
-    };
+    }};
 };
 
 
