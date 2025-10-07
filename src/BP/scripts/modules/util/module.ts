@@ -35,7 +35,7 @@ export const Module = new ShardModule(
             'cmd/repair',
             'cmd/s',
             'cmd/setslot',
-            'cmd/sp',
+            'cmd/p',
             'cmd/thru',
             'cmd/up',
             'cmd/top',

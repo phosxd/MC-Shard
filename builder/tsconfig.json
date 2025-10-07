@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+		"module": "esnext",
+    "noCheck": true,
+    "outDir": "./out/BP/scripts",
+  },
+  "include": ["./out/BP/scripts/**/**/*"],
+  "exclude": [],
+}

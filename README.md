@@ -11,6 +11,8 @@ Shard is an upcoming all-in-one add-on for servers & realms! With a fully modula
 
 This is not a complete build! Although the ground-work is out of the way, there are still many things subject to change & with incomplete implementations.
 
+Please refer to [COPYING.md](./COPYING.md) for copyright details.
+
 </div>
 
 ---
@@ -67,8 +69,10 @@ Provides essential functionality for the add-on. Cannot be disabled.
 - `/hc.load`: Load hard-copy data.
 - `/hc.print.entity`: Print an entity as a hard-copy. Some components, & entity variants are not copied.
 - `/module`: Configure a module.
-- `/module.data.print`: Print module data.
-- `/module.data.load`: Load custom module data.
+- `/module.data.print`: Print module data. Deprecating.
+- `/module.data.load`: Load custom module data. Deprecating.
+- `/module.property`: Set or print module property. Set value to "undefined" to delete.
+- `/module.property.ids`: List all module properties.
 - `/shard`: Shard info.
 - `/shardmemory`: Shard memory info.
 
@@ -86,7 +90,7 @@ Some commands may also be removed from this module & re-implemented in other mod
 - `/qrotate`: Rotate the targeted block.
 
 **Commands:**
-- `/c, /s, /a, /sp`: Change user's game-mode. Quicker than `/gamemode`.
+- `/c, /s, /a, /p`: Change game-mode.
 - `/pushchat`: Pushes all previous chat messages off-screen.
 - `/suicide`: Kill's the user. Useful if stuck.
 - `/despawn`: Remove entities without death animations & without dropping loot/XP. Cannot use on players.
