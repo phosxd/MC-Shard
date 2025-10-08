@@ -1,6 +1,5 @@
 // Copyright (c) 2025 PhosXD
 
-import {} from '@minecraft/server';
 import {Dictionary} from '../../Shard/CONST';
 import {ShardModule} from '../../Shard/module';
 import CommandEnums from './commandEnums';
@@ -30,6 +29,7 @@ export const Module = new ShardModule(
             'event/explosion',
             'event/itemUse',
             'event/playerBreakBlock',
+            'event/playerDimensionChange',
             'event/playerDropItem',
             'event/playerInteractWithBlock',
             'event/playerInteractWithEntity',

@@ -2,6 +2,13 @@
  * Event IDs & their actors/variables.
 */
 export default {
+    playerDimensionChange: [
+        '@player: Player',
+        'fromDimension: Dimension',
+        'toDimension: Dimension',
+        'fromLocation: Vector3',
+        'toLocation: Vector3',
+    ],
     playerPlaceBlock: [
         '@player: Player',
         '@block: Block',

@@ -62,7 +62,49 @@ export interface HeightmapNoise {
 };
 
 
+export interface DepthmapNoise {
+    /**
+     * Noise method used. Values are shared between noise using the same `type` & `layer`.
+     * 
+     * random:
+     * - Random noise values, randomly selects a point between min/max height.
+     * 
+     * perlin:
+     * - Smooth-like noise, more isolated islands & noticeable patterns.
+     * 
+     * simplex:
+     * - Continuous smooth noise.
+    */
+    type: 'random'|'perlin'|'simplex',
+    /**
+     * Noise layer.
+     * By default `0`.
+    */
+    layer?: number,
+    /**
+     * How exagerated the noise values are.
+     * Keep in mind noise values range from 0 to 1, amplitude multiplies those values value.
+     * By default `1`.
+    */
+    amplitude?: number,
+    /**
+     * The scale of the noise image. The lower this value is, the more that smaller details become large.
+     * The higher this value is, the more details that are packed into a smaller area.
+     * By default `1`.
+    */
+    scale?: number,
+    /**
+     * Noise values (before amplification) below this value are set to 0.
+    */
+    threshold?: number,
+};
+
+
+/**
+ * Terrain heightmap for custom generation.
+*/
 export interface Heightmap {
+    is: 'h',
     /**
      * Layer name. Used for referencing in merge layers.
      * If undefined, layer index is used as name.
@@ -74,7 +116,8 @@ export interface Heightmap {
      * If unspecifed, blocks are generated to `maxHeight`.
     */
     noiseArray?: Array<{
-        /**How much to blend this noise value with the currently constructed noise.
+        /**
+         * How much to blend this noise value with the currently constructed noise.
          * `1` means this noise value is fully preserved, `0` means this noise value will match the currently constructed noise.
          * By default `1`.
         */
@@ -144,7 +187,52 @@ export interface Heightmap {
 };
 
 
-export function GetTerrain(id:string): Array<Heightmap|TerrainReference> {
+/**
+ * Terrain depthmap for custom generation.
+*/
+export interface Depthmap {
+    /**Required to tell apart from other object types.*/
+    is: 'd',
+    /**
+     * Layer name. Used for referencing in merge layers.
+     * If undefined, layer index is used as name.
+    */
+    name?: string,
+    /**
+     * Noise images that are applied one after another.
+     * This affects the shape & pattern of the generated terrain.
+     * If unspecifed, blocks are generated to `maxHeight`.
+    */
+    noiseArray?: Array<{
+        /**
+         * How much to blend this noise value with the currently constructed noise.
+         * `1` means this noise value is fully preserved, `0` means this noise value will match the currently constructed noise.
+         * By default `1`.
+        */
+        blendRatio?: number,
+        noise: DepthmapNoise,
+    }>,
+    /**
+     * Starting height. Min/max height build from this value.
+     * By default `1`.
+    */
+    startHeight?: number,
+    /**
+     * The maximum height. If `noiseArray` returns a value too high, it is capped to `maxHeight` blocks.
+    */
+    maxHeight: number,
+    /**
+     * The minimum height. If 0 no blocks are placed.
+     * By default `1`.
+    */
+    minHeight?: number,
+};
+
+
+/**
+ * Get custom terrain by ID.
+*/
+export function GetTerrain(id:string): Array<Heightmap|Depthmap|TerrainReference> {
     const allCustomTerrain = Module.getProperty('terrain');
     let terrain = allCustomTerrain[id];
     if (!allCustomTerrain[id]) {terrain = terrainPresets[id]};
@@ -152,10 +240,14 @@ export function GetTerrain(id:string): Array<Heightmap|TerrainReference> {
 };
 
 
-export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
+/**
+ * Pre-made terrain.
+*/
+export const terrainPresets: Dictionary<Array<Heightmap|Depthmap|TerrainReference>> = {
     plainsOverlay: [
         // Surface.
         {
+            is: 'h',
             name: 'plainsOverlay-1',
             mergeMode: 'highestPoint',
             maxHeight: 4,
@@ -165,6 +257,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Grass decoration.
         {
+            is: 'h',
             mergeMode: 'previousLayer',
             mergeLayer: 'plainsOverlay-1',
             integrity: 0.1,
@@ -174,6 +267,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
             canPlaceOn: ['grass_block'],
         },
         {
+            is: 'h',
             mergeMode: 'previousLayer',
             mergeLayer: 'plainsOverlay-1',
             integrity: 0.02,
@@ -184,6 +278,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Flowers.
         {
+            is: 'h',
             mergeMode: 'previousLayer',
             mergeLayer: 'plainsOverlay-1',
             integrity: 0.005,
@@ -193,6 +288,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Place air over the flower (to remove any tall grass).
         {
+            is: 'h',
             mergeMode: 'previousLayer',
             mergeLayer: 'plainsOverlay-1',
             integrity: 0.005,
@@ -206,17 +302,20 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     desertOverlay: [
         // Surface.
         {
+            is: 'h',
             mergeMode: 'highestPoint',
             maxHeight: 2,
             fillBlock: 'sandstone',
         },
         {
+            is: 'h',
             mergeMode: 'highestPoint',
             maxHeight: 3,
             fillBlock: 'sand',
         },
         // Dead bushes.
         {
+            is: 'h',
             integrity: 0.01,
             integrityLayer: 1,
             mergeMode: 'highestPoint',
@@ -227,6 +326,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Cacti.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'random',
@@ -248,6 +348,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Cactus flowers.
         {
+            is: 'h',
             integrity: 0.003,
             integrityLayer: 2,
             clearanceArea: {
@@ -265,6 +366,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     snowOverlay: [
         // Surface.
         {
+            is: 'h',
             mergeMode: 'highestPoint',
             maxHeight: 4,
             fillBlock: 'dirt',
@@ -272,12 +374,14 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         },
         // Snow decoration.
         {
+            is: 'h',
             mergeMode: 'highestPoint',
             maxHeight: 1,
             surfaceBlock: 'snow',
             canPlaceOn: ['grass_block'],
         },
         {
+            is: 'h',
             mergeMode: 'highestPoint',
             integrity: 0.02,
             maxHeight: 1,
@@ -288,6 +392,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     desert: [
         // Base.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'simplex',
@@ -305,6 +410,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     hills: [
         // Ground level.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'simplex',
@@ -323,6 +429,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     extremeHills: [
         // Ground level.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'simplex',
@@ -341,6 +448,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     divots: [
         // Ground level.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'simplex',
@@ -359,6 +467,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     deadlySpikes: [
         // Base.
         {
+            is: 'h',
             noiseArray: [
                 // Ground.
                 {noise: {
@@ -385,6 +494,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
     sparseRocks: [
         // Ground.
         {
+            is: 'h',
             name: 'sr-ground',
             noiseArray: [
                 {noise: {
@@ -400,6 +510,7 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
         {id: 'plainsOverlay'},
         // Rocks.
         {
+            is: 'h',
             noiseArray: [
                 {noise: {
                     type: 'perlin',
@@ -420,6 +531,9 @@ export const terrainPresets: Dictionary<Array<Heightmap|TerrainReference>> = {
 
 
 
+/**
+ * Generate custom terrain in the world.
+*/
 export function* generateTerrain(dimension:Dimension, volume:BlockVolume, terrain:Array<any>, seed:number=0, speed:number=1) {
     const iterationsPerTick:number = speed*10;
     const flatVolume = new BlockVolume(volume.from, {x:volume.to.x, y:volume.from.y, z:volume.to.z});

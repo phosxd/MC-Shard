@@ -206,6 +206,7 @@ Provides regions to edit world mutability & player abilities. Can also run comma
 Run advanced commands on world events.
 
 **Events:**
+- `playerDimensionChange`
 - `playerPlaceBlock`
 - `playerBreakBlock`
 - `playerInteractWithBlock`
@@ -257,6 +258,19 @@ Provides tools for rendering shapes in the world using particles.
 **Commands:**
 - `/drawcuboid`: Renders a cuboid for the targets. "options" expects valid JSON, see "/sh:drawoptions" for option list.
 - `/drawoptions`: List all drawing options.
+
+## `generator`:
+Provides tools for generating custom terrain.
+
+**Upcoming features:**
+- `3D noise capability`
+- `UI for custom terrain editor`
+
+**Commands:**
+- `/foreachblock`: Run a command on every block in the volume.
+- `/generate`: Generate custom terrain.
+- `/addterrain`: Add custom terrain. Expects a valid `Terrain` JSON Object.
+- `/removeterrain`: Remove custom terrain.
 
 </details>
 

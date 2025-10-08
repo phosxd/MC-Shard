@@ -28,11 +28,29 @@ export const PerlinNoise = {
 };
 
 
+export const PerlinNoise3d = {
+    get(x:number, y:number, z:number, seed:number, scale:number=1, smoothing:number=0) {
+        if (currentSeed !== seed) {Perlin.seed(seed)};
+        currentSeed = seed;
+        return (Perlin.perlin3(x*scale, y*scale, z*scale) + 1) / 2; // Rescale from "-1-1" to "0-1".
+    },
+};
+
+
 export const SimplexNoise = {
     get(x:number, y:number, seed:number, scale:number=1) {
         if (currentSeed !== seed) {Perlin.seed(seed)};
         currentSeed = seed;
         return (Perlin.simplex2(x*scale, y*scale) + 1) / 2; // Rescale from "-1-1" to "0-1".
+    },
+};
+
+
+export const SimplexNoise3d = {
+    get(x:number, y:number, z:number, seed:number, scale:number=1) {
+        if (currentSeed !== seed) {Perlin.seed(seed)};
+        currentSeed = seed;
+        return (Perlin.simplex3(x*scale, y*scale, z*scale) + 1) / 2; // Rescale from "-1-1" to "0-1".
     },
 };
 
