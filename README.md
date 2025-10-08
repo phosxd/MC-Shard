@@ -5,7 +5,7 @@
 
 <img src="./assets/banner.png" align=""></img>
 
-**Source version**: `0.3-dev`
+**Source version**: `0.3`
 
 Shard is an upcoming all-in-one add-on for servers & realms! With a fully modular & customizable design, Shard will have a vast multitude of management, utility, fun, survival+, & moderation modules soon.
 
